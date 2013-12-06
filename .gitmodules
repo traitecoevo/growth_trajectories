@@ -1,0 +1,3 @@
+[submodule "tree"]
+	path = tree
+	url = git@github.com:richfitz/tree.git
