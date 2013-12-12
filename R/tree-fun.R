@@ -1,4 +1,6 @@
 
+.libPaths(c("lib", .libPaths()))  # will cause us to use local version of tree
+
 library(tree)
 
 ## This makes a fixed light environment over the plant height,
