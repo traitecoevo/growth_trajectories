@@ -2,13 +2,14 @@
 library(tree)
 
 ## This makes a fixed light environment over the plant height,
-test.environment <- function(E, height, n=101, light.env=NULL,
+fixed.environment <- function(E, height, n=101, light.env=NULL,
                              n.strategies=1, seed.rain=0) {
   if (length(seed.rain) == 1)
     seed.rain <- rep(seed.rain, n.strategies)
   hh <- seq(0, height, length=n)
   if (is.null(light.env))
-    light.env <- function(x) E  ee <- light.env(hh)
+    light.env <- function(x) E
+  ee <- light.env(hh)
   env <- new(Spline)
   env$init(hh, ee)
 
