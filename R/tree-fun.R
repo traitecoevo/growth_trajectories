@@ -29,7 +29,7 @@ fixed.environment <- function(E, height, n=101, light.env=NULL,
 # runs a new plant with given height, environment and strategy
 run_plant <- function(h=0.5, E=1,  strategy = new(Strategy)){
 
-  p <- new(Plant, new(Strategy))
+  p <- new(Plant, strategy)
 
   p$height <- h
   env <- fixed.environment(E)
@@ -79,6 +79,19 @@ change_with_light <- function( h=0.2, E=seq(0.1, 1, length.out=20), strategy = n
   tmp <- lapply(E, function(x) run_plant(h=h, E=x, strategy=strategy))
 
   merge_list_components(tmp)
+}
+
+# Clones strategy, changes value of "trait" to x then runs plant
+modify_strategy_then_run_plant <- function(x, trait, h, E, strategy){
+  strategy <- strategy$clone()
+  strategy$set_parameters(structure(list(x), names=trait))
+    run_plant(h=h, E=E, strategy=strategy)
+}
+
+# given a vector of values x for a given parameter with name 'trait', runs plants across range of values for x
+change_with_trait <- function(x, trait, h=0.2, E=1, strategy = new(Strategy)){
+  tmp <- lapply(x,modify_strategy_then_run_plant, h=h, E=E, strategy=strategy, trait=trait)
+  c(merge_list_components(tmp), structure(list(x), names=trait))
 }
 
 # step with ode stepper
