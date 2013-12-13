@@ -20,3 +20,13 @@ x <- change_with_trait(-2:2, "lma", h=18)
 plot(x[["lma"]], x$vars_phys[["height_growth_rate"]], type='b')
 
 plot_mass_fraction(h=1:50)
+
+
+# Decomposition of height growth rate
+
+# dhdt = height growth rate  	# 								= height_growth_rate
+#    dHdA   					# architecture             		= dheight_dleaf_area
+#  * dAdMl  					# leaf area per leaf mass  		= strategy->lma
+#  * dMldMt 					# total cost of leaf deployment = leaf_fraction
+#  * dMtdMp 					# fraction new mass in growth 	= (1 - reproduction_fraction)
+#  * dMpdt  					# total mass production 		= net_production
