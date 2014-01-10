@@ -38,7 +38,9 @@ run_plant <- function(h=0.5, E=1,  strategy = new(Strategy)){
   list(h=h,
      E = E,
     vars_size = data.frame(t(p$vars_size)),
-    vars_phys = data.frame(t(p$vars_phys)))
+    vars_phys = data.frame(t(p$vars_phys)),
+    vars_growth_decomp = data.frame(t(p$vars_growth_decomp))
+    )
 }
 
 change_with_size <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new(Strategy)){
@@ -46,7 +48,7 @@ change_with_size <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new(S
   env <- fixed.environment(E)
   sp <- new(Species, strategy)
 
-  for (i in 1:length(h))
+  for (i in seq_along(h))
        sp$add_seeds(1)
   sp$height <- sort(h, decreasing=TRUE)  # set heights, make sure decreasing
 
