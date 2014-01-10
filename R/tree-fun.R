@@ -12,7 +12,7 @@ fixed.environment <- function(E, height, n=101, light.env=NULL,
   if (is.null(light.env))
     light.env <- function(x) rep(E, length.out=length(x))
   ee <- light.env(hh)
-  env <- new(Spline)
+  env <- new(Interpolator)
   env$init(hh, ee)
 
   parameters <- new(Parameters)
