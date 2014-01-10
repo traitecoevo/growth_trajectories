@@ -1,4 +1,7 @@
-all: figs/RGR.pdf
+all: figs/RGR.pdf figs/figS-leaf.pdf
+
+figs/figS-leaf.pdf: R/FigS-leaf.R data/wright-2004.csv
+	Rscript $<
 
 figs/RGR.pdf: R/fig-RGR.R data/wright-2004.csv data/Wright2010.txt
 	Rscript $<
