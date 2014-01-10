@@ -107,3 +107,30 @@ derivs <- function(t, y, pars) {
   plant$compute_vars_phys(light.env)
   plant$ode_rates
 }
+
+# runs a plant with given height, environment and strategy, returns mass production
+# used as wrapper for root solving, to pass to wplcp
+run_plant_production <- function(E, h, strategy = new(Strategy)){
+  x <- run_plant(h=h, E=E, strategy = strategy)
+  x$vars_phys[["net_production"]]
+}
+
+# estimates whole-plant-light-compensation-point for plant with given height and strategy
+wplcp <- function(h=0.5, strategy = new(Strategy)){
+   uniroot(run_plant_production, c(0, 1), h=h, strategy = strategy)$root
+}
+
+wplcp_with_size <- function(h=seq(0.2, 1, length.out=10),strategy = new(Strategy)){
+  sapply(h, function(x) wplcp(h=x, strategy=strategy))
+}
+
+# Clones strategy, changes value of "trait" to x then runs plant
+modify_strategy_then_find_wplcp <- function(x, trait, h, strategy){
+  strategy <- strategy$clone()
+  strategy$set_parameters(structure(list(x), names=trait))
+  wplcp(h=h, strategy=strategy)
+}
+
+wplcp_with_trait <- function(x, trait, h=0.2, strategy = new(Strategy)){
+  sapply(x,modify_strategy_then_find_wplcp, h=h, strategy=strategy, trait=trait)
+}
