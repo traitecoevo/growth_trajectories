@@ -43,24 +43,6 @@ run_plant <- function(h=0.5, E=1,  strategy = new(Strategy)){
     )
 }
 
-change_with_size <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new(Strategy)){
-
-  env <- fixed.environment(E)
-  sp <- new(Species, strategy)
-
-  for (i in seq_along(h))
-       sp$add_seeds(1)
-  sp$height <- sort(h, decreasing=TRUE)  # set heights, make sure decreasing
-
-  sp$compute_vars_phys(env)
-  list(h=sp$height,
-    E=E,
-    vars_size = data.frame(t(sp$vars_size)),
-    vars_phys = data.frame(t(sp$vars_phys)))
-
-}
-
-
 # transforms a list of lists into a single list by applying do.call(rbind, ..) to each component of a list
 # assumes all elements of parent list have same structure
 
@@ -76,6 +58,12 @@ merge_list_components <- function(myLists){
   out
 }
 
+change_with_size <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new(Strategy)){
+
+  tmp <- lapply(h, function(x) run_plant(h=x, E=E, strategy=strategy))
+  merge_list_components(tmp)
+}
+
 change_with_light <- function( h=0.2, E=seq(0.1, 1, length.out=20), strategy = new(Strategy)){
 
   tmp <- lapply(E, function(x) run_plant(h=h, E=x, strategy=strategy))
@@ -87,7 +75,7 @@ change_with_light <- function( h=0.2, E=seq(0.1, 1, length.out=20), strategy = n
 modify_strategy_then_run_plant <- function(x, trait, h, E, strategy){
   strategy <- strategy$clone()
   strategy$set_parameters(structure(list(x), names=trait))
-    run_plant(h=h, E=E, strategy=strategy)
+  run_plant(h=h, E=E, strategy=strategy)
 }
 
 # given a vector of values x for a given parameter with name 'trait', runs plants across range of values for x
