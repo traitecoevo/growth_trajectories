@@ -81,7 +81,7 @@ modify_strategy_then_run_plant <- function(x, trait, h, E, strategy){
 # given a vector of values x for a given parameter with name 'trait', runs plants across range of values for x
 change_with_trait <- function(x, trait, h=0.2, E=1, strategy = new(Strategy)){
   tmp <- lapply(x,modify_strategy_then_run_plant, h=h, E=E, strategy=strategy, trait=trait)
-  c(merge_list_components(tmp), structure(list(x), names=trait))
+  c(merge_list_components(tmp))
 }
 
 # step with ode stepper
@@ -95,7 +95,6 @@ step_ode <- function(light.env, plant, timesteps = seq(0, 15, length=51)){
   plant.run <- rk(y, timesteps, derivs.d, pars.derivs,
                        method=rkMethod("rk45ck"), hini=1/1000, rtol=1,
                        atol=1)
-
 }
 
 ## Grow the plant in a constant environment
@@ -108,19 +107,20 @@ derivs <- function(t, y, pars) {
   plant$ode_rates
 }
 
-# runs a plant with given height, environment and strategy, returns mass production
-# used as wrapper for root solving, to pass to wplcp
-run_plant_production <- function(E, h, strategy = new(Strategy)){
-  x <- run_plant(h=h, E=E, strategy = strategy)
-  x$vars_phys[["net_production"]]
-}
-
 # estimates whole-plant-light-compensation-point for plant with given height and strategy
 wplcp <- function(h=0.5, strategy = new(Strategy)){
+
+  # runs a plant with given height, environment and strategy, returns mass production
+  # used as wrapper for root solving, to pass to wplcp
+  run_plant_production <- function(E){
+    x <- run_plant(h=h, E=E, strategy = strategy)
+    x$vars_phys[["net_production"]]
+  }
+
    uniroot(run_plant_production, c(0, 1), h=h, strategy = strategy)$root
 }
 
-wplcp_with_size <- function(h=seq(0.2, 1, length.out=10),strategy = new(Strategy)){
+wplcp_with_size <- function(h,strategy = new(Strategy)){
   sapply(h, function(x) wplcp(h=x, strategy=strategy))
 }
 
@@ -133,4 +133,29 @@ modify_strategy_then_find_wplcp <- function(x, trait, h, strategy){
 
 wplcp_with_trait <- function(x, trait, h=0.2, strategy = new(Strategy)){
   sapply(x,modify_strategy_then_find_wplcp, h=h, strategy=strategy, trait=trait)
+}
+
+# finds tarit value in range that maximises growth rate at given size and light
+maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Strategy), ){
+
+  if(length(h)>1){cat("error, h must have length 1");}
+  if(length(E)>1){cat("error, E must have length 1");}
+
+  #wrapper function to pass to optimise
+  dHdt.wrap <- function(x){
+    y <- modify_strategy_then_run_plant(x, trait, h, E, strategy)
+    y$vars_growth_decomp[["height_growth_rate"]]
+  }
+
+  optimise(dHdt.wrap, range, maximum= TRUE, tol = 0.000001, trait=trait, h=h, E=E, strategy=strategy)$maximum
+}
+
+#solve for trait value maximising growth over different light environments
+trait_maximimum_with_light <- function(E, trait, range, h=0.2, strategy = new(Strategy)){
+  sapply(E, function(x) maximise_growth_rate_by_trait(trait, range, h, x, strategy))
+}
+
+#solve for trait value maximising growth over sizes
+trait_maximimum_with_size <- function(h, trait, range, E=1, strategy = new(Strategy)){
+  sapply(h, function(x) maximise_growth_rate_by_trait(trait, range, x, E, strategy))
 }
