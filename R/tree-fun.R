@@ -1,3 +1,4 @@
+source("R/plot-utils.R")
 
 .libPaths(c("lib", .libPaths()))  # will cause us to use local version of tree
 
@@ -73,7 +74,7 @@ change_with_light <- function( h=0.2, E=seq(0.1, 1, length.out=20), strategy = n
 
 # Clones strategy, changes value of "trait" to x then runs plant
 modify_strategy_then_run_plant <- function(x, trait, h, E, strategy){
-  strategy <- strategy$clone()
+  strategy <- strategy$copy()
   strategy$set_parameters(structure(list(x), names=trait))
   run_plant(h=h, E=E, strategy=strategy)
 }
@@ -126,7 +127,7 @@ wplcp_with_size <- function(h,strategy = new(Strategy)){
 
 # Clones strategy, changes value of "trait" to x then runs plant
 modify_strategy_then_find_wplcp <- function(x, trait, h, strategy){
-  strategy <- strategy$clone()
+  strategy <- strategy$copy()
   strategy$set_parameters(structure(list(x), names=trait))
   wplcp(h=h, strategy=strategy)
 }
@@ -136,7 +137,7 @@ wplcp_with_trait <- function(x, trait, h=0.2, strategy = new(Strategy)){
 }
 
 # finds tarit value in range that maximises growth rate at given size and light
-maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Strategy), ){
+maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Strategy)){
 
   if(length(h)>1){cat("error, h must have length 1");}
   if(length(E)>1){cat("error, E must have length 1");}
