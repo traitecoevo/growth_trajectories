@@ -114,11 +114,11 @@ wplcp <- function(h=0.5, strategy = new(Strategy)){
   # runs a plant with given height, environment and strategy, returns mass production
   # used as wrapper for root solving, to pass to wplcp
   run_plant_production <- function(E){
-    x <- run_plant(h=h, E=E, strategy = strategy)
+    x <- run_plant(h=h, E=E, strategy=strategy)
     x$vars_phys[["net_production"]]
   }
 
-   uniroot(run_plant_production, c(0, 1), h=h, strategy = strategy)$root
+   uniroot(run_plant_production, c(0, 1))$root
 }
 
 wplcp_with_size <- function(h,strategy = new(Strategy)){
