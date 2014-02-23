@@ -1,4 +1,5 @@
-% Title
+% New understanding on how leaf traits influence demography using a simple mechanistic model of whole plant growth
+
 % Daniel Falster; Rich FitzJohn
 
 
@@ -180,7 +181,8 @@ More than just shade - any prolonged period of low productivity.
 
 ## Ontogenetic shift towards higher LMA with size
 
-LMA maximising growth rate against size for different light environments
+Figure \ref{f-LMA_optim}: LMA maximising growth rate against size for different light environments
+
 
 # Discussion
 
@@ -263,6 +265,9 @@ Prediction & For & Against\\ \hline
 
 ![**Whole plant light compensation point.**
 \label{f-LMA_wplcp}](../figs/LMA_wplcp.pdf)
+
+![**LMA maximising growth rate against size for different light environments.**
+\label{f-LMA_optim}](../figs/LMA_optim.pdf)
 
 \newpage
 

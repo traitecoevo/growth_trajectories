@@ -148,7 +148,13 @@ maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Str
     y$vars_growth_decomp[["height_growth_rate"]]
   }
 
-  optimise(dHdt.wrap, range, maximum= TRUE, tol = 0.000001, trait=trait, h=h, E=E, strategy=strategy)$maximum
+  opt <- optimise(dHdt.wrap, range, maximum= TRUE, tol = 0.000001)
+
+ if(opt$objective >0)
+  out <- opt$maximum
+ else
+  out <- NA
+ out
 }
 
 #solve for trait value maximising growth over different light environments
