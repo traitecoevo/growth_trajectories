@@ -23,23 +23,23 @@ Apparent change in relationship between LMA and RGR (Figure \ref{f-RGR}).
 Equations for the net mass growth of the plant can be derived based on well established physiology:
 
 \begin{equation}\label{eq:dPdt}
-\frac{dP}{\textrm{d}t}= \underbrace{\strut c Y}_\textrm{yield} (\underbrace{\strut m_l \, \phi^{-1} \, A(E)}_\textrm{photosynthesis} - (\underbrace{\strut \, m_l \, \phi  \, r_\textrm{l} + m_s \, r_\textrm{s} + m_b \, r_\textrm{b} + m_r \, r_\textrm{r}}_\textrm{respiration})) - (\underbrace{\strut m_l \, k_\textrm{l} + m_s \, k_\textrm{s} + m_b \, k_\textrm{b} + m_r \, k_\textrm{r}}_\textrm{turnover}).
+\frac{dP}{\textrm{d}t}= \underbrace{\strut c Y}_\textrm{yield} (\underbrace{\strut m_\textrm{l} \, \phi^{-1} \, A(E)}_\textrm{photosynthesis} - (\underbrace{\strut \, m_\textrm{l} \, \phi  \, r_\textrm{l} + m_\textrm{s} \, r_\textrm{s} + m_\textrm{b} \, r_\textrm{b} + m_\textrm{r} \, r_\textrm{r}}_\textrm{respiration})) - (\underbrace{\strut m_\textrm{l} \, k_\textrm{l} + m_\textrm{s} \, k_\textrm{s} + m_\textrm{b} \, k_\textrm{b} + m_\textrm{r} \, k_\textrm{r}}_\textrm{turnover}).
 \end{equation}
 
-where $A(E)$ is photosynthetic rate per unit leaf area in a given light environment $E$,, $r_l, r_s, r_b r_r$ are respiration rates per unit leaf, sapwood, bark and root mass, and $k_l, k_s, k_b, k_r$ are turnover rates of leaf, sapwood, bark and root mass.
+where $A(E)$ is photosynthetic rate per unit leaf area in a given light environment $E$,, $r_\textrm{l}, r_\textrm{s}, r_\textrm{b} r_\textrm{r}$ are respiration rates per unit leaf, sapwood, bark and root mass, and $k_\textrm{l}, k_\textrm{s}, k_\textrm{b}, k_\textrm{r}$ are turnover rates of leaf, sapwood, bark and root mass.
 
 ## The classic RGR decomposition
 
 The classic decomposition of RGR can be derived as follows. First, note that RGR is given by
 
 \begin{equation}\label{eq:RGR1}
-\textrm{RGR}=\frac{1}{m_t} \frac{\textrm{d}P}{\textrm{d}t}.
+\textrm{RGR}=\frac{1}{m_\textrm{t}} \frac{\textrm{d}P}{\textrm{d}t}.
 \end{equation}
 
 Now substitute, eq. \ref{eq:dPdt} into eq. \ref{eq:RGR} and ignore all turnover and all respiration terms except leaf. This gives
 
 \begin{equation}\label{eq:RGR2}
-\textrm{RGR}=\left(c Y (A(E) - r_\textrm{l})\right) \times \phi^{-1} \times \frac{m_l}{m_t}. \end{equation}
+\textrm{RGR}=\left(c Y (A(E) - r_\textrm{l})\right) \times \phi^{-1} \times \frac{m_\textrm{l}}{m_\textrm{t}}. \end{equation}
 
 Missing from eq. \ref{eq:RGR2} is
 
@@ -52,32 +52,32 @@ Missing from eq. \ref{eq:RGR2} is
 Height growth rate, like RGR above, can also be decomposed into the product of other terms:
 
 \begin{equation} \label{eq:dhdt}
-\frac{\textrm{d}h}{\textrm{d}t}=\frac{\textrm{d}h}{\textrm{d}a_l} \times \frac{\textrm{d}a_l}{\textrm{d}m_t} \times \frac{\textrm{d}m_t}{\textrm{d}P} \times \frac{\textrm{d}P}{\textrm{d}t}.
+\frac{\textrm{d}h}{\textrm{d}t}=\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}} \times \frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}} \times \frac{\textrm{d}m_\textrm{t}}{\textrm{d}P} \times \frac{\textrm{d}P}{\textrm{d}t}.
 \end{equation}
 
 The components of this model are as follows:
 
 - $h$ is the height of the plant,
-- $a_l$ is total leaf area
-- $\frac{\textrm{d}h}{\textrm{d}a_l}$ is the growth in height per unit growth in leaf area; accounting for the architectural strategy of the plant. (Some species tend to leaf out more than grow tall, while other species emphasise vertical extension.)
-- $\frac{\textrm{d}a_l}{\textrm{d}m_t}$ is the rate of leaf area growth per unit mass growth for the plant, accounting for costs of deploying a unit of leaf area, including the cost of building the leaf itself and the various support structures required.
-- $\frac{\textrm{d}m_t}{\textrm{d}P}$ is the fraction of mass produced by the plant allocated to reproduction, and
+- $a_\textrm{l}$ is total leaf area
+- $\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}$ is the growth in height per unit growth in leaf area; accounting for the architectural strategy of the plant. (Some species tend to leaf out more than grow tall, while other species emphasise vertical extension.)
+- $\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}$ is the rate of leaf area growth per unit mass growth for the plant, accounting for costs of deploying a unit of leaf area, including the cost of building the leaf itself and the various support structures required.
+- $\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}$ is the fraction of mass produced by the plant allocated to reproduction, and
 - $\frac{\textrm{d}P}{\textrm{d}t}$ is the mass production rate of the plant.
 
 Thus height growth rate is given by the product of terms representing architectural layout, tissue costs, allocation to growth, mass production.
 
-Each of these terms can be further decomposed, allowing the effect of traits to be clarified. The term $\frac{\textrm{d}P}{\textrm{d}t}$ is given in eq. \ref{eq:dPdt}. In addition, the term  $\frac{\textrm{d}a_l}{\textrm{d}m_t}$ can be expressed as the inverse of a sum of construction costs per unit leaf area:
+Each of these terms can be further decomposed, allowing the effect of traits to be clarified. The term $\frac{\textrm{d}P}{\textrm{d}t}$ is given in eq. \ref{eq:dPdt}. In addition, the term  $\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}$ can be expressed as the inverse of a sum of construction costs per unit leaf area:
 
 \begin{equation}\label{eq:daldmt}
-\frac{\textrm{d}a_l}{\textrm{d}m_t}= \frac{1}{\frac{\textrm{d}m_t}{\textrm{d}a_l}}
-=  \frac{1}{\frac{\textrm{d}m_l}{\textrm{d}a_l}
- + \frac{\textrm{d}m_s}{\textrm{d}a_l} + \frac{\textrm{d}m_b}{\textrm{d}a_l} + \frac{\textrm{d}m_r}{\textrm{d}a_l}}.
+\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}= \frac{1}{\frac{\textrm{d}m_\textrm{t}}{\textrm{d}a_\textrm{l}}}
+=  \frac{1}{\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}
+ + \frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}}.
 \end{equation}
 
 <!-- Thus
 \begin{equation}\label{eq:dhdt2}
-\frac{\textrm{d}h}{\textrm{d}t}=\frac{\textrm{d}h}{\textrm{d}a_l}  \frac{1}{\frac{\textrm{d}m_l}{\textrm{d}a_l}
- + \frac{\textrm{d}m_s}{\textrm{d}a_l} + \frac{\textrm{d}m_b}{\textrm{d}a_l} + \frac{\textrm{d}m_r}{\textrm{d}a_l}} \frac{\textrm{d}m_t}{\textrm{d}P}  c Y(m_l \, \phi^{-1} \, A(E) - (m_l \, \phi  \, r_\textrm{l} + m_s \, r_\textrm{s} + m_b \, r_\textrm{b} + m_r \, r_\textrm{r})) - (m_l \, k_\textrm{l} + m_s \, k_\textrm{s} + m_b \, k_\textrm{b} + m_r \, k_\textrm{r})
+\frac{\textrm{d}h}{\textrm{d}t}=\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}  \frac{1}{\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}
+ + \frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}} \frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}  c Y(m_\textrm{l} \, \phi^{-1} \, A(E) - (m_\textrm{l} \, \phi  \, r_\textrm{l} + m_\textrm{s} \, r_\textrm{s} + m_\textrm{b} \, r_\textrm{b} + m_\textrm{r} \, r_\textrm{r})) - (m_\textrm{l} \, k_\textrm{l} + m_\textrm{s} \, k_\textrm{s} + m_\textrm{b} \, k_\textrm{b} + m_\textrm{r} \, k_\textrm{r})
 .\end{equation}
  -->
 
@@ -103,7 +103,7 @@ Thus,
 
 Equations \ref{eq:dhdt},\ref{eq:daldmt},\ref{eq:dbh1} are mathematically true and thus hold for any model of plant growth. To make explicit predictions about the influence of traits on growth requires three additional features
 
-1. A specific model describing how the various mass terms ($m_l, m_s, m_b, mr$) vary with plant height.
+1. A specific model describing how the various mass terms ($m_\textrm{l}, m_\textrm{s}, m_\textrm{b}, mr$) vary with plant height.
 2. Estimates of various parameters, respiration rates and turnover rates and how these vary with size or light environment.
 3. Specification of how leaf traits enter into the eq. \ref{dhdt}.
 
@@ -127,15 +127,15 @@ These assumptions lead immediately to the set of equations for plant size descri
 Substituting the features from table \ref{tab:allometry} into eq. \ref{eq:dbh2} leads to the following equation for dbh growth:
 
 \begin{equation}\label{eq:dbh3}
-\frac{\textrm{d}D}{\textrm{d}t} = \frac{2}{\pi D \theta } \left((1+b) \frac{\textrm{d}a_l}{\textrm{d}t} + k_s a_l\right).\end{equation}
+\frac{\textrm{d}D}{\textrm{d}t} = \frac{2}{\pi D \theta } \left((1+b) \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t} + k_\textrm{s} a_\textrm{l}\right).\end{equation}
 
-This equation shows that diameter growth rate is related to height growth rate (as both are dependent on $\frac{\textrm{d}a_l}{\textrm{d}t}$), but with an allometric adjustment and the added element of heartwood formation.
+This equation shows that diameter growth rate is related to height growth rate (as both are dependent on $\frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$), but with an allometric adjustment and the added element of heartwood formation.
 
 ## Influence of traits
 
-Leaf mass per area captures a trade-off between leaf construction cost and rate of leaf turnover, reflecting the well-known correlation between measures of construction cost (LMA, leaf tissue density, or leaf thickness) and leaf lifespan [@wright_world-wide_2004]. Thus the turnover rate of leaf, $k_l$, is linked to LMA (Fig. \ref{fS-leaf}):
+Leaf mass per area captures a trade-off between leaf construction cost and rate of leaf turnover, reflecting the well-known correlation between measures of construction cost (LMA, leaf tissue density, or leaf thickness) and leaf lifespan [@wright_world-wide_2004]. Thus the turnover rate of leaf, $k_\textrm{l}$, is linked to LMA (Fig. \ref{fS-leaf}):
 \begin{equation}\label{eq:LMA-KL}
-k_l=\alpha_4 \, \phi^{\beta_4}.
+k_\textrm{l}=\alpha_4 \, \phi^{\beta_4}.
 \end{equation}
 
 ## Other parameters
@@ -201,14 +201,14 @@ Figure \ref{f-LMA_optim}: LMA maximising growth rate against size for different 
 \begin{tabular}{lll}
 \hline
 Variable & Function  & Derivative\\ \hline
-leaf area & $a_l=\alpha_1 \, h^{\beta_1}$ & $\frac{\textrm{d}h}{\textrm{d}a_l}= -\beta_1\left(\frac{a_l}{\alpha_1}\right)^{-(\beta_1+1)}$\\
-leaf mass & $m_l=\phi \, a_l $ & $\frac{\textrm{d}m_l}{\textrm{d}a_l}=\phi$\\
-sapwood mass&$m_s=\theta^{-1} \, \rho \, \eta_c \, a_l \, h $ & $\frac{\textrm{d}m_s}{\textrm{d}a_l}=\theta^{-1}\, \rho\, \eta_c\, \left( h + a_l\, \frac{\textrm{d}h}{\textrm{d}a_l} \right)$\\
-bark mass&$m_b=b\, \theta^{-1} \, \rho \, \eta_c \, a_l \, h $ & $\frac{\textrm{d}m_b}{\textrm{d}a_l}=b \, \theta^{-1} \, \rho \, \eta_c\left( h + a_l \, \frac{\textrm{d}h}{\textrm{d}A} \right)$\\
-root mass & $m_r=\alpha_3 \, a_l$ & $\frac{\textrm{d}m_r}{\textrm{d}a_l}= \alpha_3$ \\
-sapwoood area & $a_\textrm{ss}=\theta^{-1} \, a_l$ & $\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} =\theta^{-1} \, \frac{\textrm{d}a_l}{\textrm{d}t}$\\
-bark area & $a_\textrm{sb}=b \, \theta^{-1} \, da_l$ & $\frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t}=b \, \theta^{-1} \, \frac{\textrm{d}a_l}{\textrm{d}t}$\\
-heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}=k_s\theta^{-1} a_l$\\\hline
+leaf area & $a_\textrm{l}=\alpha_1 \, h^{\beta_1}$ & $\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}= -\beta_1\left(\frac{a_\textrm{l}}{\alpha_1}\right)^{-(\beta_1+1)}$\\
+leaf mass & $m_\textrm{l}=\phi \, a_\textrm{l} $ & $\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}=\phi$\\
+sapwood mass&$m_\textrm{s}=\theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}}=\theta^{-1}\, \rho\, \eta_c\, \left( h + a_\textrm{l}\, \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}} \right)$\\
+bark mass&$m_\textrm{b}=b\, \theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}}=b \, \theta^{-1} \, \rho \, \eta_c\left( h + a_\textrm{l} \, \frac{\textrm{d}h}{\textrm{d}A} \right)$\\
+root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}= \alpha_3$ \\
+sapwoood area & $a_\textrm{ss}=\theta^{-1} \, a_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} =\theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
+bark area & $a_\textrm{sb}=b \, \theta^{-1} \, da_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t}=b \, \theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
+heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}=k_\textrm{s}\theta^{-1} a_\textrm{l}$\\\hline
 \end{tabular}
 \label{tab:allometry}
 \end{table}
@@ -293,7 +293,7 @@ Here we describe an allometric model linking the various size dimensions of a pl
 Based on empirically observed allometries (see main text), we assume an allometric log-log scaling relationship between the accumulated leaf area of a plant and its height:
 
 \begin{equation}\label{eq:ha}
-a_l=\alpha_1 \, h^{\beta_1}.
+a_\textrm{l}=\alpha_1 \, h^{\beta_1}.
 \end{equation}
 
 **note, scaling relationship reveresed from Falster et al 20011***
@@ -309,19 +309,19 @@ We follow the model of [@yokozawa_foliage_1995] describing the vertical distribu
 We also assume that each unit of sapwood area supports a fixed area of leaf (the pipe model, [@shinozaki_quantitative_1964]), so that the total canopy area of a plant relates to basal sapwood area $S(0,h)$:
 
 \begin{equation}\label{eq:crown2}
-\frac{m_l}{\phi}= \theta \, S(0,h).
+\frac{m_\textrm{l}}{\phi}= \theta \, S(0,h).
 \end{equation}
 
 Integrating $S(z,h)$ gives a solution for the total mass of sapwood in the plant:
 
 \begin{equation}\label{eq:ms1}
-m_s=\rho \, \int_0^h \, S(z,h) \, \textrm{d}z= \rho \, S(0,h) \, h \, \eta_c,
+m_\textrm{s}=\rho \, \int_0^h \, S(z,h) \, \textrm{d}z= \rho \, S(0,h) \, h \, \eta_c,
 \end{equation}
 
 where $\eta_c=1-\frac{2}{1+\eta} + \frac{1}{1+2\eta} $ [@yokozawa_foliage_1995]. Substituting from eq. \ref{eq:crown2} into  eq. \ref{eq:ms1} gives an expression for sapwood mass as a function leaf area and height:
 
 \begin{equation}\label{eq:ms2}
-m_s=\rho \, \eta_c \, \theta^{-1} \, a_\textrm{l} \, h.
+m_\textrm{s}=\rho \, \eta_c \, \theta^{-1} \, a_\textrm{l} \, h.
 \end{equation}
 
 <!--
@@ -345,7 +345,7 @@ q=2\eta(1-z^\eta h^{-\eta}) z^{\eta-1} h^{-\eta}.
 Bark and phloem tissue are modelled using an analogue of the pipe model, leading to a similar equation as that for sapwood mass (eq. \ref{eq:ms2}). Cross sectional-area of bark per unit leaf area is assumed to be a constant fraction $b$ of sapwood area per unit leaf area such that
 
 \begin{equation}\label{eq:mb}
-m_\textrm{b}=b m_s.
+m_\textrm{b}=b m_\textrm{s}.
 \end{equation}
 
 ### Root mass
@@ -353,7 +353,7 @@ m_\textrm{b}=b m_s.
 Also consistent with pipe-model assumption, we assume a fixed ratio of root mass per unit leaf area
 
 \begin{equation}\label{eq:mr}
-m_\textrm{r}=\alpha_3 \, a_l.
+m_\textrm{r}=\alpha_3 \, a_\textrm{l}.
 \end{equation}
 
 Even though nitrogen and water uptake are not modelled explicitly, imposing a fixed ratio of root mass to leaf area ensures that approximate costs of root production are included in calculations of carbon budget.
