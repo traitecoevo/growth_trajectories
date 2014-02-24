@@ -8,6 +8,14 @@ BCI
 
 - Thomas 2010: LMA increases with size
 
+# Ruger 2012
+
+Related WD, SM, Hmax, and nutrient content (but not LMA) to growth rate and light response
+
+- "Our three key findings were that (1) all traits (wood density, adult stature, seed mass, leaf nutrient content) contributed independently to light response, (2) intrinsic growth rates were mostly determined by wood density and adult stature, and (3) size response was less well predicted by functional traits with the exception of wood density."
+- Overall WD effect much stronger than LMA
+- Leaf traits (LMA, leaf nutrient content, and leaf area) were not related to intrinsic growth rates. This is in line with findings of previous studies (Poorter et al. 2008, Wright et al. 2010, He ́rault et al. 2011). Neither the association of high leaf nutrient content (or low LMA) with higher photosynthetic capacity per unit leaf mass (Wright et al. 2004, Poorter and Bongers 2006), nor with higher susceptibility to herbivory (e.g., Coley 1983) seem to affect intrinsic growth rates. Likewise, traits related to leaf toughness (e.g., cellulose content, lamina density, and thickness) were not related to growth rates in 197 shade-tolerant species at BCI, possibly because the higher cost of constructing tough leaves is compensated by their longer life span (Westbrook et al. 2011).
+- "Although high photosynthetic capacity is expected to allow for a flexible response to temporal changes in resource availability (Grime 1994), only leaf nutrient content, and not LMA, contributed significantly to higher light response (see Appendix A). This stronger relationship of leaf nutrient content with light sensitivity may be due to its lower correlation with the other traits in the multivariate analysis as compared to LMA. Alternatively, leaf nutrient content may be more mechanistically linked to plant metabolism and growth than LMA, which incorporates tissue density and tissue thickness ( Westbrook et al. 2011)." --> But lack of results explained entirely by fact that looking at growth at larger sizes.
 
 # Biomass allometry
 
