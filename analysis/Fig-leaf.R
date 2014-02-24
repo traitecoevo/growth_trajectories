@@ -9,7 +9,7 @@ LMA_plot <- function(){
 
   G = dat$Dataset
   LL = dat$LeafLifespan
-  LMA= dat$LMA
+  LMA= dat$LMA /1000
 
   # only use sites with n > 5
   site.n <- data.frame(table(G))
@@ -31,7 +31,7 @@ LMA_plot <- function(){
   x <- 10^seq(log10(0.001), log10(3), by =0.01)
   points(x, 0.0286*x^-1.71, type='l', col='black', lwd=2)
 
-  mtext(expression(paste("Leaf construction cost (g ", m^-2,")")), line =3, side = 1, cex=1.0)
+  mtext(expression(paste("Leaf construction cost (kg ", m^-2,")")), line =3, side = 1, cex=1.0)
   mtext(expression(paste("Leaf turnover rate (",yr^-1,")")), line =3, side = 2, cex=1.0)
 
 
