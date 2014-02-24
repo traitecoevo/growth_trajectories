@@ -18,8 +18,7 @@ RGR_plot <- function(X, Y, col = "darkgreen", pch=19, ylim= range(Y, na.rm=TRUE)
 dat1 <- read.csv("data/Wright&Westoby2001.csv", header = TRUE, stringsAsFactors=FALSE)
 dat1$lma <-  1/ dat1$sla *10^3 #(convert from mm2/mg to g/m2)
 
-dat2 <- read.table("data/Wright-2010.txt", header = TRUE, sep="\t", skip=25, na.strings = c("NA","-99", "-99.0", "-99.00", "-99.000", "-99.0000" ))
-
+dat2 <- read.table("data/Wright-2010.txt", header = TRUE, sep="\t", skip=25, na.strings = c("NA","-99", "-99.0", "-99.00", "-99.000", "-99.0000" ), stringsAsFactors=FALSE)
 
 RGR_panel <-function(){
 
