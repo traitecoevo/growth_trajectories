@@ -1,9 +1,23 @@
 
-blank_plot <- function(xlim = c(0.02, 1.3), ylim = c(0.04, 15), use.box=TRUE,...){
-  plot.new()
-  plot.window( xlim = xlim, ylim = ylim, xaxt='n', yaxt='n', ann=FALSE,...)
-  if(use.box)
-    box()
+blank_plot <- function(xlim, ylim,
+  xlab=NULL, ylab=NULL,line=4,
+  xtick=NULL,ytick=NULL,
+  xtick.lab=xtick,ytick.lab=tick,...){
+
+  plot(NA, xlim = xlim, ylim = ylim, xaxt='n', yaxt='n', ann=FALSE,...)
+
+  if(!is.null(xtick))
+   axis(1, at=xtick, labels=xtick.lab)
+
+ if(!is.null(ytick))
+   axis(2, at=ytick, labels=ytick.lab, las=1)
+
+ if(!is.null(xlab))
+  mtext(xlab, 1, line=line)
+
+ if(!is.null(ylab))
+  mtext(ylab, 2, line=line)
+
 }
 
 

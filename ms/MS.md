@@ -1,7 +1,5 @@
-% New understanding on how leaf traits influence demography using a simple mechanistic model of whole plant growth
-
+% Growth trajectories: a new way of understanding the influence of the leaf economics spectrum on plant growth
 % Daniel Falster; Rich FitzJohn
-
 
 # Abstract
 
@@ -185,6 +183,12 @@ Figure \ref{f-LMA_optim}: LMA maximising growth rate against size for different 
 
 
 # Discussion
+
+
+1. Growth rate is size-dependent
+2. Strength of trait-correlation varies with size. Could be increasing, decreasing, reversing
+3. Species not 'fast' or 'slow', rather have a trajectory
+4. We need theory to make sense of data
 
 \newpage
 
