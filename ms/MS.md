@@ -1,4 +1,4 @@
-% Growth trajectories: a new way of understanding the influence of the leaf economics spectrum on plant growth
+% Growth trajectories: understanding how the leaf economics spectrum influences plant growth
 % Daniel Falster; Rich FitzJohn
 
 # Abstract
@@ -255,6 +255,10 @@ Prediction & For & Against\\ \hline
 ![**Relationship between leaf mass per area and relative growth rate varies with plant size.**
 \label{f-RGR}](../figs/RGR.pdf)
 
+![**Model assumptions.**
+**a)** Across species, leaf mass per area is inversely related to leaf turnover rate. Data from @wright_world-wide_2004 for 678 species from 51 sites. Green lines show standardised major axis lines fitted to data from each site, with intensity of shading adjusted according to strength of the relationship.\label{fS-leaf}](../figs/SI-leaf.pdf)
+
+
 ![**Hump-shaped relationship between growth rate and size.**
 \label{f-hump}](../figs/hump.pdf)
 
@@ -275,10 +279,6 @@ Prediction & For & Against\\ \hline
 
 \newpage
 
-# Supplementary figures
-
-![**Trade-off between leaf mass per area and leaf turnover rate.**
-Across species, leaf mass per area is inversely related to leaf turnover rate. Data from Wright et al 2004[@wright_world-wide_2004] for 678 species from 51 sites. Green lines show standardised major axis lines fitted to data from each site, with intensity of shading adjusted according to strength of the relationship.\label{fS-leaf}](../figs/SI-leaf.pdf)
 
 \newpage
 
