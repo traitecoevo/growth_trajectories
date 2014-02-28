@@ -85,7 +85,11 @@ Each of these terms can be further decomposed, allowing the effect of traits to 
 
 Note that diameter is related to the total stem cross section $a_\textrm{st}$ as $D = 2 \sqrt{\frac{a_\textrm{st}}{\pi}}$, such that diameter increment is related to area increment:
 \begin{equation} \label{eq:dbh1}
-\frac{\textrm{d}D}{\textrm{d}t} = \frac{2}{\pi D} \frac{\textrm{d}a_\textrm{st}}{\textrm{d}t}.
+\frac{\textrm{d}D}{\textrm{d}t} = \frac{2}{\pi D} \frac{\textrm{d}a_\textrm{st}}{\textrm{d}t},
+\end{equation}
+or
+\begin{equation} \label{eq:dbh1}
+\frac{\textrm{d}D}{\textrm{d}t} = \sqrt{\frac{\pi}{a_\textrm{st}}} \frac{\textrm{d}a_\textrm{st}}{\textrm{d}t}.
 \end{equation}
 
 Basal area increment in turn is the sum of increments in sapwood, bark \& heartwood area:
@@ -96,7 +100,7 @@ Basal area increment in turn is the sum of increments in sapwood, bark \& heartw
 Thus,
 
 \begin{equation} \label{eq:dbh2}
-\frac{\textrm{d}D}{\textrm{d}t} = \frac{2}{\pi D} \left(\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} + \frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t} + \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}\right).
+\frac{\textrm{d}D}{\textrm{d}t} =  \sqrt{\frac{\pi}{a_\textrm{st}}} \left(\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} + \frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t} + \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}\right).
 \end{equation}
 
 ## A simple allometric model of plant function
