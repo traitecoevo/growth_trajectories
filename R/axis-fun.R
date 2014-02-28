@@ -3,7 +3,7 @@
 get.axis.info <- function(dim, parToGet){
 
   ticks <- 0.01*2^seq(0,12)
-  lab <- expression(paste("Leaf mass per area(kg ",m^-2," )"))
+  lab <- expression(paste("Leaf mass per area (kg ",m^-2," )"))
   lim <- c(0.02,1.28)
 
   if(dim==1){
