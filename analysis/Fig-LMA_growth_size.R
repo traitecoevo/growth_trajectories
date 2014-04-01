@@ -13,7 +13,7 @@ figure <- function(){
 	for(h in c(0.25, 4, 15)){
 		x <- change_with_trait(lma, "lma", h=h)
 		new_plot(0,2, log="x", xlab=NULL, ylab=NULL)
-		points(lma, x$vars_phys[["height_growth_rate"]], type='l')
+		points(lma, x$vars[["height_growth_rate"]], type='l')
 	}
 
 	mtext(get.axis.info(0,"lab"), line =1, side = 1, cex=1.5, outer = TRUE)

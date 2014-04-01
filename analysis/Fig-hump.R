@@ -3,57 +3,47 @@
 source("R/tree-fun.R")
 
 strategy = new(Strategy)
-strategy$set_parameters(structure(list(0), names="c_r1"))
+strategy$set_parameters(structure(list(0, 0.2), names=c("c_r1", "k_s")))
 
 # growth decomp
-figure_height <- function(...){
-	h <- seq(0.1, 50,length.out=50)
-	x <- change_with_size(h=h,...)
-	par(mfrow = c(1,5))
+figure_size <- function(yvars=c("height_growth_rate","dheight_dleaf_area","leaf_fraction", "growth_fraction","net_production"), E=1, strategy = new(Strategy),...){
 
-	for(v in c("height_growth_rate","dheight_dleaf_area","leaf_fraction", "growth_fraction","net_production")){
-		plot(h, x$vars_growth_decomp[[v]], type='l', xlab = "height (m)", ylab=v)
+	h <- seq(0.1, 50,length.out=50)
+	x <- change_with_size(h=h,E=E,strategy=strategy)
+	i <- x$vars[["net_production"]] > 0
+
+	par(mfrow = c(1,length(yvars)))
+	for(v in yvars){
+		plot(h[i], x$vars[[v]][i], type='l', xlab = "height (m)", ylab=v,...)
 	}
 }
 
-to.pdf(figure_height(strategy=strategy), paste0("figs/hump.pdf"), height=4, width =12)
+# dP_dt
+to.pdf(figure_size(strategy=strategy, ylim=c(0,500),
+	yvars=c("net_production","assimilation","respiration","turnover")
+	), paste0("figs/size-dPdt.pdf"), height=4, width =12)
 
 
-# decomposition of leaf area growth rate
-figure_leaf <- function(...){
-	h <- seq(0.1, 50,length.out=50)
-	x <- change_with_size(h=h,...)
-	par(mfrow = c(1,4))
+# dh_dt
+to.pdf(figure_size(strategy=strategy,
+	yvars=c("height_growth_rate","dheight_dleaf_area","leaf_fraction", "growth_fraction","net_production")
+	), paste0("figs/size-dhdt.pdf"), height=4, width =12)
 
-	for(v in c("dleaf_area_dt","leaf_fraction", "growth_fraction","net_production")){
-		plot(h, x$vars_growth_decomp[[v]], type='l', xlab = "height (m)", ylab=v)
-	}
-}
 
-to.pdf(figure_leaf(strategy=strategy), paste0("figs/hump-leaf.pdf"), height=4, width =12)
+# dal_dt
+to.pdf(figure_size(strategy=strategy,
+	yvars=c("dleaf_area_dt","leaf_fraction", "growth_fraction","net_production")
+	), paste0("figs/size-daldt.pdf"), height=4, width =12)
 
-# decomposition of leaf area growth rate
-figure_basal_area <- function(...){
-	h <- seq(0.1, 50,length.out=50)
-	x <- change_with_size(h=h,...)
-	par(mfrow = c(1,4))
 
-	for(v in c("dbasal_area_dt","dsapwood_area_dt", "dbark_area_dt","dheartwood_area_dt")){
-		plot(h, x$vars_growth_decomp[[v]], type='l', xlab = "height (m)", ylab=v)
-	}
-}
+# dast_dt
+to.pdf(figure_size(strategy=strategy,
+	yvars=c("dbasal_area_dt","dleaf_area_dt","dsapwood_area_dt", "dheartwood_area_dt")
+	), paste0("figs/size-dbadt.pdf"), height=4, width =12)
 
-to.pdf(figure_basal_area(strategy=strategy), paste0("figs/hump-basal_area.pdf"), height=4, width =12)
 
-# decomposition of diameter growth rate
-figure_basal_diam <- function(...){
-	h <- seq(0.1, 50,length.out=50)
-	x <- change_with_size(h=h,...)
-	par(mfrow = c(1,3))
+# ddst_dt
 
-	for(v in c("dbasal_diam_dt","dbasal_diam_dbasal_area","dbasal_area_dt")){
-		plot(h, x$vars_growth_decomp[[v]], type='l', xlab = "height (m)", ylab=v)
-	}
-}
-
-to.pdf(figure_basal_diam(strategy=strategy), paste0("figs/hump-basal_diam.pdf"), height=4, width =12)
+to.pdf(figure_size(strategy=strategy,
+	yvars=c("dbasal_diam_dt","dbasal_diam_dbasal_area","dbasal_area_dt")
+	), paste0("figs/size-ddstdt.pdf"), height=4, width =12)

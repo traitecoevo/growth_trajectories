@@ -12,7 +12,7 @@ figure <- function(){
 	lma <- 10^seq(-2, 1, length.out=50)
 	for(E in seq(0.2, 1, by = 0.2)){
 		x <- change_with_trait(lma, "lma", h=0.25, E=E)
-		points(lma, x$vars_phys[["height_growth_rate"]], type='l')
+		points(lma, x$vars[["height_growth_rate"]], type='l')
 	}
 	par(op)
 }

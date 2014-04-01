@@ -38,9 +38,7 @@ run_plant <- function(h=0.5, E=1,  strategy = new(Strategy)){
 
   list(h=h,
      E = E,
-    vars_size = data.frame(t(p$vars_size)),
-    vars_phys = data.frame(t(p$vars_phys)),
-    vars_growth_decomp = data.frame(t(p$vars_growth_decomp))
+     vars = data.frame(t(p$vars_size), t(p$vars_phys), t(p$vars_growth_decomp))
     )
 }
 
@@ -115,7 +113,7 @@ wplcp <- function(h=0.5, strategy = new(Strategy)){
   # used as wrapper for root solving, to pass to wplcp
   run_plant_production <- function(E){
     x <- run_plant(h=h, E=E, strategy=strategy)
-    x$vars_phys[["net_production"]]
+    x$vars[["net_production"]]
   }
 
    uniroot(run_plant_production, c(0, 1))$root
@@ -145,7 +143,7 @@ maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Str
   #wrapper function to pass to optimise
   dHdt.wrap <- function(x){
     y <- modify_strategy_then_run_plant(x, trait, h, E, strategy)
-    y$vars_growth_decomp[["height_growth_rate"]]
+    y$vars[["height_growth_rate"]]
   }
 
   opt <- optimise(dHdt.wrap, range, maximum= TRUE, tol = 0.000001)

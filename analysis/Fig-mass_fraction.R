@@ -18,13 +18,13 @@ plot_mass_fraction <- function(h=1:50, E=1, strategy = new(Strategy),
 	}
 
 	# plants across a range of sizes
-	X <- change_with_size(h=h, E=E, strategy=strategy)
+	X <- change_with_size(h=h, E=E, strategy=strategy)[["vars"]]
 
-	mass_fraction <- X[["vars_size"]][,vars]/ rowSums(X[["vars_size"]][,vars])
+	mass_fraction <- X[,vars]/ rowSums(X[,vars])
 
 	# cumulative sum of columns as fraction of total
 	y <- t(apply( mass_fraction, 1, cumsum))
-	x <- X[["vars_size"]][[xvar]]
+	x <- X[[xvar]]
 
 	par(oma=c(2,2,2,4))
 
