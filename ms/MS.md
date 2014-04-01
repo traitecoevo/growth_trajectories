@@ -47,6 +47,31 @@ Missing from eq. \ref{eq:RGR2} is
 - respiration of non-leaf tissues
 - costs of deploying new tissues.
 
+## Decomposition of leaf area growth rate
+
+The growth rate of total leaf area, like RGR above, can also be decomposed into the product of other terms:
+
+\begin{equation} \label{eq:dadt}
+\frac{\textrm{d}a_\textrm{l}}{\textrm{d}t} =
+\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}} \times \frac{\textrm{d}m_\textrm{t}}{\textrm{d}P} \times \frac{\textrm{d}P}{\textrm{d}t}.
+\end{equation}
+
+The components of this model are as follows:
+
+- $a_\textrm{l}$ is total leaf area
+- $\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}$ is the rate of leaf area growth per unit mass growth for the plant, accounting for costs of deploying a unit of leaf area, including the cost of building the leaf itself and the various support structures required.
+- $\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}$ is the fraction of mass produced by the plant allocated to reproduction, and
+- $\frac{\textrm{d}P}{\textrm{d}t}$ is the mass production rate of the plant.
+
+Several of these terms can be further decomposed, allowing the effect of traits to be clarified. The term $\frac{\textrm{d}P}{\textrm{d}t}$ is given in eq. \ref{eq:dPdt}. In addition, the term  $\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}$ can be expressed as the inverse of a sum of construction costs per unit leaf area:
+
+\begin{equation}\label{eq:daldmt}
+\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}= \frac{1}{\frac{\textrm{d}m_\textrm{t}}{\textrm{d}a_\textrm{l}}}
+=  \frac{1}{\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}
+ + \frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}}.
+\end{equation}
+
+
 ## Decomposition of height growth rate
 
 Height growth rate, like RGR above, can also be decomposed into the product of other terms:
@@ -60,41 +85,22 @@ The components of this model are as follows:
 - $h$ is the height of the plant,
 - $a_\textrm{l}$ is total leaf area
 - $\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}$ is the growth in height per unit growth in leaf area; accounting for the architectural strategy of the plant. (Some species tend to leaf out more than grow tall, while other species emphasise vertical extension.)
-- $\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}$ is the rate of leaf area growth per unit mass growth for the plant, accounting for costs of deploying a unit of leaf area, including the cost of building the leaf itself and the various support structures required.
-- $\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}$ is the fraction of mass produced by the plant allocated to reproduction, and
-- $\frac{\textrm{d}P}{\textrm{d}t}$ is the mass production rate of the plant.
 
 Thus height growth rate is given by the product of terms representing architectural layout, tissue costs, allocation to growth, mass production.
 
-Each of these terms can be further decomposed, allowing the effect of traits to be clarified. The term $\frac{\textrm{d}P}{\textrm{d}t}$ is given in eq. \ref{eq:dPdt}. In addition, the term  $\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}$ can be expressed as the inverse of a sum of construction costs per unit leaf area:
+## Decomposition of basal area growth rate
 
-\begin{equation}\label{eq:daldmt}
-\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}= \frac{1}{\frac{\textrm{d}m_\textrm{t}}{\textrm{d}a_\textrm{l}}}
-=  \frac{1}{\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}
- + \frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}}.
+Basal area increment in turn is the sum of increments in sapwood, bark \& heartwood area:
+\begin{equation} \label{eq:dast}
+\frac{\textrm{d}a_\textrm{st}}{\textrm{d}t}= \frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} + \frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t} + \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}.
 \end{equation}
 
-<!-- Thus
-\begin{equation}\label{eq:dhdt2}
-\frac{\textrm{d}h}{\textrm{d}t}=\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}  \frac{1}{\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}
- + \frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}} \frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}  c Y(m_\textrm{l} \, \phi^{-1} \, A(E) - (m_\textrm{l} \, \phi  \, r_\textrm{l} + m_\textrm{s} \, r_\textrm{s} + m_\textrm{b} \, r_\textrm{b} + m_\textrm{r} \, r_\textrm{r})) - (m_\textrm{l} \, k_\textrm{l} + m_\textrm{s} \, k_\textrm{s} + m_\textrm{b} \, k_\textrm{b} + m_\textrm{r} \, k_\textrm{r})
-.\end{equation}
- -->
 
 ## Decomposition of diameter growth rate
 
 Note that diameter is related to the total stem cross section $a_\textrm{st}$ as $D = 2 \sqrt{\frac{a_\textrm{st}}{\pi}}$, such that diameter increment is related to area increment:
 \begin{equation} \label{eq:dbh1}
-\frac{\textrm{d}D}{\textrm{d}t} = \frac{2}{\pi D} \frac{\textrm{d}a_\textrm{st}}{\textrm{d}t},
-\end{equation}
-or
-\begin{equation} \label{eq:dbh1}
 \frac{\textrm{d}D}{\textrm{d}t} = \sqrt{\frac{\pi}{a_\textrm{st}}} \frac{\textrm{d}a_\textrm{st}}{\textrm{d}t}.
-\end{equation}
-
-Basal area increment in turn is the sum of increments in sapwood, bark \& heartwood area:
-\begin{equation} \label{eq:dast}
-\frac{\textrm{d}a_\textrm{st}}{\textrm{d}t}= \frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} + \frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t} + \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}.
 \end{equation}
 
 Thus,
@@ -212,7 +218,7 @@ bark mass&$m_\textrm{b}=b\, \theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $
 root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}= \alpha_3$ \\
 sapwoood area & $a_\textrm{ss}=\theta^{-1} \, a_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} =\theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
 bark area & $a_\textrm{sb}=b \, \theta^{-1} \, da_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t}=b \, \theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
-heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}=k_\textrm{s}\theta^{-1} a_\textrm{l}$\\\hline
+heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}=k_\textrm{s} \, a_\textrm{ss}$\\\hline
 \end{tabular}
 \label{tab:allometry}
 \end{table}
