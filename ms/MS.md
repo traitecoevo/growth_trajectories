@@ -1,24 +1,165 @@
-% Growth trajectories: understanding how the leaf economics spectrum influences plant growth
-% Daniel Falster; Rich FitzJohn
+% Growth trajectories: untangling the link between leaf traits and plant growth
+% Daniel Falster; Rich FitzJohn; Karou Kitajima; Joe Wright
 
 # Abstract
 
-* Background/Question/Methods: Plant species differ in many structural and allocation traits (SATs), each with its own distinct influence on plant function. Here, we show how these SATs combine with size and light environment to determine growth and survival throughout a plant’s life. We introduce a new theoretical framework, based on carbon fluxes and allocation, which extends earlier models designed to understand differences in the relative growth rate of seedlings.
-* In both old and new models, growth rate is decomposed into several components, each influenced by traits. Unlike models that focus exclusively on seedlings, the new framework explains how the influence of traits is moderated by plant size. This leads to specific hypotheses about the effect of some well-known SATs, including leaf mass per area, wood density, leaf nitrogen content and seed size, on plant growth.
-* Results: The new model suggests four fundamental predictions about growth. First, growth rates show a hump-shaped relationship with plant size. Second, the expected correlation between growth rate and individual SATs varies with size, with some relationships increasing in strength, others decreasing, and some reversing direction as size increases. Third, SATs moderate how growth rate responds to resource levels. Fourth, shade tolerance decreases with size and select SATs.
-* Conclusions: Combined, these results suggest that individual SATs do not necessarily imply fast or slow growth, but rather define a trajectory of growth with size and light level that determines a species' growth strategy.
+* The well documented trade-off between leaf construction cost (LCC) and leaf turnover rate, known as the leaf economics spectrum, captures a core difference in the strategy plants use to generate and invest surplus energy.
+* In seedlings, LCC correlates tightly with plant growth; the strength of the relationship leading many to suggest LCC as a global indicator of potential growth rate. Although existing models suggests this relationship should extend to larger plants, numerous attempts to link LCC with growth rate in trees have been unsuccessful.
+* Here we use a mechanistic model based on carbon balance and allocation to show, firstly, why the link between LCC and growth breaks down in larger plants. Secondly, we use our model to generate ??4?? other fundamental predictions about the influence of traits and plant size on growth, with all 5 predictions verified using data from experimental plantings and long-term plot surveys of the tropical forest at Barro Colorado Island, Panama.
+* In general, we find that the influence of LCC on growth changes with size because the benefits of cheap leaf construction diminish at larger sizes, as an increasing fraction of the plant is comprised of woody tissues.
+* Thus in contrast to earlier models and theory, we suggest that a given LCC value does not necessarily imply fast or slow growth, but rather defines a trajectory of growth with size and light environment, and that this trajectory is what defines a species' growth strategy.
 
-# Introduction
+# Main text
 
 Ecologists have identified a variety of traits influencing plant function; the challenge now is to understand how these traits influence growth, mortality and fecundity across the life cycle.
 
 Apparent change in relationship between LMA and RGR (Figure \ref{f-RGR}).
 
-# Model
+Predictions summarised \ref{tab:predictions}.
+
+## Growth rate shows hump-shaped pattern with with size
+
+Figure \ref{f-hump}: Hump-shaped curve, 4 components
+
+Figure: what drives decline at larger sizes --> Amount due to respiration, turnover, architecture, support costs, reproduction
+
+## Correlation of growth rate with LMA changes with size
+
+Figure \ref{f-LMA_growth_size}
+
+- also include gif in suppmat?
+
+Figure \ref{f-mass_fraction}: differential effects of LMA on dP/dt and dA/dMt. Allocation.
+
+## Responsiveness of growth to light changes with LMA
+
+Figure \ref{f-LMA_growth_light}: sensitivity of growth to light
+
+## Low LMA species less shade tolerant
+
+Figure \ref{f-LMA_wplcp}: LMA vs wplcp for different size classes
+
+Shade-tolerance also decreases with size. (As previously recognised by Givnish)
+
+- see previous figure \ref{f-LMA_wplcp}:
+- Faster decline in shade tolerance with size for low LMA species ??
+
+More than just shade - any prolonged period of low productivity.
+
+- low LMA on less productive soils
+
+## Ontogenetic shift towards higher LMA with size
+
+Figure \ref{f-LMA_optim}: LMA maximising growth rate against size for different light environments
+
+
+# Discussion
+
+
+1. Growth rate is size-dependent
+2. Strength of trait-correlation varies with size. Could be increasing, decreasing, reversing
+3. Species not 'fast' or 'slow', rather have a trajectory
+4. We need theory to make sense of data
+
+\newpage
+
+# Supplementary material
+
+# Tables
+
+\begin{table}[h]
+\caption{Equations for an allometric growth model}
+\centering
+
+\begin{tabular}{lll}
+\hline
+Variable & Function  & Derivative\\ \hline
+leaf area & $a_\textrm{l}=\alpha_1 \, h^{\beta_1}$ & $\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}= -\beta_1\left(\frac{a_\textrm{l}}{\alpha_1}\right)^{-(\beta_1+1)}$\\
+leaf mass & $m_\textrm{l}=\phi \, a_\textrm{l} $ & $\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}=\phi$\\
+sapwood mass&$m_\textrm{s}=\theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}}=\theta^{-1}\, \rho\, \eta_c\, \left( h + a_\textrm{l}\, \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}} \right)$\\
+bark mass&$m_\textrm{b}=b\, \theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}}=b \, \theta^{-1} \, \rho \, \eta_c\left( h + a_\textrm{l} \, \frac{\textrm{d}h}{\textrm{d}A} \right)$\\
+root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}= \alpha_3$ \\
+sapwoood area & $a_\textrm{ss}=\theta^{-1} \, a_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} =\theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
+bark area & $a_\textrm{sb}=b \, \theta^{-1} \, da_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t}=b \, \theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
+heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}=k_\textrm{s} \, a_\textrm{ss}$\\\hline
+\end{tabular}
+\label{tab:allometry}
+\end{table}
+
+\newpage
+\begin{table}[h]
+\caption{Model parameters}
+\centering
+
+\include{table-pars}
+
+\label{tab:params}
+\end{table}
+
+\newpage
+
+\begin{table}[h]
+\caption{Predictions and evidence}
+
+\centering
+
+\begin{tabular}{p{7cm}p{4cm}p{4cm}}
+\hline
+Prediction & For & Against\\ \hline
+
+1. Growth rates show a hump-shaped relationship with size& &\\ \\
+2. The influence of traits on growth rate changes with size& &\\ \\
+2a. Low LMA-LL species have faster growth rates as seedlings& &\\ \\
+2b. There is no consistent relationship between LMA-LL and growth rates among larger plants& &\\ \\
+3. The ranking of growth rates across species does not change with light environment& &\\ \\
+4. The growth rate of low LMA species is more sensitive to changes in light& &\\ \\
+5. Low LMA species are less shade tolerant& &\\ \\
+6. Shade-tolerance decreases with size& &\\ \\
+7. Faster decline in shade tolerance with size for low LMA species& &\\ \\
+8. For all species, LMA increases with size& &\\ \hline
+\end{tabular}
+\label{tab:predictions}
+\end{table}
+
+\newpage
+
+# Figures
+
+![**The relationship between leaf mass per area and growth rate varies with plant size.**
+\label{f-RGR}](../figs/RGR.pdf)
+![**Correlation between LMA and growth changes with plant size.**
+\label{f-LMA_growth_size}](../figs/growth-height.pdf)
+
+
+![**Sensitivity of growth to light.**
+\label{f-LMA_growth_light}](../figs/growth-light-1.pdf)
+
+![**Whole plant light compensation point.**
+\label{f-LMA_wplcp}](../figs/LMA_wplcp.pdf)
+
+![**LMA maximising growth rate against size for different light environments.**
+\label{f-LMA_optim}](../figs/LMA_optim.pdf)
+
+
+
+
+# Supplementary material
+
+## figures
+
+![**Model assumptions.**
+**a)** Across species, leaf mass per area is inversely related to leaf turnover rate. Data from @wright_world-wide_2004 for 678 species from 51 sites. Green lines show standardised major axis lines fitted to data from each site, with intensity of shading adjusted according to strength of the relationship.\label{fS-leaf}](../figs/SI-leaf.pdf)
+
+![**Hump-shaped relationship between growth rate and size.**
+\label{f-hump}](../figs/size-dhdt.pdf)
+
+![**Change in allocation with size.**
+\label{f-mass_fraction}](../figs/mass_fraction.pdf)
+
+
+## Model description
 
 ## Mass production
-
-## Net photosynthetic Income
 
 Equations for the net mass growth of the plant can be derived based on well established physiology:
 
@@ -143,7 +284,7 @@ This equation shows that diameter growth rate is related to height growth rate (
 
 ## Influence of traits
 
-Leaf mass per area captures a trade-off between leaf construction cost and rate of leaf turnover, reflecting the well-known correlation between measures of construction cost (LMA, leaf tissue density, or leaf thickness) and leaf lifespan [@wright_world-wide_2004]. Thus the turnover rate of leaf, $k_\textrm{l}$, is linked to LMA (Fig. \ref{fS-leaf}):
+Leaf mass per area captures a trade-off between LCCand rate of leaf turnover, reflecting the well-known correlation between measures of construction cost (LMA, leaf tissue density, or leaf thickness) and leaf lifespan [@wright_world-wide_2004]. Thus the turnover rate of leaf, $k_\textrm{l}$, is linked to LMA (Fig. \ref{fS-leaf}):
 \begin{equation}\label{eq:LMA-KL}
 k_\textrm{l}=\alpha_4 \, \phi^{\beta_4}.
 \end{equation}
@@ -152,147 +293,6 @@ k_\textrm{l}=\alpha_4 \, \phi^{\beta_4}.
 
 Remaining parameters listed in Table \ref{tab:params}.
 
-# Results
-
-Predictions summarised \ref{tab:predictions}.
-
-## Growth rate shows hump-shaped pattern with with size
-
-Figure \ref{f-hump}: Hump-shaped curve, 4 components
-
-Figure: what drives decline at larger sizes --> Amount due to respiration, turnover, architecture, support costs, reproduction
-
-## Correlation of growth rate with LMA changes with size
-
-Figure \ref{f-LMA_growth_size}
-
-- also include gif in suppmat?
-
-Figure \ref{f-mass_fraction}: differential effects of LMA on dP/dt and dA/dMt. Allocation.
-
-## Responsiveness of growth to light changes with LMA
-
-Figure \ref{f-LMA_growth_light}: sensitivity of growth to light
-
-## Low LMA species less shade tolerant
-
-Figure \ref{f-LMA_wplcp}: LMA vs wplcp for different size classes
-
-Shade-tolerance also decreases with size. (As previously recognised by Givnish)
-
-- see previous figure \ref{f-LMA_wplcp}:
-- Faster decline in shade tolerance with size for low LMA species ??
-
-More than just shade - any prolonged period of low productivity.
-
-- low LMA on less productive soils
-
-## Ontogenetic shift towards higher LMA with size
-
-Figure \ref{f-LMA_optim}: LMA maximising growth rate against size for different light environments
-
-
-# Discussion
-
-
-1. Growth rate is size-dependent
-2. Strength of trait-correlation varies with size. Could be increasing, decreasing, reversing
-3. Species not 'fast' or 'slow', rather have a trajectory
-4. We need theory to make sense of data
-
-\newpage
-
-# Tables
-
-\begin{table}[h]
-\caption{Equations for an allometric growth model}
-\centering
-
-\begin{tabular}{lll}
-\hline
-Variable & Function  & Derivative\\ \hline
-leaf area & $a_\textrm{l}=\alpha_1 \, h^{\beta_1}$ & $\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}= -\beta_1\left(\frac{a_\textrm{l}}{\alpha_1}\right)^{-(\beta_1+1)}$\\
-leaf mass & $m_\textrm{l}=\phi \, a_\textrm{l} $ & $\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}=\phi$\\
-sapwood mass&$m_\textrm{s}=\theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}}=\theta^{-1}\, \rho\, \eta_c\, \left( h + a_\textrm{l}\, \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}} \right)$\\
-bark mass&$m_\textrm{b}=b\, \theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}}=b \, \theta^{-1} \, \rho \, \eta_c\left( h + a_\textrm{l} \, \frac{\textrm{d}h}{\textrm{d}A} \right)$\\
-root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}= \alpha_3$ \\
-sapwoood area & $a_\textrm{ss}=\theta^{-1} \, a_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} =\theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
-bark area & $a_\textrm{sb}=b \, \theta^{-1} \, da_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t}=b \, \theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
-heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}=k_\textrm{s} \, a_\textrm{ss}$\\\hline
-\end{tabular}
-\label{tab:allometry}
-\end{table}
-
-\newpage
-\begin{table}[h]
-\caption{Model parameters}
-\centering
-
-\include{table-pars}
-
-\label{tab:params}
-\end{table}
-
-\newpage
-
-\begin{table}[h]
-\caption{Predictions and evidence}
-
-\centering
-
-\begin{tabular}{p{7cm}p{4cm}p{4cm}}
-\hline
-Prediction & For & Against\\ \hline
-
-1. Growth rates show a hump-shaped relationship with size& &\\ \\
-2. The influence of traits on growth rate changes with size& &\\ \\
-2a. Low LMA-LL species have faster growth rates as seedlings& &\\ \\
-2b. There is no consistent relationship between LMA-LL and growth rates among larger plants& &\\ \\
-3. The ranking of growth rates across species does not change with light environment& &\\ \\
-4. The growth rate of low LMA species is more sensitive to changes in light& &\\ \\
-5. Low LMA species are less shade tolerant& &\\ \\
-6. Shade-tolerance decreases with size& &\\ \\
-7. Faster decline in shade tolerance with size for low LMA species& &\\ \\
-8. For all species, LMA increases with size& &\\ \hline
-\end{tabular}
-\label{tab:predictions}
-\end{table}
-
-\newpage
-
-# Figures
-
-![**Relationship between leaf mass per area and relative growth rate varies with plant size.**
-\label{f-RGR}](../figs/RGR.pdf)
-
-![**Model assumptions.**
-**a)** Across species, leaf mass per area is inversely related to leaf turnover rate. Data from @wright_world-wide_2004 for 678 species from 51 sites. Green lines show standardised major axis lines fitted to data from each site, with intensity of shading adjusted according to strength of the relationship.\label{fS-leaf}](../figs/SI-leaf.pdf)
-
-
-![**Hump-shaped relationship between growth rate and size.**
-\label{f-hump}](../figs/hump.pdf)
-
-![**Correlation between LMA and growth changes with plant size.**
-\label{f-LMA_growth_size}](../figs/LMA_growth_size.pdf)
-
-![**Change in allocation with size.**
-\label{f-mass_fraction}](../figs/mass_fraction.pdf)
-
-![**Sensitivity of growth to light.**
-\label{f-LMA_growth_light}](../figs/LMA_growth_light.pdf)
-
-![**Whole plant light compensation point.**
-\label{f-LMA_wplcp}](../figs/LMA_wplcp.pdf)
-
-![**LMA maximising growth rate against size for different light environments.**
-\label{f-LMA_optim}](../figs/LMA_optim.pdf)
-
-\newpage
-
-
-\newpage
-
-# Supplementary material
 
 ## A simple allometric model of plant structure
 

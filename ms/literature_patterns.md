@@ -8,6 +8,11 @@ BCI
 
 - Thomas 2010: LMA increases with size
 
+Mortality:
+
+- Miura: U shaped mortality function, small trees died standing while large trees die because from being broken or uprooted
+- Lutz & Halpern 2008: Supression accounted for most mortality (> 50%) as # indivs, but when expressed as biomass mechanical damage most important (larger trees)
+
 # Ruger 2012
 
 Related WD, SM, Hmax, and nutrient content (but not LMA) to growth rate and light response

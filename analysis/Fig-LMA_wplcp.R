@@ -11,7 +11,7 @@ figure <- function(){
 	new_plot(0,4, log="x")
 
 	lma <- 10^seq(-1.5, 0.5, length.out=50)
-	for(h in c(0.25, 1, 5,10,20)){
+	for(h in c(0.25, 1, 5,10)){
 		x <- wplcp_with_trait(lma, "lma", h=h)
 		points(lma, x, type='l')
 	}
