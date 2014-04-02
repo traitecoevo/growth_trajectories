@@ -1,4 +1,4 @@
-all: figs/RGR.pdf figs/SI-leaf.pdf figs/size-dhdt.pdf figs/LMA_growth_size.pdf figs/mass_fraction.pdf figs/LMA_growth_light.pdf figs/LMA_wplcp.pdf figs/LMA_optim.pdf
+all: figs/RGR.pdf figs/SI-leaf.pdf figs/size-dhdt.pdf figs/growth-height.pdf figs/mass_fraction.pdf figs/growth-light-0.25.pdf figs/LMA_wplcp.pdf figs/LMA_optim.pdf
 
 figs/mass_fraction.pdf: analysis/Fig-mass_fraction.R
 	Rscript $<
@@ -9,10 +9,10 @@ figs/LMA_optim.pdf: analysis/Fig-LMA_optim.R
 figs/LMA_wplcp.pdf: analysis/Fig-LMA_wplcp.R
 	Rscript $<
 
-figs/LMA_growth_light.pdf: analysis/Fig-LMA_growth_light.R
+figs/growth-light-0.25.pdf: analysis/Fig-LMA_growth_light.R
 	Rscript $<
 
-figs/LMA_growth_size.pdf: analysis/Fig-LMA_growth_size.R
+figs//growth-height.pdf: analysis/Fig-LMA_growth_size.R
 	Rscript $<
 
 figs/size-dhdt.pdf: analysis/Fig-hump.R
