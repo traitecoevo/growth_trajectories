@@ -12,7 +12,7 @@ figs/LMA_wplcp.pdf: analysis/Fig-LMA_wplcp.R
 figs/growth-light-1.pdf: analysis/Fig-LMA_growth_light.R
 	Rscript $<
 
-figs//growth-height.pdf: analysis/Fig-LMA_growth_size.R
+figs/growth-height.pdf: analysis/Fig-LMA_growth_size.R
 	Rscript $<
 
 figs/size-dhdt.pdf: analysis/Fig-hump.R

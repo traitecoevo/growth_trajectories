@@ -4,7 +4,7 @@ get.axis.info <- function(dim, parToGet){
 
   ticks <- 0.01*2^seq(0,12)
   lab <- expression(paste("Leaf mass per area (kg ",m^-2," )"))
-  lim <- c(0.02,1.28)
+  lim <- c(0.01,1.28)
 
   if(dim==1){
     ticks <- 0.25*2^seq(0,12)
@@ -19,9 +19,9 @@ get.axis.info <- function(dim, parToGet){
   }
 
   if(dim==3){
-    ticks <- c(0.12, 0.25, 0.5, 1.0, 2,4,8,16)
+    ticks <- c(0.06, 0.12, 0.25, 0.5, 1.0, 2,4,8,16, 32)
     lab <- expression(paste("Leaf turnover rate (",yr^-1," )"))
-    lim <- c(0.12,16)
+    lim <- c(0.03,32)
   }
 
   if(dim==4){
