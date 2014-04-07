@@ -32,7 +32,7 @@ get.axis.info <- function(dim, parToGet){
 
   if(dim==5){
     ticks <- 0.0125*2^seq(0,20)
-    lab <- expression(paste("Relative growth rate (",yr^-1,")"))
+    lab <- expression(paste("Growth rate (mm ",yr^-1,")"))
     lim <- c(0.01,0.2)
   }
 

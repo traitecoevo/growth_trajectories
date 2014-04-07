@@ -1,4 +1,4 @@
-all: figs/RGR.pdf figs/SI-leaf.pdf figs/size-dhdt.pdf figs/growth-height.pdf figs/mass_fraction.pdf figs/growth-light-1.pdf figs/LMA_wplcp.pdf figs/LMA_optim.pdf
+all: figs/GR.pdf figs/SI-leaf.pdf figs/size-dhdt.pdf figs/growth-height.pdf figs/mass_fraction.pdf figs/growth-light-1.pdf figs/LMA_wplcp.pdf figs/LMA_optim.pdf
 
 figs/mass_fraction.pdf: analysis/Fig-mass_fraction.R
 	Rscript $<
@@ -18,13 +18,10 @@ figs/growth-height.pdf: analysis/Fig-LMA_growth_size.R
 figs/size-dhdt.pdf: analysis/Fig-hump.R
 	Rscript $<
 
+figs/GR.pdf: analysis/Fig-GR.R data/BCI_species_data.csv
+	Rscript $<
+
 figs/SI-leaf.pdf: analysis/Fig-leaf.R data/wright-2004.csv
-	Rscript $<
-
-figs/RGR.pdf: analysis/Fig-RGR.R data/wright-2004.csv data/wright-2010.txt
-	Rscript $<
-
-data/wright-2010.txt: analysis/make-data-wright-2010.txt.R
 	Rscript $<
 
 data/wright-2004.csv: analysis/make-data-wright-2004.csv.R data/wright-2004.xls
@@ -32,6 +29,9 @@ data/wright-2004.csv: analysis/make-data-wright-2004.csv.R data/wright-2004.xls
 
 data/wright-2004.xls: analysis/make-data-wright-2004.xls.R
 	Rscript $<
+
+data/BCI_species_data.csv:
+	cp  ~/Dropbox/data/plant/BCI/data_BCI/output/species_data.csv $@
 
 clean:
 	rm -f figs/*.pdf

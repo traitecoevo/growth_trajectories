@@ -123,3 +123,8 @@ axis.log10 <- function(side=1, horiz=FALSE, labels=TRUE, baseAxis = TRUE, wholen
 }
 
 colour.by.category <- function(x, table) unname(table[x])
+
+linear.rescale  <-  function(x, range, scale=range(x)) {
+  p  <-  (x - scale[[1]]) / (scale[[2]] - scale[[1]])
+  range[[1]] + p * (range[[2]] - range[[1]])
+}
