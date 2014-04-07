@@ -121,3 +121,5 @@ axis.log10 <- function(side=1, horiz=FALSE, labels=TRUE, baseAxis = TRUE, wholen
     axis(side, at=at, FALSE, col=if(horiz) fg else NA,
          col.ticks=fg, las=las)
 }
+
+colour.by.category <- function(x, table) unname(table[x])

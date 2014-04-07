@@ -55,7 +55,7 @@ Eqs. \ref{eq:dhdt} and \ref{eq:daldmt} are mathematically true and must therefor
 1. An allometric relation between total leaf area and plant height
 2. A constant ratio between total leaf area and each of sapwood cross-sectional area, bark cross-sectional area, and total root mass.
 
-These assumptions, which are well supported by data (Fig. XX), lead immediately to the set of equations for plant size described in Table \ref{tab:allometry} (see Supplementary material for derivations).
+These assumptions, which are well supported by data (Fig. \ref{fS-allometry}), lead immediately to the set of equations for plant size described in Table \ref{tab:allometry} (see Supplementary material for derivations).
 
 In a similar way, basal area increment can be expressed as the sum of increments in sapwood, bark \& heartwood area, $\textrm{d}a_\textrm{st} / \textrm{d}t= \textrm{d}a_\textrm{ss} / \textrm{d}t + \textrm{d}a_\textrm{b} / \textrm{d}t + \textrm{d}a_\textrm{sh} / \textrm{d}t$. Sustituting from Table \ref{tab:allometry} gives:
 \begin{equation} \label{eq:dast}
@@ -181,6 +181,9 @@ FIGURES
 
 ![**Model assumptions.**
 **a)** Across species, leaf mass per area is inversely related to leaf turnover rate. Data from @wright_world-wide_2004 for 678 species from 51 sites. Green lines show standardised major axis lines fitted to data from each site, with intensity of shading adjusted according to strength of the relationship.\label{fS-leaf}](../figs/SI-leaf.pdf)
+
+![**Verifying assumptions of allometric model.**
+\label{fS-allometry}](../figs/allometry.pdf)
 
 ![**Hump-shaped relationship between growth rate and size.**
 \label{f-hump}](../figs/size-dhdt.pdf)

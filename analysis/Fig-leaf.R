@@ -21,8 +21,6 @@ LMA_plot <- function(){
   col.table <- niceColors(nbiomes)
   names(col.table) <- biomes
 
-  colour.by.category <- function(x, table) unname(table[x])
-
   # only use sites with n > 5
   site.n <- data.frame(table(G))
   i <- !is.na(LMA) &!is.na(LL) & site.n[match(G, as.character(site.n[,1])),2] >3
