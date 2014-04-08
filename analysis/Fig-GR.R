@@ -9,7 +9,7 @@ GR_plot <- function(X, Y, cex=1,col = "darkgreen", pch=1, ylim= range(Y, na.rm=T
   new_plot(0,5, log="xy", xlim=c(0.02, 0.16), ylim=ylim, xlab=NULL, ylab=NULL,...)
 
   sm <- sma(Y~X,log='xy', method="OLS")
-  points(X, Y, col = make.transparent("grey", 1), pch=pch, type='p', lwd=0, cex=cex)
+  points(X, Y, col = "black", pch=pch, type='p', lwd=0, cex=cex)
   plot(sm, add=T,  col = col,pch=pch, lwd = 2, type='l', p.lines.transparent = 0.1)
 
   lab = paste0(sum(!is.na(Y) &!is.na(X) ), " species\nr2 = ", format(sm$groupsummary$r2, digits=2))
@@ -36,4 +36,4 @@ GR_panel <-function(){
   par(op)
 }
 
-to.pdf(GR_panel(), paste0("figs/GR.pdf"), height=6, width=12)
+to.pdf(GR_panel(), paste0("figs/GR.pdf"), height=4, width=12)
