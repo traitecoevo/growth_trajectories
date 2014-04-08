@@ -38,7 +38,7 @@ plot_mass_fraction <- function(h=1:50, E=1, strategy = new(Strategy),
 
 	#add labels
 	if(include_labels){
-		at = 0.5*(c(0,y[1,-c(ncol(y))]) + y[1,])
+		at = 0.5*(c(0,y[nrow(y),-c(ncol(y))]) + y[nrow(y),])
 		axis(4, at = at, labels = labels, las=1, lwd.ticks=par("lwd"), lwd=0)
 	}
 }
