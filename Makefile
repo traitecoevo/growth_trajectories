@@ -30,7 +30,10 @@ data/wright-2004.csv: analysis/make-data-wright-2004.csv.R data/wright-2004.xls
 data/wright-2004.xls: analysis/make-data-wright-2004.xls.R
 	Rscript $<
 
-data/BCI_species_data.csv:
+data/wright-2010.txt: analysis/make-data-wright-2010.txt.R
+	Rscript $<
+
+data/BCI_species_data.csv: data/wright-2010.txt
 	cp  ~/Dropbox/data/plant/BCI/data_BCI/output/species_data.csv $@
 
 clean:
