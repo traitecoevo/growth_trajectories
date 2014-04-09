@@ -18,7 +18,7 @@ GR_plot <- function(X, Y, cex=1,col = "darkgreen", pch=1, ylim= range(Y, na.rm=T
 
 GR_panel <-function(){
 
-  dat <- read.csv("data/BCI_species_data.csv", header = TRUE, stringsAsFactors=FALSE)
+  dat <- read.csv("data/BCI_species.csv", header = TRUE, stringsAsFactors=FALSE)
   dat$lma <-  dat$lma/1000 #(convert from g/2 to kg/m2)
   at <- c(10,20,60,120)
 
