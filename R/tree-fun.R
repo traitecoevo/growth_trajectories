@@ -1,8 +1,8 @@
-source("R/plot-utils.R")
-
-.libPaths(c("lib", .libPaths()))  # will cause us to use local version of tree
-
+require(deSolve, quietly=TRUE)
+require(dplyr, quietly=TRUE)
 library(tree)
+
+source("R/plot-utils.R")
 
 ## This makes a fixed light environment over the plant height,
 fixed.environment <- function(E, height, n=101, light.env=NULL,
@@ -84,16 +84,16 @@ change_with_trait <- function(x, trait, h=0.2, E=1, strategy = new(Strategy)){
 }
 
 # step with ode stepper
-require(deSolve, quietly=TRUE)
+step.ode <- function(y0, light.env, plant, timesteps = seq(0, 15, length=51)){
 
-step_ode <- function(light.env, plant, timesteps = seq(0, 15, length=51)){
-
-  pars.derivs <- list(plant=p, light.env=env)
+  pars.derivs <- list(plant=plant, light.env=light.env)
   derivs.d <- function(...) list(derivs(...))
 
-  plant.run <- rk(y, timesteps, derivs.d, pars.derivs,
+  plant.run <- rk(y0, timesteps, derivs.d, pars.derivs,
                        method=rkMethod("rk45ck"), hini=1/1000, rtol=1,
                        atol=1)
+  colnames(plant.run) <- c("time", "height", "mortality", "fecundity", "heartwood_area", "heartwood_mass")
+   plant.run
 }
 
 ## Grow the plant in a constant environment
@@ -105,6 +105,23 @@ derivs <- function(t, y, pars) {
   plant$compute_vars_phys(light.env)
   plant$ode_rates
 }
+
+step.ode.for.target <- function(target.var, y0, light.env, plant, timesteps){
+
+  x <- data.frame(step.ode(y0, light.env, plant, timesteps)) %.%
+    group_by(time) %.%
+    mutate(target=get.size.metric(target.var, height, heartwood_area, heartwood_mass, plant))
+  names(x)[which("target"==names(x))] <- target.var
+  x
+}
+
+get.size.metric <- function(variable, height, heartwood_area, heartwood_mass, plant){
+  plant$height <- height
+  plant$heartwood_area <- heartwood_area
+  plant$heartwood_mass <- heartwood_mass
+  plant$vars_size[[variable]]
+}
+
 
 # estimates whole-plant-light-compensation-point for plant with given height and strategy
 wplcp <- function(h=0.5, strategy = new(Strategy)){
