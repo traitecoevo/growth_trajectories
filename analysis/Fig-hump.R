@@ -9,7 +9,7 @@ strategy$set_parameters(structure(list(0, 0.2), names=c("c_r1", "k_s")))
 figure_size <- function(yvars=c("height_growth_rate","dheight_dleaf_area","leaf_fraction", "growth_fraction","net_production"), E=1, strategy = new(Strategy),...){
 
 	h <- seq(0.1, 50,length.out=50)
-	x <- change_with_size(h=h,E=E,strategy=strategy)
+	x <- change_with_height(h=h,E=E,strategy=strategy)
 	i <- x$vars[["net_production"]] > 0
 
 	par(mfrow = c(1,length(yvars)))

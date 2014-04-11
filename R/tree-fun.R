@@ -27,18 +27,14 @@ fixed.environment <- function(E, height, n=101, light.env=NULL,
   ret
 }
 
-# runs a new plant with given height, environment and strategy
-run_plant <- function(h=0.5, E=1,  strategy = new(Strategy)){
+# runs a new plant in given environment
+run_plant <- function(plant, E=1){
 
-  p <- new(Plant, strategy)
-
-  p$height <- h
   env <- fixed.environment(E)
-  p$compute_vars_phys(env)
+  plant$compute_vars_phys(env)
 
-  list(h=h,
-     E = E,
-     vars = data.frame(t(p$vars_size), t(p$vars_phys), t(p$vars_growth_decomp))
+  list(E = E,
+     vars = data.frame(t(plant$vars_size), t(plant$vars_phys), t(plant$vars_growth_decomp))
     )
 }
 
@@ -57,69 +53,42 @@ merge_list_components <- function(myLists){
   out
 }
 
-change_with_size <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new(Strategy)){
+change_with_height <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new(Strategy)){
 
-  tmp <- lapply(h, function(x) run_plant(h=x, E=E, strategy=strategy))
-  merge_list_components(tmp)
+  myfun <- function(x){
+    plant <- new(Plant, strategy)
+    plant$height <- x
+    run_plant(plant, E)
+  }
+
+  merge_list_components(lapply(h, myfun))
 }
 
 change_with_light <- function( h=0.2, E=seq(0.1, 1, length.out=20), strategy = new(Strategy)){
 
-  tmp <- lapply(E, function(x) run_plant(h=h, E=x, strategy=strategy))
+  myfun <- function(x){
+    plant <- new(Plant, strategy)
+    plant$height <- h
+    run_plant(plant, x)
+  }
 
-  merge_list_components(tmp)
+  merge_list_components(lapply(E, myfun))
 }
 
-# Clones strategy, changes value of "trait" to x then runs plant
-modify_strategy_then_run_plant <- function(x, trait, h, E, strategy){
-  strategy <- strategy$copy()
-  strategy$set_parameters(structure(list(x), names=trait))
-  run_plant(h=h, E=E, strategy=strategy)
-}
 
 # given a vector of values x for a given parameter with name 'trait', runs plants across range of values for x
 change_with_trait <- function(x, trait, h=0.2, E=1, strategy = new(Strategy)){
-  tmp <- lapply(x,modify_strategy_then_run_plant, h=h, E=E, strategy=strategy, trait=trait)
-  c(merge_list_components(tmp))
-}
 
-# step with ode stepper
-step.ode <- function(y0, light.env, plant, timesteps = seq(0, 15, length=51)){
+  # Clones strategy, changes value of "trait" to x then runs plant
+  myfun <- function(x){
+    strategy <- strategy$copy()
+    strategy$set_parameters(structure(list(x), names=trait))
+    plant <- new(Plant, strategy)
+    plant$height <- h
+    run_plant(plant, E)
+  }
 
-  pars.derivs <- list(plant=plant, light.env=light.env)
-  derivs.d <- function(...) list(derivs(...))
-
-  plant.run <- rk(y0, timesteps, derivs.d, pars.derivs,
-                       method=rkMethod("rk45ck"), hini=1/1000, rtol=1,
-                       atol=1)
-  colnames(plant.run) <- c("time", "height", "mortality", "fecundity", "heartwood_area", "heartwood_mass")
-   plant.run
-}
-
-## Grow the plant in a constant environment
-derivs <- function(t, y, pars) {
-  plant <- pars$plant
-  light.env <- pars$light.env
-
-  plant$set_ode_values(t, y)
-  plant$compute_vars_phys(light.env)
-  plant$ode_rates
-}
-
-step.ode.for.target <- function(target.var, y0, light.env, plant, timesteps){
-
-  x <- data.frame(step.ode(y0, light.env, plant, timesteps)) %.%
-    group_by(time) %.%
-    mutate(target=get.size.metric(target.var, height, heartwood_area, heartwood_mass, plant))
-  names(x)[which("target"==names(x))] <- target.var
-  x
-}
-
-get.size.metric <- function(variable, height, heartwood_area, heartwood_mass, plant){
-  plant$height <- height
-  plant$heartwood_area <- heartwood_area
-  plant$heartwood_mass <- heartwood_mass
-  plant$vars_size[[variable]]
+  c(merge_list_components(lapply(x,myfun)))
 }
 
 
@@ -129,8 +98,10 @@ wplcp <- function(h=0.5, strategy = new(Strategy)){
   # runs a plant with given height, environment and strategy, returns mass production
   # used as wrapper for root solving, to pass to wplcp
   run_plant_production <- function(E){
-    x <- run_plant(h=h, E=E, strategy=strategy)
-    x$vars[["net_production"]]
+    plant <- new(Plant, strategy)
+    plant$height <- h
+
+    run_plant(plant, E)$vars[["net_production"]]
   }
 
    uniroot(run_plant_production, c(0, 1))$root
@@ -159,8 +130,13 @@ maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Str
 
   #wrapper function to pass to optimise
   dHdt.wrap <- function(x){
-    y <- modify_strategy_then_run_plant(x, trait, h, E, strategy)
-    y$vars[["height_growth_rate"]]
+
+    strategy <- strategy$copy()
+    strategy$set_parameters(structure(list(x), names=trait))
+    plant <- new(Plant, strategy)
+    plant$height <- h
+
+    run_plant(plant, E)$vars[["height_growth_rate"]]
   }
 
   opt <- optimise(dHdt.wrap, range, maximum= TRUE, tol = 0.000001)

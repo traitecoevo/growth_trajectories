@@ -3,6 +3,18 @@
 source("R/tree-fun.R")
 source("R/axis-fun.R")
 
+strategy = new(Strategy)
+strategy$set_parameters(structure(list(0, 0.2), names=c("c_r1", "k_s")))
+plant <- new(Plant, strategy)
+
+# function to give distance from target
+height.10 <- function(plant) {
+	plant$height - 10
+}
+
+plant <- grow.plant.to.size(plant, fixed.environment(1), distance.from.target=height.10)
+
+
 
 figure <- function(yvar="height_growth_rate", ylab=get.axis.info(2,"lab"), log="x", ...){
 
@@ -10,7 +22,7 @@ figure <- function(yvar="height_growth_rate", ylab=get.axis.info(2,"lab"), log="
 
 	lma <- 10^seq(-1.5, 0.5, length.out=50)
 	for(h in c(0.25, 2, 15)){
-		x <- change_with_trait(lma, "lma", h=h)
+		x <- change_with_trait(lma, "lma", h=h, strategy=strategy)
 		ylim <- c(0, max(x$vars[[yvar]], na.rm=TRUE)*1.2)
 		new_plot(0,2, log=log, xlab=NULL, ylab=NULL, ylim=ylim,ytick=pretty(ylim),...)
 		points(lma, x$vars[[yvar]], type='l')
