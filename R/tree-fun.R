@@ -33,24 +33,7 @@ run_plant <- function(plant, E=1){
   env <- fixed.environment(E)
   plant$compute_vars_phys(env)
 
-  list(E = E,
-     vars = data.frame(t(plant$vars_size), t(plant$vars_phys), t(plant$vars_growth_decomp))
-    )
-}
-
-# transforms a list of lists into a single list by applying do.call(rbind, ..) to each component of a list
-# assumes all elements of parent list have same structure
-
-merge_list_components <- function(myLists){
-
-  out <- list()
-
-  if(length(myLists) > 0){
-    vars <- names(myLists[[1]])
-    f <- function(v) do.call(rbind, lapply(myLists, "[[", v))
-      out <- structure(lapply(vars, f), names=vars)
-  }
-  out
+  data.frame(t(plant$vars_size), t(plant$vars_phys), t(plant$vars_growth_decomp))
 }
 
 change_with_height <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new(Strategy)){
@@ -61,65 +44,72 @@ change_with_height <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new
     run_plant(plant, E)
   }
 
-  merge_list_components(lapply(h, myfun))
+ lapply(h, myfun)
 }
 
-change_with_light <- function( h=0.2, E=seq(0.1, 1, length.out=20), strategy = new(Strategy)){
+# e.g.  = function(plant){plant$height - 0.25}
+change_with_light <- function(E=seq(0.1, 1, length.out=20),
+  distance.from.target.fn, strategy = new(Strategy)) {
 
   myfun <- function(x){
-    plant <- new(Plant, strategy)
-    plant$height <- h
+    plant1 <- new(Plant, strategy)
+    plant1$height <- 0.1
+    plant <- grow.plant.to.size(plant1, fixed.environment(x), distance.from.target=distance.from.target.fn)
     run_plant(plant, x)
   }
 
-  merge_list_components(lapply(E, myfun))
+  lapply(E, myfun)
 }
 
 
 # given a vector of values x for a given parameter with name 'trait', runs plants across range of values for x
-change_with_trait <- function(x, trait, h=0.2, E=1, strategy = new(Strategy)){
+#  e.g. distance.from.target.fn = function(plant){plant$height - 0.25}
+change_with_trait <- function(x, trait, E, distance.from.target.fn, strategy = new(Strategy)){
 
   # Clones strategy, changes value of "trait" to x then runs plant
   myfun <- function(x){
     strategy <- strategy$copy()
     strategy$set_parameters(structure(list(x), names=trait))
-    plant <- new(Plant, strategy)
-    plant$height <- h
+    plant1 <- new(Plant, strategy)
+    plant1$height <- 0.1
+    plant <- try(grow.plant.to.size(plant1, fixed.environment(E),
+      distance.from.target=distance.from.target.fn), silent=TRUE)
+    if (inherits(plant, "try-error")) return(NULL);
     run_plant(plant, E)
   }
 
-  c(merge_list_components(lapply(x,myfun)))
+  lapply(x,myfun)
 }
 
-
 # estimates whole-plant-light-compensation-point for plant with given height and strategy
-wplcp <- function(h=0.5, strategy = new(Strategy)){
+wplcp <- function(h=0.2, strategy = new(Strategy)){
 
   # runs a plant with given height, environment and strategy, returns mass production
   # used as wrapper for root solving, to pass to wplcp
   run_plant_production <- function(E){
     plant <- new(Plant, strategy)
     plant$height <- h
-
-    run_plant(plant, E)$vars[["net_production"]]
+    run_plant(plant, E)[["net_production"]]
   }
 
-   uniroot(run_plant_production, c(0, 1))$root
+ out <- try(uniroot(run_plant_production, c(0, 1))$root,  silent = TRUE)
+ if (inherits(out, "try-error")) return(NA);
+ out
 }
 
-wplcp_with_size <- function(h,strategy = new(Strategy)){
-  sapply(h, function(x) wplcp(h=x, strategy=strategy))
+wplcp_with_height <- function(h,strategy = new(Strategy)){
+  sapply(h, function(x) wplcp(x, strategy))
 }
 
 # Clones strategy, changes value of "trait" to x then runs plant
-modify_strategy_then_find_wplcp <- function(x, trait, h, strategy){
+modify_strategy_then_find_wplcp <- function(x, trait,strategy, ...){
   strategy <- strategy$copy()
   strategy$set_parameters(structure(list(x), names=trait))
-  wplcp(h=h, strategy=strategy)
+  wplcp(strategy=strategy, ...)
 }
 
-wplcp_with_trait <- function(x, trait, h=0.2, strategy = new(Strategy)){
-  sapply(x,modify_strategy_then_find_wplcp, h=h, strategy=strategy, trait=trait)
+wplcp_with_trait <- function(x, trait, strategy = new(Strategy), h=0.2){
+  sapply(x,modify_strategy_then_find_wplcp, strategy=strategy, trait=trait, h=h)
 }
 
 # finds tarit value in range that maximises growth rate at given size and light
@@ -136,7 +126,7 @@ maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Str
     plant <- new(Plant, strategy)
     plant$height <- h
 
-    run_plant(plant, E)$vars[["height_growth_rate"]]
+    run_plant(plant, E)[["height_growth_rate"]]
   }
 
   opt <- optimise(dHdt.wrap, range, maximum= TRUE, tol = 0.000001)

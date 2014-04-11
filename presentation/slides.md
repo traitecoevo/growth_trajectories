@@ -47,7 +47,7 @@ Begin with a standard model for the amount of biomass production available for g
 
 $$\frac{dP}{\textrm{d}t}= \underbrace{\strut Y}_\textrm{yield} \big(\underbrace{\strut \frac{m_\textrm{l}}{\phi} \, A}_\textrm{photosynthesis} - \big(\underbrace{\strut \, \frac{m_\textrm{l}}{\phi} \, r_\textrm{l} + \sum_\textrm{i=b,s,r}{m_\textrm{i} \, r_\textrm{i}}}_\textrm{respiration}\big)\big) - \big(\underbrace{\strut \sum_\textrm{i=l,b,s,r}{m_\textrm{i} \, k_\textrm{i}}}_\textrm{turnover}\big).$$
 
-- $\phi$ = leaf construction costs (aka. leaf mass per area)
+- $\phi$ = leaf-construction costs (aka. leaf mass per area)
 - $m,r$, and $k$ = mass, respiration rate, and turnover rate
 - subscripts: $l$=leaves, $b$=bark, $s$=sapwood and $r$=roots
 - $A$ = assimilation rate per leaf area
@@ -100,7 +100,7 @@ Are mathematically true and must therefore hold for any model of plant growth.
 Reasonable support from data (good first approximation)
 ![](figs/allometry.png)
 
-# Specify influence of leaf construction cost
+# Specify influence of leaf-construction cost
 
 $$\frac{dP}{\textrm{d}t}= \underbrace{\strut Y}_\textrm{yield} \big(\underbrace{\strut \frac{m_\textrm{l}}{\phi} \, A}_\textrm{photosynthesis} - \big(\underbrace{\strut \, \frac{m_\textrm{l}}{\phi} \, r_\textrm{l} + \sum_\textrm{i=b,s,r}{m_\textrm{i} \, r_\textrm{i}}}_\textrm{respiration}\big)\big) - \big(\underbrace{\strut \sum_\textrm{i=l,b,s,r}{m_\textrm{i} \, k_\textrm{i}}}_\textrm{turnover}\big).$$
 

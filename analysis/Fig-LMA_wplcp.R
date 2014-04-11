@@ -8,12 +8,14 @@ figure <- function(){
 
 	op <- par(oma=c(4,4,1,1))
 
-	new_plot(0,4, log="x")
+	new_plot(0,4, log="xy")
 
-	lma <- 10^seq(-1.5, 0.5, length.out=50)
-	for(h in c(0.25, 1, 5,10)){
-		x <- wplcp_with_trait(lma, "lma", h=h)
+	lma <- 10^seq(-2, 0.5, length.out=50)
+	for(h in c(0.1, 2, 10, 20)){
+		x <- log(wplcp_with_trait(lma, "lma", h=h))/-0.5
 		points(lma, x, type='l')
+		i <- 25-4*floor(log2(22-h))
+		text(lma[i], x[i], pos=3, labels=paste0("h=", h), col= "grey")
 	}
 	par(op)
 }

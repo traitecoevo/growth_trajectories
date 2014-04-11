@@ -18,7 +18,10 @@ plot_mass_fraction <- function(h=1:50, E=1, strategy = new(Strategy),
 	}
 
 	# plants across a range of sizes
-	X <- change_with_height(h=h, E=E, strategy=strategy)[["vars"]]
+	X <- change_with_height(h=h, E=E, strategy=strategy)
+	i <- !sapply(X, is.null)  	# check for null values
+	X <- do.call(rbind,X[i])
+
 
 	mass_fraction <- X[,vars]/ rowSums(X[,vars])
 

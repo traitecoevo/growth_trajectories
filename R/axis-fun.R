@@ -2,8 +2,8 @@
 
 get.axis.info <- function(dim, parToGet){
 
-  ticks <- 0.01*2^seq(0,12)
-  lab <- expression(paste("Leaf construction cost (kg ",m^-2," )"))
+  ticks <- 0.01*2^seq(0,20)
+  lab <- expression(paste("Leaf-construction cost (kg ",m^-2," )"))
   lim <- c(0.01,1.28)
 
   if(dim==1){
@@ -25,9 +25,9 @@ get.axis.info <- function(dim, parToGet){
   }
 
   if(dim==4){
-    ticks <- seq(0, 0.5, by=0.1)
-    lab <- expression(paste("Light compensation point (0-1)"))
-    lim <- c(0,0.5)
+    ticks <- c(0.25, 0.5, 1.0, 2,4)
+    lab <- expression(paste("Maximum leaf area above (",m^2," )"))
+    lim <- c(0.2,5)
   }
 
   if(dim==5){

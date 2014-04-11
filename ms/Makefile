@@ -1,6 +1,6 @@
 all: MS.pdf theory.pdf
 
-MS.pdf: MS.md table-pars.tex figs
+MS.pdf: MS.md table-pars.tex
 
 figs:
 	make -C ..

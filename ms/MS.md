@@ -1,36 +1,36 @@
-% Growth trajectories: untangling the link between leaf traits and plant growth
-% Daniel Falster; Rich FitzJohn;
-<!-- Karou Kitajima; Joe Wright -->
+% Untangling the link between leaf traits and plant growth
+% Daniel Falster; Rich FitzJohn; Karou Kitajima; Joe Wright
 
 # Abstract
 
-* The well documented trade-off between leaf construction cost and leaf turnover rate, known as the leaf economics spectrum, captures a core difference in the strategy plants use to generate and invest surplus energy.
-* In seedlings, leaf construction cost correlates tightly with plant growth; the strength of the relationship leading many to suggest leaf construction cost as a generic indicator of potential growth rate. Although existing models suggests this relationship should extend to larger plants, numerous attempts to link leaf construction cost with growth rate in trees have been unsuccessful.
-* Here we use a mechanistic model based on carbon balance and allocation to show, firstly, why the link between leaf construction cost and growth rate breaks down in larger plants. We find that the influence of leaf construction cost on growth changes with size because the benefits of cheap leaf construction diminish at larger sizes, as an increasing fraction of the plant is comprised of woody tissues.
-* Secondly, we use our model to generate ??4?? other fundamental predictions about plant growth and the influence leaf construction cost; these predictions are verified using data from experimental plantings and long-term plot surveys of the tropical forest at Barro Colorado Island, Panama.
+* The well documented trade-off between leaf-construction cost ($\phi$) and leaf turnover rate, known as the leaf economics spectrum, represents a core difference in the strategy plants use to generate and invest surplus energy[@wright_world-wide_2004; @falster_influence_2011].
+* In seedlings, $\phi$ correlates tightly with plant growth[@cornelissen_seedling_1996; @wright_cross-species_2000]; the strength of the relationship leading many to use $\phi$ as a generic indicator of potential growth rate. Although existing models suggest this relationship should extend to larger plants[@enquist_general_2007], several attempts to link  $\phi$ with growth rate in large trees have been unsuccessful[@wright_functional_2010, @herault_functional_2011, @poorter_are_2008].
+* Here we use a mechanistic model based on carbon balance and allocation[@falster_influence_2011] to first explain why the link between leaf-construction cost and growth rate breaks down in larger plants. The reason is that benefits of cheap leaf construction diminish at larger sizes, while the costs (increased leaf turnover rate) remain.
+* We then use our model to generate ??4?? other fundamental predictions about plant growth and the influence leaf-construction cost; these predictions are verified using data from experimental plantings and long-term plot surveys of the tropical forest at Barro Colorado Island, Panama.
 * Combined, out model ...
-* Thus in contrast to earlier models and theory, we suggest that a given leaf construction cost value does not necessarily imply fast or slow growth, but rather defines a trajectory of growth with size and light environment, and that this trajectory is what defines a species' growth strategy.
+* Thus in contrast to earlier models and theory, we suggest that a given leaf-construction cost value does not necessarily imply fast or slow growth, but rather defines a trajectory of growth with size and light environment, and that this trajectory is what defines a species' growth strategy.
 
 # Main text
 
-Plant growth is the foundation of the terrestrial biosphere, powering foodwebs and much of human activity[@raupach_carbon_2010]. While most higher plants have the same basic resource requirements (light water, nutrients) and physiological bauplan, key quantitative differences exist in the quality of construction and allocation to key plant components (leaves, stems, roots)[@westoby_plant_2002;@niklas_evolution_2000]. Leaf construction cost ($\phi$) -- the amount of mass used to construct a unit of leaf area -- is one dimension of variation, varying approx 40 fold among species[@wright_world-wide_2004]. Low $\phi$ can, in principle, accelerate growth, as leaves which are cheap to build enable faster canopy expansion[@blackman_compound_1919; @westoby_time_2000]. Indeed, growth rate in seedlings is strongly and negatively correlated with $\phi$ (Fig. \ref{f-RGR}a)[@cornelissen_seedling_1996; @wright_cross-species_2000]. It has been suggested that low $\phi$ might also give a growth advantage in larger plants[@enquist_general_2007], with $\phi$ often being directly equated with growth rate (??). However, an increasing number of empirical studies have failed to detect any such effect in large trees (Fig. \ref{f-RGR}c)[@wright_functional_2010, @herault_functional_2011, @poorter_are_2008]. The growing discord between theoretical expectation and empirical result indicates a strong need for a new theoretical framework through which the influence of $\phi$ on plant growth can be reassessed.
+Plant growth is the foundation of the terrestrial biosphere, powering food-webs and much of human activity[@raupach_carbon_2010]. While most higher plants have the same basic resource requirements (light water, nutrients) and physiological bauplan, large differences exist among species in the quality of construction and allocation to different tissues (leaves, stems, roots)[@westoby_plant_2002;@niklas_evolution_2000]. Leaf-construction cost ($\phi$) -- the amount of mass used to construct a unit of leaf area -- is one of the most prominent dimensions of variation, varying ~40 fold among species[@wright_world-wide_2004]. Low $\phi$ can, in principle, accelerate growth, as leaves which are cheap to build enable faster canopy expansion[@blackman_compound_1919; @westoby_time_2000]. Indeed, growth rate in seedlings is strongly and negatively correlated with $\phi$ (Fig. \ref{f-RGR}a)[@cornelissen_seedling_1996; @wright_cross-species_2000]. While it has been suggested that low $\phi$ might also give a growth advantage in larger plants[@enquist_general_2007], an increasing number of empirical studies have failed to detect any such effect in large trees [@wright_functional_2010, @herault_functional_2011, @poorter_are_2008] (Fig. \ref{f-RGR}c). The growing discord between theoretical expectation and empirical result thus indicates a strong need for a new theoretical framework through which the influence of $\phi$ on plant growth can be understood.
 
-Here we extend the theoretical model used to link $\phi$ with growth rate in seedlings to explicitly include influences of size, light environment, and effects of leaf turnover, and thereby generate XX predictions about plant demography and links to $\phi$ (Table \ref{tab:predictions}). The new model captures the observed change in correlation between $\phi$ and growth rate with increasing size (Fig. \ref{f-RGR}), and also between $\phi$ and shade tolerance (Fig. \ref{f-LMA_wplcp}). Moreover, we provide a novel explanation for the observed tendency of $\phi$ to increase through ontogeny (Fig. \ref{f-LMA_optim}). Together, these findings help to integrate a large number of empirical and theoretical findings about plant growth and its link to traits.
+Here we extend a widely-used theoretical model used to link $\phi$ with growth rate in seedlings (refs) to explicitly include influences of size, light environment, and effects of leaf turnover, and thereby a number of general novel predictions on the link between plant demography and $\phi$ (Table \ref{tab:predictions}). The new model captures the observed change in correlation between $\phi$ and growth rate with increasing size (Fig. \ref{f-RGR}), and also between $\phi$ and shade tolerance (Fig. \ref{f-LMA_wplcp}). Moreover, we provide a novel explanation for the observed tendency of $\phi$ to increase through ontogeny (Fig. \ref{f-LMA_optim}). Together, these findings help to integrate a large number of empirical findings about plant growth and its link to traits[@wright_functional_2010, @herault_functional_2011, @poorter_are_2008] .
 
-We begin with a standard model for the production of live biomass, $dP / \textrm{d}t$, given by the difference income (total photosynthesis) and losses (respiration and turnover) for the different plant components:
+We begin with a standard model for the amount of biomass available for growth, $dP / \textrm{d}t$, given by the difference income (total photosynthesis) and losses (respiration and turnover) for the different plant components[@falster_influence_2011]:
 
 \begin{equation}\label{eq:dPdt}
 \frac{dP}{\textrm{d}t}= \underbrace{\strut Y}_\textrm{yield} \big(\underbrace{\strut \frac{m_\textrm{l}}{\phi} \, A}_\textrm{photosynthesis} - \big(\underbrace{\strut \, \frac{m_\textrm{l}}{\phi} \, r_\textrm{l} + \sum_\textrm{i=b,s,r}{m_\textrm{i} \, r_\textrm{i}}}_\textrm{respiration}\big)\big) - \big(\underbrace{\strut \sum_\textrm{i=l,b,s,r}{m_\textrm{i} \, k_\textrm{i}}}_\textrm{turnover}\big).
 \end{equation}
+Eq. \ref{eq:dPdt} assumes that
 Here, $m,r$, and $k$ refer to the mass, respiration rate, and turnover rate of different tissues with subscripts $l$=leaves, $b$=bark, $s$=sapwood and $r$=roots, while $A$ is the assimilation rate per leaf area and $Y$ is yield, which accounts for growth respiration (see Table \ref{tab:params} for units and definitions). Photosynthesis is proportional to leaf area, $a_\textrm{l} = m_\textrm{l} / \phi$, while total mass of living tissues $m_\textrm{t}=m_\textrm{l}+m_\textrm{b}+m_\textrm{s}+m_\textrm{r}.$
 
-Current theory emphasises the relationship between $\phi$ and relative growth in mass for seedlings, $R_{m_\textrm{t}}= \textrm{d}P / \textrm{d}t \, / \, m_\textrm{t}$. For seedlings, which are young and mostly leaf, it is reasonable to ignore all turnover terms as well as the respiration terms for non-leaf tissues. Net production then becomes a linear function of leaf area and net photosynthesis per leaf area ($A_\textrm{net} = Y(A - r_\textrm{l})$), making $R_{m_\textrm{t}}$ a linear function of $\phi$:
+Current theory emphasises the relationship between $\phi$ and relative growth in mass[@enquist_general_2007], $R_{m_\textrm{t}}= \textrm{d}P / \textrm{d}t \, / \, m_\textrm{t}$. For seedlings, which are young and mostly leaf, it is reasonable to ignore all turnover terms as well as the respiration terms for non-leaf tissues. Net production then becomes a linear function of leaf area and net photosynthesis per leaf area ($A_\textrm{net} = Y(A - r_\textrm{l})$), making $R_{m_\textrm{t}}$ a linear function of $\phi$:
 \begin{equation}\label{eq:RGR}
 R_{m_\textrm{t}} \approx A_\textrm{net} \times \phi^{-1} \times \frac{m_\textrm{l}}{m_\textrm{t}}. \end{equation}
 Although eq. \ref{eq:RGR} adequately describes growth in seedlings
-[@wright_cross-species_2000], the predicted link between $\phi$ and growth is absent in larger plants (Fig. \ref{f-RGR}). Moreover, a mdoel formulated via $R_{m_\textrm{t}}$ is difficult to link with the types of data routinely collected for large trees, namely plant height ($h$), stem basal area ($a_\textrm{st}$), and stem diameter $D$.
+[@wright_cross-species_2000], the predicted link between $\phi$ and growth is absent in larger plants (Fig. \ref{f-RGR}). A model formulated via $R_{m_\textrm{t}}$ is also difficult to link with the types of data routinely collected for large trees, namely plant height ($h$), stem basal area ($a_\textrm{st}$), and stem diameter $D$. More fundamentally, the assumption that
 
-To properly model growth in any of these quantities, it is necessary to account not just for mass production, but also for the costs of building new tissues, allocation to reproduction, and architectural layout. For height growth, this can achieved by decomposing $\textrm{d}h / \textrm{d}t$ into a product of physiologically relevant terms:
+To properly model growth either height or basal area growth requires one to account not just for mass production, but also for the costs of building new tissues, allocation to reproduction, and architectural layout. For height growth, this can achieved by decomposing $\textrm{d}h / \textrm{d}t$ into a product of physiologically relevant terms[@falster_influence_2011]:
 
 \begin{equation} \label{eq:dhdt}
 \frac{\textrm{d}h}{\textrm{d}t}= \underbrace{\strut\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}}_\textrm{architecture}
@@ -50,21 +50,21 @@ The second term, $\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{t}$, accounts for
 
 The third term in eq \ref{eq:dhdt}, $\textrm{d}m_\textrm{t} / \textrm{d}P$, gives the fraction of net production ($\textrm{d}P / \textrm{d}t$) that is allocated to growth rather than reproduction or storage.
 
-Eqs. \ref{eq:dhdt} and \ref{eq:daldmt} are mathematically true and must therefore hold for any model of plant growth. In other words, we are yet to make any assumptions about the nature of plant construction. However, to make explicit predictions about requires first, a specific model describing how the various mass and area terms ($m_\textrm{l}, m_\textrm{s}, m_\textrm{b}, m\textrm{r}, a_\textrm{l}, a_\textrm{s}, a_\textrm{b}$) vary relative to one another; and second, for the effects of varying $\phi$ on plant function to be specified. To address the first of these challenges, we use a simple model[@yokozawa_foliage_1995; @falster_influence_2011] assuming:
+Eqs. \ref{eq:dhdt} and \ref{eq:daldmt} are mathematically true and must therefore hold for any model of plant growth. In other words, we are yet to make any assumptions about the nature of plant construction. To make explicit predictions, however, requires a specific model describing how the various mass and area terms ($m_\textrm{l}, m_\textrm{s}, m_\textrm{b}, m_\textrm{r}, a_\textrm{l}, a_\textrm{s}, a_\textrm{b}$) vary relative to one another; and also, for the effects of varying $\phi$ on plant function to be specified. To address the first of these challenges, we use a simple model[@yokozawa_foliage_1995; @falster_influence_2011] assuming:
 
 1. An allometric relation between total leaf area and plant height
 2. A constant ratio between total leaf area and each of sapwood cross-sectional area, bark cross-sectional area, and total root mass.
 
 These assumptions, which are well supported by data (Fig. \ref{fS-allometry}), lead immediately to the set of equations for plant size described in Table \ref{tab:allometry} (see Supplementary material for derivations).
 
-In a similar way, basal area increment can be expressed as the sum of increments in sapwood, bark \& heartwood area, $\textrm{d}a_\textrm{st} / \textrm{d}t= \textrm{d}a_\textrm{ss} / \textrm{d}t + \textrm{d}a_\textrm{b} / \textrm{d}t + \textrm{d}a_\textrm{sh} / \textrm{d}t$. Sustituting from Table \ref{tab:allometry} gives:
+In a similar way, basal area increment can be expressed as the sum of increments in sapwood, bark \& heartwood area, $\textrm{d}a_\textrm{st} / \textrm{d}t= \textrm{d}a_\textrm{ss} / \textrm{d}t + \textrm{d}a_\textrm{b} / \textrm{d}t + \textrm{d}a_\textrm{sh} / \textrm{d}t$. Substituting from Table \ref{tab:allometry} gives:
 \begin{equation} \label{eq:dast}
 \frac{\textrm{d}a_\textrm{st}}{\textrm{d}t}=
 \underbrace{\strut \frac{1+b}{\theta} \times
 \frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}} \times \frac{\textrm{d}m_\textrm{t}}{\textrm{d}P} \times \frac{\textrm{d}P}{\textrm{d}t}}_\textrm{expanding sapwood area}
 + \underbrace{\strut k_\textrm{s} \, \theta^{-1} \, a_\textrm{l}}_\textrm{heartwood formation}.
 \end{equation}
-Diameter growth can also be calculated via the geometric relationship between stem diamater ($D$) and $a_\textrm{st}$:
+Diameter growth can also be calculated via the geometric relationship between stem diameter ($D$) and $a_\textrm{st}$:
 \begin{equation} \label{eq:dDdt}
 \frac{\textrm{d}D}{\textrm{d}t}= \sqrt{\frac{\pi}{a_\textrm{st}}} \frac{\textrm{d}a_\textrm{st}}{\textrm{d}t}.
 \end{equation}
@@ -150,18 +150,18 @@ heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{
 # Figures
 FIGURES
 
-![**The relationship between leaf mass per area and growth rate varies with plant size.**
-\label{f-RGR}](../figs/RGR.pdf)
+![**The relationship between leaf-construction cost and growth rate varies with plant size.**
+\label{f-RGR}](../figs/GR.pdf)
 
 \newpage
 
-![**Correlation between LMA and growth changes with plant size.**
+![**Correlation between leaf-construction cost and growth changes with plant size.**
 \label{f-LMA_growth_size}](../figs/growth-height.pdf)
 
 \newpage
 
 ![**Sensitivity of growth to light.**
-\label{f-LMA_growth_light}](../figs/growth-light-1.pdf)
+\label{f-LMA_growth_light}](../figs/growth-light.pdf)
 
 \newpage
 

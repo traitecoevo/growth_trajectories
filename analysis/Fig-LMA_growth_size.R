@@ -5,41 +5,61 @@ source("R/axis-fun.R")
 
 strategy = new(Strategy)
 strategy$set_parameters(structure(list(0, 0.2), names=c("c_r1", "k_s")))
-plant <- new(Plant, strategy)
 
-# function to give distance from target
-height.10 <- function(plant) {
-	plant$height - 10
-}
-
-plant <- grow.plant.to.size(plant, fixed.environment(1), distance.from.target=height.10)
-
-
-
-figure <- function(yvar="height_growth_rate", ylab=get.axis.info(2,"lab"), log="x", ...){
-
-	op <- par(oma=c(4,4,1,1), mfrow = c(1,3))
-
+plot.trait.effect.at.given.size <- function(focus, size, strategy){
 	lma <- 10^seq(-1.5, 0.5, length.out=50)
-	for(h in c(0.25, 2, 15)){
-		x <- change_with_trait(lma, "lma", h=h, strategy=strategy)
-		ylim <- c(0, max(x$vars[[yvar]], na.rm=TRUE)*1.2)
-		new_plot(0,2, log=log, xlab=NULL, ylab=NULL, ylim=ylim,ytick=pretty(ylim),...)
-		points(lma, x$vars[[yvar]], type='l')
-		title(paste0("h=", h,"m"))
+
+	if(focus=="b"){
+		distance.from.target.fn <- function(plant){plant$vars_size[["area_basal"]] - size}
+		yvar <- "dbasal_area_dt"
+		main <- paste0("b=", format(size, digits=2, scientifIc=TRUE),"mm^2")
+	}
+	if(focus=="h"){
+		distance.from.target.fn <- function(plant){plant$height - size}
+		yvar <- "height_growth_rate"
+		main <- paste0("h=", size, "m")
+	}
+	if(focus =="p"){
+		distance.from.target.fn <- function(plant){plant$height - size}
+		yvar <- "net_production"
+		main <- paste0("h=", size, "m")
 	}
 
-	mtext(get.axis.info(0,"lab"), line =1, side = 1, cex=1, outer = TRUE)
-	mtext(ylab, line =1, side = 2, cex=1, outer = TRUE)
+	plants <- change_with_trait(lma, "lma", E=1, distance.from.target.fn, strategy=strategy)
+	i <- !sapply(plants, is.null)  	# check for null values
+	x <- lma[i]
+	y <- do.call(rbind,plants[i])[[yvar]]
 
+	ylim <- c(0, max(y)*1.2)
+
+	if(focus=="h") ylim <- c(0, 1.4)
+
+	new_plot(0,2, log="x", xlab=NULL, ylab=NULL, ylim=ylim, ytick=pretty(ylim))
+	points(x, y, type='l')
+	title(main)
+}
+
+plot.panel <- function(focus, sizes, strategy, xlab, ylab){
+	op <- par(oma=c(4,4,1,1), mfrow = c(1,length(sizes)))
+	for(size in sizes)
+		plot.trait.effect.at.given.size(focus, size,strategy)
+	mtext(xlab, line =1, side = 1, cex=1, outer = TRUE)
+	mtext(ylab, line =1, side = 2, cex=1, outer = TRUE)
 	par(op)
 }
 
-to.pdf(figure("height_growth_rate"),
+to.pdf(
+	plot.panel("h", sizes=c(0.5, 2,8,16), strategy,
+		xlab=get.axis.info(0,"lab"), ylab=get.axis.info(2,"lab")),
 	paste0("figs/growth-height.pdf"), height=4, width=8)
-to.pdf(figure("dleaf_area_dt", ylab=expression(paste("Leaf area growth (", m^2, " ",yr^-1,")"))),
-	paste0("figs/growth-leaf.pdf"), height=4, width=8)
-to.pdf(figure("dbasal_area_dt", ylab=expression(paste("Basal area growth (", m^2, " ", yr^-1,")"))),
+
+
+to.pdf(
+	plot.panel("b", sizes=pi/4*(0.001*c(10, 20, 50, 100))^2, strategy,
+		xlab=get.axis.info(0,"lab"), ylab=expression(paste("Basal area growth (", m^2, " ", yr^-1,")"))),
 	paste0("figs/growth-stem.pdf"), height=4, width=8)
-to.pdf(figure("net_production", ylab=expression(paste("Net production (kg ", yr^-1,")"))),
+
+to.pdf(
+	plot.panel("p", sizes=c(0.5, 2,8,16), strategy,
+		xlab=get.axis.info(0,"lab"), ylab=expression(paste("Net production (kg ", yr^-1,")"))),
 	paste0("figs/growth-production.pdf"), height=4, width =8)
