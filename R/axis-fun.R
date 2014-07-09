@@ -36,6 +36,12 @@ get.axis.info <- function(dim, parToGet){
     lim <- c(0.01,0.2)
   }
 
+  if(dim==6){
+    ticks <- 0.25*2^seq(0,20)
+    lab <- expression(paste("Maximum height (m)"))
+    lim <- c(2,40)
+  }
+
   return(get(parToGet))
 }
 

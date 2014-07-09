@@ -73,7 +73,7 @@ This model seems to capture well the intrinsically size-dependent nature of plan
 - Hump-shaped pattern of height growth rate with size resulting from changes size-dependent changes in 4 components of eq. \ref{eq:dhdt} (Fig. \ref{f-hump}).
 - dbh and basal area growth?
 - Decrease in RGR with size
-- Large effect of reproductive allocation on growth rate in large trees (Fig. \ref{f-mass_fraction}).
+- Large effect of reproductive allocation on growth rate in large trees (Fig. \ref{f-hmax}).
 
 (?Figure: what drives decline at larger sizes --> Amount due to respiration, turnover, architecture, support costs, reproduction)
 
@@ -147,12 +147,17 @@ root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm
 # Figures
 
 ![**The relationship between leaf-construction cost and growth rate varies with plant size.**
-For XXX species growing in lowland forest at BCI Panama, we estimated the potential growth rate of individual's in that species at a given size and plotted this against leaf-construction cost, with size of circle indicating the number of data points used to estimate potential growth rate. \label{f-RGR}](../figs/GR.pdf)
+For XXX species growing in lowland forest at BCI Panama, we estimated the potential growth rate of individual's in that species at a given size and plotted this against leaf-construction cost, with size of circle indicating the number of data points used to estimate potential growth rate. \label{f-RGR}](../figs/GR-LCC.pdf)
 
 ![**The expected correlation between leaf-construction cost and growth rate changes with plant size.**
 Predictions from the model on the relationship between leaf-construction cost and height growth rate under ideal conditions at a range of sizes.
 \label{f-LMA_growth_size}](../figs/growth-height.pdf)
 
+\newpage
+
+![**Reproductive allocation has a strong influence on tree growth at larger sizes.**
+We use maximum height as an indicator of reproductive allocation. Generally, plants with great maximum height tend to defer reproductive investment until a larger size is reached, which increase their growth rate relative to species with lower maximum height and higher allocation of resources to reproduction.
+\label{f-hmax](../figs/mass_fraction.pdf)
 \newpage
 
 ![**Plants with cheaper leaf construction are more sensitive to changing light.**
@@ -167,7 +172,7 @@ Shade tolerances is quantified as the maximum leaf area above the plant before g
 
 \newpage
 
-![**Leaf construction cost increase through ontogeny.**
+![**Leaf construction cost increases through ontogeny.**
 Plot shows the value of $\phi$ maximising growth rate for plants at a given height and under a range of shading environments.
 \label{f-LMA_optim}](../figs/LMA_optim.pdf)
 
@@ -178,7 +183,7 @@ Plot shows the value of $\phi$ maximising growth rate for plants at a given heig
 ![**Leaf turnover decreases with leaf-construction cost.**
 Data from @wright_world-wide_2004 for 678 species from 51 sites, each point giving a species-average. Lines show standardised major axis lines fitted to data from each site, with intensity of shading adjusted according to strength of the relationship.\label{fS-leaf}](../figs/SI-leaf.pdf)
 
-![**Three key assumptions of allometric model supported by data.**
+![**Three key assumptions of allometric model and supporting data.**
 Data is from Biomass and allometry database (Falster et al). \label{fS-allometry}](../figs/allometry.pdf)
 
 ![**Hump-shaped relationship between growth rate and size.**
@@ -186,6 +191,9 @@ Data is from Biomass and allometry database (Falster et al). \label{fS-allometry
 
 ![**Change in allocation with size.**
 \label{f-mass_fraction}](../figs/mass_fraction.pdf)
+
+
+
 
 \newpage
 \begin{table}[h]
