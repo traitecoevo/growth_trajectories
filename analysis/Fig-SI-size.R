@@ -27,16 +27,16 @@ figure_size <- function(yvars=c("height_growth_rate","dheight_dleaf_area","leaf_
 # dP_dt
 to.pdf(figure_size(strategy=strategy, ylim=c(0,500),
 	yvars=c("net_production","assimilation","respiration","turnover")
-	), paste0("figs/size-dPdt.pdf"), height=4, width =12)
+	), paste0("output/figs/SI-size-dPdt.pdf"), height=4, width =12)
 
 
 # dh_dt
 to.pdf(figure_size(strategy=strategy,
 	yvars=c("height_growth_rate","dheight_dleaf_area","leaf_fraction", "growth_fraction","net_production")
-	), paste0("figs/size-dhdt.pdf"), height=4, width =12)
+	), paste0("output/figs/SI-size-dhdt.pdf"), height=4, width =12)
 
 
 # dal_dt
 to.pdf(figure_size(strategy=strategy,
 	yvars=c("dleaf_area_dt","leaf_fraction", "growth_fraction","net_production")
-	), paste0("figs/size-daldt.pdf"), height=4, width =12)
+	), paste0("output/figs/SI-size-daldt.pdf"), height=4, width =12)

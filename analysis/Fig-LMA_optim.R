@@ -18,4 +18,4 @@ figure <- function(){
 	par(op)
 }
 
-to.pdf(figure(), paste0("figs/LMA_optim.pdf"), height=6, width=6)
+to.pdf(figure(), paste0("output/figs/LMA_optim.pdf"), height=6, width=6)

@@ -55,5 +55,5 @@ panel_height <-function(){
   par(op)
 }
 
-to.pdf(panel_lma(), paste0("figs/GR-LCC.pdf"), height=4, width=12)
-to.pdf(panel_height(), paste0("figs/GR-Hmax.pdf"), height=4, width=12)
+to.pdf(panel_lma(), paste0("output/figs/GR-LCC.pdf"), height=4, width=12)
+to.pdf(panel_height(), paste0("output/figs/GR-Hmax.pdf"), height=4, width=12)

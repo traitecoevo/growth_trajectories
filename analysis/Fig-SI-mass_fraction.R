@@ -46,4 +46,4 @@ plot_mass_fraction <- function(h=1:50, E=1, strategy = new(Strategy),
 	}
 }
 
-to.pdf(plot_mass_fraction(h=1:50), paste0("figs/mass_fraction.pdf"), height=6, width=6)
+to.pdf(plot_mass_fraction(h=1:50), paste0("output/figs/SI-mass_fraction.pdf"), height=6, width=6)

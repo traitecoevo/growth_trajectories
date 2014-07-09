@@ -49,11 +49,11 @@ write.csv(species.data,"data/BCI_species.csv", quote=FALSE, row.names=FALSE)
 
 # to.pdf(
 # 	myfun(filter(data, dbh >= 10 & dbh < 40 & species=="Beilschmiedia pendula"), predict.at=20),
-# 	file="figs/example-20.pdf", height=6, width=6)
+# 	file="output/figs/example-20.pdf", height=6, width=6)
 
 # to.pdf(
 # 	myfun(filter(data, dbh >= 20 & dbh < 80 & species=="Beilschmiedia pendula"), predict.at=40),
-# 	file="figs/example-40.pdf", height=6, width=6)
+# 	file="output/figs/example-40.pdf", height=6, width=6)
 
 # three_plot <- function(){
 # 	par(mfrow=c(1,3))
@@ -62,4 +62,4 @@ write.csv(species.data,"data/BCI_species.csv", quote=FALSE, row.names=FALSE)
 # 	myfun(filter(data, dbh >= 40 & dbh < 160 & species=="Beilschmiedia pendula"), predict.at=80)
 # }
 
-# to.pdf(three_plot(), file="figs/example-three.pdf", height=6, width=9)
+# to.pdf(three_plot(), file="output/figs/example-three.pdf", height=6, width=9)

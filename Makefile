@@ -1,27 +1,27 @@
-all: figs/GR-LCC.pdf figs/SI-leaf.pdf figs/size-dhdt.pdf figs/growth-height.pdf figs/mass_fraction.pdf figs/growth-light.pdf figs/LMA_wplcp.pdf figs/LMA_optim.pdf
+all: output/figs/GR-LCC.pdf output/figs/SI-leaf.pdf output/figs/SI-size-dhdt.pdf output/figs/growth-height.pdf output/figs/SI-mass_fraction.pdf output/figs/growth-light.pdf output/figs/LMA_wplcp.pdf output/figs/LMA_optim.pdf
 
-figs/mass_fraction.pdf: analysis/Fig-mass_fraction.R
+output/figs/GR-LCC.pdf: analysis/Fig-GR.R data/BCI_species.csv
 	Rscript $<
 
-figs/LMA_optim.pdf: analysis/Fig-LMA_optim.R
+output/figs/growth-height.pdf: analysis/Fig-LMA_growth_size.R
 	Rscript $<
 
-figs/LMA_wplcp.pdf: analysis/Fig-LMA_wplcp.R
+output/figs/growth-light.pdf: analysis/Fig-LMA_growth_light.R
 	Rscript $<
 
-figs/growth-light.pdf: analysis/Fig-LMA_growth_light.R
+output/figs/LMA_wplcp.pdf: analysis/Fig-LMA_wplcp.R
 	Rscript $<
 
-figs/growth-height.pdf: analysis/Fig-LMA_growth_size.R
+output/figs/LMA_optim.pdf: analysis/Fig-LMA_optim.R
 	Rscript $<
 
-figs/size-dhdt.pdf: analysis/Fig-hump.R
+output/figs/SI-size-dhdt.pdf: analysis/Fig-SI-size.R
 	Rscript $<
 
-figs/GR-LCC.pdf: analysis/Fig-GR.R data/BCI_species.csv
+output/figs/SI-mass_fraction.pdf: analysis/Fig-SI-mass_fraction.R
 	Rscript $<
 
-figs/SI-leaf.pdf: analysis/Fig-leaf.R data/wright-2004.csv
+output/figs/SI-leaf.pdf: analysis/Fig-SI-leaf.R data/wright-2004.csv
 	Rscript $<
 
 data/wright-2004.csv: analysis/make-data-wright-2004.csv.R data/wright-2004.xls
@@ -40,6 +40,6 @@ data/wright-2010.txt: analysis/make-data-wright-2010.txt.R
 	Rscript $<
 
 clean:
-	rm -f figs/*.pdf
+	rm -f output/figs/*.pdf
 
 .PHONY: all clean

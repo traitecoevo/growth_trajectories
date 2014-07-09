@@ -54,4 +54,4 @@ LMA_plot <- function(){
   par(op)
 }
 
-to.pdf(LMA_plot(), paste0("figs/SI-leaf.pdf"), height=6, width=6)
+to.pdf(LMA_plot(), paste0("output/figs/SI-leaf.pdf"), height=6, width=6)

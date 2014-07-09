@@ -84,4 +84,4 @@ myfigure <- function(){
 }
 
 
-to.pdf(myfigure(),"figs/allometry.pdf", height= 4, width =12)
+to.pdf(myfigure(),"output/figs/allometry.pdf", height= 4, width =12)

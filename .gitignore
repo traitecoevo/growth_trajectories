@@ -3,5 +3,5 @@ ms/*.csl
 ms/*.tex
 data/
 output/
-figs/
+output/figs/
 lib/

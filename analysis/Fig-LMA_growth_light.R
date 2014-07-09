@@ -25,4 +25,4 @@ figure <- function(h){
 	par(op)
 }
 
-to.pdf(figure(h=0.25), paste0("figs/growth-light.pdf"), height=8, width=8)
+to.pdf(figure(h=0.25), paste0("output/figs/growth-light.pdf"), height=8, width=8)

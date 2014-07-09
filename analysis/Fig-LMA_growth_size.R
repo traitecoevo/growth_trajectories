@@ -51,15 +51,15 @@ plot.panel <- function(focus, sizes, strategy, xlab, ylab){
 to.pdf(
 	plot.panel("h", sizes=c(0.5, 2,8,16), strategy,
 		xlab=get.axis.info(0,"lab"), ylab=get.axis.info(2,"lab")),
-	paste0("figs/growth-height.pdf"), height=4, width=8)
+	paste0("output/figs/growth-height.pdf"), height=4, width=8)
 
 
 to.pdf(
 	plot.panel("b", sizes=pi/4*(0.001*c(10, 20, 50, 100))^2, strategy,
 		xlab=get.axis.info(0,"lab"), ylab=expression(paste("Basal area growth (", m^2, " ", yr^-1,")"))),
-	paste0("figs/growth-stem.pdf"), height=4, width=8)
+	paste0("output/figs/growth-stem.pdf"), height=4, width=8)
 
 to.pdf(
 	plot.panel("p", sizes=c(0.5, 2,8,16), strategy,
 		xlab=get.axis.info(0,"lab"), ylab=expression(paste("Net production (kg ", yr^-1,")"))),
-	paste0("figs/growth-production.pdf"), height=4, width =8)
+	paste0("output/figs/growth-production.pdf"), height=4, width =8)
