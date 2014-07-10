@@ -42,6 +42,12 @@ get.axis.info <- function(dim, parToGet){
     lim <- c(2,40)
   }
 
+  if(dim==7){
+    ticks <- 0.125*2^seq(0,20)
+    lab <- expression(paste("Wood density (kg ",m^3," )"))
+    lim <- c(0.2,1.2)
+  }
+
   return(get(parToGet))
 }
 
