@@ -6,7 +6,7 @@ source("R/axis-fun.R")
 figure <- function(){
 
 	op <- par(oma=c(4,4,1,1))
-	new_plot(1,0, log="xy",  ylim=c(0.01,2.6))
+	new_plot("height","lma", log="xy",  ylim=c(0.01,2.6))
 
 	h <- 10^seq(log10(0.2), log10(30), length.out=50)
 	for(E in exp(-0.5*c(3, 2, 1, 0.1))) {

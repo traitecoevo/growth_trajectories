@@ -9,7 +9,7 @@ strategy = new(Strategy)
 figure <- function(h){
 	op <- par(oma=c(4,4,1,1))
 
-	new_plot(0,2, log="x", ylim = c(0, 0.5),ytick=seq(0, 0.5, by=0.1), ytick.lab=seq(0, 0.5, by=0.1))
+	new_plot("lma", "height_growth_rate", log="x", ylim = c(0, 0.5),ytick=seq(0, 0.5, by=0.1), ytick.lab=seq(0, 0.5, by=0.1))
 
 	lma <- 10^seq(-2, 1, length.out=50)
 	for(E in seq(0.2, 1, by = 0.2)){

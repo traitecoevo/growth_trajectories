@@ -128,3 +128,11 @@ linear.rescale  <-  function(x, range, scale=range(x)) {
   p  <-  (x - scale[[1]]) / (scale[[2]] - scale[[1]])
   range[[1]] + p * (range[[2]] - range[[1]])
 }
+
+seq_log_range <- function (r, length.out) {
+    seq_log(r[[1]], r[[2]], length.out)
+}
+
+seq_log <- function (from, to, length.out) {
+    exp(seq(log(from), log(to), length.out = length.out))
+}

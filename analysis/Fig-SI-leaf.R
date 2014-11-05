@@ -29,7 +29,7 @@ LMA_plot <- function(){
   X <- LMA[i]
 
   sm1 <- sma(Y~X*G[i],log='xy')
-  new_plot(0,3, log="xy")
+  new_plot("lma","leaf_turnover", log="xy")
 
 
   points(X,Y, type ='p', col=make.transparent("grey", 0.3),pch= 16, cex=0.9)

@@ -8,7 +8,7 @@ figure <- function(){
 
 	op <- par(oma=c(4,4,1,1))
 
-	new_plot(0,4, log="xy")
+	new_plot("lma","shading", log="xy")
 
 	lma <- 10^seq(-2, 0.5, length.out=50)
 	for(h in c(0.1, 2, 10, 20)){
