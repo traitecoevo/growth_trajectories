@@ -4,7 +4,7 @@ source("R/tree-fun.R")
 source("R/axis-fun.R")
 
 strategy = new(Strategy)
-strategy$set_parameters(structure(list(0, 0.2), names=c("c_r1", "k_s")))
+strategy$set_parameters(structure(list(0, 0.2), names=c("c_r1", "k_s0")))
 
 plot.trait.effect.at.given.size <- function(focus, size, strategy){
 	lma <- 10^seq(-1.5, 0.5, length.out=50)

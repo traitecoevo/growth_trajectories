@@ -3,7 +3,7 @@
 source("R/tree-fun.R")
 
 strategy = new(Strategy)
-strategy$set_parameters(structure(list(0, 0.2), names=c("c_r1", "k_s")))
+strategy$set_parameters(structure(list(0, 0.2), names=c("c_r1", "k_s0")))
 
 # growth decomp
 figure_size <- function(yvars=c("height_growth_rate","dheight_dleaf_area","leaf_fraction", "growth_fraction","net_production"), E=1, strategy = new(Strategy),...){
