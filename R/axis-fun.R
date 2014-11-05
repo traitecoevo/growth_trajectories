@@ -37,13 +37,13 @@ get.axis.info <- function(dim, parToGet){
   }
 
   if(dim==6){
-    ticks <- 0.25*2^seq(0,20)
+    ticks <- 2^seq(-4,20)
     lab <- expression(paste("Maximum height (m)"))
-    lim <- c(2,40)
+    lim <- c(1,40)
   }
 
   if(dim==7){
-    ticks <- 0.125*2^seq(0,20)
+    ticks <- 0.2*2^seq(-5,10)
     lab <- expression(paste("Wood density (kg ",m^3," )"))
     lim <- c(0.2,1.2)
   }

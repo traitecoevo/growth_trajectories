@@ -1,4 +1,4 @@
-% Untangling the link between leaf traits and plant growth
+% Untangling the link between traits, size and and growth rate in plants
 % Daniel Falster; Rich FitzJohn; Karou Kitajima; Joe Wright
 
 # Abstract
@@ -65,7 +65,7 @@ While eqs. \ref{eq:dhdt}-\ref{eq:dDdt} are mathematical truisms and therefore ho
 i) A specific model describing how the various mass and area terms ($m_\textrm{l}, m_\textrm{s}, m_\textrm{b}, m_\textrm{r}, a_\textrm{l}, a_\textrm{s}, a_\textrm{b}$) vary relative to one another; and
 ii) For the effects of varying $\phi$ on plant function to be specified.
 
-To address the first of these challenges, we use a functional balance model[@yokozawa_foliage_1995; @falster_influence_2011] assuming 1) an allometric relation between total leaf area and plant height, and 2) a constant ratio between total leaf area and each of sapwood cross-sectional area, bark cross-sectional area, and total root mass. These assumptions, which are well supported by data (Fig. \ref{fS-allometry}), lead immediately to the set of equations for plant size described in Table \ref{tab:allometry} (see Supplementary material for derivations). Substituting from Table \ref{tab:allometry} into eqs. \ref{eq:dhdt},\ref{eq:dast},\ref{eq:dDdt} then gives an explicit model for plant growth in relation to size.
+To address the first of these challenges, we use a functional balance model[@yokozawa_foliage_1995; @falster_influence_2011] assuming 1) an allometric relation between total leaf area and plant height, and 2) a constant ratio between total leaf area and each of sapwood cross-sectional area, bark cross-sectional area, and total root mass. These assumptions, which are well supported by data, lead immediately to the set of equations for plant size described in Table \ref{tab:allometry} (see Supplementary material for derivations). Substituting from Table \ref{tab:allometry} into eqs. \ref{eq:dhdt},\ref{eq:dast},\ref{eq:dDdt} then gives an explicit model for plant growth in relation to size.
 
 This model seems to capture well the intrinsically size-dependent nature of plant growth. Specifically, the model cpatures the following empirical patterns
 
@@ -132,7 +132,7 @@ Variable & Function & Derivative\\ \hline
 leaf area & $a_\textrm{l}=\alpha_1 \, h^{\beta_1}$ & $\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}= -\beta_1\big(\frac{a_\textrm{l}}{\alpha_1}\big)^{-(\beta_1+1)}$\\
 leaf mass & $m_\textrm{l}=\phi \, a_\textrm{l} $ & $\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}=\phi$\\
 sapwoood area & $a_\textrm{ss}=\theta^{-1} \, a_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} =\theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
-sapwood mass&$m_\textrm{s}=\theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}}=\theta^{-1}\, \rho\, \eta_c\, \big( h + a_\textrm{l}\, \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}} \big)$\\
+sapwood mass&$m_\textrm{ss}=\theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{ss}}{\textrm{d}a_\textrm{l}}=\theta^{-1}\, \rho\, \eta_c\, \big( h + a_\textrm{l}\, \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}} \big)$\\
 bark area & $a_\textrm{sb}=b \, \theta^{-1} \, da_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t}=b \, \theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
 bark mass&$m_\textrm{b}=b\, \theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}}=b \, \theta^{-1} \, \rho \, \eta_c\big( h + a_\textrm{l} \, \frac{\textrm{d}h}{\textrm{d}A} \big)$\\
 heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}=k_\textrm{s} \, a_\textrm{ss}$\\
@@ -182,9 +182,6 @@ Plot shows the value of $\phi$ maximising growth rate for plants at a given heig
 
 ![**Leaf turnover decreases with leaf-construction cost.**
 Data from @wright_world-wide_2004 for 678 species from 51 sites, each point giving a species-average. Lines show standardised major axis lines fitted to data from each site, with intensity of shading adjusted according to strength of the relationship.\label{fS-leaf}](../output/figs/SI-leaf.pdf)
-
-![**Three key assumptions of allometric model and supporting data.**
-Data is from Biomass and allometry database (Falster et al). \label{fS-allometry}](allometry.pdf)
 
 ![**Hump-shaped relationship between growth rate and size.**
 \label{f-hump}](../output/figs/SI-size-dhdt.pdf)
@@ -238,10 +235,9 @@ We also assume that each unit of sapwood area supports a fixed area of leaf (the
 Integrating $S(z,h)$ gives a solution for the total mass of sapwood in the plant:
 
 \begin{equation}\label{eq:ms1}
-m_\textrm{s}=\rho \, \int_0^h \, S(z,h) \, \textrm{d}z= \rho \, S(0,h) \, h \, \eta_c,
-\end{equation}
+m_\textrm{s}=\rho \, \int_0^h \, S(z,h) \, \textrm{d}z= \rho \, S(0,h) \, h \, \eta_c, \end{equation}
 
-where $\eta_c=1-\frac{2}{1+\eta} + \frac{1}{1+2\eta} $[@yokozawa_foliage_1995]. Substituting from eq. \ref{eq:crown2} into eq. \ref{eq:ms1} gives an expression for sapwood mass as a function leaf area and height:
+where $\eta_c=1-\frac{2}{1+\eta} + \frac{1}{1+2\eta}$[@yokozawa_foliage_1995]. Substituting from eq. \ref{eq:crown2} into eq. \ref{eq:ms1} gives an expression for sapwood mass as a function leaf area and height:
 
 \begin{equation}\label{eq:ms2}
 m_\textrm{s}=\rho \, \eta_c \, \theta^{-1} \, a_\textrm{l} \, h.

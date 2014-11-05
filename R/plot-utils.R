@@ -2,7 +2,7 @@
 blank_plot <- function(xlim, ylim,
   xlab=NULL, ylab=NULL,line=4,
   xtick=NULL,ytick=NULL,
-  xtick.lab=xtick,ytick.lab=tick,...){
+  xtick.lab=xtick,ytick.lab=ytick,...){
 
   plot(NA, xlim = xlim, ylim = ylim, xaxt='n', yaxt='n', ann=FALSE,...)
 
