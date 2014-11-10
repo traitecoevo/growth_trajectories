@@ -33,7 +33,16 @@ run_plant <- function(plant, E=1){
   env <- fixed.environment(E)
   plant$compute_vars_phys(env)
 
-  data.frame(t(plant$vars_size), t(plant$vars_phys), t(plant$vars_growth_decomp))
+  x <- data.frame(t(plant$vars_size), t(plant$vars_phys), t(plant$vars_growth_decomp))
+
+  # add relative measures
+  x[["height_growth_rate_relative"]] <- x[["height_growth_rate"]]/x[["height"]]
+  x[["dbasal_area_dt_relative"]] <- x[["dbasal_area_dt"]]/x[["area_basal"]]
+  x[["dbasal_diam_dt_relative"]] <- x[["dbasal_diam_dt"]]/x[["diameter"]]
+  x[["dbasal_diam_dt_relative"]] <- x[["dbasal_diam_dt"]]/x[["diameter"]]
+  x [["dmass_above_ground_dt_relative"]] <- x[["dmass_above_ground_dt"]]/x[["mass_above_ground"]]
+
+  x
 }
 
 change_with_height <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new(Strategy)){

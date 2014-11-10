@@ -4,7 +4,7 @@ source("R/plot-utils.R")
 source("R/axis-fun.R")
 require(smatr)
 
-GR_plot <- function(X, Y, cex=1,col = "darkgreen", pch=1, ylim= range(Y, na.rm=TRUE), axes=c("lma","dbh_gr"), ytick.lab = TRUE, ...){
+GR_plot <- function(X, Y, cex=1,col = "darkgreen", pch=1, ylim= range(Y, na.rm=TRUE), axes=c("lma","dbasal_diam_dt"), ytick.lab = TRUE, ...){
   if(ytick.lab)
     new_plot(axes[1],axes[2], log="xy", ylim=ylim, xlab=NULL, ylab=NULL, ...)
   else
@@ -18,7 +18,7 @@ GR_plot <- function(X, Y, cex=1,col = "darkgreen", pch=1, ylim= range(Y, na.rm=T
   legend("topright", legend = lab, bty = "n")
 }
 
-panel <-function(dat, axes=c("lma","dbh_gr"), xlim=c(0.02, 0.16), ylim=c(1,20)/1000, at=c(10,20,60,120), title=FALSE) {
+panel <-function(dat, axes=c("lma","dbasal_diam_dt"), xlim=c(0.02, 0.16), ylim=c(1,20)/1000, at=c(10,20,60,120), title=FALSE) {
 
   trait <- axes[[1]]
   for(a in at){
@@ -35,16 +35,6 @@ panel <-function(dat, axes=c("lma","dbh_gr"), xlim=c(0.02, 0.16), ylim=c(1,20)/1
   }
 }
 
-headerplot <- function(x){
-  oldpar <- par("mar")
-  par(mar = c(0,0,1,0))
-  plot(1,1,type = "n",frame.plot = FALSE,axes = FALSE)
-  u <- par("usr")
-  text(1,u[4],labels = x,pos = 1, cex = 1.5)
-  par(mar = oldpar)
-}
-
-
 
 fig1 <- function(){
 
@@ -52,29 +42,34 @@ fig1 <- function(){
 
   names(data)[names(data) == "wsg"] <- "rho"
   names(data)[names(data) == "height"] <- "hmat"
-  names(data)[names(data) == "dbh.gr"] <- "dbh_gr"
+  names(data)[names(data) == "dbh.gr"] <- "dbasal_diam_dt"
 
   data$lma <-  data$lma/1000 #(convert from g/2 to kg/m2)
-  data$dbh_gr <-  data$dbh_gr/1000 #(convert from mm to m)
+  data$dbasal_diam_dt <-  data$dbasal_diam_dt/1000 #(convert from mm to m)
   data$rho <- data$rho*1000
 
   at <- c(10,20,60,120)
 
   op <- par(oma=c(4,6,2,1), mar=c(1,1,2,1))
 
-  m <- matrix(c(1:4, rep(5,4), 6:9, rep(10,4),  11:14, rep(15,4)),ncol = 4, byrow = TRUE)
-  layout(m,widths = rep(0.25, 4),heights = c(0.27,0.063,0.27,0.063,0.27,0.063))
+  nrows <- 3
+  ncols <- length(at)
 
-  panel(data, axes=c("lma","dbh_gr"), at=at)
+  m <- matrix(
+    rep(c(1:ncols, rep(ncols+1, ncols)), nrows) + sort(rep(0:(nrows-1), ncols*2))*(ncols+1),
+    ncol = ncols, byrow = TRUE)
+  layout(m, widths = rep(1/ncols, ncols),heights = rep(c(0.8, 0.2)/nrows, nrows))
+
+  panel(data, axes=c("lma","dbasal_diam_dt"), at=at)
   headerplot(get.axis.info("lma","lab"))
 
-  panel(data, axes=c("rho","dbh_gr"), xlim=c(200,1000), at=at)
+  panel(data, axes=c("rho","dbasal_diam_dt"), xlim=c(200,1000), at=at)
   headerplot(get.axis.info("rho","lab"))
 
-  panel(data, axes=c("hmat","dbh_gr"), xlim=c(2,50), at=at)
+  panel(data, axes=c("hmat","dbasal_diam_dt"), xlim=c(2,50), at=at)
   headerplot(get.axis.info("hmat","lab"))
 
-  mtext(get.axis.info("dbh_gr","lab"), line = 4, side = 2, cex=1, outer = TRUE)
+  mtext(get.axis.info("dbasal_diam_dt","lab"), line = 4, side = 2, cex=1, outer = TRUE)
   par(op)
 }
 

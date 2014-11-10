@@ -1,9 +1,9 @@
-all: output/figs/GR-LCC.pdf output/figs/SI-leaf.pdf output/figs/SI-size-dhdt.pdf output/figs/growth-height.pdf output/figs/SI-mass_fraction.pdf output/figs/growth-light.pdf output/figs/LMA_wplcp.pdf output/figs/LMA_optim.pdf
+all: output/figs/GR-LCC.pdf output/figs/SI-leaf.pdf output/figs/SI-size-dhdt.pdf output/figs/growth-lma_abs_height.pdf output/figs/SI-mass_fraction.pdf output/figs/growth-light.pdf output/figs/LMA_wplcp.pdf output/figs/LMA_optim.pdf
 
 output/figs/GR-LCC.pdf: analysis/Fig-GR.R
 	Rscript $<
 
-output/figs/growth-height.pdf: analysis/Fig-LMA_growth_size.R
+output/figs/growth-lma_abs_height.pdf: analysis/Fig-LMA_growth_size.R
 	Rscript $<
 
 output/figs/growth-light.pdf: analysis/Fig-LMA_growth_light.R

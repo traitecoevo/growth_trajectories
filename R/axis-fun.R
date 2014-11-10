@@ -6,7 +6,7 @@ get.axis.info <- function(name, parToGet){
   if(name=="lma"){
     ticks <- 0.01*2^seq(0,20)
     lab <- expression(paste("Leaf-construction cost (kg ",m^-2," )"))
-    lim <- c(0.01,1.28)
+    lim <- c(0.04,1.28)
   }
   if(name=="hmat"){
     ticks <- 2^seq(-4,20)
@@ -14,8 +14,8 @@ get.axis.info <- function(name, parToGet){
     lim <- c(1,40)
   }
   if(name=="rho"){
-    ticks <- 0.2*2^seq(-5,10)
-    lab <- expression(paste("Wood density (kg ",m^3," )"))
+    ticks <- 50*2^seq(0,10)
+    lab <- expression(paste("Wood density (kg ",m^-3," )"))
     lim <- c(200,1200)
   }
 
@@ -25,10 +25,10 @@ get.axis.info <- function(name, parToGet){
     lab <- expression(paste("Height (m)"))
     lim <- c(0.25,32)
   }
-  if(name=="dbh"){
-    ticks <- 0.25*2^seq(0,12)
+  if(name=="diameter"){
+    ticks <- 0.25*2^seq(-4,12)
     lab <- expression(paste("Stem diameter (m)"))
-    lim <- c(0.25,32)
+    lim <- c(0.001, 1)
   }
   if(name=="area_basal"){
     ticks <- 0.25*2^seq(0,12)
@@ -39,26 +39,51 @@ get.axis.info <- function(name, parToGet){
   # GROWTH RATE
   if(name=="height_growth_rate"){
     ticks <- seq(0, 2, by=0.25)
-    lab <- expression(paste("Height growth rate (m ",yr^-1," )"))
+    lab <- expression(paste("Height (m ",yr^-1," )"))
     lim <- c(0,2)
   }
 
-  if(name=="dbh_gr"){
+  if(name=="dbasal_diam_dt"){
     ticks <- 0.0125*2^seq(-5,10)
-    lab <- expression(paste("Diameter growth rate (m ",yr^-1,")"))
-    lim <- c(0.01,0.2)/1000
+    lab <- expression(paste("Diameter growth (m ",yr^-1,")"))
+    lim <- c(0,0.05)
   }
 
   if(name=="dbasal_area_dt"){
     ticks <- 0.0125*2^seq(0,20)
     lab <- expression(paste("Basal area growth (", m^2," ", yr^-1,")"))
-    lim <- c(0.01,0.2)^2
+    lim <- c(0.0,0.003)
   }
 
-  if(name=="mass_gr"){
-    ticks <- 0.0125*2^seq(0,20)
+  if(name=="dmass_above_ground_dt"){
+    ticks <- 1*2^seq(0,20)
     lab <- expression(paste("Mass growth (kg ", yr^-1,")"))
-    lim <- c(0.01,0.2)^2
+    lim <- c(0,25)
+  }
+
+  # RELATIVE GROWTH RATE
+  if(name=="height_growth_rate_relative"){
+    ticks <- seq(0, 5, by=0.2)
+    lab <- expression(paste("Relative height growth (",yr^-1," )"))
+    lim <- c(0,5)
+  }
+
+  if(name=="dbasal_diam_dt_relative"){
+    ticks <- seq(0, 5, by=0.2)
+    lab <- expression(paste("Relative diameter growth (",yr^-1,")"))
+    lim <- c(0,5)
+  }
+
+  if(name=="dbasal_area_dt_relative"){
+    ticks <- seq(0, 5, by=0.2)
+    lab <- expression(paste("Relative basal area growth (", yr^-1,")"))
+    lim <- c(0,5)
+  }
+
+  if(name=="dmass_above_ground_dt_relative"){
+    ticks <- seq(0, 5, by=0.2)
+    lab <- expression(paste("Relative mass growth (kg ", yr^-1,")"))
+    lim <- c(0,5)
   }
 
   # OTHER

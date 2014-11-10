@@ -12,14 +12,19 @@ blank_plot <- function(xlim, ylim,
  if(!is.null(ytick))
    axis(2, at=ytick, labels=ytick.lab, las=1)
 
+ # function handles multiple lines, if lab is a list
+  add_axis_label <- function(lab, side, line){
+      for(i in seq_along(lab))
+         mtext(lab[[i]], side, line=line-(i+1))
+  }
+
  if(!is.null(xlab))
-  mtext(xlab, 1, line=line)
+  add_axis_label(xlab, 1, line)
 
  if(!is.null(ylab))
-  mtext(ylab, 2, line=line)
+  add_axis_label(ylab, 2, line)
 
 }
-
 
 to.dev <- function(expr, dev, filename, ..., verbose=TRUE){
   if(!file.exists(dirname(filename)))
@@ -135,4 +140,13 @@ seq_log_range <- function (r, length.out) {
 
 seq_log <- function (from, to, length.out) {
     exp(seq(log(from), log(to), length.out = length.out))
+}
+
+headerplot <- function(x){
+  oldpar <- par("mar")
+  par(mar = c(0,0,1,0))
+  plot(1,1,type = "n",frame.plot = FALSE,axes = FALSE)
+  u <- par("usr")
+  text(1,u[4],labels = x,pos = 1, cex = 1.5)
+  par(mar = oldpar)
 }
