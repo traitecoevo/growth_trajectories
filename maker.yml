@@ -33,10 +33,10 @@ targets:
       - glopnet
 
   BCI_species_data:
-    command: BCI_get_species_maximums(BCI_individual_growth, wright_2010)
+    command: BCI_calculate_species_traits(BCI_individual_growth, wright_2010)
 
   BCI_individual_growth:
-    command: BCI_get_individual_growth(BCI_50haplot_data)
+    command: BCI_calculate_individual_growth(BCI_50haplot_data, BCI_nomenclature)
 
   BCI_50haplot_data:
     command: BCI_load_50ha_plot("downloads/50ha/bci.full7.csv")
@@ -44,6 +44,9 @@ targets:
   downloads/50ha/bci.full7.csv:
     command: BCI_download_50ha_plot(target_name)
     cleanup_level: never
+
+  BCI_nomenclature:
+    command: read.csv("data/Nomenclature_R_20101129_Rready.csv")
 
   wright_2010:
     command: process_wright_2010("downloads/wright_2010.txt")
@@ -55,20 +58,24 @@ targets:
   glopnet:
     command: >
       process_wright_2004("downloads/wright_2004.xls",
-                          "data/wright_2004_locations.csv")
+                          glopnet_locations)
+
   downloads/wright_2004.xls:
     command: download_wright_2004(target_name)
     cleanup_level: purge
+
+  glopnet_locations:
+    command: read.csv("data/wright_2004_locations.csv")
 
   figures:
     depends:
       - ms/figures/BCI_data.pdf
       - ms/figures/growth_light.pdf
       - ms/figures/lma_optim.pdf
-      - ms/figures/LMA_wplcp.pdf
+      - ms/figures/lma_wplcp.pdf
       - ms/figures/SI_mass_fraction.pdf
       - ms/figures/SI_lma_tradeoff.pdf
-      - ms/figures/SI_size_dPdt.pdf
+      - ms/figures/SI_size_dpdt.pdf
       - ms/figures/SI_size_dhdt.pdf
       - ms/figures/SI_size_daldt.pdf
       - ms/figures/SI_lma_effects_at_heights.pdf
@@ -92,7 +99,7 @@ targets:
     command: figure_growth_light()
     plot: square
 
-  ms/figures/LMA_wplcp.pdf:
+  ms/figures/lma_wplcp.pdf:
     command: figure_lma_wplcp()
     plot: square
 
@@ -108,8 +115,8 @@ targets:
     command: figure_mass_fraction()
     plot: square
 
-  ms/figures/SI_size_dPdt.pdf:
-    command: fig_size_dPdt()
+  ms/figures/SI_size_dpdt.pdf:
+    command: fig_size_dpdt()
     plot: wide
 
   ms/figures/SI_size_dhdt.pdf:

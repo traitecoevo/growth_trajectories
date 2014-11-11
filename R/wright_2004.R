@@ -1,18 +1,15 @@
 download_wright_2004 <- function(destination_filename) {
-  url <-
-    "http://www.nature.com/nature/journal/v428/n6985/extref/nature02403-s2.xls"
+  url <- "http://www.nature.com/nature/journal/v428/n6985/extref/nature02403-s2.xls"
   download.file(url, destination_filename)
 }
 
-process_wright_2004 <- function(filename, sitevars_file) {
+process_wright_2004 <- function(filename, sitevars) {
 
-  ## There are several strategies for reading in an excel file, but
-  ## this one works quite well.
-  library(methods) # Serious, WTF Rscript?
-  library(xlsx, quietly=TRUE) # Yay, using xlsx::read
+  ## There are several strategies for reading in an excel file, but this one works quite well.
+  library(methods)  # Serious, WTF Rscript?
+  library(xlsx, quietly = TRUE)  # Yay, using xlsx::read
 
-  d <-read.xlsx2(filename, sheetIndex=1, startRow=11,
-                  stringsAsFactors=FALSE, check.names=FALSE)
+  d <- read.xlsx2(filename, sheetIndex = 1, startRow = 11, stringsAsFactors = FALSE, check.names = FALSE)
 
   ## Do some name translations:
   tr <- c("Code"="Code",
@@ -46,9 +43,9 @@ process_wright_2004 <- function(filename, sitevars_file) {
   d[["CaCi"]] <- as.numeric(d[["CaCi"]])
 
   d[["Deciduous"]] <- category_to_logical(d[["Deciduous"]], "D")
-  d[["Needle"]]    <- category_to_logical(d[["Needle"]],    "N")
-  d[["C3"]]        <- category_to_logical(d[["C3"]],        "C3")
-  d[["N2fixer"]]   <- category_to_logical(d[["N2fixer"]],   "Y")
+  d[["Needle"]] <- category_to_logical(d[["Needle"]], "N")
+  d[["C3"]] <- category_to_logical(d[["C3"]], "C3")
+  d[["N2fixer"]] <- category_to_logical(d[["N2fixer"]], "Y")
 
   names(d) <- gsub("Log\\.", "Log", names(d))
   re <- "Log"
@@ -60,21 +57,19 @@ process_wright_2004 <- function(filename, sitevars_file) {
   d <- cbind(d[-c(i_log)], d_unlogged)
 
   # add location info
-  sitevars <- read.csv(sitevars_file, stringsAsFactors=FALSE)
-  data <- merge(d, sitevars, by.x = 'Dataset', by.y = 'dataset_location')
+  data <- merge(d, sitevars, by.x = "Dataset", by.y = "dataset_location")
 
-  #lowercase names
+  # lowercase names
   names(data) <- tolower(names(data))
 
-
   # unit conversions
-  data$lma <- data$lma/1000 # Converts to Kg
-  data$n.area <- data$n.area/1000 # Converts to Kg
-  data$a.area <- (data$a.area * 31557.6)*10^-6 # converts to mol/kg/yr from micro-mol/g/s
-  data$rd.area <- (data$rd.area * 31557.6)*10^-6 # converts to mol/kg/yr from micro-mol/g/s
+  data[["lma"]] <- data[["lma"]]/1000  # Converts to Kg
+  data[["n.area"]] <- data[["n.area"]]/1000  # Converts to Kg
+  data[["a.area"]] <- (data[["a.area"]] * 31557.6) * 10^-6  # converts to mol/kg/yr from micro-mol/g/s
+  data[["rd.area"]] <- (data[["rd.area"]] * 31557.6) * 10^-6  # converts to mol/kg/yr from micro-mol/g/s
 
-  data$leaflifespan <- data$leaflifespan/12 ## conevrt LL from months to years
-  data$leaf_turnover <- 1/data$leaflifespan ## per year
+  data[["leaflifespan"]] <- data[["leaflifespan"]]/12  ## conevrt LL from months to years
+  data[["leaf_turnover"]] <- 1/data[["leaflifespan"]]  ## per year
 
   data
 }

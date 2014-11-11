@@ -1,26 +1,23 @@
 
-default_strategy <- function(){
-  strategy = new(Strategy)
-  strategy$set_parameters(
-    structure(list(0.8, 10, 0.2, 2.17, 0.546), names=c("c_r1", "c_r2", "k_s0", "a1", "B1")))
+default_strategy <- function() {
+  strategy <- new(Strategy)
+  strategy$set_parameters(structure(list(0.8, 10, 0.2, 2.17, 0.546), names = c("c_r1", "c_r2", "k_s0", "a1", "B1")))
   strategy
 }
 
 ## This makes a fixed light environment over the plant height,
-fixed.environment <- function(E, height, n=101, light.env=NULL,
-                             n.strategies=1, seed.rain=0) {
+fixed.environment <- function(E, height, n = 101, light.env = NULL, n.strategies = 1, seed.rain = 0) {
   if (length(seed.rain) == 1)
     seed.rain <- rep(seed.rain, n.strategies)
-  hh <- seq(0, height, length=n)
+  hh <- seq(0, height, length = n)
   if (is.null(light.env))
-    light.env <- function(x) rep(E, length.out=length(x))
+    light.env <- function(x) rep(E, length.out = length(x))
   ee <- light.env(hh)
   env <- new(Interpolator)
   env$init(hh, ee)
 
   parameters <- new(Parameters)
-  for (i in seq_len(n.strategies))
-    parameters$add_strategy(new(Strategy))
+  for (i in seq_len(n.strategies)) parameters$add_strategy(new(Strategy))
   parameters$seed_rain <- seed.rain
 
   ret <- new(Environment, parameters)
@@ -30,7 +27,7 @@ fixed.environment <- function(E, height, n=101, light.env=NULL,
 }
 
 # runs a new plant in given environment
-run_plant <- function(plant, E=1){
+run_plant <- function(plant, E = 1) {
 
   env <- fixed.environment(E)
   plant$compute_vars_phys(env)
@@ -41,31 +38,29 @@ run_plant <- function(plant, E=1){
   x[["height_growth_rate_relative"]] <- x[["height_growth_rate"]]/x[["height"]]
   x[["dbasal_area_dt_relative"]] <- x[["dbasal_area_dt"]]/x[["area_basal"]]
   x[["dbasal_diam_dt_relative"]] <- x[["dbasal_diam_dt"]]/x[["diameter"]]
-  x[["dbasal_diam_dt_relative"]] <- x[["dbasal_diam_dt"]]/x[["diameter"]]
   x[["dmass_above_ground_dt_relative"]] <- x[["dmass_above_ground_dt"]]/x[["mass_above_ground"]]
 
   x
 }
 
-change_with_height <- function(h=seq(0.2, 1, length.out=10), E=1, strategy = new(Strategy)){
+change_with_height <- function(h = seq(0.2, 1, length.out = 10), E = 1, strategy = new(Strategy)) {
 
-  myfun <- function(x){
+  myfun <- function(x) {
     plant <- new(Plant, strategy)
     plant$height <- x
     run_plant(plant, E)
   }
 
- lapply(h, myfun)
+  lapply(h, myfun)
 }
 
 # e.g.  = function(plant){plant$height - 0.25}
-change_with_light <- function(E=seq(0.1, 1, length.out=20),
-  distance.from.target.fn, strategy = new(Strategy)) {
+change_with_light <- function(E = seq(0.1, 1, length.out = 20), distance_from_target_fn, strategy = new(Strategy)) {
 
-  myfun <- function(x){
+  myfun <- function(x) {
     plant1 <- new(Plant, strategy)
     plant1$height <- 0.1
-    plant <- grow.plant.to.size(plant1, fixed.environment(x), distance.from.target=distance.from.target.fn)
+    plant <- grow.plant.to.size(plant1, fixed.environment(x), distance.from.target = distance_from_target_fn)
     run_plant(plant, x)
   }
 
@@ -73,88 +68,90 @@ change_with_light <- function(E=seq(0.1, 1, length.out=20),
 }
 
 
-# given a vector of values x for a given parameter with name 'trait', runs plants across range of values for x
-#  e.g. distance.from.target.fn = function(plant){plant$height - 0.25}
-change_with_trait <- function(x, trait, E, distance.from.target.fn, strategy = new(Strategy)){
+# given a vector of values x for a given parameter with name 'trait', runs plants across range of values for x e.g. distance_from_target_fn =
+# function(plant){plant$height - 0.25}
+change_with_trait <- function(x, trait, E, distance_from_target_fn, strategy = new(Strategy)) {
 
-  # Clones strategy, changes value of "trait" to x then runs plant
-  myfun <- function(x){
+  # Clones strategy, changes value of 'trait' to x then runs plant
+  myfun <- function(x) {
     strategy <- strategy$copy()
-    strategy$set_parameters(structure(list(x), names=trait))
+    strategy$set_parameters(structure(list(x), names = trait))
     plant1 <- new(Plant, strategy)
     plant1$height <- 0.1
-    plant <- try(grow.plant.to.size(plant1, fixed.environment(E),
-      distance.from.target=distance.from.target.fn), silent=TRUE)
-    if (inherits(plant, "try-error")) return(NULL);
+    plant <- try(grow.plant.to.size(plant1, fixed.environment(E), distance.from.target = distance_from_target_fn), silent = TRUE)
+    if (inherits(plant, "try-error"))
+      return(NULL)
     run_plant(plant, E)
   }
 
-  lapply(x,myfun)
+  lapply(x, myfun)
 }
 
 # estimates whole-plant-light-compensation-point for plant with given height and strategy
-wplcp <- function(h=0.2, strategy = new(Strategy)){
+wplcp <- function(h = 0.2, strategy = new(Strategy)) {
 
-  # runs a plant with given height, environment and strategy, returns mass production
-  # used as wrapper for root solving, to pass to wplcp
-  run_plant_production <- function(E){
+  # runs a plant with given height, environment and strategy, returns mass production used as wrapper for root solving, to pass to wplcp
+  run_plant_production <- function(E) {
     plant <- new(Plant, strategy)
     plant$height <- h
     run_plant(plant, E)[["net_production"]]
   }
 
- out <- try(uniroot(run_plant_production, c(0, 1))$root,  silent = TRUE)
- if (inherits(out, "try-error")) return(NA);
- out
+  out <- try(uniroot(run_plant_production, c(0, 1))$root, silent = TRUE)
+  if (inherits(out, "try-error"))
+    return(NA)
+  out
 }
 
-wplcp_with_height <- function(h,strategy = new(Strategy)){
+wplcp_with_height <- function(h, strategy = new(Strategy)) {
   sapply(h, function(x) wplcp(x, strategy))
 }
 
-# Clones strategy, changes value of "trait" to x then runs plant
-modify_strategy_then_find_wplcp <- function(x, trait,strategy, ...){
+# Clones strategy, changes value of 'trait' to x then runs plant
+modify_strategy_then_find_wplcp <- function(x, trait, strategy, ...) {
   strategy <- strategy$copy()
-  strategy$set_parameters(structure(list(x), names=trait))
-  wplcp(strategy=strategy, ...)
+  strategy$set_parameters(structure(list(x), names = trait))
+  wplcp(strategy = strategy, ...)
 }
 
-wplcp_with_trait <- function(x, trait, strategy = new(Strategy), h=0.2){
-  sapply(x,modify_strategy_then_find_wplcp, strategy=strategy, trait=trait, h=h)
+wplcp_with_trait <- function(x, trait, strategy = new(Strategy), h = 0.2) {
+  sapply(x, modify_strategy_then_find_wplcp, strategy = strategy, trait = trait, h = h)
 }
 
 # finds tarit value in range that maximises growth rate at given size and light
-maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Strategy)){
+maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Strategy)) {
 
-  if(length(h)>1){cat("error, h must have length 1");}
-  if(length(E)>1){cat("error, E must have length 1");}
+  if (length(h) > 1) {
+    cat("error, h must have length 1")
+  }
+  if (length(E) > 1) {
+    cat("error, E must have length 1")
+  }
 
-  #wrapper function to pass to optimise
-  dHdt.wrap <- function(x){
+  # wrapper function to pass to optimise
+  dHdt.wrap <- function(x) {
 
     strategy <- strategy$copy()
-    strategy$set_parameters(structure(list(x), names=trait))
+    strategy$set_parameters(structure(list(x), names = trait))
     plant <- new(Plant, strategy)
     plant$height <- h
 
     run_plant(plant, E)[["height_growth_rate"]]
   }
 
-  opt <- optimise(dHdt.wrap, range, maximum= TRUE, tol = 0.000001)
+  opt <- optimise(dHdt.wrap, range, maximum = TRUE, tol = 1e-06)
 
- if(opt$objective >0)
-  out <- opt$maximum
- else
-  out <- NA
- out
+  if (opt$objective > 0)
+    out <- opt$maximum else out <- NA
+  out
 }
 
-#solve for trait value maximising growth over different light environments
-trait_maximimum_with_light <- function(E, trait, range, h=0.2, strategy = new(Strategy)){
+# solve for trait value maximising growth over different light environments
+trait_maximimum_with_light <- function(E, trait, range, h = 0.2, strategy = new(Strategy)) {
   sapply(E, function(x) maximise_growth_rate_by_trait(trait, range, h, x, strategy))
 }
 
-#solve for trait value maximising growth over sizes
-trait_maximimum_with_size <- function(h, trait, range, E=1, strategy = new(Strategy)){
+# solve for trait value maximising growth over sizes
+trait_maximimum_with_size <- function(h, trait, range, E = 1, strategy = new(Strategy)) {
   sapply(h, function(x) maximise_growth_rate_by_trait(trait, range, x, E, strategy))
 }
