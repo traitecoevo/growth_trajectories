@@ -1,7 +1,10 @@
 ms/*.pdf
 ms/*.csl
 ms/*.tex
+ms/figures
 data/
 output/
 output/figs/
 lib/
+downloads
+.maker

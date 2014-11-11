@@ -1,8 +1,10 @@
-require(deSolve, quietly=TRUE)
-require(dplyr, quietly=TRUE)
-library(tree)
 
-source("R/plot-utils.R")
+default_strategy <- function(){
+  strategy = new(Strategy)
+  strategy$set_parameters(
+    structure(list(0.8, 10, 0.2, 2.17, 0.546), names=c("c_r1", "c_r2", "k_s0", "a1", "B1")))
+  strategy
+}
 
 ## This makes a fixed light environment over the plant height,
 fixed.environment <- function(E, height, n=101, light.env=NULL,
@@ -40,7 +42,7 @@ run_plant <- function(plant, E=1){
   x[["dbasal_area_dt_relative"]] <- x[["dbasal_area_dt"]]/x[["area_basal"]]
   x[["dbasal_diam_dt_relative"]] <- x[["dbasal_diam_dt"]]/x[["diameter"]]
   x[["dbasal_diam_dt_relative"]] <- x[["dbasal_diam_dt"]]/x[["diameter"]]
-  x [["dmass_above_ground_dt_relative"]] <- x[["dmass_above_ground_dt"]]/x[["mass_above_ground"]]
+  x[["dmass_above_ground_dt_relative"]] <- x[["dmass_above_ground_dt"]]/x[["mass_above_ground"]]
 
   x
 }

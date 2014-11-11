@@ -1,0 +1,169 @@
+packages:
+  - plyr
+  - dplyr
+  - rmarkdown
+  - smatr
+  - quantreg
+  - tree
+  - deSolve
+
+sources:
+  - R
+
+plot_options:
+  wide:
+    width: 12
+    height: 4
+  square:
+    width: 8
+    height: 8
+  large_square:
+    width: 12
+    height: 12
+
+targets:
+  all:
+    depends:
+      - data
+      - figures
+
+  data:
+    depends:
+      - BCI_species_data
+      - glopnet
+
+  BCI_species_data:
+    command: BCI_get_species_maximums(BCI_individual_growth, wright_2010)
+
+  BCI_individual_growth:
+    command: BCI_get_individual_growth(BCI_50haplot_data)
+
+  BCI_50haplot_data:
+    command: BCI_load_50ha_plot("downloads/50ha/bci.full7.csv")
+
+  downloads/50ha/bci.full7.csv:
+    command: BCI_download_50ha_plot(target_name)
+    cleanup_level: never
+
+  wright_2010:
+    command: process_wright_2010("downloads/wright_2010.txt")
+
+  downloads/wright_2010.txt:
+    command: download_wright_2010(target_name)
+    cleanup_level: purge
+
+  glopnet:
+    command: >
+      process_wright_2004("downloads/wright_2004.xls",
+                          "data/wright_2004_locations.csv")
+  downloads/wright_2004.xls:
+    command: download_wright_2004(target_name)
+    cleanup_level: purge
+
+  figures:
+    depends:
+      - ms/figures/BCI_data.pdf
+      - ms/figures/growth_light.pdf
+      - ms/figures/lma_optim.pdf
+      - ms/figures/LMA_wplcp.pdf
+      - ms/figures/SI_mass_fraction.pdf
+      - ms/figures/SI_lma_tradeoff.pdf
+      - ms/figures/SI_size_dPdt.pdf
+      - ms/figures/SI_size_dhdt.pdf
+      - ms/figures/SI_size_daldt.pdf
+      - ms/figures/SI_lma_effects_at_heights.pdf
+      - ms/figures/SI_rho_effects_at_heights.pdf
+      - ms/figures/SI_hmat_effects_at_heights.pdf
+      - ms/figures/SI_lma_relative_effects_at_heights.pdf
+      - ms/figures/SI_rho_relative_effects_at_heights.pdf
+      - ms/figures/SI_hmat_relative_effects_at_heights.pdf
+      - ms/figures/SI_lma_effects_at_diameters.pdf
+      - ms/figures/SI_rho_effects_at_diameters.pdf
+      - ms/figures/SI_hmat_effects_at_diameters.pdf
+      - ms/figures/SI_lma_relative_effects_at_diameters.pdf
+      - ms/figures/SI_rho_relative_effects_at_diameters.pdf
+      - ms/figures/SI_hmat_relative_effects_at_diameters.pdf
+
+  ms/figures/BCI_data.pdf:
+    command: fig_BCI_data(BCI_species_data)
+    plot: large_square
+
+  ms/figures/growth_light.pdf:
+    command: figure_growth_light()
+    plot: square
+
+  ms/figures/LMA_wplcp.pdf:
+    command: figure_lma_wplcp()
+    plot: square
+
+  ms/figures/lma_optim.pdf:
+    command: figure_optimal_lma_light()
+    plot: square
+
+  ms/figures/SI_lma_tradeoff.pdf:
+    command: figure_lma_tradeoff(glopnet)
+    plot: square
+
+  ms/figures/SI_mass_fraction.pdf:
+    command: figure_mass_fraction()
+    plot: square
+
+  ms/figures/SI_size_dPdt.pdf:
+    command: fig_size_dPdt()
+    plot: wide
+
+  ms/figures/SI_size_dhdt.pdf:
+    command: fig_size_dhdt()
+    plot: wide
+
+  ms/figures/SI_size_daldt.pdf:
+    command: fig_size_daldt()
+    plot: wide
+
+  ms/figures/SI_lma_effects_at_heights.pdf:
+    command: figure_lma_effects_at_heights()
+    plot: large_square
+
+  ms/figures/SI_rho_effects_at_heights.pdf:
+    command: figure_rho_effects_at_heights()
+    plot: large_square
+
+  ms/figures/SI_hmat_effects_at_heights.pdf:
+    command: figure_hmat_effects_at_heights()
+    plot: large_square
+
+  ms/figures/SI_lma_relative_effects_at_heights.pdf:
+    command: figure_lma_relative_effects_at_heights()
+    plot: large_square
+
+  ms/figures/SI_rho_relative_effects_at_heights.pdf:
+    command: figure_rho_relative_effects_at_heights()
+    plot: large_square
+
+  ms/figures/SI_hmat_relative_effects_at_heights.pdf:
+    command: figure_hmat_relative_effects_at_heights()
+    plot: large_square
+
+  ms/figures/SI_lma_effects_at_diameters.pdf:
+    command: figure_lma_effects_at_diameters()
+    plot: large_square
+
+  ms/figures/SI_rho_effects_at_diameters.pdf:
+    command: figure_rho_effects_at_diameters()
+    plot: large_square
+
+  ms/figures/SI_hmat_effects_at_diameters.pdf:
+    command: figure_hmat_effects_at_diameters()
+    plot: large_square
+
+  ms/figures/SI_lma_relative_effects_at_diameters.pdf:
+    command: figure_lma_relative_effects_at_diameters()
+    plot: large_square
+
+  ms/figures/SI_rho_relative_effects_at_diameters.pdf:
+    command: figure_rho_relative_effects_at_diameters()
+    plot: large_square
+
+  ms/figures/SI_hmat_relative_effects_at_diameters.pdf:
+    command: figure_hmat_relative_effects_at_diameters()
+    plot: large_square

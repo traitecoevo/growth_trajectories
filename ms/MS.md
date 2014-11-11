@@ -13,7 +13,7 @@
 
 Plant growth is the foundation of the terrestrial biosphere, powering food-webs and much of human activity[@raupach_carbon_2010]. While most higher plants have the same basic resource requirements (light water, nutrients) and physiological bauplan, large differences exist among species in the quality of construction and allocation to different tissues (leaves, stems, roots)[@westoby_plant_2002;@niklas_evolution_2000]. Leaf-construction cost ($\phi$) -- the amount of mass used to construct a unit of leaf area -- is one of the most prominent dimensions of variation, varying ~40 fold among species[@wright_world-wide_2004]. Low $\phi$ can, in principle, accelerate growth, as leaves which are cheap to build enable faster canopy expansion[@blackman_compound_1919; @westoby_time_2000]. Indeed, growth rate in seedlings is strongly and negatively correlated with $\phi$ (Fig. \ref{f-RGR}a)[@cornelissen_seedling_1996; @wright_cross-species_2000]. While it has been suggested that low $\phi$ might also give a growth advantage in larger plants[@enquist_general_2007], an increasing number of empirical studies have failed to detect any such effect in large trees [@wright_functional_2010, @herault_functional_2011, @poorter_are_2008] (Fig. \ref{f-RGR}c). The growing discord between theoretical expectation and empirical result thus indicates a strong need for a new theoretical framework through which the influence of $\phi$ on plant growth can be understood.
 
-Here we extend a widely-used theoretical model used to link $\phi$ with growth rate in seedlings (refs) to explicitly include influences of size, light environment, and effects of leaf turnover, and thereby a number of general novel predictions on the link between plant demography and $\phi$ (Table \ref{tab:predictions}). The new model captures the observed change in correlation between $\phi$ and growth rate with increasing size (Fig. \ref{f-RGR}), and also between $\phi$ and shade tolerance (Fig. \ref{f-LMA_wplcp}). Moreover, we provide a novel explanation for the observed tendency of $\phi$ to increase through ontogeny (Fig. \ref{f-LMA_optim}). Together, these findings help to integrate a large number of empirical findings about plant growth and its link to traits[@wright_functional_2010, @herault_functional_2011, @poorter_are_2008] .
+Here we extend a widely-used theoretical model used to link $\phi$ with growth rate in seedlings (refs) to explicitly include influences of size, light environment, and effects of leaf turnover, and thereby a number of general novel predictions on the link between plant demography and $\phi$ (Table \ref{tab:predictions}). The new model captures the observed change in correlation between $\phi$ and growth rate with increasing size (Fig. \ref{f-RGR}), and also between $\phi$ and shade tolerance (Fig. \ref{f-lma_wplcp}). Moreover, we provide a novel explanation for the observed tendency of $\phi$ to increase through ontogeny (Fig. \ref{f-lma_optim}). Together, these findings help to integrate a large number of empirical findings about plant growth and its link to traits[@wright_functional_2010, @herault_functional_2011, @poorter_are_2008] .
 
 We begin with a standard model for the amount of biomass available for growth, $dP / \textrm{d}t$, given by the difference income (total photosynthesis) and losses (respiration and turnover) for the different plant components[@falster_influence_2011]:
 
@@ -79,20 +79,20 @@ This model seems to capture well the intrinsically size-dependent nature of plan
 
 Having captured the intrinsic size-dependent nature of growth, we are ready to incorporate the effects of the effect of $\phi$ on growth. The direct effect of increasing $\phi$ is to increase the marginal cost of building leaf area (eq. \ref{eq:daldmt}) and thus reduce growth rate. However, to fully account for the influence of $\phi$ on growth we must also account for benefits of superior leaf construction: increased leaf longevity[@wright_world-wide_2004]. This is achieved by linking the turnover rate of leaf in eq. \ref{eq:dPdt} to $\phi$. We use an allometric scaling relationship of the form $k_\textrm{l}=\alpha_4 \, \phi^{\beta_4}$, which has been shown to describe patterns across diverse ecosystems[@wright_world-wide_2004] (Fig. \ref{fS-leaf}).
 
-Unlike eq. \ref{eq:RGR}, eqs. \ref{eq:dhdt}, \ref{eq:dast} and \ref{eq:dDdt} predict a relationship between $\phi$ and growth that changes with plant size (Fig. \ref{f-LMA_growth_size}). Decreasing $\phi$ has two impacts on growth rate. First, lower $\phi$ increases leaf deployment rate ($\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{t}$ by economising on construction costs. Second, lower $\phi$ decreases net production ($\textrm{d}P / \textrm{d}t$), due to increased leaf turnover. Whether lower $\phi$ increases growth thus depends on the relative size of these two effects. When plants are small the effect on leaf deployment rate is bigger and so decreasing $\phi$ increases growth rate. When plants are large, the influence of $\phi$ on leaf deployment rate is diminished, because the costs of building other supportive tissues (other terms in eq. \ref{eq:daldmt}) are larger (Fig. XX). The net result is that at larger sizes, low $\phi$ is no longer advantageous for growth (Fig. \ref{f-LMA_growth_size}d).
+Unlike eq. \ref{eq:RGR}, eqs. \ref{eq:dhdt}, \ref{eq:dast} and \ref{eq:dDdt} predict a relationship between $\phi$ and growth that changes with plant size (Fig. \ref{f-lma_growth_size}). Decreasing $\phi$ has two impacts on growth rate. First, lower $\phi$ increases leaf deployment rate ($\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{t}$ by economising on construction costs. Second, lower $\phi$ decreases net production ($\textrm{d}P / \textrm{d}t$), due to increased leaf turnover. Whether lower $\phi$ increases growth thus depends on the relative size of these two effects. When plants are small the effect on leaf deployment rate is bigger and so decreasing $\phi$ increases growth rate. When plants are large, the influence of $\phi$ on leaf deployment rate is diminished, because the costs of building other supportive tissues (other terms in eq. \ref{eq:daldmt}) are larger (Fig. XX). The net result is that at larger sizes, low $\phi$ is no longer advantageous for growth (Fig. \ref{f-lma_growth_size}d).
 
-- Correlation of growth rate with $\phi$ changes with size, Figure \ref{f-LMA_growth_size}
+- Correlation of growth rate with $\phi$ changes with size, Figure \ref{f-lma_growth_size}
 - Figure XXX: differential effects of $\phi$ on dP/dt and dA/dMt.
 
 A number of other predictions arise directly from this model (Table \ref{tab:predictions}), all of which are supported with data from the BCI forest (?? we hope??).
 
-Firstly, the responsiveness of growth rate to light changes with $\phi$ (Fig. \ref{f-LMA_growth_light}), such that species with low $\phi$ exhibit a wider range of growth rates, and also that the relationship between $\phi$ and growth rate flattens out under more stressed conditions.
+Firstly, the responsiveness of growth rate to light changes with $\phi$ (Fig. \ref{f-lma_growth_light}), such that species with low $\phi$ exhibit a wider range of growth rates, and also that the relationship between $\phi$ and growth rate flattens out under more stressed conditions.
 
-Second, species with low $\phi$ are predicted to be less shade tolerant (Fig. \ref{f-LMA_wplcp}). At low $\phi$, leaf turnover is higher and thus a greater light income is needed to offset these costs. As previously suggested by @givnish_adaptation_1988, shade-tolerance also decreases with height because as size increase, the total amount of energy needed to offset respiratory and turnover costs in the stem also increases.
+Second, species with low $\phi$ are predicted to be less shade tolerant (Fig. \ref{f-lma_wplcp}). At low $\phi$, leaf turnover is higher and thus a greater light income is needed to offset these costs. As previously suggested by @givnish_adaptation_1988, shade-tolerance also decreases with height because as size increase, the total amount of energy needed to offset respiratory and turnover costs in the stem also increases.
 
 These first two predictions would also be expected to hold under any environmental conditions decreasing photosynthetic income (e.g. low temperature of nutrients), not just decreased light.
 
-Finally, we predict that all species will show a strong onto-genetic increase in $\phi$ with size (Fig. \ref{f-LMA_optim}). To arrive at this prediction we solved for the value of $\phi$ maximising growth rate at a given light environment. At larger sizes, the benefits of cheap leaf construction diminish, while the costs (increased leaf turnover rate) remain. This means that at larger sizes growth rate is maximised with lower values of $\phi$ (Fig. \label{f-LMA_growth_size}).
+Finally, we predict that all species will show a strong onto-genetic increase in $\phi$ with size (Fig. \ref{f-lma_optim}). To arrive at this prediction we solved for the value of $\phi$ maximising growth rate at a given light environment. At larger sizes, the benefits of cheap leaf construction diminish, while the costs (increased leaf turnover rate) remain. This means that at larger sizes growth rate is maximised with lower values of $\phi$ (Fig. \label{f-lma_growth_size}).
 
 \newpage
 
@@ -147,47 +147,47 @@ root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm
 # Figures
 
 ![**The relationship between leaf-construction cost and growth rate varies with plant size.**
-For XXX species growing in lowland forest at BCI Panama, we estimated the potential growth rate of individual's in that species at a given size and plotted this against leaf-construction cost, with size of circle indicating the number of data points used to estimate potential growth rate. \label{f-RGR}](../output/figs/GR-LCC.pdf)
+For XXX species growing in lowland forest at BCI Panama, we estimated the potential growth rate of individual's in that species at a given size and plotted this against leaf-construction cost, with size of circle indicating the number of data points used to estimate potential growth rate. \label{f-RGR}](figures/BCI_data.pdf)
 
 ![**The expected correlation between leaf-construction cost and growth rate changes with plant size.**
 Predictions from the model on the relationship between leaf-construction cost and height growth rate under ideal conditions at a range of sizes.
-\label{f-LMA_growth_size}](../output/figs/growth-height.pdf)
+\label{f-lma_growth_size}](figures/SI_lma_effects_at_diameters.pdf)
 
 \newpage
 
 ![**Reproductive allocation has a strong influence on tree growth at larger sizes.**
 We use maximum height as an indicator of reproductive allocation. Generally, plants with great maximum height tend to defer reproductive investment until a larger size is reached, which increase their growth rate relative to species with lower maximum height and higher allocation of resources to reproduction.
-\label{f-hmax](../output/figs/SI-mass_fraction.pdf)
+\label{f-hmax](figures/SI_mass_fraction.pdf)
 \newpage
 
 ![**Plants with cheaper leaf construction are more sensitive to changing light.**
 Plot shows predicted relationship between height growth rate and leaf-construction cost under a range of shading environments for plants 0.25m tall.
-\label{f-LMA_growth_light}](../output/figs/growth-light.pdf)
+\label{f-lma_growth_light}](figures/growth_light.pdf)
 
 \newpage
 
 ![**Plants with cheaper leaf construction and greater height are less shade tolerant**
 Shade tolerances is quantified as the maximum leaf area above the plant before growth rate reaches zero. Plot shows predicted relationship with leaf-construction cost for plants at a range of heights.
-\label{f-LMA_wplcp}](../output/figs/LMA_wplcp.pdf)
+\label{f-lma_wplcp}](figures/lma_wplcp.pdf)
 
 \newpage
 
 ![**Leaf construction cost increases through ontogeny.**
 Plot shows the value of $\phi$ maximising growth rate for plants at a given height and under a range of shading environments.
-\label{f-LMA_optim}](../output/figs/LMA_optim.pdf)
+\label{f-lma_optim}](figures/lma_optim.pdf)
 
 \newpage
 
 # Supplementary material
 
 ![**Leaf turnover decreases with leaf-construction cost.**
-Data from @wright_world-wide_2004 for 678 species from 51 sites, each point giving a species-average. Lines show standardised major axis lines fitted to data from each site, with intensity of shading adjusted according to strength of the relationship.\label{fS-leaf}](../output/figs/SI-leaf.pdf)
+Data from @wright_world-wide_2004 for 678 species from 51 sites, each point giving a species-average. Lines show standardised major axis lines fitted to data from each site, with intensity of shading adjusted according to strength of the relationship.\label{fS-leaf}](figures/SI_lma_tradeoff.pdf)
 
 ![**Hump-shaped relationship between growth rate and size.**
-\label{f-hump}](../output/figs/SI-size-dhdt.pdf)
+\label{f-hump}](figures/SI_size_dhdt.pdf)
 
 ![**Change in allocation with size.**
-\label{f-mass_fraction}](../output/figs/SI-mass_fraction.pdf)
+\label{f-mass_fraction}](figures/SI_mass_fraction.pdf)
 
 
 

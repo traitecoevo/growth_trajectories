@@ -117,3 +117,30 @@ new_plot <- function(xvar, yvar,
     ylim=ylim, ytick=ytick, ylab=ylab, xtick.lab=xtick.lab,
     ytick.lab=ytick.lab, ...)
 }
+
+blank_plot <- function(xlim, ylim,
+  xlab=NULL, ylab=NULL,line=4,
+  xtick=NULL,ytick=NULL,
+  xtick.lab=xtick,ytick.lab=ytick,...){
+
+  plot(NA, xlim = xlim, ylim = ylim, xaxt='n', yaxt='n', ann=FALSE,...)
+
+  if(!is.null(xtick))
+   axis(1, at=xtick, labels=xtick.lab)
+
+ if(!is.null(ytick))
+   axis(2, at=ytick, labels=ytick.lab, las=1)
+
+ # function handles multiple lines, if lab is a list
+  add_axis_label <- function(lab, side, line){
+      for(i in seq_along(lab))
+         mtext(lab[[i]], side, line=line-(i+1))
+  }
+
+ if(!is.null(xlab))
+  add_axis_label(xlab, 1, line)
+
+ if(!is.null(ylab))
+  add_axis_label(ylab, 2, line)
+
+}
