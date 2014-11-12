@@ -32,12 +32,6 @@ targets:
       - ms/ms.pdf
       - ms/nature.csl
 
-  ms/nature.csl:
-    command: get_nature_csl(target_name)
-
-  ms/ms.pdf:
-    command: pandoc_build("ms/ms.md")
-
   data:
     depends:
       - BCI_species_data
@@ -87,7 +81,6 @@ targets:
 
   tree_parameters:
     command: read.csv("data/growth_model_pars.csv")
-
 
   figures:
     depends:
@@ -196,3 +189,9 @@ targets:
   ms/figures/SI_hmat_relative_effects_at_diameters.pdf:
     command: figure_hmat_relative_effects_at_diameters()
     plot: large_square
+
+  ms/nature.csl:
+    command: get_nature_csl(target_name)
+
+  ms/ms.pdf:
+    command: pandoc_build("ms/ms.md")
