@@ -1,0 +1,12 @@
+packages:
+  - rmarkdown
+
+sources:
+  - ms-fun.R
+
+targets:
+  all:
+    - MS.pdf
+
+  MS.pdf:
+    command: pandoc_build("MS.md")

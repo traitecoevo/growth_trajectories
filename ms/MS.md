@@ -1,13 +1,17 @@
-% Untangling the link between traits, size and and growth rate in plants
-% Daniel Falster; Rich FitzJohn; Karou Kitajima; Joe Wright
+---
+title:  'Untangling the link between traits, size and and growth rate in plants'
+author:
+- name: Daniel Falster
+  affiliation: Biological Sciences, Macquarie University
+  email: daniel.falster@mq.edu.au
+- name: Rich FitzJohn
+  affiliation: Biological Sciences, Macquarie University
+  email: richard.fitzjohn@mq.edu.au
+bibliography: refs.bib
+csl: nature.csl
 
-# Abstract
-
-* The well documented trade-off between leaf-construction cost ($\phi$) and leaf turnover rate, known as the leaf economics spectrum, represents a core difference in the strategy plants use to generate and invest surplus energy[@wright_world-wide_2004; @falster_influence_2011].
-* In seedlings, $\phi$ correlates tightly with plant growth[@cornelissen_seedling_1996; @wright_cross-species_2000]; the strength of the relationship leading many to use $\phi$ as a generic indicator of potential growth rate. Although existing models suggest this relationship should extend to larger plants[@enquist_general_2007], several attempts to link $\phi$ with growth rate in large trees have been unsuccessful[@wright_functional_2010, @herault_functional_2011, @poorter_are_2008].
-* Here we use a mechanistic model based on carbon balance and allocation[@falster_influence_2011] to first explain why the link between leaf-construction cost and growth rate breaks down in larger plants. The reason is that benefits of cheap leaf construction diminish at larger sizes, while the costs (increased leaf turnover rate) remain.
-* We then use our model to generate ??4?? other fundamental predictions about plant growth and the influence leaf-construction cost; these predictions are verified using data from experimental plantings and long-term plot surveys of the tropical forest at Barro Colorado Island, Panama.
-* Combined, out model ...
+abstract: The well documented trade-off between leaf-construction cost ($\phi$ and leaf turnover rate, known as the leaf economics spectrum, represents a core difference in the strategy plants use to generate and invest surplus energy[@wright_world-wide_2004; @falster_influence_2011]. In seedlings, $\phi$ correlates tightly with plant growth[@cornelissen_seedling_1996; @wright_cross-species_2000]; the strength of the relationship leading many to use $\phi$ as a generic indicator of potential growth rate. Although existing models suggest this relationship should extend to larger plants[@enquist_general_2007], several attempts to link $\phi$ with growth rate in large trees have been unsuccessful[@wright_functional_2010, @herault_functional_2011, @poorter_are_2008]. Here we use a mechanistic model based on carbon balance and allocation[@falster_influence_2011] to first explain why the link between leaf-construction cost and growth rate breaks down in larger plants. The reason is that benefits of cheap leaf construction diminish at larger sizes, while the costs (increased leaf turnover rate) remain. We then use our model to generate ??4?? other fundamental predictions about plant growth and the influence leaf-construction cost; these predictions are verified using data from experimental plantings and long-term plot surveys of the tropical forest at Barro Colorado Island, Panama. Combined, out model.
+---
 
 # Main text
 
