@@ -38,7 +38,7 @@ linear_rescale <- function(x, range, scale = range(x)) {
 
 header_plot <- function(x) {
   oldpar <- par("mar")
-  par(mar = c(0, 0, 1, 0))
+  par(mar = c(0, 0, 2, 0))
   plot(1, 1, type = "n", frame.plot = FALSE, axes = FALSE)
   u <- par("usr")
   text(1, u[4], labels = x, pos = 1, cex = 1.5)

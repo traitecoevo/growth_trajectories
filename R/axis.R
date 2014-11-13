@@ -1,17 +1,17 @@
 
 
-get_axis_info <- function(name, parToGet) {
+get_axis_info <- function(name, parToGet, option=1) {
 
   # TRAITS
   if (name == "lma") {
     ticks <- 0.01 * 2^seq(0, 20)
     lab <- expression(paste("Leaf-construction cost (kg ", m^-2, " )"))
-    lim <- c(0.04, 1.28)
+    lim <- c(0.02, 1.0)
   }
   if (name == "hmat") {
     ticks <- 2^seq(-4, 20)
     lab <- expression(paste("Maximum height (m)"))
-    lim <- c(1, 40)
+    lim <- c(3, 60)
   }
   if (name == "rho") {
     ticks <- 50 * 2^seq(0, 10)
@@ -44,7 +44,7 @@ get_axis_info <- function(name, parToGet) {
   }
 
   if (name == "dbasal_diam_dt") {
-    ticks <- 0.0125 * 2^seq(-5, 10)
+    ticks <- 0.001 * 2^seq(-2, 10)
     lab <- expression(paste("Diameter growth (m ", yr^-1, ")"))
     lim <- c(0, 0.05)
   }
@@ -98,8 +98,8 @@ get_axis_info <- function(name, parToGet) {
     lim <- c(0.2, 5)
   }
 
-  return(get(parToGet))
-}
+  get(parToGet)
+  }
 
 
 new_plot <- function(xvar, yvar, xlim = get_axis_info(xvar, "lim"), xtick = get_axis_info(xvar, "ticks"), xlab = get_axis_info(xvar, "lab"), ylim = get_axis_info(yvar,

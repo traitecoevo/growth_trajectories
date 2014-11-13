@@ -103,7 +103,7 @@ figure_lma_tradeoff <- function(data) {
   site.n <- data.frame(table(sites))
   i <- !is.na(lma) & !is.na(leaf_turnover) & site.n[match(sites, as.character(site.n[, 1])), 2] > 3
 
-  new_plot("lma", "leaf_turnover", log = "xy", line = 5)
+  new_plot("lma", "leaf_turnover", log = "xy", line = 5, xlim = c(0.01, 1.28))
   points(lma[i], leaf_turnover[i], type = "p", col = make_transparent("grey", 0.3), pch = 16, cex = 0.9)
 
   sm1 <- sma(leaf_turnover[i] ~ lma[i] * sites[i], log = "xy")

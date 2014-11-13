@@ -19,6 +19,9 @@ plot_options:
   square:
     width: 8
     height: 8
+  med_square:
+    width: 10
+    height: 10
   large_square:
     width: 12
     height: 12
@@ -108,7 +111,7 @@ targets:
 
   ms/figures/BCI_data.pdf:
     command: fig_BCI_data(BCI_species_data)
-    plot: large_square
+    plot: med_square
 
   ms/figures/growth_light.pdf:
     command: figure_growth_light()
