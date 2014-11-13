@@ -100,27 +100,79 @@ Finally, we predict that all species will show a strong onto-genetic increase in
 
 \newpage
 
+
+
 # Tables
 \begin{table}[h]
-\caption{Predictions and evidence}
+\caption{Model predictions and evidence}
 
+{\small
 \centering
-
-\begin{tabular}{p{7cm}p{4cm}p{4cm}}
+\begin{tabular}{p{4cm}p{4cm}p{2cm}p{6cm}}
+\\
+\multicolumn{4}{l}{\textbf{a) Intrinsic changes with size}} \\ \\
 \hline
-Prediction & For & Against\\ \hline
-
-1. Growth rates show a hump-shaped relationship with size& &\\ \\
-2. The influence of traits on growth rate changes with size& &\\ \\
-2a. Low LCC-LL species have faster growth rates as seedlings& &\\ \\
-2b. There is no consistent relationship between LCC-LL and growth rates among larger plants& &\\ \\
-3. The ranking of growth rates across species does not change with light environment& &\\ \\
-4. The growth rate of low LCC species is more sensitive to changes in light& &\\ \\
-5. Low LCC species are less shade tolerant& &\\ \\
-6. Shade-tolerance decreases with size& &\\ \\
-7. Faster decline in shade tolerance with size for low LCC species& &\\ \\
-8. For all species, LCC increases with size& &\\ \hline
+Variable & Change with size & & Support \\ \hline
+Height growth & strongly hump-shaped & & \\
+Diameter growth & weakly hump-shaped & & \\
+Basal area growth & increases & & \\
+Live mass growth & weakly hump-shaped & & \\
+ABG mass growth & increases & & \\
+Relative growth (any) & decreases & & \\
+Shade tolerance & decreases & & \\ \\
 \end{tabular}
+
+\begin{tabular}{p{4cm}p{2.5cm}p{3.5cm}p{6cm}}
+\multicolumn{4}{l}{\textbf{b) Relationships of demography with traits}} \\ \\
+\hline
+Variable & When small & Change with size & Support \\ \hline
+\multicolumn{4}{l}{\emph{Leaf construction cost}} \\
+
+Height growth & negative & flattens \& reverses & \\
+Diameter growth & negative & flattens & \\
+Basal area growth & negative & flattens \& reverses & \\
+Live mass growth & ??  & & \\
+ABG mass growth & negative & same & \\
+Relative growth (any) & negative & weakens & \\
+Shade tolerance & positive &  strengthens & \\ \\
+
+\multicolumn{4}{l}{\emph{Wood density}} \\
+
+Height growth & negative & strengthens  & \\
+Diameter growth & negative & strengthens & \\
+Basal area growth & negative & strengthens & \\
+Live mass growth & ??  & & \\
+ABG mass growth & negative & strengthens & \\
+Relative growth (any) & negative & ?? & \\
+Shade tolerance & ?? &  ?? & \\ \\
+
+\multicolumn{4}{l}{\emph{Height at maturation}} \\
+
+Any growth measure & none & becomes positive  & \\
+Shade tolerance & none &  none &  \\  \\
+
+\multicolumn{4}{l}{\emph{Leaf nitrogen per area}} \\
+
+Height growth & ?? & ??  & \\
+Diameter growth & ?? & ??  & \\
+Basal area growth & ?? & ??  & \\
+Live mass growth & ?? & ??  & \\
+ABG mass growth & ?? & ??  & \\
+Relative growth & ?? & ??  & \\
+Shade tolerance & ?? &  ?? & \\ \\
+
+\end{tabular}
+
+\begin{tabular}{p{4cm}p{6cm}p{6cm}}
+\multicolumn{3}{l}{\textbf{c) Sensitivity of growth strategies to light}} \\ \\
+\hline
+Trait & Response & Support \\ \hline
+Leaf construction & & \\
+Wood density & & \\
+Height at maturation & & \\
+\end{tabular}
+}
+
 \label{tab:predictions}
 \end{table}
 
@@ -130,8 +182,8 @@ Prediction & For & Against\\ \hline
 \caption{Equations for an allometric growth model}
 \centering
 
-\begin{tabular}{lll}
-\hline
+\begin{tabular}{p{5cm}p{5cm}p{5cm} }
+\\ \hline
 Variable & Function & Derivative\\ \hline
 leaf area & $a_\textrm{l}=\alpha_1 \, h^{\beta_1}$ & $\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}= -\beta_1\big(\frac{a_\textrm{l}}{\alpha_1}\big)^{-(\beta_1+1)}$\\
 leaf mass & $m_\textrm{l}=\phi \, a_\textrm{l} $ & $\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}=\phi$\\
