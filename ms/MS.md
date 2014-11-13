@@ -100,20 +100,42 @@ Finally, we predict that all species will show a strong onto-genetic increase in
 
 \newpage
 
-
-
 # Tables
-\begin{table}[h]
+
+
+\begin{table}[H]
+\caption{Equations for an allometric growth model}
+\centering
+
+\begin{tabular}{p{5cm}p{5cm}p{5cm} }
+\\ \hline
+Variable & Function & Derivative\\ \hline
+leaf area & $a_\textrm{l}=\alpha_1 \, h^{\beta_1}$ & $\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}= -\beta_1\big(\frac{a_\textrm{l}}{\alpha_1}\big)^{-(\beta_1+1)}$\\
+leaf mass & $m_\textrm{l}=\phi \, a_\textrm{l} $ & $\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}=\phi$\\
+sapwoood area & $a_\textrm{ss}=\theta^{-1} \, a_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} =\theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
+sapwood mass&$m_\textrm{ss}=\theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{ss}}{\textrm{d}a_\textrm{l}}=\theta^{-1}\, \rho\, \eta_c\, \big( h + a_\textrm{l}\, \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}} \big)$\\
+bark area & $a_\textrm{sb}=b \, \theta^{-1} \, da_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t}=b \, \theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
+bark mass&$m_\textrm{b}=b\, \theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}}=b \, \theta^{-1} \, \rho \, \eta_c\big( h + a_\textrm{l} \, \frac{\textrm{d}h}{\textrm{d}A} \big)$\\
+heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}=k_\textrm{s} \, a_\textrm{ss}$\\
+heartwood mass & $m_\textrm{sh}=\int_0^t \frac{\textrm{d}m_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}m_\textrm{sh}}{\textrm{d}t}=k_\textrm{s} \, m_\textrm{ss}$\\
+root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}= \alpha_3$ \\\hline
+\end{tabular}
+\label{tab:allometry}
+\end{table}
+
+\newpage
+
+\begin{table}[H]
 \caption{Model predictions and evidence}
 
 {\small
 \centering
 \begin{tabular}{p{4cm}p{4cm}p{2cm}p{6cm}}
 \\
-\multicolumn{4}{l}{\textbf{a) Intrinsic changes with size}} \\ \\
+\multicolumn{4}{l}{\textbf{a) Intrinsic changes in demography with size}} \\ \\
 \hline
 Variable & Change with size & & Support \\ \hline
-Height growth & strongly hump-shaped & & \\
+Height growth & strongly hump-shaped & & Model: ; Data:  \\
 Diameter growth & weakly hump-shaped & & \\
 Basal area growth & increases & & \\
 Live mass growth & weakly hump-shaped & & \\
@@ -123,7 +145,7 @@ Shade tolerance & decreases & & \\ \\
 \end{tabular}
 
 \begin{tabular}{p{4cm}p{2.5cm}p{3.5cm}p{6cm}}
-\multicolumn{4}{l}{\textbf{b) Relationships of demography with traits}} \\ \\
+\multicolumn{4}{l}{\textbf{b) Relationship of demography to traits}} \\ \\
 \hline
 Variable & When small & Change with size & Support \\ \hline
 \multicolumn{4}{l}{\emph{Leaf construction cost}} \\
@@ -170,32 +192,11 @@ Trait & Response & Support \\ \hline
 Leaf construction & & \\
 Wood density & & \\
 Height at maturation & & \\
+Leaf nitrogen per area & &\\
 \end{tabular}
 }
 
 \label{tab:predictions}
-\end{table}
-
-\newpage
-
-\begin{table}[h]
-\caption{Equations for an allometric growth model}
-\centering
-
-\begin{tabular}{p{5cm}p{5cm}p{5cm} }
-\\ \hline
-Variable & Function & Derivative\\ \hline
-leaf area & $a_\textrm{l}=\alpha_1 \, h^{\beta_1}$ & $\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}= -\beta_1\big(\frac{a_\textrm{l}}{\alpha_1}\big)^{-(\beta_1+1)}$\\
-leaf mass & $m_\textrm{l}=\phi \, a_\textrm{l} $ & $\frac{\textrm{d}m_\textrm{l}}{\textrm{d}a_\textrm{l}}=\phi$\\
-sapwoood area & $a_\textrm{ss}=\theta^{-1} \, a_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}t} =\theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
-sapwood mass&$m_\textrm{ss}=\theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{ss}}{\textrm{d}a_\textrm{l}}=\theta^{-1}\, \rho\, \eta_c\, \big( h + a_\textrm{l}\, \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}} \big)$\\
-bark area & $a_\textrm{sb}=b \, \theta^{-1} \, da_\textrm{l}$ & $\frac{\textrm{d}a_\textrm{sb}}{\textrm{d}t}=b \, \theta^{-1} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$\\
-bark mass&$m_\textrm{b}=b\, \theta^{-1} \, \rho \, \eta_c \, a_\textrm{l} \, h $ & $\frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}}=b \, \theta^{-1} \, \rho \, \eta_c\big( h + a_\textrm{l} \, \frac{\textrm{d}h}{\textrm{d}A} \big)$\\
-heartwood area & $a_\textrm{sh}=\int_0^t \frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t}=k_\textrm{s} \, a_\textrm{ss}$\\
-heartwood mass & $m_\textrm{sh}=\int_0^t \frac{\textrm{d}m_\textrm{sh}}{\textrm{d}t}(t^\prime) \, dt^\prime$ & $\frac{\textrm{d}m_\textrm{sh}}{\textrm{d}t}=k_\textrm{s} \, m_\textrm{ss}$\\
-root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}= \alpha_3$ \\\hline
-\end{tabular}
-\label{tab:allometry}
 \end{table}
 
 \newpage
