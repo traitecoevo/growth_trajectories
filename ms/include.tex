@@ -1,6 +1,6 @@
 % THIS FILE TAKEN FROM PANDOC DEMOS PAGE:http://johnmacfarlane.net/pandoc/demos.html,http://johnmacfarlane.net/pandoc/demo/mytemplate.tex
 
-\documentclass[12pt,article,a4paper]{$documentclass$}
+\documentclass[12pt, a4paper]{article}
 \RequirePackage[hmargin=2cm,vmargin=2cm]{geometry}
 
 \usepackage[T1]{fontenc}
@@ -8,42 +8,14 @@
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
+\usepackage{mathabx}
 
-\usepackage{float}
-\restylefloat{table}
-
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[utf8]{inputenc}
-
-$if(euro)$
-  \usepackage{eurosym}
-$endif$
-\else % if luatex or xelatex
-  \usepackage{fontspec}
-  \ifxetex
-    \usepackage{xltxtra,xunicode}
-  \fi
-  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-  \newcommand{\euro}{€}
-
-% \setmainfont{Times New Roman}
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+% \setmainfont{"Times New Roman"}
 % \setsansfont{Arial}
-
-\setmainfont{Garamond}
-\setsansfont{Helvetica}
-
-
-$if(monofont)$
-    \setmonofont{$monofont$}
-$endif$
-$if(mathfont)$
-    \setmathfont{$mathfont$}
-$endif$
-\fi
-
-\usepackage[rgb,dvipsnames]{xcolor}
-\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
-\definecolor{grey}{rgb}{0.5, 0.5, 0.5}
+% \setmonofont{$monofont$}
+% \setmathfont{$mathfont$}
 
 % Fancy HEADER
 \usepackage{fancyhdr}
@@ -56,34 +28,13 @@ $endif$
 \cfoot{}
 %\rfoot{\thepage}
 
-$if(geometry)$
-\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
-$endif$
-$if(natbib)$
-\usepackage{natbib}
-\bibliographystyle{plainnat}
-$endif$
-$if(biblatex)$
-\usepackage{biblatex}
-$if(biblio-files)$
-\bibliography{$biblio-files$}
-$endif$
-$endif$
 $if(listings)$
 \usepackage{listings}
-$endif$
-$if(lhs)$
-\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
-$endif$
-$if(highlighting-macros)$
-$highlighting-macros$
-$endif$
-$if(verbatim-in-note)$
-\usepackage{fancyvrb}
 $endif$
 $if(tables)$
 \usepackage{longtable}
 $endif$
+
 $if(graphics)$
 \usepackage{graphicx}
 % We will generate all images so they have a width \maxwidth. This means
@@ -93,68 +44,55 @@ $if(graphics)$
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
 \else\Gin@nat@width\fi}
 \makeatother
+
 \let\Oldincludegraphics\includegraphics
 \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
 $endif$
-\ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
+
+\usepackage[rgb,dvipsnames]{xcolor}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+\definecolor{grey}{rgb}{0.5, 0.5, 0.5}
+
+\usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
               xetex]{hyperref}
-\else
-  \usepackage[unicode=true]{hyperref}
-\fi
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={$author-meta$},
             pdftitle={$title-meta$},
             colorlinks=true,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$grey$endif$,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$grey$endif$,
-            pdfborder={0 0 0}}
-$if(links-as-notes)$
-% Make links footnotes instead of hotlinks:
-\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
-$endif$
-$if(strikeout)$
-\usepackage[normalem]{ulem}
-% avoid problems with \sout in headers with hyperref:
-\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
-$endif$
+            urlcolor=grey,
+            linkcolor=grey}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
-$if(numbersections)$
-$else$
-\setcounter{secnumdepth}{0}
-$endif$
-$if(verbatim-in-note)$
-\VerbatimFootnotes % allows verbatim text in footnotes
-$endif$
-$if(lang)$
-\ifxetex
-  \usepackage{polyglossia}
-  \setmainlanguage{$mainlang$}
-\else
-  \usepackage[$lang$]{babel}
-\fi
-$endif$
-$for(header-includes)$
-$header-includes$
-$endfor$
+
+\usepackage{titling}
 
 $if(title)$
 \title{$title$}
 $endif$
 
-\author{$for(author)$\Large $author.name$\vspace{0.05in} \\ \normalsize\emph{$author.affiliation$} \\ \url{$author.email$}\vspace*{0.2in}\\ \and $endfor$}
-% \author{$for(author)$$author$$sep$ \and $endfor$}
+$if(author)$
+\author{$for(author)$ {\bf $author.name$} \\ \normalsize\emph{$author.affiliation$} \\ \url{$author.email$}\vspace{0.1in}\\$endfor$ }
+$endif$
 
 \date{$date$}
 
-
 \begin{document}
-$if(title)$
-\maketitle
+
+\thispagestyle{empty} % avoid header and footer on first page. Put after \maketitile, if using that
+
+{\LARGE \bf \thetitle \vspace{0.2in}}
+
+\theauthor
+
+$if(toc)$
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
 $endif$
 
 $if(abstract)$
@@ -163,38 +101,5 @@ $abstract$
 \end{abstract}
 $endif$
 
-$for(include-before)$
-$include-before$
-
-$endfor$
-$if(toc)$
-{
-\hypersetup{linkcolor=black}
-\setcounter{tocdepth}{$toc-depth$}
-\tableofcontents
-}
-$endif$
 $body$
-
-$if(natbib)$
-$if(biblio-files)$
-$if(biblio-title)$
-$if(book-class)$
-\renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
-\bibliography{$biblio-files$}
-
-$endif$
-$endif$
-$if(biblatex)$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
-$endif$
-$for(include-after)$
-$include-after$
-
-$endfor$
 \end{document}
