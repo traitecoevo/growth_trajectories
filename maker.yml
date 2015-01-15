@@ -29,16 +29,34 @@ plot_options:
 targets:
   all:
     depends:
-      - data
-      - tables
-      - figures
       - ms/ms.pdf
-      - ms/nature.csl
 
-  data:
+  ms/ms.pdf:
+    command: pandoc_build("ms/ms.md")
     depends:
-      - BCI_species_data
-      - glopnet
+      - ms/nature.csl
+      - ms/table-pars.tex
+      - ms/figures/BCI_data.pdf
+      - ms/figures/growth_light.pdf
+      - ms/figures/lma_optim.pdf
+      - ms/figures/lma_wplcp.pdf
+      - ms/figures/SI_mass_fraction.pdf
+      - ms/figures/SI_lma_tradeoff.pdf
+      - ms/figures/SI_size_dpdt.pdf
+      - ms/figures/SI_size_dhdt.pdf
+      - ms/figures/SI_size_daldt.pdf
+      - ms/figures/SI_lma_effects_at_heights.pdf
+      - ms/figures/SI_rho_effects_at_heights.pdf
+      - ms/figures/SI_hmat_effects_at_heights.pdf
+      - ms/figures/SI_lma_relative_effects_at_heights.pdf
+      - ms/figures/SI_rho_relative_effects_at_heights.pdf
+      - ms/figures/SI_hmat_relative_effects_at_heights.pdf
+      - ms/figures/SI_lma_effects_at_diameters.pdf
+      - ms/figures/SI_rho_effects_at_diameters.pdf
+      - ms/figures/SI_hmat_effects_at_diameters.pdf
+      - ms/figures/SI_lma_relative_effects_at_diameters.pdf
+      - ms/figures/SI_rho_relative_effects_at_diameters.pdf
+      - ms/figures/SI_hmat_relative_effects_at_diameters.pdf
 
   BCI_species_data:
     command: BCI_calculate_species_traits(BCI_individual_growth, wright_2010)
@@ -75,39 +93,11 @@ targets:
   glopnet_locations:
     command: read.csv("data/wright_2004_locations.csv")
 
-  tables:
-    depends:
-      - ms/table-pars.tex
-
   ms/table-pars.tex:
     command: table_tree_parameters(tree_parameters, target_name)
 
   tree_parameters:
     command: read.csv("data/growth_model_pars.csv")
-
-  figures:
-    depends:
-      - ms/figures/BCI_data.pdf
-      - ms/figures/growth_light.pdf
-      - ms/figures/lma_optim.pdf
-      - ms/figures/lma_wplcp.pdf
-      - ms/figures/SI_mass_fraction.pdf
-      - ms/figures/SI_lma_tradeoff.pdf
-      - ms/figures/SI_size_dpdt.pdf
-      - ms/figures/SI_size_dhdt.pdf
-      - ms/figures/SI_size_daldt.pdf
-      - ms/figures/SI_lma_effects_at_heights.pdf
-      - ms/figures/SI_rho_effects_at_heights.pdf
-      - ms/figures/SI_hmat_effects_at_heights.pdf
-      - ms/figures/SI_lma_relative_effects_at_heights.pdf
-      - ms/figures/SI_rho_relative_effects_at_heights.pdf
-      - ms/figures/SI_hmat_relative_effects_at_heights.pdf
-      - ms/figures/SI_lma_effects_at_diameters.pdf
-      - ms/figures/SI_rho_effects_at_diameters.pdf
-      - ms/figures/SI_hmat_effects_at_diameters.pdf
-      - ms/figures/SI_lma_relative_effects_at_diameters.pdf
-      - ms/figures/SI_rho_relative_effects_at_diameters.pdf
-      - ms/figures/SI_hmat_relative_effects_at_diameters.pdf
 
   ms/figures/BCI_data.pdf:
     command: fig_BCI_data(BCI_species_data)
@@ -195,6 +185,3 @@ targets:
 
   ms/nature.csl:
     command: get_nature_csl(target_name)
-
-  ms/ms.pdf:
-    command: pandoc_build("ms/ms.md")
