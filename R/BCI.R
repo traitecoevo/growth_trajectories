@@ -45,7 +45,7 @@ BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
 
   # bands in which to calculate growth rate In all but first band we estimate growth at centre of band.  The first interval is repeated so that we can estimate
   # growth at LHS also
-  size_min <- c(10, 10, 15, 20, 25, 30, 40, 50, 60)/1000
+  size_min <- c(10, 10, 25, 50, 100, 200)/1000
   size_range <- data.frame(at = 2 * size_min, min = size_min, max = 4 * size_min)
   size_range[1, "at"] <- 10 / 1000
 
@@ -176,7 +176,7 @@ figure_trait_growth_data_panel <- function(data, axes = c("lma", "dbasal_diam_dt
 }
 
 
-fig_BCI_data <- function(data, at = c(10, 20, 60, 120)/1000) {
+fig_BCI_data <- function(data, at = c(10, 20, 50, 100, 200)/1000) {
 
   op <- par(oma = c(3, 6, 3, 1), mar = c(1, 1, 2, 1))
 
