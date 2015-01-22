@@ -167,9 +167,13 @@ figure_mass_fraction <- function(h = 1:50, E = 1, strategy = default_strategy(),
 }
 
 figure_trait_effect_at_size <- function(trait, growth_measure, size_measure, size, strategy = default_strategy(), E = 1, ylim = NULL, title = TRUE, ylab = NULL,
-  ...) {
+  xlim = NULL,   ...) {
 
-  x.range <- get_axis_info(trait, "lim")
+  if(is.null(xlim))
+    x.range <- get_axis_info(trait, "lim")
+  else
+    x.range <- xlim
+
   xx <- seq_log_range(x.range, 50)
 
   distance_from_target_fn <- function(plant) {

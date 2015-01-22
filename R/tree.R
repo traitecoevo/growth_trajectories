@@ -119,7 +119,7 @@ wplcp_with_trait <- function(x, trait, strategy = new(Strategy), h = 0.2) {
 }
 
 # finds tarit value in range that maximises growth rate at given size and light
-maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Strategy)) {
+maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Strategy), outcome ="height_growth_rate", tol=1e-6) {
 
   if (length(h) > 1) {
     cat("error, h must have length 1")
@@ -129,20 +129,22 @@ maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Str
   }
 
   # wrapper function to pass to optimise
-  dHdt.wrap <- function(x) {
+  f <- function(x) {
 
     strategy <- strategy$copy()
     strategy$set_parameters(structure(list(x), names = trait))
     plant <- new(Plant, strategy)
     plant$height <- h
 
-    run_plant(plant, E)[["height_growth_rate"]]
+    run_plant(plant, E)[[outcome]]
   }
 
-  opt <- optimise(dHdt.wrap, range, maximum = TRUE, tol = 1e-06)
+  opt <- optimise(f, range, maximum = TRUE, tol = tol)
 
   if (opt$objective > 0)
-    out <- opt$maximum else out <- NA
+    out <- opt$maximum
+  else out <- NA
+
   out
 }
 
