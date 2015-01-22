@@ -1,0 +1,228 @@
+# Fitting TREE to observed data
+
+
+```{r, echo=FALSE, results="hide"}
+sourceDir <- function(path, ...) {
+     for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
+        source(file.path(path, nm), ...)
+     }
+}
+sourceDir("R")
+```
+
+## Data
+
+Used estimate potential growth rate and species-level traits.
+
+```{r, echo=TRUE, results="hide"}
+library(maker)
+library(dplyr)
+
+m <- maker::maker()
+m$make("BCI_species_data")
+data <- m$get("BCI_species_data")
+head(data)
+```
+
+## Model
+
+We now need a function taking as arguments size x, traits, parameters and returning estimated growth rate
+
+```{r, echo=TRUE, results="hide"}
+library(tree)
+
+# given a dbh x, traits and parameters, grows plant to right size and estimates growth rate
+run_tree <- function(x, E=1, traits=list(), pars=list(), strategy = default_strategy()) {
+
+  distance_from_target_fn <- function(plant) {
+    plant$vars_size[["diameter"]] - x
+  }
+
+  strategy <- strategy$copy()
+  strategy$set_parameters(traits)
+  strategy$set_parameters(pars)
+  plant1 <- new(Plant, strategy)
+  plant1$height <- 0.1
+  plant <- try(grow.plant.to.size(plant1, fixed.environment(E), distance.from.target = distance_from_target_fn), silent = FALSE)
+  if (inherits(plant, "try-error"))
+      return(0)
+  run_plant(plant, E)$dbasal_diam_dt
+}
+```
+We can test it works
+
+```{r, echo=TRUE, results="show"}
+run_tree(0.01)
+run_tree(0.01, traits=list(lma=0.2))
+run_tree(0.01, traits=list(lma=0.5))
+```
+
+## Fitting the model using  nonlinear regression
+
+To fit the model we can use the package [minpack.lm](http://cran.r-project.org/web/packages/minpack.lm/index.html). According to [this blog](http://www.r-bloggers.com/a-better-nls/), the standard `nls` routine in R does not use the  [Levenberg-Marquardt](http://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm) approach, which "is more robust,  i.e. finds a solution even if it starts very far off the final minimum. This is because its switching between Gauss-Newton and gradient descent.
+
+Here's the example on how use minpack.lm:
+
+```{r, echo=TRUE, results="show"}
+library(minpack.lm)
+## values over which to simulate data
+x <- seq(0,5,length=100)
+## model based on a list of parameters
+getPred <- function(parS, xx) parS$a * exp(xx * parS$b) + parS$c
+## parameter values used to simulate data
+pp <- list(a=9,b=-1, c=6)
+## simulated data, with noise
+simDNoisy <- getPred(pp,x) + rnorm(length(x),sd=.1)
+## plot data
+plot(x,simDNoisy, main="data")
+## residual function
+residFun <- function(p, observed, xx) observed - getPred(p,xx)
+## starting values for parameters
+parStart <- list(a=3,b=-.001, c=1)
+## perform fit
+nls.out <- nls.lm(par=parStart, fn = residFun, observed = simDNoisy,
+xx = x, control = nls.lm.control(nprint=1))
+## plot model evaluated at final parameter estimates
+lines(x,getPred(as.list(coef(nls.out)), x), col=2, lwd=2)
+## summary information on parameter estimates
+summary(nls.out)
+```
+
+
+Now our model. We ned a function which given parameters and covrites predicts growth rates:
+
+```{r, echo=TRUE, results="hide"}
+# generative mdoel
+# takes pars and traits
+getPred <- function(pars, xx) {
+	npoints <- nrow(xx)
+	zz <- rep(NA_real_, npoints)
+	for(i in seq_len(npoints)) {
+		zz[i] <- run_tree(xx$dbh[i], E=1, traits=list(lma=xx$lma[i], rho=xx$rho[i], hmat=100), pars=pars)
+	}
+	zz
+}
+```
+
+And another which calculates residuals by comparing to observed:
+
+```{r, echo=TRUE, results="hide"}
+residFun <- function(p, observed, xx) observed - getPred(p,xx)
+```
+
+The set parameters to fit an some lower bounds (optionl) for these:
+
+```{r, echo=TRUE, results="hide"}
+par_init <- list(k_l0=0.4, k_s0=0.2, c_NUE=80213)
+lower <- c(0,0,2000)
+names(lower) <- c("k_l0","k_s0", "c_NUE")
+```
+
+Finally prepare the data for comparison. In this trial we'll just use the smallest size class.
+
+```{r, echo=TRUE, results="hide"}
+data <- m$get("BCI_species_data") %>%
+  mutate(dbh=at) %>%
+  filter(!is.na(lma*rho*hmat*dbh*dbasal_diam_dt), dbh %in% c(0.01), hmat > 10) %>%
+  select(dbh, lma, rho, dbasal_diam_dt)
+```
+
+We can now test our functions work:
+
+```{r, echo=TRUE, results="show"}
+x_example <- data[c(1,10), c("dbh", "lma", "rho")]
+obs_example <- data[c(1,10), c("dbasal_diam_dt")]
+getPred(par_init, x_example)
+residFun(par_init, obs_example, x_example)
+```
+
+And then fit the model to the data.
+
+```{r, echo=TRUE, results="show"}
+x <- data[, c("dbh", "lma", "rho")]
+obs <- data$dbasal_diam_dt
+
+nls.out <- nls.lm(par=par_init, fn = residFun, observed = obs, xx = x,
+		lower=lower,
+		control = nls.lm.control(nprint=1, ftol=1e-4))
+
+out.init <- getPred(par_init, x)
+out.fit <- getPred(as.list(coef(nls.out)), x)
+```
+
+Finally compare to data:
+
+```{r, echo=TRUE, results="show"}
+par(mfrow=c(2,1))
+for(trait in c("lma", "rho")) {
+	plot(x[[trait]],obs, xlab=trait, ylab= "dbh growth", pch=16)
+	xs <- x[order(x[[trait]]),]
+	other_trait <- c("lma", "rho")[!c("lma", "rho") %in% trait]
+	xs[[other_trait]] <- mean(xs[[other_trait]])
+
+	out.init <- getPred(par_init, xs)
+	out.fit <- getPred(as.list(coef(nls.out)), xs)
+
+	lines(xs[[trait]],out.init, col="grey", lwd=2)
+	lines(xs[[trait]],out.fit, col=2, lwd=2)
+}
+mtext(paste("fitting pars", paste(names(par_init), collapse=", ")), side=3, outer=TRUE, line=-2, cex=2)
+legend("topright", legend=c("Initial", "Fitted"), col=c("grey", "red"), lty="solid", bty = "n")
+```
+
+
+# Fitting with distribution and likelihood based approach
+
+Using the nls is ok but not ideal because it only returns one plausible combination of parametrs. A better approach would be to fit using a
+distribution-based approach. For this there are two challenges:
+
+1. Defining the likelihood
+2. Fitting the model
+
+## Defining the likelihood
+
+The main challenge for us is to define the likelihood of a model given observed data.For this type of problem the following approaches have been used:
+
+### Approximate Bayesian computing (ABC)
+
+Suits problems where cannot define likelihood of model, and the model is stochastic, i.e. has some inherent variability
+
+R Packages:
+
+- R package [EasyABC](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12050)
+- R package [ABC](http://onlinelibrary.wiley.com/doi/10.1111/j.2041-210X.2011.00179.x)
+
+Our model is determinsitic so does not produce a distribution, rather a single value. hence ABC does not seem so useful
+
+### Make distributional assumption
+
+From [Vrugt 2003](http://doi.org/10.1029/2002WR001642): Assuming that the residuals are mutually independent, Gaussian distributed, with constant variance, the likelihood of a parameter set q(t) for describing the observed data y can be computed using sum of squares of stanadarides error terms..
+
+From [Hartig 2014](http://arxiv.org/abs/1401.8205): Most previous applications of Bayesian statistics to process-based ecological models derive this probability by making distributional assumptions about how observations vary around mean model predictions that are independent of the processes in the model, either ad-hoc or based on the ob- served variance in the data (e.g. Martínez et al., 2011; van Oijen et al., 2013). This is usually justified with the idea in mind that there is observation uncertainty or variability in en- vironmental conditions that is not accounted for in the model
+
+[Van Oijen 2013](http://treephys.oxfordjournals.org/content/25/7/915): The likelihood function p(D θ) is determined by the distribution of the measurement error, assumed to be additive, Gaussian and uncorrelated. Because we have no information about the precision of the measurements of the Skogaby data (Table 3), we choose the standard deviation of each measurement to be 30\% of the mean value.
+
+
+### Other approaches
+
+[Keenan 2013](http://www.esajournals.org/doi/abs/10.1890/12-0747.1) provides an example of mdoel-data fusion without explictly defining likelihood - uses a cost function for compare multiple outputs aginst data, then samples space using MCMC. Acceptance of a parameter set is based on whether the cost function for each data stream passes a chi-squared test (at 90\% confidence) for acceptance/ rejection, after variance normalization. The cost function quantifies the extent of model–data mismatch using all available data (eddy-covariance, biometric, and so forth).
+
+[LeBauer 2012](http://doi.org/10.1890/12-0137.1): Uses informative prior based on metanalysis, then propagates that through model by running an ensemble to give posterior of model predictions. Does not actually compare to data.
+
+## Sampling
+
+Options for sampling model. [This blog](http://www.sumsar.net/blog/2013/06/three-ways-to-run-bayesian-models-in-r/
+) compares some of approaches
+
+[JAGS](http://mcmc-jags.sourceforge.net/)
+
+- Ecologists standard
+- By Jags does not take custom functions
+- are possibilities for defining own distribution via C++: http://www.cidlab.com/prints/wabersich2013poster.pdf
+- some tutorials: http://www.johnmyleswhite.com/notebook/2010/08/20/using-jags-in-r-with-the-rjags-package/, http://www.stat.cmu.edu/~rsteorts/jags_present.pdf
+
+[Rcppbugs](https://github.com/armstrtw/rcppbugs)
+
+- claims to be native R, much faster than JAGS
+- can use custom R functions and distributions
+- problem installing: `devtools::install_github("armstrtw/rcppbugs")`
