@@ -106,21 +106,29 @@ figure_optimal_lma_light <- function() {
   par(op)
 }
 
-
 # growth decomp
-figure_lma_wplcp <- function() {
+figure_wplcp <- function() {
 
-  op <- par(oma = c(4, 4, 1, 1))
+  op <- par(oma = c(4, 4, 1, 1), mar = c(1, 1, 1, 1), mfcol=c(1,2))
 
-  new_plot("lma", "shading", log = "xy")
+  for(trait in c("lma", "rho")) {
 
-  lma <- 10^seq(-2, 0.5, length.out = 50)
-  for (h in c(0.1, 2, 10, 20)) {
-    x <- log(wplcp_with_trait(lma, "lma", h = h))/-0.5
-    points(lma, x, type = "l")
-    i <- 25 - 4 * floor(log2(22 - h))
-    text(lma[i], x[i], pos = 3, labels = paste0("h=", h), col = "grey")
+    if (trait=="lma"){
+      new_plot(trait, "shading", log = "xy", line=5)
+    } else{
+      new_plot(trait, "shading", log = "xy", ylab = NULL,  ytick.lab = NA, line=5)
+    }
+
+    x <- seq_log_range(get_axis_info(trait, "lim"), 20)
+
+    for (h in c(0.1, 2, 10, 20)) {
+      y <- log(wplcp_with_trait(x, trait, h = h))/-0.5
+      points(x, y, type = "l")
+      i <- 25 - 4 * floor(log2(22 - h))
+      text(x[i], y[i], pos = 3, labels = paste0("h = ", h), col = "grey")
+      }
   }
+
   par(op)
 }
 

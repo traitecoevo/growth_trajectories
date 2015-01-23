@@ -107,9 +107,9 @@ targets:
     command: figure_growth_light()
     plot: square
 
-  ms/figures/lma_wplcp.pdf:
-    command: figure_lma_wplcp()
-    plot: square
+  ms/figures/wplcp.pdf:
+    command: figure_wplcp()
+    plot: wide
 
   ms/figures/lma_optim.pdf:
     command: figure_optimal_lma_light()

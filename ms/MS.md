@@ -101,9 +101,9 @@ Leaf area per sapwood area
 
 In the current model, the only effects of the trait seed size ($s$) are to influence starting size of seedlings and fecundity of the mother. Seed size therefore has no direct influence on absolute growth (Table \ref{tab:predictions}). In may studies seed size has been found to be negatively correlated with mass-based relative growth rate of seedlings. This effect is recovered here because of the intrinsic decrease in RGR with size.
 
-Two other important predictions arise directly from linking traits to growth rate (Table \ref{tab:predictions}c). First, species with low construction cost show stronger responses to changes in light environment. (XXX check this is true with respect to to sixe). Fig. \ref{f-lma_growth_light} shows that species with low $\phi$ exhibit a wider range of growth rates, and also that the relationship between $\phi$ and growth rate flattens out under more stressed conditions. A similar response is observed for changes in $\rho$, matching empirically observed patterns[@ruger_functional_2012].
+Two other important predictions arise directly from linking traits to growth rate (Table \ref{tab:predictions}c). First, species with low construction cost show stronger responses to changes in light environment. (XXX check this is true with respect to to sixe). Fig. \ref{f-growth_light} shows that species with low $\phi$ exhibit a wider range of growth rates, and also that the relationship between $\phi$ and growth rate flattens out under more stressed conditions. A similar response is observed for changes in $\rho$, matching empirically observed patterns[@ruger_functional_2012].
 
-Second, species with low $\phi$ and low $\rho$ are predicted to be less shade tolerant (Fig. \ref{f-lma_wplcp}). At low $\phi$ ($\rho$), leaf (sapwood) turnover is higher and thus a greater light income is needed to offset these costs. As previously suggested [@givnish_adaptation_1988], shade-tolerance also decreases with height because as size increase, the total amount of energy needed to offset respiratory and turnover costs in the stem also increases. These finding matches well known empirical patterns, where both $\phi$ and $\rho$ have been liked to shade tolerance[@poorter_leaf_2006; @lusk_ontogenetic_2008; @osunkoya_light_1996].
+Second, species with low $\phi$ and low $\rho$ are predicted to be less shade tolerant (Fig. \ref{f-wplcp}). At low $\phi$ ($\rho$), leaf (sapwood) turnover is higher and thus a greater light income is needed to offset these costs. As previously suggested [@givnish_adaptation_1988], shade-tolerance also decreases with height because as size increase, the total amount of energy needed to offset respiratory and turnover costs in the stem also increases. These finding matches well known empirical patterns, where both $\phi$ and $\rho$ have been liked to shade tolerance[@poorter_leaf_2006; @lusk_ontogenetic_2008; @osunkoya_light_1996].
 
 Conclusion,.....
 
@@ -135,12 +135,12 @@ For XXX species growing in lowland forest at BCI Panama, we estimated the potent
 
 ![**Low construction cost allows more vigorous response to increased light.**
 Plot shows predicted relationship between height growth rate and leaf-construction cost under a range of shading environments for plants 0.25m tall.
-\label{f-lma_growth_light}](figures/growth_light.pdf)
+\label{f-growth_light}](figures/growth_light.pdf)
 
 \newpage
 
 ![**Low construction cost leads to shade intolerance, because of costs of high turnover.**
-\label{f-wplcp}](figures/lma_wplcp.pdf)
+\label{f-wplcp}](figures/wplcp.pdf)
 
 \newpage
 
