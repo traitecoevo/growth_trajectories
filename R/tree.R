@@ -1,7 +1,7 @@
 
 default_strategy <- function() {
   strategy <- new(Strategy)
-  strategy$set_parameters(structure(list(0.4565855/3, 0.8, 10, 0.2, 2.17, 0.546), names = c("k_l0", "c_r1", "c_r2", "k_s0", "a1", "B1")))
+  strategy$set_parameters(structure(list(1, 0.4565855/3, 30, 0.8, 20, 0.2, 2.17, 0.546), names = c("B5", "k_l0", "hmat", "c_r1", "c_r2", "k_s0", "a1", "B1")))
   strategy
 }
 
