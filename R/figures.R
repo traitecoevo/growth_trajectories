@@ -30,26 +30,65 @@ figure_size <- function(yvars = c("height_growth_rate", "dheight_dleaf_area", "l
   }
 }
 
+figure_growth_light <- function(strategy = default_strategy()) {
+  op <- par(oma = c(3, 6, 3, 1), mar = c(1, 1, 2, 1))
 
-figure_growth_light <- function(h = 0.25, strategy = default_strategy()) {
-  op <- par(oma = c(4, 4, 1, 1))
+  at <- c(0.005, 0.01, 0.1)
+  nrows <- 2
+  ncols <- length(at)
 
-  new_plot("lma", "height_growth_rate", log = "x", ylim = c(0, 0.5), ytick = seq(0, 0.5, by = 0.1), ytick.lab = seq(0, 0.5, by = 0.1))
-
-  lma <- 10^seq(-2, 1, length.out = 50)
-  for (E in seq(0.2, 1, by = 0.2)) {
-    plants <- change_with_trait(lma, "lma", E = E, distance_from_target_fn = function(plant) {
-      plant$height - h
-    }, strategy = strategy)
-    i <- !sapply(plants, is.null)  # check for null values
-    x <- lma[i]
-    y <- do.call(rbind, plants[i])[["height_growth_rate"]]
-    points(x, y, type = "l")
-
-    i <- 20
-    text(x[i], y[i], pos = 3, labels = paste0(format(-log(E)/0.5, digits = 1), "m2"), col = "grey")
+  m <- matrix(rep(c(1:ncols, rep(ncols + 1, ncols)), nrows) + sort(rep(0:(nrows - 1), ncols * 2)) * (ncols + 1), ncol = ncols, byrow = TRUE)
+  layout(m, widths = rep(1/ncols, ncols), heights = rep(c(0.8, 0.2)/nrows, nrows))
+  E <- exp(-0.5*c(0, 0.5, 1, 2,3))
+  for(trait in c("lma", "rho")) {
+    figure_trait_growth_model_panel(E,trait, at = at, strategy=strategy, title = (trait=="lma"))
+    header_plot(get_axis_info(trait, "lab"))
   }
+  mtext(get_axis_info("dbasal_diam_dt", "lab"), line = 4, side = 2, cex = 1, outer = TRUE)
   par(op)
+}
+
+
+figure_trait_growth_model_panel <- function(E, trait, at, title = FALSE, ...) {
+
+  for (a in at) {
+    if (a == at[1])
+      ytick <- TRUE else ytick <- FALSE
+
+  figure_trait_growth_model(E,  a, trait, ytick.lab = ytick, ...)
+  if (title)
+    mtext(paste0("dbh=", a, "m"), cex=1, line =1 )
+  }
+}
+
+figure_trait_growth_model <- function(E,  at, trait, ytick.lab = TRUE, strategy = default_strategy,
+  ylim =c(0.0, 0.08), ...) {
+
+  axes <- c(trait, "dbasal_diam_dt")
+
+  ytick <- seq(0, 0.1, by=0.02)
+
+  if (ytick.lab){
+    new_plot(axes[1], axes[2], log = "x", xlab = NULL, ylab = NULL, ylim = ylim,
+      ytick=ytick, ...)
+  } else{
+    new_plot(axes[1], axes[2], log = "x", xlab = NULL, ylab = NULL, ylim = ylim,
+      ytick=ytick, ytick.lab = NA, ...)
+  }
+
+  x <- seq_log_range(get_axis_info(trait, "lim"), 20)
+
+  for (env in E) {
+    plants <- change_with_trait(x, trait, env,
+      distance_from_target_fn = function(plant) { plant$vars_size[["diameter"]] - at},
+      strategy = strategy)
+    keep <- !sapply(plants, is.null)  # check for null values
+    xx <- x[keep]
+    y <- do.call(rbind, plants[keep])[["dbasal_diam_dt"]]
+    points(xx, y, type = "l")
+    keep <- 2
+    text(xx[keep], y[keep], pos = 3, labels = paste0(format(-log(env)/0.5, digits = 1), " m2"), col = "grey")
+  }
 }
 
 figure_optimal_lma_light <- function() {
