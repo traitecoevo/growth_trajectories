@@ -17,7 +17,7 @@ fixed.environment <- function(E, height, n = 101, light.env = NULL, n.strategies
   env$init(hh, ee)
 
   parameters <- new(Parameters)
-  for (i in seq_len(n.strategies)) parameters$add_strategy(new(Strategy))
+  for (i in seq_len(n.strategies)) parameters$add_strategy(default_strategy())
   parameters$seed_rain <- seed.rain
 
   ret <- new(Environment, parameters)
@@ -43,7 +43,7 @@ run_plant <- function(plant, E = 1) {
   x
 }
 
-change_with_height <- function(h = seq(0.2, 1, length.out = 10), E = 1, strategy = new(Strategy)) {
+change_with_height <- function(h = seq(0.2, 1, length.out = 10), E = 1, strategy = default_strategy()) {
 
   myfun <- function(x) {
     plant <- new(Plant, strategy)
@@ -55,7 +55,7 @@ change_with_height <- function(h = seq(0.2, 1, length.out = 10), E = 1, strategy
 }
 
 # e.g.  = function(plant){plant$height - 0.25}
-change_with_light <- function(E = seq(0.1, 1, length.out = 20), distance_from_target_fn, strategy = new(Strategy)) {
+change_with_light <- function(E = seq(0.1, 1, length.out = 20), distance_from_target_fn, strategy = default_strategy()) {
 
   myfun <- function(x) {
     plant1 <- new(Plant, strategy)
@@ -70,7 +70,7 @@ change_with_light <- function(E = seq(0.1, 1, length.out = 20), distance_from_ta
 
 # given a vector of values x for a given parameter with name 'trait', runs plants across range of values for x e.g. distance_from_target_fn =
 # function(plant){plant$height - 0.25}
-change_with_trait <- function(x, trait, E, distance_from_target_fn, strategy = new(Strategy)) {
+change_with_trait <- function(x, trait, E, distance_from_target_fn, strategy = default_strategy()) {
 
   # Clones strategy, changes value of 'trait' to x then runs plant
   myfun <- function(x) {
@@ -88,7 +88,7 @@ change_with_trait <- function(x, trait, E, distance_from_target_fn, strategy = n
 }
 
 # estimates whole-plant-light-compensation-point for plant with given height and strategy
-wplcp <- function(h = 0.2, strategy = new(Strategy)) {
+wplcp <- function(h = 0.2, strategy = default_strategy()) {
 
   # runs a plant with given height, environment and strategy, returns mass production used as wrapper for root solving, to pass to wplcp
   run_plant_production <- function(E) {
@@ -103,7 +103,7 @@ wplcp <- function(h = 0.2, strategy = new(Strategy)) {
   out
 }
 
-wplcp_with_height <- function(h, strategy = new(Strategy)) {
+wplcp_with_height <- function(h, strategy = default_strategy()) {
   sapply(h, function(x) wplcp(x, strategy))
 }
 
@@ -114,12 +114,12 @@ modify_strategy_then_find_wplcp <- function(x, trait, strategy, ...) {
   wplcp(strategy = strategy, ...)
 }
 
-wplcp_with_trait <- function(x, trait, strategy = new(Strategy), h = 0.2) {
+wplcp_with_trait <- function(x, trait, strategy = default_strategy(), h = 0.2) {
   sapply(x, modify_strategy_then_find_wplcp, strategy = strategy, trait = trait, h = h)
 }
 
 # finds tarit value in range that maximises growth rate at given size and light
-maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Strategy), outcome ="height_growth_rate", tol=1e-6) {
+maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = default_strategy(), outcome ="height_growth_rate", tol=1e-6) {
 
   if (length(h) > 1) {
     cat("error, h must have length 1")
@@ -149,11 +149,11 @@ maximise_growth_rate_by_trait <- function(trait, range, h, E, strategy = new(Str
 }
 
 # solve for trait value maximising growth over different light environments
-trait_maximimum_with_light <- function(E, trait, range, h = 0.2, strategy = new(Strategy)) {
+trait_maximimum_with_light <- function(E, trait, range, h = 0.2, strategy = default_strategy()) {
   sapply(E, function(x) maximise_growth_rate_by_trait(trait, range, h, x, strategy))
 }
 
 # solve for trait value maximising growth over sizes
-trait_maximimum_with_size <- function(h, trait, range, E = 1, strategy = new(Strategy)) {
+trait_maximimum_with_size <- function(h, trait, range, E = 1, strategy = default_strategy()) {
   sapply(h, function(x) maximise_growth_rate_by_trait(trait, range, x, E, strategy))
 }
