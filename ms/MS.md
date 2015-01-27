@@ -103,6 +103,8 @@ In the current model, the only effects of the trait seed size ($s$) are to influ
 
 Two other important predictions arise directly from linking traits to growth rate (Table \ref{tab:predictions}c). First, species with low construction cost show stronger responses to changes in light environment. (XXX check this is true with respect to to sixe). Fig. \ref{f-growth_light} shows that species with low $\phi$ exhibit a wider range of growth rates, and also that the relationship between $\phi$ and growth rate flattens out under more stressed conditions. A similar response is observed for changes in $\rho$, matching empirically observed patterns[@ruger_functional_2012].
 
+Captures patterns from Ruger
+
 Second, species with low $\phi$ and low $\rho$ are predicted to be less shade tolerant (Fig. \ref{f-wplcp}). At low $\phi$ ($\rho$), leaf (sapwood) turnover is higher and thus a greater light income is needed to offset these costs. As previously suggested [@givnish_adaptation_1988], shade-tolerance also decreases with height because as size increase, the total amount of energy needed to offset respiratory and turnover costs in the stem also increases. These finding matches well known empirical patterns, where both $\phi$ and $\rho$ have been liked to shade tolerance[@poorter_leaf_2006; @lusk_ontogenetic_2008; @osunkoya_light_1996].
 
 Conclusion,.....
@@ -324,6 +326,54 @@ m_\textrm{r}=\alpha_3 \, a_\textrm{l}.
 Even though nitrogen and water uptake are not modelled explicitly, imposing a fixed ratio of root mass to leaf area ensures that approximate costs of root production are included in calculations of carbon budget.
 
 \newpage
+
+## Trait values maximising height growth
+
+We want to find the trait values maximising growth rate, $G$. To make the analysis more tractible, we will focus on height growth rate and assume we are dealing with a plant of given height where 100% of available energy is allocated to growth. From eq. \ref{eq:dhdt}, we thus have
+
+\begin{equation} \label{eq:G1}
+G = \frac{\textrm{d}h}{\textrm{d}t} = \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}
+\times \frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}
+\times \frac{\textrm{d}m_\textrm{t}} {\textrm{d}P}
+\times \frac{\textrm{d}P}{\textrm{d}t}.
+\end{equation}
+
+Maximising $G$ is equivalent to solving for trait values $x$ giving $\partial G  /\partial x = 0$. Noting that traits do not influence $\frac{\textrm{d}h} {\textrm{d}a_\textrm{l}}$, and by assumption $\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}=1$, we thus have
+
+\begin{equation} \label{eq:G2}
+G =  c_1   \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}  \frac{ \textrm{d}P} {\textrm{d}t} \right),
+\end{equation}
+
+where $c_1 = \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}$. Eq. \ref{eq:G2} is a product of the form $Y = W(x) \times Z(x)$. For, equations of this type, a solution to $\partial{Y}/\partial{x} =0$ is given by $\partial{W}/\partial{x} / W = \partial{Z}/\partial{x} / Z$. Maximum growth rate thus occurs when
+\begin{equation} \label{eq:G3}
+\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\right)}{\partial x} \frac{1}{\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}} = \frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x} \frac{1}{\frac{ \textrm{d}P} {\textrm{d}t} }.
+\end{equation}
+In words, the maximum occurs when relative change in marginal leaf deployment with respect to trait is equal to the relative change in mass production with respect to the trait.
+
+Let us now try and simplify equation \ref{eq:G3}. First, let our trait of interest be LCC, i.e. $x=\phi$. From eq/ \ref{eq:daldmt}, we can derive
+\begin{equation} \label{eq:G4}
+\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\right)}{\partial \phi} = -\left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\ \right)^2.
+\end{equation}
+This simplifies eq. \ref{eq:G3} to
+
+\begin{equation} \label{eq:G5}
+\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}(x) =  \frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x} \frac{1}{\frac{ \textrm{d}P} {\textrm{d}t} }.
+\end{equation}
+From eq. \ref{eq:dPdt} we obtain, \begin{equation}\label{eq:dPdt2}
+\frac{dP}{\textrm{d}t} = c_2 - a_\textrm{l} a_4 \phi ^{1-B_4}
+\end{equation}
+where $c_2 = Y ( a_\textrm{l} \, (A - r_\textrm{l}) + \sum_\textrm{i=b,s,r}{m_\textrm{i} \, r_\textrm{i}}) - (\sum_\textrm{i=b,s,r}{m_\textrm{i} \, k_\textrm{i}})$ is independt of $\phi$, and thus
+\begin{equation}\label{eq:dPdt3}
+\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial \phi}  = - (1-B_4) a_\textrm{l} a_4\phi ^{-B_4}.
+\end{equation}
+Combing eqs. \ref{eq:G5}-\ref{eq:dPdt3}, we find that the maximum occurs when
+\begin{equation} \label{eq:G6}
+\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}(\phi) = \frac{- (1-B_4) a_\textrm{l} a_4\phi ^{-B_4}}{c_2 - a_\textrm{l} a_4 \phi ^{1-B_4}}.
+\end{equation}
+
+
+Note also that if $B4=1$, $\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial \phi} =0$, also if  $B4>1$, $\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial \phi} > 0$. A similar derivation can be produced linking wood density to productivity, via sapwood turnover.
+
 
 ## Supplementary figures
 
