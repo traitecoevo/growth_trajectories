@@ -140,7 +140,7 @@ Plot shows predicted relationship between height growth rate and leaf-constructi
 \newpage
 
 ![**Low construction cost leads to shade intolerance, because of costs of high turnover.**
-\label{f-wplcp}](figures/wplcp.pdf)
+\label{f-wplcp}](figures/max_leaf_above.pdf)
 
 \newpage
 

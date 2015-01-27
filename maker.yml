@@ -38,8 +38,7 @@ targets:
       - ms/table-pars.tex
       - ms/figures/BCI_data.pdf
       - ms/figures/growth_light.pdf
-      - ms/figures/lma_optim.pdf
-      - ms/figures/lma_wplcp.pdf
+      - ms/figures/max_leaf_above.pdf
       - ms/figures/SI_mass_fraction.pdf
       - ms/figures/SI_lma_tradeoff.pdf
       - ms/figures/SI_size_dpdt.pdf
@@ -107,13 +106,9 @@ targets:
     command: figure_growth_light()
     plot: square
 
-  ms/figures/wplcp.pdf:
+  ms/figures/max_leaf_above.pdf:
     command: figure_wplcp()
     plot: wide
-
-  ms/figures/lma_optim.pdf:
-    command: figure_optimal_lma_light()
-    plot: square
 
   ms/figures/SI_lma_tradeoff.pdf:
     command: figure_lma_tradeoff(glopnet)
