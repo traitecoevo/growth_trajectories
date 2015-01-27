@@ -33,7 +33,7 @@ figure_size <- function(yvars = c("height_growth_rate", "dheight_dleaf_area", "l
 figure_growth_light <- function(strategy = default_strategy()) {
   op <- par(oma = c(3, 6, 3, 1), mar = c(1, 1, 2, 1))
 
-  at <- c(0.005, 0.01, 0.1)
+  at <- c(0.005, 0.01, 0.1, 0.2)
   nrows <- 2
   ncols <- length(at)
 
