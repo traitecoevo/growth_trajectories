@@ -121,7 +121,7 @@ targets:
     command: read.csv("data/growth_model_pars.csv")
 
   ms/figures/BCI_data.pdf:
-    command: fig_BCI_data(BCI_species_data)
+    command: figure_BCI_data(BCI_species_data)
     plot: med_square
 
   ms/figures/SI_lma_tradeoff.pdf:

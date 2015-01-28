@@ -216,61 +216,44 @@ quantreg_plot <- function(x, y, p = 0.99, nmin = 100, predict_at = 10, add.legen
     legend("topright", legend = c("Wright2010", "QuantReg"), col = c("red", "blue"), lty = c("solid", "solid"), bty = "n")
 }
 
-figure_trait_growth_data <- function(X, Y, cex = 1, col = "darkgreen", pch = 1, ylim = range(Y, na.rm = TRUE), axes = c("lma", "dbasal_diam_dt"), ytick.lab = TRUE, ...) {
-  if (ytick.lab){
-    new_plot(axes[1], axes[2], log = "xy", ylim = ylim, xlab = NULL, ylab = NULL, ...)
-  } else{
-    new_plot(axes[1], axes[2], log = "xy", ylim = ylim, xlab = NULL, ylab = NULL, ytick.lab = NA, ...)
+figure_BCI_data <- function(data) {
+  traits <- c("lma", "rho", "hmat")
+  at <- c(10, 20, 50, 100, 200)/1000
+
+  op <- par(oma=c(3, 6, 3, 1),
+            mar=c(1, 1, 2, 1),
+            mfcol=c(length(at), length(traits)))
+
+  data <- data[data$count > 800,]
+  dsplit <- lapply(at, function(a) data[data$at == a,])
+
+  ylim <- c(1, 30) / 1000
+  cex_lab <- .85
+
+  for (trait in traits) {
+    xlim <- range(data[[trait]], na.rm=TRUE)
+    for (i in seq_along(at)) {
+      dsub <- dsplit[[i]]
+      cex <- linear_rescale(log10(dsub$count), c(0.6, 2.5), log10(c(800, 10000)))
+      x <- dsub[[trait]]
+      y <- dsub$dbasal_diam_dt
+
+      sm <- sma(y ~ x, log="xy", method="OLS")
+
+      plot(x, y, pch=1, xlim=xlim, ylim=ylim, log="xy", cex=cex, xaxt="n", yaxt="n")
+      plot(sm, add=TRUE, col="darkgreen", lwd=2, type="l", p.lines.transparent=0.1)
+
+      lab <- sprintf("r2 = %2.2f, n=%d",
+                     sm[["groupsummary"]][["r2"]],
+                     sum(!is.na(y) & !is.na(x)))
+      legend("topright", legend=lab, bty="n", cex=1.25)
+
+      axis(1, labels=i == length(at))
+      axis(2, labels=trait == traits[[1]], las=1)
+      if (i == length(at)) {
+        mtext(name_pretty(trait), 1, line=3, xpd=NA, cex=cex_lab)
+      }
+    }
   }
-
-  sm <- sma(Y ~ X, log = "xy", method = "OLS")
-  points(X, Y, col = "black", pch = pch, type = "p", cex = cex)
-  plot(sm, add = T, col = col, pch = pch, lwd = 2, type = "l", p.lines.transparent = 0.1)
-
-  lab <- paste0("r2 = ", format(round(sm[["groupsummary"]][["r2"]],2), nsmall = 2), ", n=",sum(!is.na(Y) & !is.na(X)))
-  legend("topright", legend = lab, bty = "n", cex=1.25)
-}
-
-figure_trait_growth_data_panel <- function(data, axes = c("lma", "dbasal_diam_dt"), ylim = c(1, 30)/1000, at = c(10, 20, 60, 120), title = FALSE, ...) {
-
-  trait <- axes[[1]]
-  for (a in at) {
-    data_sub <- data[data[["at"]] == a & data[["count"]] > 800, ]
-    if (a == at[1])
-      ytick <- TRUE else ytick <- FALSE
-    figure_trait_growth_data(X = data_sub[[trait]], Y = data_sub[[axes[2]]], ylim = ylim,
-                             cex = linear_rescale(log10(data_sub[["count"]]), c(0.6, 2.5), log10(c(800, 10000))),
-                             ytick.lab = ytick, axes=axes, ...)
-    if (title)
-      mtext(paste0("dbh=", a, "m"), cex=1, line =1 )
-  }
-}
-
-
-fig_BCI_data <- function(data, at = c(10, 20, 50, 100, 200)/1000) {
-
-# library(maker)
-# m <- maker()
-# e <- m$make_dependencies("ms/figures/BCI_data.pdf")
-# maker_attach(e)
-
-  op <- par(oma = c(3, 6, 3, 1), mar = c(1, 1, 2, 1))
-
-  nrows <- 3
-  ncols <- length(at)
-
-  m <- matrix(rep(c(1:ncols, rep(ncols + 1, ncols)), nrows) + sort(rep(0:(nrows - 1), ncols * 2)) * (ncols + 1), ncol = ncols, byrow = TRUE)
-  layout(m, widths = rep(1/ncols, ncols), heights = rep(c(0.8, 0.2)/nrows, nrows))
-
-  figure_trait_growth_data_panel(data, axes = c("lma", "dbasal_diam_dt"), at = at, title=TRUE, xlim= c(0.02, 0.2))
-  header_plot(get_axis_info("lma", "lab"))
-
-  figure_trait_growth_data_panel(data, axes = c("rho", "dbasal_diam_dt"), at = at)
-  header_plot(get_axis_info("rho", "lab"))
-
-  figure_trait_growth_data_panel(data, axes = c("hmat", "dbasal_diam_dt"), at = at)
-  header_plot(get_axis_info("hmat", "lab"))
-
-  mtext(get_axis_info("dbasal_diam_dt", "lab"), line = 4, side = 2, cex = 1, outer = TRUE)
-  par(op)
+  mtext(name_pretty("dbasal_diam_dt"), 2, line=3, outer=TRUE, cex=cex_lab)
 }
