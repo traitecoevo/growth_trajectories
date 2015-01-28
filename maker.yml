@@ -71,7 +71,7 @@ targets:
     cleanup_level: never
 
   BCI_nomenclature:
-    command: read.csv("data/Nomenclature_R_20101129_Rready.csv")
+    command: read_csv("data/Nomenclature_R_20101129_Rready.csv")
 
   wright_2010:
     command: process_wright_2010("downloads/wright_2010.txt")
