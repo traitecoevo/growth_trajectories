@@ -27,18 +27,6 @@ render_md_as_html <- function(filename) {
   rmarkdown::render(filename, "html_document", quiet = TRUE)
 }
 
-na.clean <- function(x) {
-  x[!is.na(x)]
-}
-
-seq_log_range <- function(r, length.out) {
-  seq_log(r[[1]], r[[2]], length.out)
-}
-
-seq_log <- function(from, to, length.out) {
-  exp(seq(log(from), log(to), length.out = length.out))
-}
-
 #loads an RData file, and returns it
 load_rdata <- function(fileName){
     load(fileName)

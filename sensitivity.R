@@ -1,92 +1,90 @@
 # Fitting TREE to observed data
 
-sourceDir <- function(path, ...) {
-     for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
-        source(file.path(path, nm), ...)
-     }
+source_dir <- function(path, ...) {
+  for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
+    source(file.path(path, nm), ...)
+  }
 }
-sourceDir("R")
+source_dir("R")
 
-library(tree)
-library(maker)
-library(plyr)
-library(dplyr)
+library(tree2)
+suppressPackageStartupMessages({
+  library(plyr)
+  library(dplyr)
+})
 
 # First, look at plot: challenge is to move peak to left and pull down elevation of curve.
-
 m <- maker::maker()
-data <- m$get("BCI_species_data") %>%
+data <- m$make("BCI_species_data") %>%
   mutate(dbh=at) %>%
   filter(!is.na(lma*rho*hmat*dbh*dbasal_diam_dt), dbh %in% c(0.01), hmat > 10) %>%
   select(dbh, lma, rho, dbasal_diam_dt)
 
-figure_trait_effect_at_size("lma", "dbasal_diam_dt", "diameter", 0.01, xlim = c(0.01, 0.1), strategy = default_strategy())
-points(data$lma, data$dbasal_diam_dt)
+d <- trait_effects_data("lma", "diameter")
+d <- d[d$size_class == 2L,]
+
+plot(data$lma, data$dbasal_diam_dt, las=1, log="x",
+     xlab=name_pretty("lma"), ylab=name_pretty("dbasal_diam_dt"),
+     xlim=range(data$lma, d$lma),
+     ylim=range(data$dbasal_diam_dt, d$dbasal_diam_dt))
+lines(d$lma, d$dbasal_diam_dt, col="red")
 
 # given a dbh x, traits and parameters, grows plant to right size and estimates growth rate
-growth <- function(trait, x, D, E=1, strategy = default_strategy()) {
-
-  distance_from_target_fn <- function(plant) {
-    plant$vars_size[["diameter"]] - D
-  }
-
-  strategy <- strategy$copy()
-  strategy$set_parameters(structure(list(x), names = trait))
-  plant <- new(Plant, strategy)
-  plant$height <- 0.1
-
-  plant <- try(grow.plant.to.size(plant, fixed.environment(E), distance.from.target = distance_from_target_fn), silent = FALSE)
-  if (inherits(plant, "try-error"))
-    return(NULL)
-
-  run_plant(plant, E)
+growth <- function(x, trait, dbh, E=1,
+                   strategy=default_strategy()) {
+  strategy[trait] <- x
+  pp <- grow_plant_to_size(Plant(strategy), dbh, "diameter",
+                           fixed_environment(E))
+  sapply(pp$plant, function(p) p$vars_growth[["dbasal_diam_dt"]])
 }
 
-growth_outcome <- function(...,  outcome ="dbasal_diam_dt") {
-  g <- growth(...)
-  if(is.null(g))
-    return(0)
-  g[[outcome]]
-}
-
-# finds tarit value in range that maximises growth rate at given size and light
-maximise_growth_rate_by_trait <- function(trait, range, D, E=1, strategy = default_strategy(), outcome ="dbasal_diam_dt", tol=1e-6) {
-
- # wrapper function to pass to optimise
+# finds trait value in range that maximises growth rate at given size and light
+maximise_growth_rate_by_trait <- function(strategy,
+                                          trait="lma",
+                                          range=c(0.001, 1),
+                                          dbh=0.01, E=1) {
   f <- function(x) {
-      growth_outcome(trait, x, D, E, strategy, outcome=outcome)
-    }
-
- optimise(f, range, maximum = TRUE, tol = tol)
+    growth(x, trait, dbh, E, strategy)
+  }
+  ret <- optimise(f, range, maximum=TRUE, tol=1e-4)
+  list(optimal_trait=ret$maximum,
+       growth_rate=ret$objective)
 }
 
-# finds tarit value in range that maximises growth rate at given size and light
-maximise_growth_rate_by_trait("lma", range = c(0.001, 1), D=0.01, E=1, strategy =strategy, outcome ="dbasal_diam_dt", tol=1e-4)
+# finds trait value in range that maximises growth rate at given size
+# and light
+maximise_growth_rate_by_trait(default_strategy())
 
 # Sensitivity to pars
-exclude <- c("c_acc","c_bio","c_d0","c_d2","c_d3","c_p2","c_r1","c_r2","c_s0","hmat","hmat_0","lma","lma_0","s","s_0","B5","B6","c_d1", "B7", "n_area_0", "rho_0")
-par_names <- names(strategy$parameters)[!names(strategy$parameters) %in% exclude]
+exclude <- c("c_acc", "c_bio", "c_d0", "c_d2", "c_d3", "c_p2", "c_r1",
+             "c_r2", "c_s0", "hmat", "hmat_0", "lma", "lma_0", "s",
+             "s_0", "B5", "B6", "c_d1", "B7", "n_area_0", "rho_0",
+             "control")
+par_names <- setdiff(names(Strategy()), exclude)
 
-pars <- expand.grid(par=par_names, adj=c(1.01), stringsAsFactors=FALSE)
-
-run_variant <- function(par, adj, strategy = default_strategy()) {
-
-  strategy <- strategy$copy()
-  x <- strategy$parameters[[par]]
-  strategy$set_parameters(structure(list(x*adj), names = par))
-  max_lma <- maximise_growth_rate_by_trait("lma", range = c(0.001, 1), D=0.01, E=1, strategy =strategy, outcome ="dbasal_diam_dt", tol=1e-4)
-  data.frame(theta_0=x, theta=x*adj, maximum = max_lma$maximum, objective=max_lma$objective)
+run_variant <- function(par, adj, strategy=default_strategy()) {
+  x0 <- strategy[[par]]
+  x1 <- x0 * adj
+  strategy[[par]] <- x1
+  max_lma <- maximise_growth_rate_by_trait(strategy)
+  data.frame(x0=x0, x1=x1,
+             optimal_trait=max_lma$optimal_trait,
+             growth_rate=max_lma$growth_rate)
 }
 
-base <- run_variant("c_acc", 1.0)
+CV <- function(x1, x2) {
+  (x2 - x1) / x1
+}
 
-elasticity <- ddply(pars, c("par", "adj"), function(x) run_variant(x$par, x$adj))
-elasticity$maximum_0 <- base$maximum
-elasticity$objective_0 <- base$objective
+strategy <- default_strategy()
+base <- run_variant("c_acc", 1.0, strategy)
 
-CV <- function(x1,x2) {(x2-x1)/x1}
-
-elasticity$el_max <- CV(elasticity[["maximum"]], elasticity[["maximum_0"]]) / CV(elasticity[["theta"]], elasticity[["theta_0"]])
-elasticity$el_obj <- CV(elasticity[["objective"]], elasticity[["objective_0"]]) / CV(elasticity[["theta"]], elasticity[["theta_0"]])
-
-elasticity[, c("par", "theta_0", "el_max", "el_obj")]
+elasticity <- ldply(par_names, function(x) run_variant(x, 1.01))
+rownames(elasticity) <- par_names
+elasticity$optimal_trait0 <- base$optimal_trait
+elasticity$growth_rate0 <- base$growth_rate
+elasticity$scale <- CV(elasticity$x1, elasticity$x0)
+elasticity$el_opt <- CV(elasticity$optimal_trait, base$optimal_trait) /
+  elasticity$scale
+elasticity$el_gro <- CV(elasticity$growth_rate, base$growth_rate) /
+  elasticity$scale

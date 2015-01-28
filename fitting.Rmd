@@ -2,12 +2,12 @@
 
 
 ```{r, echo=FALSE, results="hide"}
-sourceDir <- function(path, ...) {
-     for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
-        source(file.path(path, nm), ...)
-     }
+source_dir <- function(path, ...) {
+  for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
+    source(file.path(path, nm), ...)
+  }
 }
-sourceDir("R")
+source_dir("R")
 ```
 
 ## Data
@@ -15,12 +15,10 @@ sourceDir("R")
 Used estimate potential growth rate and species-level traits.
 
 ```{r, echo=TRUE, results="hide"}
-library(maker)
 library(dplyr)
 
 m <- maker::maker()
-m$make("BCI_species_data")
-data <- m$get("BCI_species_data")
+data <- m$make("BCI_species_data")
 head(data)
 ```
 
@@ -29,24 +27,16 @@ head(data)
 We now need a function taking as arguments size x, traits, parameters and returning estimated growth rate
 
 ```{r, echo=TRUE, results="hide"}
-library(tree)
+library(tree2)
 
 # given a dbh x, traits and parameters, grows plant to right size and estimates growth rate
-run_tree <- function(x, E=1, traits=list(), pars=list(), strategy = default_strategy()) {
-
-  distance_from_target_fn <- function(plant) {
-    plant$vars_size[["diameter"]] - x
-  }
-
-  strategy <- strategy$copy()
-  strategy$set_parameters(traits)
-  strategy$set_parameters(pars)
-  plant1 <- new(Plant, strategy)
-  plant1$height <- 0.1
-  plant <- try(grow.plant.to.size(plant1, fixed.environment(E), distance.from.target = distance_from_target_fn), silent = FALSE)
-  if (inherits(plant, "try-error"))
-      return(0)
-  run_plant(plant, E)$dbasal_diam_dt
+run_tree <- function(x, E=1, traits=list(), pars=list(),
+                     strategy=default_strategy()) {
+  strategy[names(traits)] <- traits
+  strategy[names(pars)] <- pars
+  pp <- grow_plant_to_size(Plant(strategy), x, "diameter",
+                           fixed_environment(E))
+  sapply(pp$plant, function(p) p$vars_growth[["dbasal_diam_dt"]])
 }
 ```
 We can test it works
@@ -66,26 +56,26 @@ Here's the example on how use minpack.lm:
 ```{r, echo=TRUE, results="show"}
 library(minpack.lm)
 ## values over which to simulate data
-x <- seq(0,5,length=100)
+x <- seq(0, 5, length.out=100)
 ## model based on a list of parameters
-getPred <- function(parS, xx) parS$a * exp(xx * parS$b) + parS$c
+get_pred <- function(pars, xx) pars$a * exp(xx * pars$b) + pars$c
 ## parameter values used to simulate data
-pp <- list(a=9,b=-1, c=6)
+pp <- list(a=9, b=-1, c=6)
 ## simulated data, with noise
-simDNoisy <- getPred(pp,x) + rnorm(length(x),sd=.1)
+sim_d_noisy <- get_pred(pp,x) + rnorm(length(x), sd=.1)
 ## plot data
-plot(x,simDNoisy, main="data")
+plot(x, sim_d_noisy, main="data")
 ## residual function
-residFun <- function(p, observed, xx) observed - getPred(p,xx)
+resid_fun <- function(p, observed, xx) observed - get_pred(p,xx)
 ## starting values for parameters
-parStart <- list(a=3,b=-.001, c=1)
+par_start <- list(a=3, b=-.001, c=1)
 ## perform fit
-nls.out <- nls.lm(par=parStart, fn = residFun, observed = simDNoisy,
+nls_out <- nls.lm(par=par_start, fn = resid_fun, observed = sim_d_noisy,
 xx = x, control = nls.lm.control(nprint=1))
 ## plot model evaluated at final parameter estimates
-lines(x,getPred(as.list(coef(nls.out)), x), col=2, lwd=2)
+lines(x,get_pred(as.list(coef(nls_out)), x), col=2, lwd=2)
 ## summary information on parameter estimates
-summary(nls.out)
+summary(nls_out)
 ```
 
 
@@ -94,23 +84,25 @@ Now our model. We ned a function which given parameters and covrites predicts gr
 ```{r, echo=TRUE, results="hide"}
 # generative mdoel
 # takes pars and traits
-getPred <- function(pars, xx) {
-	npoints <- nrow(xx)
-	zz <- rep(NA_real_, npoints)
-	for(i in seq_len(npoints)) {
-		zz[i] <- run_tree(xx$dbh[i], E=1, traits=list(lma=xx$lma[i], rho=xx$rho[i], hmat=100), pars=pars)
-	}
-	zz
+get_pred <- function(pars, xx) {
+  npoints <- nrow(xx)
+  zz <- rep(NA_real_, npoints)
+  for(i in seq_len(npoints)) {
+    zz[i] <- run_tree(xx$dbh[i], E=1,
+                      traits=list(lma=xx$lma[i], rho=xx$rho[i], hmat=100),
+                      pars=pars)
+  }
+  zz
 }
 ```
 
 And another which calculates residuals by comparing to observed:
 
 ```{r, echo=TRUE, results="hide"}
-residFun <- function(p, observed, xx) observed - getPred(p,xx)
+resid_fun <- function(p, observed, xx) observed - get_pred(p,xx)
 ```
 
-The set parameters to fit an some lower bounds (optionl) for these:
+The set parameters to fit an some lower bounds (optional) for these:
 
 ```{r, echo=TRUE, results="hide"}
 par_init <- list(k_l0=0.4, k_s0=0.2, c_NUE=80213)
@@ -132,8 +124,8 @@ We can now test our functions work:
 ```{r, echo=TRUE, results="show"}
 x_example <- data[c(1,10), c("dbh", "lma", "rho")]
 obs_example <- data[c(1,10), c("dbasal_diam_dt")]
-getPred(par_init, x_example)
-residFun(par_init, obs_example, x_example)
+get_pred(par_init, x_example)
+resid_fun(par_init, obs_example, x_example)
 ```
 
 And then fit the model to the data.
@@ -142,12 +134,12 @@ And then fit the model to the data.
 x <- data[, c("dbh", "lma", "rho")]
 obs <- data$dbasal_diam_dt
 
-nls.out <- nls.lm(par=par_init, fn = residFun, observed = obs, xx = x,
-		lower=lower,
-		control = nls.lm.control(nprint=1, ftol=1e-4))
+nls_out <- nls.lm(par=par_init, fn = resid_fun, observed = obs, xx = x,
+                  lower=lower,
+                  control = nls.lm.control(nprint=1, ftol=1e-4))
 
-out.init <- getPred(par_init, x)
-out.fit <- getPred(as.list(coef(nls.out)), x)
+out.init <- get_pred(par_init, x)
+out.fit <- get_pred(as.list(coef(nls_out)), x)
 ```
 
 Finally compare to data:
@@ -155,16 +147,16 @@ Finally compare to data:
 ```{r, echo=TRUE, results="show"}
 par(mfrow=c(2,1))
 for(trait in c("lma", "rho")) {
-	plot(x[[trait]],obs, xlab=trait, ylab= "dbh growth", pch=16)
-	xs <- x[order(x[[trait]]),]
-	other_trait <- c("lma", "rho")[!c("lma", "rho") %in% trait]
-	xs[[other_trait]] <- mean(xs[[other_trait]])
+  plot(x[[trait]],obs, xlab=trait, ylab= "dbh growth", pch=16)
+  xs <- x[order(x[[trait]]),]
+  other_trait <- c("lma", "rho")[!c("lma", "rho") %in% trait]
+  xs[[other_trait]] <- mean(xs[[other_trait]])
 
-	out.init <- getPred(par_init, xs)
-	out.fit <- getPred(as.list(coef(nls.out)), xs)
+  out.init <- get_pred(par_init, xs)
+  out.fit <- get_pred(as.list(coef(nls_out)), xs)
 
-	lines(xs[[trait]],out.init, col="grey", lwd=2)
-	lines(xs[[trait]],out.fit, col=2, lwd=2)
+  lines(xs[[trait]],out.init, col="grey", lwd=2)
+  lines(xs[[trait]],out.fit, col=2, lwd=2)
 }
 mtext(paste("fitting pars", paste(names(par_init), collapse=", ")), side=3, outer=TRUE, line=-2, cex=2)
 legend("topright", legend=c("Initial", "Fitted"), col=c("grey", "red"), lty="solid", bty = "n")
@@ -173,8 +165,7 @@ legend("topright", legend=c("Initial", "Fitted"), col=c("grey", "red"), lty="sol
 
 # Fitting with distribution and likelihood based approach
 
-Using the nls is ok but not ideal because it only returns one plausible combination of parametrs. A better approach would be to fit using a
-distribution-based approach. For this there are two challenges:
+Using the nls is ok but not ideal because it only returns one plausible combination of parametrs. A better approach would be to fit using a distribution-based approach. For this there are two challenges:
 
 1. Defining the likelihood
 2. Fitting the model
