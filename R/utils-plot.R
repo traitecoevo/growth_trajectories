@@ -15,21 +15,10 @@ nice_colors <- function(n = 80) {
   cols[1:n]
 }
 
-
 make_transparent <- function(col, opacity = 0.5) {
   tmp <- col2rgb(col)/255
   rgb(tmp[1, ], tmp[2, ], tmp[3, ], alpha = opacity)
 }
-
-## Position label at a fractional x/y position on a plot
-label <- function(px, py, lab, ..., adj = c(0, 1)) {
-  usr <- par("usr")
-  text(usr[1] + px * (usr[2] - usr[1]), usr[3] + py * (usr[4] - usr[3]), lab, adj = adj, ...)
-}
-
-is.wholenumber <- function(x, tol = .Machine$double.eps^0.5) abs(x - round(x)) < tol
-
-colour_by_category <- function(x, table) unname(table[x])
 
 linear_rescale <- function(x, range, scale = range(x)) {
   p <- (x - scale[[1]])/(scale[[2]] - scale[[1]])

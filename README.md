@@ -25,6 +25,12 @@ After installation, tests can be run by running
 
 from within the tree directory.
 
+Best to install `smatr` from github to avoid warnings in the plotting function in the CRAN version:
+
+```
+devtools::install_bitbucket("remkoduursma/smatr)
+```
+
 # Variables
 
 

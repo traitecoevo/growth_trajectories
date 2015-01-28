@@ -170,6 +170,7 @@ name_pretty <- function(trait) {
          hmat="Height at maturation (m)",
          dbasal_diam_dt=expression(paste("Diameter growth (m ", yr^-1, ")")),
          shading=expression(paste("Maximum leaf area above (", m^2, " )")),
+         leaf_turnover=expression(paste("Leaf turnover rate (", yr^-1, " )")),
 
          height_growth_rate=expression(paste("Height growth (m ", yr^-1, " )")),
          dbasal_diam_dt=expression(paste("Diameter growth (m ", yr^-1, ")")),
