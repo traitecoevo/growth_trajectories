@@ -1,17 +1,33 @@
 #List of functions used to manipulate and summarise data from BCI.
 
-#Download BCI
-BCI_download_50ha_plot <- function(dest) {
-  if (!file.exists(dest))
-    stop(sprintf("Please visit %s and save file as %s. See Readme file for further instructions.", "http://ctfs.arnarb.harvard.edu/webatlas/datasets/bci/", dest))
+#Download BCI data
+# download function from package downloader provides wrapper
+# to download file so that works for https and across platforms
+BCI_download_50ha_plot_full <- function(dest) {
+  url <-"https://repository.si.edu/bitstream/handle/10088/20925/bci.full.Rdata31Aug2012.zip"
+  download(url, dest, mode="wb")
+}
+
+BCI_download_50ha_plot_stem <- function(dest) {
+  url <-"https://repository.si.edu/bitstream/handle/10088/20925/bci.stem.Rdata31Aug2012.zip"
+  download(url, dest, mode="wb")
+}
+
+BCI_download_species_table <- function(dest) {
+  url <-"https://repository.si.edu/bitstream/handle/10088/20925/bci.spptable.rdata"
+  download(url, dest, mode="wb")
 }
 
 #Load 50ha census data
-BCI_load_50ha_plot <- function(path_to_file) {
-  path_to_BCI_data <- dirname(path_to_file)
-  files <- data.frame(year = c(1990, 1995, 2000, 2005, 2010),
-                      name = paste0(path_to_BCI_data, "/bci.stem", 3:7, ".csv"), stringsAsFactors = FALSE)
-  tbl_df(ddply(files, "year", function(x) read.csv(x[["name"]], stringsAsFactors = FALSE)))
+BCI_load_50ha_plot <- function(path_to_zip) {
+
+  tmp <- tempfile()
+  unzip(path_to_zip, exdir=tmp)
+  on.exit(unlink(tmp, recursive=TRUE))
+
+  files<- data.frame(name=list.files(tmp, pattern=".rdata", full.names=TRUE),
+                    year = c(1980, 1985, 1990, 1995, 2000, 2005, 2010), stringsAsFactors = FALSE)
+  tbl_df(ldply(list.files(tmp, pattern=".rdata", full.names=TRUE), function(x) load_rdata(x)))
 }
 
 #Look up family
@@ -21,10 +37,10 @@ lookup_family <- function(tag, nomen){
 }
 
 #Look up species code
-lookup_spcode <- function(tag, nomen){
+lookup_latin <- function(tag, nomen){
   nomen$latin <- paste(nomen$genus, nomen$species)
-  i <- match(tag, nomen$latin)
-  tolower(nomen[['sp6']])[i]
+  i <- match(tag, tolower(nomen[['sp6']]))
+  nomen[['latin']][i]
 }
 
 # Calculates growth rate, either absolute (default) or relative relative (set f=log)
@@ -43,17 +59,13 @@ mortality_in_next_census <- function(status){
   else{
     i <- 0
   }
-  as.numeric(c(status[i] == 'alive' & status[i+1] == 'dead', NA))
+  as.numeric(c(status[i] == 'A' & status[i+1] == 'D', NA))
 }
 
 #Flags individuals that return from the dead
-zombie_flagger <- function(status){
-  if(length(status) > 1){
-    i <- 1:(length(status)-1)} # if more than 1 obs
-  else{
-    i <- 0
-  }
-  as.numeric(c(status[i] == 'dead' & status[i+1] == 'alive', NA))
+is_zombie <- function(status){
+  i <- seq_len(length(status)-1)
+  any(status[i] == 'D' & status[i+1] == 'A')
 }
 
 # Flags bad data. Adapted from function in CTFS R package. Errorenous data = 0
@@ -80,54 +92,53 @@ BCI_calculate_individual_growth <- function(BCI_50haplot_data, BCI_nomenclature)
 # m <- maker()
 # e <- m$make_dependencies("BCI_individual_growth")
 # maker_attach(e)
+# BCI_50haplot_data <- BCI_50haplot_stem
 
-  # sort bci data so that ordered by species
-  data <- BCI_50haplot_data %>%
-    arrange(Latin, TreeID, StemID, year, Date) %>%
-    select(Latin, TreeID, StemID,Stem,HOM,year, Date, Status, DBH) %>%
-    mutate(spcode = lookup_spcode(Latin, BCI_nomenclature), # adds species code column
-           family = lookup_family(spcode, BCI_nomenclature)) # adds family column
+  data <- BCI_50haplot_data
   names(data) <- tolower(names(data)) # lower case for all column names
 
-  # From 1990 to 2010 there are 320 species, 374797 individuals and 1555593 observations
-  individual_growth <- data %>%
+  # sort bci data so that ordered by species
+  data <- data %>%
+    select(sp, treeid, stemid, hom, exactdate, status, dbh) %>%
+    mutate(family = lookup_family(sp, BCI_nomenclature),  # adds family column
+         latin = lookup_latin(sp, BCI_nomenclature)) %>%
+    arrange(latin, treeid, stemid, exactdate)
 
-    # Selects observations that were recorded at 1.3 m or were recorded as dead (where hom = NA)
+  # From 1990 to 2010 there are 320 species, 374797 individuals and 1555593 observations
+  individual_growth <- group_by(data, treeid) %>%
+    # Selects observations that were recorded at 1.3 m
     # Also removes species from families that don't exhibit dbh growth or species that were not named.
     # resulitng in the removal of 14 species, 13586 individual plants removed or 171927 observations
-
-    filter((hom == 1.3 | status=='dead')
+   filter( abs(hom - 1.3) < 1e-4  #NB hom ==1.3 does not work due to precision errors
+            & !is_zombie(status)
+            &  status=='A'
             & !family %in% c('Arecaceae', 'Cyatheaceae', 'Dicksoniaceae', 'Metaxyaceae',
                             'Cibotiaceae', 'Loxomataceae', 'Culcitaceae', 'Plagiogyriaceae',
                             'Thyrsopteridaceae')
-            & !is.na(spcode)) %>%
+            & !is.na(sp) ) %>%
 
     # Removes multistemmed plants because stemid isn't consistently recorded for multistemmed plants
     # resulting in the removal of 6 additional species, 74085 multistemmed individuals or 451152 observations
-
-    group_by(treeid) %>%
     mutate(nostems = length(na.exclude(unique(stemid)))) %>% # na.exclude because dead individuals contain a NA stemid.
     filter(nostems == 1) %>%
 
     # Removes inidividuals that do not survive more than 1 census (required to estimate growth rates).
     # resulting in the removal of an additional 23 species, 97980 individuals or 134111 observations
 
-    mutate(ncensus = length(unique(year[status=='alive']))) %>%
+    mutate(ncensus = length(unique(exactdate))) %>%
     filter(ncensus >1) %>%
 
     # Calculates growth rates, census interval and flags whether data is erroneous (via CTFS function) or plants return from dead.
     mutate(
       dbh = dbh/1000, #convert to m
-      julian = as.vector(julian(as.Date(date,"%Y-%m-%d"), as.Date("1990-02-06", "%Y-%m-%d"))), # First measurement in 1990 ='1990-02-06'.
+      julian = as.vector(julian(as.Date(exactdate,"%Y-%m-%d"), as.Date("1970-01-01", "%Y-%m-%d"))),
       census_interval = c(NA, diff(julian/365.25)),
       dbh_increment = c(NA, diff(dbh)),
       dbasal_diam_dt = calculate_growth_rate(dbh, julian),
       dbasal_diam_dt_relative = calculate_growth_rate(dbh, julian, log),
       basal_area = 0.25*pi*dbh^2,
       basal_area_dt = calculate_growth_rate(basal_area, julian),
-      basal_area_dt_relative = calculate_growth_rate(basal_area, julian, log),
-      zombies = max(zombie_flagger(status), na.rm=TRUE), # flags individuals that return from the dead.
-      datacheck = min(as.numeric(flag_bad_data(dbh, dbh_increment, dbasal_diam_dt)), na.rm=TRUE)) %>% # CTFS datacheck (Dodgy data= 0).
+      basal_area_dt_relative = calculate_growth_rate(basal_area, julian, log)) %>% # CTFS datacheck (Dodgy data= 0).
 
     # Removes redundant rows for dead individuals, zombie plants and data flagged as erroneous.
     # datacheck reveals 2495 individuals contain erroneous data resulting in the removal of 11401 observations
@@ -135,17 +146,17 @@ BCI_calculate_individual_growth <- function(BCI_50haplot_data, BCI_nomenclature)
     # 69982 redundant dead rows.
     # 184950 observations are the first records of an individual & contain no measure of growth rate
 
-    filter(status=='alive' & zombies==0 & datacheck==1 & !is.na(dbh_increment))
+    filter(!is.na(dbh_increment) &
+            flag_bad_data(dbh, dbh_increment, dbasal_diam_dt) )# CTFS datacheck (Dodgy data= 0).
 
   # Rearranges columns
   tbl_df(individual_growth) %>%
-    select(latin,spcode,treeid,year,date,julian,census_interval,
+    select(latin,sp,treeid,exactdate,julian,census_interval,
            dbh,dbh_increment,dbasal_diam_dt,dbasal_diam_dt_relative,basal_area,basal_area_dt,
            basal_area_dt_relative)
 }
 
 BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
-
   # bands in which to calculate growth rate In all but first band we estimate growth at centre of band.  The first interval is repeated so that we can estimate
   # growth at LHS also
   size_min <- c(10, 10, 25, 50, 100, 200)/1000
@@ -237,6 +248,11 @@ figure_trait_growth_data_panel <- function(data, axes = c("lma", "dbasal_diam_dt
 
 
 fig_BCI_data <- function(data, at = c(10, 20, 50, 100, 200)/1000) {
+
+# library(maker)
+# m <- maker()
+# e <- m$make_dependencies("ms/figures/BCI_data.pdf")
+# maker_attach(e)
 
   op <- par(oma = c(3, 6, 3, 1), mar = c(1, 1, 2, 1))
 

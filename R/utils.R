@@ -38,3 +38,9 @@ seq_log_range <- function(r, length.out) {
 seq_log <- function(from, to, length.out) {
   exp(seq(log(from), log(to), length.out = length.out))
 }
+
+#loads an RData file, and returns it
+load_rdata <- function(fileName){
+    load(fileName)
+    get(ls()[ls() != "fileName"])
+}
