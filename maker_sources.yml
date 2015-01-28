@@ -1,0 +1,7 @@
+tree2:
+  source: github
+  repo: richfitz/tree2
+
+smatr:
+  source: bitbucket
+  repo: remkoduursma/smatr

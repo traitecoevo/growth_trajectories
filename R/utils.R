@@ -28,7 +28,12 @@ render_md_as_html <- function(filename) {
 }
 
 #loads an RData file, and returns it
-load_rdata <- function(fileName){
-    load(fileName)
-    get(ls()[ls() != "fileName"])
+load_rdata <- function(fileName) {
+  load(fileName)
+  get(ls()[ls() != "fileName"])
+}
+
+linear_rescale <- function(x, range, scale = range(x)) {
+  p <- (x - scale[[1]])/(scale[[2]] - scale[[1]])
+  range[[1]] + p * (range[[2]] - range[[1]])
 }

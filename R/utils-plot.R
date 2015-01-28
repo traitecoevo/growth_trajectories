@@ -19,17 +19,3 @@ make_transparent <- function(col, opacity = 0.5) {
   tmp <- col2rgb(col)/255
   rgb(tmp[1, ], tmp[2, ], tmp[3, ], alpha = opacity)
 }
-
-linear_rescale <- function(x, range, scale = range(x)) {
-  p <- (x - scale[[1]])/(scale[[2]] - scale[[1]])
-  range[[1]] + p * (range[[2]] - range[[1]])
-}
-
-header_plot <- function(x) {
-  oldpar <- par("mar")
-  par(mar = c(0, 0, 2, 0))
-  plot(1, 1, type = "n", frame.plot = FALSE, axes = FALSE)
-  u <- par("usr")
-  text(1, u[4], labels = x, pos = 1, cex = 1.5)
-  par(mar = oldpar)
-}

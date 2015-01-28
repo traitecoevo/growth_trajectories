@@ -4,35 +4,21 @@ The paper will be based on presentation at Intecol2013: Falster, Daniel (2013): 
 
 # Setup
 
-We use the TREE growth model, which is managed using git's [submodules feature](http://git-scm.com/book/en/Git-Tools-Submodules).
+Install all required packages with
 
-To setup existing submodules after cloning run
-
-	git submodule init
-	git submodule update
-
-To update submodule to correct version:
-
-	git submodule update
-
-The TREE package also needs to be installed.
-
-    R CMD INSTALL tree
-
-After installation, tests can be run by running
-
-    make test
-
-from within the tree directory.
+```
+maker::maker()$install_packages()
+```
 
 Best to install `smatr` from github to avoid warnings in the plotting function in the CRAN version:
 
 ```
-devtools::install_bitbucket("remkoduursma/smatr)
+devtools::install_bitbucket("remkoduursma/smatr")
 ```
 
-# Variables
+(this will be done by maker if smatr is not installed already).
 
+# Variables
 
 TRAITS
 
