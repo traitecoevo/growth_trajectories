@@ -1,3 +1,8 @@
+
+read_csv <- function(filename, ...){
+  read.csv(filename, stringsAsFactors=FALSE, ...)
+}
+
 export_csv <- function(data, filename) {
   write.csv(data, filename, row.names = FALSE)
 }
