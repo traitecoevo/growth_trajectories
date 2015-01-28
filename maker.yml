@@ -106,6 +106,7 @@ targets:
     command: >
       process_wright_2004("downloads/wright_2004.xls",
                           glopnet_locations)
+    packages: xlsx
 
   downloads/wright_2004.xls:
     command: download_wright_2004(target_name)

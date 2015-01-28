@@ -1,14 +1,10 @@
 download_wright_2004 <- function(destination_filename) {
-  url <- "http://www.nature.com/nature/journal/v428/n6985/extref/nature02403-s2.xls"
+  url <-
+    "http://www.nature.com/nature/journal/v428/n6985/extref/nature02403-s2.xls"
   download.file(url, destination_filename)
 }
 
 process_wright_2004 <- function(filename, sitevars) {
-
-  ## There are several strategies for reading in an excel file, but this one works quite well.
-  library(methods)  # Serious, WTF Rscript?
-  library(xlsx, quietly = TRUE)  # Yay, using xlsx::read
-
   d <- read.xlsx2(filename, sheetIndex = 1, startRow = 11, stringsAsFactors = FALSE, check.names = FALSE)
 
   ## Do some name translations:
@@ -62,14 +58,19 @@ process_wright_2004 <- function(filename, sitevars) {
   # lowercase names
   names(data) <- tolower(names(data))
 
-  # unit conversions
-  data[["lma"]] <- data[["lma"]]/1000  # Converts to Kg
-  data[["n.area"]] <- data[["n.area"]]/1000  # Converts to Kg
-  data[["a.area"]] <- (data[["a.area"]] * 31557.6) * 10^-6  # converts to mol/kg/yr from micro-mol/g/s
-  data[["rd.area"]] <- (data[["rd.area"]] * 31557.6) * 10^-6  # converts to mol/kg/yr from micro-mol/g/s
+  ## Convert to Kg from g
+  data[["lma"]] <- data[["lma"]]/1000
+  ## Convert to Kg from g
+  data[["n.area"]] <- data[["n.area"]]/1000
+  ## Convert to mol/kg/yr from micro-mol/g/s
+  data[["a.area"]] <- (data[["a.area"]] * 31557.6) * 10^-6
+  ## Convert to mol/kg/yr from micro-mol/g/s
+  data[["rd.area"]] <- (data[["rd.area"]] * 31557.6) * 10^-6
 
-  data[["leaflifespan"]] <- data[["leaflifespan"]]/12  ## conevrt LL from months to years
-  data[["leaf_turnover"]] <- 1/data[["leaflifespan"]]  ## per year
+  ## Convert to years from month
+  data[["leaflifespan"]] <- data[["leaflifespan"]]/12
+  ## Convert to 1/year from year
+  data[["leaf_turnover"]] <- 1/data[["leaflifespan"]]
 
   data
 }

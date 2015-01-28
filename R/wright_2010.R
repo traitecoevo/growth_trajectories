@@ -30,7 +30,7 @@ process_wright_2010 <- function(filename) {
 
   x <- readLines(filename)[26:160]
 
-  for (i in 1:nrow(corrections)){
+  for (i in 1:nrow(corrections)) {
     x <- gsub(corrections[["OLD"]][i], corrections[["NEW"]][i], x, fixed = TRUE)
   }
 
@@ -44,7 +44,7 @@ process_wright_2010 <- function(filename) {
   names(data)[names(data) == "wsg"] <- "rho"
   names(data)[names(data) == "height"] <- "hmat"
 
-  data[["lma"]] <- data[["lma"]]/1000  #(convert from g/2 to kg/m2)
+  data[["lma"]] <- data[["lma"]] / 1000  #(convert from g/2 to kg/m2)
   data[["rho"]] <- data[["rho"]] * 1000
 
   data
