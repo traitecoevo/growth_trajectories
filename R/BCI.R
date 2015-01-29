@@ -47,10 +47,10 @@ BCI_calculate_individual_growth <- function(data_in, nomenclature) {
     select(sp, treeid, stemid, date, status, hom, dbh, agb) %>%
     filter(status=="A") %>%
     mutate(species = lookup_latin(sp, nomenclature),
-      dbh=dbh/1000)
+          dbh=dbh/1000)
 
   # calculate growth for each tree in each census
-  individual_growth <- group_by(data, treeid) %>%
+  group_by(data, treeid) %>%
     mutate(
       dbh_increment = c(diff(dbh), NA),
       pom_change = c(diff(hom), NA)/hom,
@@ -58,17 +58,15 @@ BCI_calculate_individual_growth <- function(data_in, nomenclature) {
       dbasal_diam_dt = calculate_growth_rate(dbh, date),
       dbasal_diam_dt_relative = calculate_growth_rate(dbh, date, log),
       basal_area = 0.25 * pi * dbh^2,
-      dbasal_area_dt = calculate_growth_rate(basal_area, date))
-
-
-  individual_growth
+      dbasal_area_dt = calculate_growth_rate(basal_area, date)) %>%
+    filter(flag_bad_data(dbh, dbh_increment, dbasal_diam_dt, pom_change, stemID_change)
+        & !is.na(dbasal_diam_dt)) %>%
+    select(species, status, dbh, dbasal_diam_dt, basal_area, dbasal_area_dt)
 }
 
 BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
-  data <- mutate(tbl_df(individual_growth),
-      keep = flag_bad_data(dbh, dbh_increment, dbasal_diam_dt, pom_change, stemID_change)) %>%
-    select(species, keep, status, dbh, dbasal_diam_dt, basal_area, dbasal_area_dt) %>%
-    filter(keep & status == "A" & !is.na(dbasal_diam_dt))
+
+  data <- individual_growth
 
   # bands in which to calculate growth rate In all but first band we estimate growth at centre of band.  The first interval is repeated so that we can estimate
   # growth at LHS also
