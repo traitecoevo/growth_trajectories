@@ -49,6 +49,7 @@ BCI_calculate_individual_growth <- function(data_in, nomenclature) {
     arrange(sp, treeid, date) %>%
     select(sp, treeid, stemid, date, status, hom, dbh, agb) %>%
     mutate(species = lookup_latin(sp, nomenclature),
+          family = lookup_family(sp, nomenclature),
           dbh=dbh/1000)
 
   # calculate growth for each tree in each census
@@ -62,8 +63,12 @@ BCI_calculate_individual_growth <- function(data_in, nomenclature) {
       basal_area = 0.25 * pi * dbh^2,
       dbasal_area_dt = calculate_growth_rate(basal_area, date)) %>%
     filter(flag_bad_data(dbh, dbh_increment, dbasal_diam_dt, pom_change, stemID_change)
-        & !is.na(dbasal_diam_dt)) %>%
-    select(species, status, dbh, dbasal_diam_dt, basal_area, dbasal_area_dt)
+        & !is.na(dbasal_diam_dt)
+        # Remove species from families that don't exhibit dbh growth, eg. palms
+        & !family %in% c('Arecaceae', 'Cyatheaceae', 'Dicksoniaceae', 'Metaxyaceae',
+                          'Cibotiaceae', 'Loxomataceae', 'Culcitaceae', 'Plagiogyriaceae',
+                          'Thyrsopteridaceae')) %>%
+    select(species, family, status, dbh, dbasal_diam_dt, basal_area, dbasal_area_dt)
 }
 
 BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
