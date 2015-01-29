@@ -41,11 +41,13 @@ BCI_calculate_individual_growth <- function(data_in, nomenclature) {
   data <- data_in
   names(data) <- tolower(names(data)) # lower case for all column names
 
-  # sort data so that ordered by species
   data <- data %>%
+    # Remove stems from earlier census, measured with course resolution
+    filter(exactdate > "1990-02-06") %>%
+    # Only keep alive stems
+    filter(status=="A") %>%
     arrange(sp, treeid, date) %>%
     select(sp, treeid, stemid, date, status, hom, dbh, agb) %>%
-    filter(status=="A") %>%
     mutate(species = lookup_latin(sp, nomenclature),
           dbh=dbh/1000)
 
