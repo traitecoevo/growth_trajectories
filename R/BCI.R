@@ -38,6 +38,12 @@ BCI_calculate_individual_growth <- function(data_in, nomenclature) {
 # data_in <- BCI_50haplot_full
 # nomenclature <- BCI_nomenclature
 
+  #Flags individuals that return from the dead
+  is_zombie <- function(status){
+    i <- seq_len(length(status)-1)
+    any(status[i] == 'D' & status[i+1] == 'A')
+  }
+
   data <- data_in
   names(data) <- tolower(names(data)) # lower case for all column names
 
@@ -50,9 +56,12 @@ BCI_calculate_individual_growth <- function(data_in, nomenclature) {
           family = lookup_family(sp, nomenclature),
           dbh=dbh/1000) %>%
     group_by(treeid) %>%
+    # Remove zombies - plants recorded as dead that then reappear at later date
+    filter(!is_zombie(status)) %>%
     # Only keep alive stems
     filter(status=="A") %>%
-
+    #Remove plants where height of measurement changed
+    filter( abs(hom - 1.3) < 1e-4) %>%   #NB hom ==1.3 does not work due to precision errors
     # filter plants with multiple stems
     filter(max(nostems)==1) %>%
     mutate(
