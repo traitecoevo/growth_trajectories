@@ -44,16 +44,17 @@ BCI_calculate_individual_growth <- function(data_in, nomenclature) {
   data <- data %>%
     # Remove stems from earlier census, measured with course resolution
     filter(exactdate > "1990-02-06") %>%
-    # Only keep alive stems
-    filter(status=="A") %>%
     arrange(sp, treeid, date) %>%
-    select(sp, treeid, stemid, date, status, hom, dbh, agb) %>%
+    select(sp, treeid, stemid, nostems, date, status, hom, dbh, agb) %>%
     mutate(species = lookup_latin(sp, nomenclature),
           family = lookup_family(sp, nomenclature),
-          dbh=dbh/1000)
+          dbh=dbh/1000) %>%
+    group_by(treeid) %>%
+    # Only keep alive stems
+    filter(status=="A") %>%
 
-  # calculate growth for each tree in each census
-  group_by(data, treeid) %>%
+    # filter plants with multiple stems
+    filter(max(nostems)==1) %>%
     mutate(
       dbh_increment = c(diff(dbh), NA),
       pom_change = c(diff(hom), NA)/hom,
