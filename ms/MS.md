@@ -148,7 +148,7 @@ Plot shows predicted relationship between height growth rate and leaf-constructi
 
 # Tables
 
-\begin{table}[H]
+\begin{table}
 \caption{Model predictions and evidence.}
 
 {\footnotesize
@@ -222,7 +222,7 @@ Leaf-nitrogen per area & &\\
 \end{table}
 
 
-\begin{table}[H]
+\begin{table}
 \caption{Equations for an allometric growth model}
 \centering
 
@@ -242,7 +242,7 @@ root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm
 \label{tab:allometry}
 \end{table}
 
-\begin{table}[H]
+\begin{table}
 \caption{Trait related trade-offs in plant function.}
 \begin{tabular}[c]{l|ccccc|c|c|c}
 \multicolumn{9}{c}{}\\ \hline
@@ -401,7 +401,7 @@ Predictions from the model on the relationship between leaf-construction cost an
 
 ## Supplementary tables
 
-\begin{table}[H]
+\begin{table}
 \caption{Model parameters}
 \centering
 
