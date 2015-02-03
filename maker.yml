@@ -43,6 +43,7 @@ targets:
       - ms/figures/max_leaf_above.pdf
       - ms/figures/SI_mass_fraction.pdf
       - ms/figures/SI_lma_tradeoff.pdf
+      - ms/figures/SI_quantile_examples.pdf
 
       - ms/figures/SI_size_dpdt.pdf
       - ms/figures/SI_size_dhdt.pdf
@@ -116,6 +117,10 @@ targets:
   ms/figures/BCI_data.pdf:
     command: figure_BCI_data(BCI_species_data)
     plot: med_square
+
+  ms/figures/SI_quantile_examples.pdf:
+    command: figure_qunatile_examples(BCI_individual_growth)
+    plot: large_square
 
   ms/figures/SI_lma_tradeoff.pdf:
     command: figure_lma_tradeoff(glopnet)

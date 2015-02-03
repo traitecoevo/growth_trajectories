@@ -152,20 +152,6 @@ predict_via_quantile_regression <- function(x, y, p = 0.99, nmin = 50, predict_a
   predict(f, newdata = data.frame(x = predict_at))
 }
 
-# plot to demonstarte the qunatile gression method for estimating growth rates
-quantreg_plot <- function(x, y, p = 0.99, nmin = 100, predict_at = 10, add.legend = TRUE, title, ...) {
-  n <- length(y)
-  plot(y ~ x, log = "x", main = paste0(title, ", n=", n), ...)
-  if (n > nmin) {
-    f <- fit_quantile_regression(y, x, p)
-    abline(h = quantile(y, probs = 0.95), col = "red")
-    abline(f, col = "blue")
-    points(predict_at, predict(f, newdata = data.frame(x = predict_at)), col = "blue", pch = 16)
-  }
-  if (add.legend)
-    legend("topright", legend = c("Wright2010", "QuantReg"), col = c("red", "blue"), lty = c("solid", "solid"), bty = "n")
-}
-
 figure_BCI_data <- function(data) {
   traits <- c("lma", "rho", "hmat")
   at <- c(10, 20, 50, 100, 200)/1000
@@ -174,11 +160,11 @@ figure_BCI_data <- function(data) {
             mar=c(1, 1, 2, 1),
             mfcol=c(length(at), length(traits)))
 
-  data <- data[data$count > 800,]
+  data <- data[data$count > 500,]
   dsplit <- lapply(at, function(a) data[data$at == a,])
 
   ylim <- c(0.5, 32) / 1000
-  cex_lab <- .85
+  cex_lab <- 1
 
   xlim <- list(lma=c(0.02, 0.18), rho=c(250, 1000), hmat=c(5,50))
 
@@ -205,9 +191,65 @@ figure_BCI_data <- function(data) {
         mtext(name_pretty(trait), 1, line=3, xpd=NA, cex=cex_lab)
       }
       if (trait == last(traits)) {
-        mtext(sprintf("dbh=%sm", dsub$at[1]), 4, cex=1, line=1)
+        mtext(sprintf("dbh=%sm", dsub$at[1]), 4, cex=cex_lab, line=1)
       }
     }
   }
   mtext(name_pretty("dbasal_diam_dt"), 2, line=3, outer=TRUE, cex=cex_lab)
+}
+
+
+figure_qunatile_examples <- function(BCI_individual_growth) {
+
+ # bands in which to calculate growth rate In all but first band we estimate growth at centre of band.  The first interval is repeated so that we can estimate
+ # growth at LHS also
+ size_min <- c(10, 10, 25, 50, 100)/1000
+ size_range <- data.frame(at = 2 * size_min, min = size_min, max = 4 * size_min)
+ size_range[1, "at"] <- 10 / 1000
+
+ cex_lab <- 1.2
+ example_species <- c("Alseis blackiana", "Cordia bicolor", "Garcinia madruno","Tabernaemontana arborea")
+ nspecies <- length(example_species)
+
+ par(mfrow=c(4,5), mar=c(1,1,1,1), oma=c(5,5,3,3))
+
+ for(j in seq_len(nspecies)) {
+  data1 <- filter(BCI_individual_growth, species ==  example_species[j])
+   for(i in seq_len(nrow(size_range))) {
+
+      data <- filter(data1,
+        dbh >= size_range[["min"]][i] & dbh < size_range[["max"]][i])
+
+      x <- data[["dbh"]]
+      y <- data[["dbasal_diam_dt"]]
+      n <- length(y)
+      plot(x, y, log="x", pch=16, col="grey", ann=FALSE, xaxt="n", yaxt="n", cex=1.2,
+        ylim =  c(-1, 32) / 1000, xlim = as.numeric(size_range[i, c("min", "max")]))
+      legend("topright", legend=sprintf("n = %d", n), bty="n", cex=1.2, text.col="grey")
+      axis(1, labels=j==nspecies)
+      axis(2, labels=i==1)
+
+      at <- size_range[["at"]][i]
+      if (j == 1) {
+        mtext(sprintf("dbh=%sm", at), 3, cex=cex_lab, line=2, xpd=NA)
+      }
+      if (n > 500) {
+        f <- fit_quantile_regression(y, x, 0.99)
+        abline(f, lwd=1, col="red")
+        points(at, predict(f, newdata = data.frame(x=at)), col="red", pch=16, cex=1.5)
+      }
+
+
+
+      if (i == last(nrow(size_range))) {
+        mtext( example_species[j], 4, cex=cex_lab, line=2)
+      }
+
+
+    }
+  }
+
+  mtext("Diameter (m)", 1, cex=cex_lab, line=3, outer=TRUE)
+  mtext(name_pretty("dbasal_diam_dt"), 2, line=3, outer=TRUE, cex=cex_lab)
+
 }
