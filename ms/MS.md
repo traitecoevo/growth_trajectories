@@ -89,16 +89,6 @@ As for leaf, cheaper wood construction (lower $\rho$) increases marginal leaf de
 (TODO: Anais found this next para unclear)
 Greater height at maturation ($h_m$) leads to a growth advantage among larger plants by reducing the amount of energy invested in reproduction, thus increasing $\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}$ in eqs. \ref{eq:dhdt} and \ref{eq:dast}. At larger sizes, individuals of some species are allocating a majority of their surplus energy to growth, leaving a strong signal in potential growth rate. At smaller sizes, this differentiation disappears (Fig. \ref{f-BCI}), as predicted (Table \ref{tab:predictions}).
 
-Leaf N
-
-- Increases Amax and respiration rate
-- no size effect (need to verify)?
-
-Leaf area per sapwood area
-
-- expect growth advantage btu interaction with size unclear
-- see also @westoby_evolutionary_2012
-
 In the current model, the only effects of the trait seed size ($s$) are to influence starting size of seedlings and fecundity of the mother. Seed size therefore has no direct influence on absolute growth (Table \ref{tab:predictions}). In may studies seed size has been found to be negatively correlated with mass-based relative growth rate of seedlings. This effect is recovered here because of the intrinsic decrease in RGR with size.
 
 Two other important predictions arise directly from linking traits to growth rate (Table \ref{tab:predictions}c). First, species with low construction cost show stronger responses to changes in light environment. (XXX check this is true with respect to to sixe). Fig. \ref{f-growth_light} shows that species with low $\phi$ exhibit a wider range of growth rates, and also that the relationship between $\phi$ and growth rate flattens out under more stressed conditions. A similar response is observed for changes in $\rho$, matching empirically observed patterns[@ruger_functional_2012].
@@ -196,16 +186,6 @@ Shade tolerance & ?? &  ?? & \\ \\
 Any growth measure & none & becomes positive  & \\
 Shade tolerance & none &  none &  \\  \\
 
-\multicolumn{4}{l}{\emph{Leaf-nitrogen per area}} \\
-
-Height growth & ?? & ??  & \\
-Diameter growth & ?? & ??  & \\
-Basal area growth & ?? & ??  & \\
-Live mass growth & ?? & ??  & \\
-ABG mass growth & ?? & ??  & \\
-Relative growth & ?? & ??  & \\
-Shade tolerance & ?? &  ?? & \\ \\
-
 \end{tabular}
 
 \begin{tabular}{p{4cm}p{6cm}p{6cm}}
@@ -213,9 +193,8 @@ Shade tolerance & ?? &  ?? & \\ \\
 \hline
 Trait & Response & Support \\ \hline
 Leaf construction & & \\
-wood-construction cost & & \\
+Wood-construction cost & & \\
 Height at maturation & & \\
-Leaf-nitrogen per area & &\\
 \end{tabular}
 }
 \label{tab:predictions}
@@ -255,8 +234,6 @@ root mass & $m_\textrm{r}=\alpha_3 \, a_\textrm{l}$ & $\frac{\textrm{d}m_\textrm
 & $\frac{1}{k_s}$ & & & $h_0$ \\\hline
 Leaf-construction cost, $\phi$ & $\downarrow$ & $\uparrow$ & & & & & \\
 Wood-construction cost, $\rho$ & $\downarrow$ &  & & & $\downarrow$ & & \\
-Leaf area per sapwood area, $\theta$ & $\uparrow$& & $\downarrow$ & $\downarrow$ & & &\\
-Leaf-nitrogen & &$\downarrow$$\uparrow$ & & & & & \\
 Height at maturation, $h_m$ & &$\uparrow$ & & & & & $\downarrow$ & \\
 Seed size, $s$ & & & & & & & $\downarrow$ & $\uparrow$\\ \hline
 \end{tabular}
