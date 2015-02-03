@@ -168,9 +168,9 @@ plant_list_set_height <- function(x, height) {
   invisible(x)
 }
 
-lcp_whole_plant_with_trait <- function(x, trait_name, height,
+lcp_whole_plant_with_trait <- function(x, height,
                                        strategy=default_strategy()) {
-  plants <- plant_list(x, trait_name, strategy)
+  plants <- plant_list(x, strategy)
   plant_list_set_height(plants, height)
   sapply(plants, lcp_whole_plant)
 }
@@ -187,7 +187,7 @@ figure_lcp_whole_plant <- function() {
     cols <- RColorBrewer::brewer.pal(length(heights) + 3, "Blues")[-(1:3)]
 
     lcp <- sapply(heights, function(h)
-                  lcp_whole_plant_with_trait(x, trait, h, s))
+                  lcp_whole_plant_with_trait(trait_matrix(x, trait), h, s))
     lai <- log(lcp) / (-Parameters()$c_ext)
 
     matplot(x, lai, type="l", lty=1, col=cols, log="xy", ylim=ylim,
@@ -223,8 +223,8 @@ trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
     colnames(tmp) <- trait_name
     cbind(tmp, size_class=seq_along(size_values), pp[c(size_name, cols)])
   }
-  ret <- do.call("rbind",
-                 lapply(strategy_list(trait_values, trait_name, s), f))
+  traits <- trait_matrix(trait_values, trait_name)
+  ret <- do.call("rbind", lapply(strategy_list(traits, s), f))
   attr(ret, "info") <- list(size_name=size_name,
                             size_values=size_values,
                             trait_name=trait_name,
