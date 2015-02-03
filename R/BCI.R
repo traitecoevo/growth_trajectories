@@ -177,11 +177,12 @@ figure_BCI_data <- function(data) {
   data <- data[data$count > 800,]
   dsplit <- lapply(at, function(a) data[data$at == a,])
 
-  ylim <- c(1, 30) / 1000
+  ylim <- c(0.5, 32) / 1000
   cex_lab <- .85
 
+  xlim <- list(lma=c(0.02, 0.18), rho=c(250, 1000), hmat=c(5,50))
+
   for (trait in traits) {
-    xlim <- range(data[[trait]], na.rm=TRUE)
     for (i in seq_along(at)) {
       dsub <- dsplit[[i]]
       cex <- linear_rescale(log10(dsub$count), c(0.6, 2.5), log10(c(800, 10000)))
@@ -190,18 +191,21 @@ figure_BCI_data <- function(data) {
 
       sm <- sma(y ~ x, log="xy", method="OLS")
 
-      plot(x, y, pch=1, xlim=xlim, ylim=ylim, log="xy", cex=cex, xaxt="n", yaxt="n")
+      plot(x, y, pch=1, xlim=xlim[[trait]], ylim=ylim, log="xy", cex=cex, xaxt="n", yaxt="n")
       plot(sm, add=TRUE, col="darkgreen", lwd=2, type="l", p.lines.transparent=0.1)
 
       lab <- sprintf("r2 = %2.2f, n=%d",
                      sm[["groupsummary"]][["r2"]],
                      sum(!is.na(y) & !is.na(x)))
-      legend("topright", legend=lab, bty="n", cex=1.25)
+      legend("topright", legend=lab, bty="n", cex=1.25, text.col="grey")
 
       axis(1, labels=i == length(at))
       axis(2, labels=trait == traits[[1]], las=1)
       if (i == length(at)) {
         mtext(name_pretty(trait), 1, line=3, xpd=NA, cex=cex_lab)
+      }
+      if (trait == last(traits)) {
+        mtext(sprintf("dbh=%sm", dsub$at[1]), 4, cex=1, line=1)
       }
     }
   }
