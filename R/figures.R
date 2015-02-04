@@ -35,11 +35,12 @@ plant_info <- function(p) {
   x <- as.data.frame(as.list(c(p$vars_size,
                                p$vars_phys,
                                p$vars_growth)))
+
   # add relative measures
   x$height_growth_rate_relative    <- x$height_growth_rate / x$height
-  x$dbasal_area_dt_relative        <- x$dbasal_area_dt / x$area_basal
+  x$dbasal_area_dt_relative        <- x$dbasal_area_dt / x$basal_area
   x$dbasal_diam_dt_relative        <- x$dbasal_diam_dt / x$diameter
-  x$dmass_above_ground_dt_relative <- x$dmass_above_ground_dt / x$mass_above_ground
+  x$dabove_ground_mass_dt_relative <- x$dabove_ground_mass_dt / x$above_ground_mass
   x
 }
 
@@ -212,7 +213,7 @@ trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
   env <- fixed_environment(1.0)
 
   cols <- c("height_growth_rate", "dbasal_area_dt", "dbasal_diam_dt",
-            "dmass_above_ground_dt")
+            "dabove_ground_mass_dt")
   if (relative) {
     cols <- paste0(cols, "_relative")
   }
@@ -265,11 +266,11 @@ figure_mass_fraction <- function() {
   xlab <- "Height (m)"
   ylab <- "Fraction of live mass"
 
-  vars <- c("mass_leaf", "mass_root", "mass_bark", "mass_sapwood",
-            "mass_heartwood")
-  cols <- c(mass_leaf="forestgreen", mass_root="tan", mass_bark="orange",
-            mass_sapwood="firebrick2", mass_heartwood="brown")
-  vars <- setdiff(vars, "mass_heartwood")
+  vars <- c("leaf_mass", "root_mass", "bark_mass", "sapwood_mass",
+            "heartwood_mass")
+  cols <- c(leaf_mass="forestgreen", root_mass="tan", bark_mass="orange",
+            sapwood_mass="firebrick2", heartwood_mass="brown")
+  vars <- setdiff(vars, "heartwood_mass")
 
   p <- Plant(strategy)
   f <- function(h) {
@@ -289,7 +290,7 @@ figure_mass_fraction <- function() {
   }
   ylast <- c(0, y[nrow(y),])
   at <- (ylast[-1] + ylast[-length(ylast)]) / 2
-  axis(4, at=at, labels=sub("mass_", "", vars), las=1)
+  axis(4, at=at, labels=sub("_mass", "", vars), las=1)
 
   box()
 }
