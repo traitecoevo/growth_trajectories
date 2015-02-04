@@ -191,7 +191,7 @@ figure_BCI_data <- function(data) {
         mtext(name_pretty(trait), 1, line=3, xpd=NA, cex=cex_lab)
       }
       if (trait == last(traits)) {
-        mtext(sprintf("dbh=%sm", dsub$at[1]), 4, cex=cex_lab, line=1)
+        mtext(sprintf("D=%sm", dsub$at[1]), 4, cex=cex_lab, line=1)
       }
     }
   }
@@ -231,7 +231,7 @@ figure_qunatile_examples <- function(BCI_individual_growth) {
 
       at <- size_range[["at"]][i]
       if (j == 1) {
-        mtext(sprintf("dbh=%sm", at), 3, cex=cex_lab, line=2, xpd=NA)
+        mtext(sprintf("D=%sm", at), 3, cex=cex_lab, line=2, xpd=NA)
       }
       if (n > 500) {
         f <- fit_quantile_regression(y, x, 0.99)

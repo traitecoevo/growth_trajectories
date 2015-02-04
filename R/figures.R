@@ -47,22 +47,24 @@ plant_info <- function(p) {
 ## Code for the "rates vs size" figure set:
 figure_rate_vs_size <- function(type, canopy_openness=1,
                                 strategy=default_strategy()) {
-  dat <- figure_rate_vs_size_data(type, canopy_openness, strategy)
+  dat <- figure_rate_vs_size_data(canopy_openness, strategy)
 
-  yvars <- names(dat)[-1]
-  par(mfrow=c(1, length(yvars)))
+  yvars <- figure_rate_vs_size_cols(type)
+
+  par(mfrow=c(1, length(yvars)), oma=c(3,1,1,1))
   for (v in yvars) {
-    plot(dat[[1]], dat[[v]], type="l", xlab="height (m)", ylab=v)
+    plot(dat[["height"]], dat[[v]], type="l", xlab="", ylab= v, ylim=c(0, max(1,dat[[v]])))
   }
+  mtext("Height (m)", 1, cex=1, line=, outer=TRUE)
+
 }
 
-figure_rate_vs_size_data <- function(type, canopy_openness, strategy) {
+figure_rate_vs_size_data <- function(canopy_openness, strategy) {
   heights <- seq(Plant(strategy)$height, strategy$hmat, length.out=50)
   env <- fixed_environment(canopy_openness)
   res <- run_plant_to_heights(heights, strategy, env)
-  cols <- c("height", figure_rate_vs_size_cols(type))
   i <- res[["net_production"]] > 0
-  res[i, cols]
+  res[i, ]
 }
 
 figure_rate_vs_size_cols <- function(type) {
@@ -72,6 +74,10 @@ figure_rate_vs_size_cols <- function(type) {
     c("height_growth_rate", "dheight_dleaf_area", "leaf_fraction", "growth_fraction", "net_production")
   } else if (type == "leaf area growth") {
     c("dleaf_area_dt", "leaf_fraction", "growth_fraction", "net_production")
+  } else if (type == "diameter growth") {
+     c("dbasal_diam_dt", "leaf_fraction", "growth_fraction", "net_production")
+  } else if (type == "basal growth") {
+     c("dbasal_area_dt", "leaf_fraction", "growth_fraction", "net_production")
   } else {
     stop("Unknown type ", dQuote(type))
   }
@@ -100,7 +106,7 @@ figure_diameter_growth <- function(dat=NULL) {
       axis(1, labels=i == length(diameters), las=1)
       axis(2, labels=v == "lma", las=1)
       if (v == last(traits)) {
-        mtext(sprintf("dbh=%sm", diameters[[i]]), 4, cex=1, line=1)
+        mtext(sprintf("D=%sm", diameters[[i]]), 4, cex=1, line=1)
       }
     }
     mtext(name_pretty(v), 1, cex=1, line=3.5)
@@ -205,8 +211,10 @@ figure_lcp_whole_plant <- function() {
 trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
   if (size_name == "diameter") {
     size_values <- c(0.0025, 0.01, 0.1, 0.5)
+    titles <- sprintf("D=%0.2f (m)", size_values)
   } else {
     size_values <- c(0.25, 2, 8, 16)
+    titles <- sprintf("H=%0.2f (m)", size_values)
   }
   trait_values <- seq_log_range(trait_range(trait_name), 50)
   s <- default_strategy()
@@ -253,7 +261,8 @@ trait_effects_plot <- function(d) {
         mtext(name_pretty(g), 2, line=3)
       }
       if (g == growth_measures[[1]]) {
-        mtext(info$size_values[[i]], side=3, line=0.5, cex=1)
+        title <- sprintf("%s=%s (m)", toupper(substr(info$size_name,1,1)), prettyNum(info$size_values[[i]]))
+        mtext(title, side=3, line=0.5, cex=1)
       }
     }
   }

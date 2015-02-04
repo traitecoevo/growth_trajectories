@@ -47,7 +47,8 @@ targets:
 
       - ms/figures/SI_size_dpdt.pdf
       - ms/figures/SI_size_dhdt.pdf
-      - ms/figures/SI_size_daldt.pdf
+      - ms/figures/SI_size_dDdt.pdf
+      - ms/figures/SI_size_dastdt.pdf
 
       - ms/figures/SI_lma_effects_at_heights.pdf
       - ms/figures/SI_rho_effects_at_heights.pdf

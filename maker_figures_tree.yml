@@ -4,7 +4,7 @@ targets:
     plot: square
   diameter_growth_data:
     command: figure_diameter_growth_data()
-  
+
   ms/figures/max_leaf_above.pdf:
     command: figure_lcp_whole_plant()
     plot: wide
@@ -21,9 +21,13 @@ targets:
     command: figure_rate_vs_size(I("height growth"))
     plot: wide
 
-  ms/figures/SI_size_daldt.pdf:
-    command: figure_rate_vs_size(I("leaf area growth"))
-    plot: wide
+  ms/figures/SI_size_dDdt.pdf:
+    command: figure_rate_vs_size(I("diameter growth"))
+    plot: large_square
+
+  ms/figures/SI_size_dastdt.pdf:
+    command: figure_rate_vs_size(I("basal growth"))
+    plot: large_square
 
   ms/figures/SI_lma_effects_at_diameters.pdf:
     command: trait_effects_plot(d_lma_diameter_abs)
