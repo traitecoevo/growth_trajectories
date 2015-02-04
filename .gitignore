@@ -1,7 +1,4 @@
-ms/*.pdf
-ms/*.csl
-ms/*.tex
-ms/figures
-output/
+ms.pdf
+figures
 downloads
 .maker

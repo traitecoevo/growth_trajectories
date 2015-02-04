@@ -1,70 +1,70 @@
 targets:
-  ms/figures/growth_light.pdf:
+  figures/growth_light.pdf:
     command: figure_diameter_growth(diameter_growth_data)
     plot: square
   diameter_growth_data:
     command: figure_diameter_growth_data()
 
-  ms/figures/max_leaf_above.pdf:
+  figures/max_leaf_above.pdf:
     command: figure_lcp_whole_plant()
     plot: wide
 
-  ms/figures/SI_mass_fraction.pdf:
+  figures/SI_mass_fraction.pdf:
     command: figure_mass_fraction()
     plot: square
 
-  ms/figures/SI_size_dpdt.pdf:
+  figures/SI_size_dpdt.pdf:
     command: figure_rate_vs_size(I("mass production"))
     plot: wide
 
-  ms/figures/SI_size_dhdt.pdf:
+  figures/SI_size_dhdt.pdf:
     command: figure_rate_vs_size(I("height growth"))
     plot: wide
 
-  ms/figures/SI_size_dDdt.pdf:
+  figures/SI_size_dDdt.pdf:
     command: figure_rate_vs_size(I("diameter growth"))
     plot: large_square
 
-  ms/figures/SI_size_dastdt.pdf:
+  figures/SI_size_dastdt.pdf:
     command: figure_rate_vs_size(I("basal growth"))
     plot: large_square
 
-  ms/figures/SI_lma_effects_at_diameters.pdf:
+  figures/SI_lma_effects_at_diameters.pdf:
     command: trait_effects_plot(d_lma_diameter_abs)
     plot: large_square
-  ms/figures/SI_lma_effects_at_heights.pdf:
+  figures/SI_lma_effects_at_heights.pdf:
     command: trait_effects_plot(d_lma_height_abs)
     plot: large_square
-  ms/figures/SI_lma_effects_at_diameters_relative.pdf:
+  figures/SI_lma_effects_at_diameters_relative.pdf:
     command: trait_effects_plot(d_lma_diameter_rel)
     plot: large_square
-  ms/figures/SI_lma_effects_at_heights_relative.pdf:
+  figures/SI_lma_effects_at_heights_relative.pdf:
     command: trait_effects_plot(d_lma_height_rel)
     plot: large_square
 
-  ms/figures/SI_rho_effects_at_diameters.pdf:
+  figures/SI_rho_effects_at_diameters.pdf:
     command: trait_effects_plot(d_rho_diameter_abs)
     plot: large_square
-  ms/figures/SI_rho_effects_at_heights.pdf:
+  figures/SI_rho_effects_at_heights.pdf:
     command: trait_effects_plot(d_rho_height_abs)
     plot: large_square
-  ms/figures/SI_rho_effects_at_diameters_relative.pdf:
+  figures/SI_rho_effects_at_diameters_relative.pdf:
     command: trait_effects_plot(d_rho_diameter_rel)
     plot: large_square
-  ms/figures/SI_rho_effects_at_heights_relative.pdf:
+  figures/SI_rho_effects_at_heights_relative.pdf:
     command: trait_effects_plot(d_rho_height_rel)
     plot: large_square
 
-  ms/figures/SI_hmat_effects_at_diameters.pdf:
+  figures/SI_hmat_effects_at_diameters.pdf:
     command: trait_effects_plot(d_hmat_diameter_abs)
     plot: large_square
-  ms/figures/SI_hmat_effects_at_heights.pdf:
+  figures/SI_hmat_effects_at_heights.pdf:
     command: trait_effects_plot(d_hmat_height_abs)
     plot: large_square
-  ms/figures/SI_hmat_effects_at_diameters_relative.pdf:
+  figures/SI_hmat_effects_at_diameters_relative.pdf:
     command: trait_effects_plot(d_hmat_diameter_rel)
     plot: large_square
-  ms/figures/SI_hmat_effects_at_heights_relative.pdf:
+  figures/SI_hmat_effects_at_heights_relative.pdf:
     command: trait_effects_plot(d_hmat_height_rel)
     plot: large_square
 
