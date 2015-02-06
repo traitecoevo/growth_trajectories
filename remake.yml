@@ -8,6 +8,8 @@ packages:
   - xtable
   - RCurl
   - downloader
+  - RColorBrewer
+
 sources:
   - R
 
@@ -26,7 +28,7 @@ plot_options:
     height: 12
 
 include:
-  - maker_figures_tree.yml
+  - remake_figures_tree.yml
 
 targets:
   all:

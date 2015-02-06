@@ -17,8 +17,7 @@ Used estimate potential growth rate and species-level traits.
 ```{r, echo=TRUE, results="hide"}
 library(dplyr)
 
-m <- maker::maker()
-data <- m$make("BCI_species_data")
+data <- remake::make("BCI_species_data")
 head(data)
 ```
 
@@ -113,7 +112,7 @@ names(lower) <- c("k_l0","k_s0", "c_NUE")
 Finally prepare the data for comparison. In this trial we'll just use the smallest size class.
 
 ```{r, echo=TRUE, results="hide"}
-data <- m$get("BCI_species_data") %>%
+data <- remake::make("BCI_species_data") %>%
   mutate(dbh=at) %>%
   filter(!is.na(lma*rho*hmat*dbh*dbasal_diam_dt), dbh %in% c(0.01), hmat > 10) %>%
   select(dbh, lma, rho, dbasal_diam_dt)

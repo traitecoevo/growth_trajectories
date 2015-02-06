@@ -14,8 +14,7 @@ suppressPackageStartupMessages({
 })
 
 # First, look at plot: challenge is to move peak to left and pull down elevation of curve.
-m <- maker::maker()
-data <- m$make("BCI_species_data") %>%
+data <- remake::make("BCI_species_data") %>%
   mutate(dbh=at) %>%
   filter(!is.na(lma*rho*hmat*dbh*dbasal_diam_dt), dbh %in% c(0.01), hmat > 10) %>%
   select(dbh, lma, rho, dbasal_diam_dt)

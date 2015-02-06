@@ -7,7 +7,7 @@ The paper will be based on presentation at Intecol2013: Falster, Daniel (2013): 
 Install all required packages with
 
 ```
-maker::maker()$install_packages()
+remake::install_missing_packages()
 ```
 
 Best to install `smatr` from github to avoid warnings in the plotting function in the CRAN version:
@@ -16,7 +16,7 @@ Best to install `smatr` from github to avoid warnings in the plotting function i
 devtools::install_bitbucket("remkoduursma/smatr")
 ```
 
-(this will be done by maker if smatr is not installed already).
+(this will be done by remake if smatr is not installed already).
 
 # Variables
 
