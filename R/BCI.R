@@ -198,6 +198,71 @@ figure_BCI_data <- function(data) {
   mtext(name_pretty("dbasal_diam_dt"), 2, line=3, outer=TRUE, cex=cex_lab)
 }
 
+figure_BCI_data2 <- function(data) {
+  traits <- c("lma", "rho", "hmat")
+  at <- c(10, 20, 50, 100, 200)/1000
+
+  data <- data[data$count > 500 & data$at %in% at,]
+  data$class <- match(data$at, at)
+
+  ## Three types if fits: independent (_i), weighted (_w) and joint
+  ## (_j).
+  prep <- function(trait) {
+    data$x <- data[[trait]]
+    dsplit <- split(data, data$class)
+    fits_i <- lapply(dsplit, function(d)
+                     lm(log10(dbasal_diam_dt) ~ log10(x), d))
+
+    ## Next thing to try is weights.
+    fits_w <- lapply(dsplit, function(d)
+                     lm(log10(dbasal_diam_dt) ~ log10(x), d,
+                        weights=log(count)))
+
+    fits_j <- lm(log10(dbasal_diam_dt) ~ log10(x) * log(at), data,
+                 weights=log(count))
+
+    ## Generate a data set to do prediction with:
+    xr <- sapply(dsplit, function(x) range(x[[trait]], na.rm=TRUE))
+
+    yr_i <- sapply(seq_along(dsplit), function(i)
+                   10^(predict(fits_i[[i]], list(x=xr[,i]))))
+    yr_w <- sapply(seq_along(dsplit), function(i)
+                   10^(predict(fits_w[[i]], list(x=xr[,i]))))
+    yr_j <- sapply(seq_along(dsplit), function(i)
+                   10^(predict(fits_j, data.frame(x=xr[,i], at=at[i]))))
+
+    list(data=data, xr=xr, yr_i=yr_i, yr_w=yr_w, yr_j=yr_j)
+  }
+
+  dat <- setNames(lapply(traits, prep), traits)
+
+  ylim <- c(0.5, 32) / 1000
+  xlim <- list(lma=c(0.02, 0.18), rho=c(250, 1000), hmat=c(5,50))
+  cols <- RColorBrewer::brewer.pal(length(at), "Set1")
+  cex <- linear_rescale(log10(data$count), c(0.6, 2.5), log10(c(800, 10000)))
+  cex_lab <- 0.75
+
+  par(mfrow=c(1, 3), oma=c(0, 4.1, 0, 0), mar=c(4.1, 2.1, .5, .5))
+  for (trait in traits) {
+    dt <- dat[[trait]]
+    plot(dbasal_diam_dt ~ x, dt$data, pch=21, xlim=xlim[[trait]], #ylim=ylim,
+         log="xy", cex=cex, yaxt="n", xlab="", ylab="",
+         col=make_transparent(cols[class], .6),
+         bg=make_transparent(cols[class], .5))
+
+    segments(dt$xr[1,], dt$yr_i[1,], dt$xr[2,], dt$yr_i[2,],
+             col=cols, lwd=3, lty=2)
+    ## segments(dt$xr[1,], dt$yr_w[1,], dt$xr[2,], dt$yr_w[2,],
+    ##          col=cols, lwd=3, lty=3)
+    segments(dt$xr[1,], dt$yr_j[1,], dt$xr[2,], dt$yr_j[2,],
+             col=cols, lwd=3)
+    axis(2, las=1, labels=trait == traits[[1]])
+    if (trait == traits[[1]]) {
+      mtext(name_pretty("dbasal_diam_dt"), 2, xpd=NA, line=4, cex=cex_lab)
+    }
+    mtext(name_pretty(trait), 1, line=3, cex=cex_lab)
+  }
+}
 
 figure_qunatile_examples <- function(BCI_individual_growth) {
 

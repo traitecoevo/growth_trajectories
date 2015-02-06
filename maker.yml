@@ -124,6 +124,10 @@ targets:
     command: figure_BCI_data(BCI_species_data)
     plot: med_square
 
+  figures/BCI_data2.pdf:
+    command: figure_BCI_data2(BCI_species_data)
+    plot: wide
+
   figures/SI_quantile_examples.pdf:
     command: figure_qunatile_examples(BCI_individual_growth)
     plot: large_square
