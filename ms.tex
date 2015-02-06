@@ -734,60 +734,106 @@ carbon budget.
 \label{tab:params}
 \end{table}
 
-\subsection{Trait values maximising height
-growth}\label{trait-values-maximising-height-growth}
 
-We want to find the trait values maximising growth rate, \(G\). To make
-the analysis more tractible, we will focus on height growth rate and
-assume we are dealing with a plant of given height where 100\% of
-available energy is allocated to growth. From eq. \ref{eq:dhdt}, we thus
-have
+\subsection{Effect of traits on height growth} \label{trait-values-maximising-height-growth}
 
-\begin{equation} \label{eq:G1}
-G = \frac{\textrm{d}h}{\textrm{d}t} = \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}
-\times \frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}
-\times \frac{\textrm{d}m_\textrm{t}} {\textrm{d}P}
-\times \frac{\textrm{d}P}{\textrm{d}t}.
-\end{equation}
-
-Maximising \(G\) is equivalent to solving for trait values \(x\) giving
-\(\partial G /\partial x = 0\). Noting that traits do not influence
-\(\frac{\textrm{d}h} {\textrm{d}a_\textrm{l}}\), and by assumption
-\(\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}=1\), we thus have
+We want to show how two traits $\phi$ and $\rho$ influence growth rate,
+by looking at the effect of
+traits on the components of growth rate (eq. \ref{eq:dhdt}. To make
+the analysis more tractable, we will assume we are dealing with a plant of
+given height where 100\% of available energy is allocated to growth,
+i.e. \(\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}=1\). Note also
+that by the assumptions of our model and above, traits do not influence
+\(\frac{\textrm{d}h} {\textrm{d}a_\textrm{l}}\). Thus we have
 
 \begin{equation} \label{eq:G2}
-G =  c_1   \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}  \frac{ \textrm{d}P} {\textrm{d}t} \right),
+G = \frac{\textrm{d}h}{\textrm{d}t} = c_1   \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}  \frac{ \textrm{d}P} {\textrm{d}t} \right),
 \end{equation}
 
 where \(c_1 = \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}\). Eq.
-\ref{eq:G2} is a product of the form \(Y = W(x) \times Z(x)\). For,
-equations of this type, a solution to \(\partial{Y}/\partial{x} =0\) is
-given by \(\partial{W}/\partial{x} / W = \partial{Z}/\partial{x} / Z\).
-Maximum growth rate thus occurs when
+\ref{eq:G2} is a product of the form \(Y(x) = W(x) \times Z(x)\). For,
+equations of this type, the derivative \(\partial{Y}/\partial{x}\) is
+given by \(\partial{W}/\partial{x} \, Z + W \, \partial{Z}/\partial{x}\). Thus
+the derivative of \(G\) with respect to some trait $x$  is given by
 
-\begin{equation} \label{eq:G3}
-\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\right)}{\partial x} \frac{1}{\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}} = \frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x} \frac{1}{\frac{ \textrm{d}P} {\textrm{d}t} }.
+\begin{equation} \label{eq:dG}
+\frac{\partial G} {\partial x} =
+\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\right)}{\partial x}
+ \, \frac{ \textrm{d}P} {\textrm{d}t}
++ \frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}
+\, \frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x}.
 \end{equation}
 
-In words, the maximum occurs when relative change in marginal leaf
-deployment with respect to trait is equal to the relative change in mass
-production with respect to the trait.
+If this derivative is positive (negative), there will be a positive (negative) relationship
+between traits and growth at the height where it is evaluated.
 
-Let us now try and simplify equation \ref{eq:G3}. First, let our trait
-of interest be leaf-construction cost, i.e. \(x=\phi\). From eq/
-\ref{eq:daldmt}, we can derive
+We further simplify by expanding the derivative of eq. \ref{eq:daldmt}:
 
-\begin{equation} \label{eq:G4}
-\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\right)}{\partial \phi} = -\left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\ \right)^2.
+\begin{equation} \label{eq:da_dx}
+\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\right)}
+{\partial x} = -\left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\ \right)^2
+\, \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
+}{\partial x}.
 \end{equation}
 
-This simplifies eq. \ref{eq:G3} to
+Combing eqs. \ref{eq:dG}-\ref{eq:da_dx}, we have
 
-\begin{equation} \label{eq:G5}
-\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}(x) =  \frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x} \frac{1}{\frac{ \textrm{d}P} {\textrm{d}t} }.
+\begin{equation} \label{eq:dG2}
+\frac{\partial G} {\partial x} =
+\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}
+\left(
+\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x}
+- \frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}
+\,  \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
+}{\partial x}
+ \, \frac{ \textrm{d}P} {\textrm{d}t}
+\right).
 \end{equation}
 
-From eq. \ref{eq:dPdt} we obtain,
+Since is $\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}>0$ always, the sign
+of $\frac{\partial G} {\partial x}$ depends on the terms inside the brackets on the
+RHS. Rearranging we find that $\frac
+{\partial G} {\partial x} < 0$ if
+
+\begin{equation}\label{eq:dg3}
+\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x}
+< \frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}
+\,  \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
+}{\partial x} \, \frac{ \textrm{d}P} {\textrm{d}t},
+\end{equation}
+
+or equivalently
+\begin{equation}\label{eq:dg4}
+\frac{
+\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x} }
+{\frac{ \textrm{d}P} {\textrm{d}t}}
+<
+\frac{ \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
+}{\partial x}}{\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}}.
+\end{equation}
+
+In words, there will be a negative relationship between trait x and growth if the
+relative change in production due to change in traits is less than the relative change
+in the total construction cost for a unit of leaf area due to change in trait. Crucially,
+key elements in eq. \ref{eq:dg3} are modified by height.
+
+We can also solve for trait values \(x\) maximising growth rate, i.e. the value
+giving \(\partial G /\partial x = 0\):
+
+\begin{equation}\label{eq:max}
+\frac{
+\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x} }
+{\frac{ \textrm{d}P} {\textrm{d}t}}
+=
+\frac{ \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
+}{\partial x}}{\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}}.
+\end{equation}
+
+\subsubsection{Leaf construction cost}
+
+If the trait of interest is leaf-construction cost, i.e. \(x=\phi\), we can expand
+eq. \ref{eq:dg4} as follows. Note that $\frac{\partial \left(\frac{\textrm{d}m_\textrm
+{t}} {\textrm{d}a_\textrm{l}}\right)}{\partial \phi} = 1$. Also, from eq. \ref{eq:dPdt} we obtain,
 
 \begin{equation}\label{eq:dPdt2}
 \frac{dP}{\textrm{d}t} = c_2 - a_\textrm{l} a_4 \phi ^{1-B_4}
@@ -795,25 +841,32 @@ From eq. \ref{eq:dPdt} we obtain,
 
 where
 \(c_2 = Y ( a_\textrm{l} \, (A - r_\textrm{l}) + \sum_\textrm{i=b,s,r}{m_\textrm{i} \, r_\textrm{i}}) - (\sum_\textrm{i=b,s,r}{m_\textrm{i} \, k_\textrm{i}})\)
-is independt of \(\phi\), and thus
+is independent of \(\phi\), and thus
 
 \begin{equation}\label{eq:dPdt3}
-\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial \phi}  = - (1-B_4) a_\textrm{l} a_4\phi ^{-B_4}.
+\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial \phi}  =
+(B_4-1) a_\textrm{l} a_4\phi ^{-B_4}.
 \end{equation}
 
-Combing eqs. \ref{eq:G5}-\ref{eq:dPdt3}, we find that the maximum occurs
-when
+Eq. \ref{eq:dPdt3} shows that if \(B4=1\), \(\frac{ \textrm{d}P} {\textrm{d}t}\) is independent
+of $\phi$. In contrast, if \(B4>1\) (which tends to be the case empirically), \(\frac{ \textrm
+{d}P} {\textrm{d}t}\) increases as $\phi$ increases, more acutely at low $\phi$.
+
+Substituting into eq. \ref{eq:dg4}, we have the result that growth rate correlates
+with traits if
 
 \begin{equation} \label{eq:G6}
-\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}(\phi) = \frac{- (1-B_4) a_\textrm{l} a_4\phi ^{-B_4}}{c_2 - a_\textrm{l} a_4 \phi ^{1-B_4}}.
+\frac{(B_4-1) a_\textrm{l} a_4\phi ^{-B_4}}{c_2 - a_\textrm{l} a_4 \phi ^{1-B_4}}
+< \frac{1}{\phi
+ + \frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm
+ {b}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}}.
 \end{equation}
 
-Note also that if \(B4=1\),
-\(\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial \phi} =0\),
-also if \(B4>1\),
-\(\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial \phi} > 0\).
-A similar derivation can be produced linking wood density to
-productivity, via sapwood turnover.
+\subsubsection{Wood construction cost}
+
+Do similar to previous section for wood construction cost.
+
+
 
 \subsection{Supplementary figures}\label{supplementary-figures}
 
