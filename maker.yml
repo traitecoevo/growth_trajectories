@@ -75,14 +75,17 @@ targets:
   downloads/bci.full.Rdata31Aug2012.zip:
     command: BCI_download_50ha_plot_full(target_name)
     cleanup_level: never
+    check: exists
 
   downloads/bci.spptable.rdata:
     command: BCI_download_species_table(target_name)
     cleanup_level: never
+    check: exists
 
   downloads/50ha/bci.stem7.csv:
     command: BCI_download_50ha_plot(target_name)
     cleanup_level: never
+    check: exists
 
   BCI_nomenclature:
     command: read_csv("data/Nomenclature_R_20101129_Rready.csv")
@@ -95,6 +98,7 @@ targets:
   downloads/wright_2010.txt:
     command: download_wright_2010(target_name)
     cleanup_level: purge
+    check: exists
 
   glopnet:
     command: >
@@ -105,6 +109,7 @@ targets:
   downloads/wright_2004.xls:
     command: download_wright_2004(target_name)
     cleanup_level: purge
+    check: exists
 
   glopnet_locations:
     command: read.csv("data/wright_2004_locations.csv")
