@@ -41,6 +41,7 @@ targets:
       - references.bib
       - figures/table-pars.tex
       - figures/BCI_data.pdf
+      - figures/BCI_data2.pdf
       - figures/growth_light.pdf
       - figures/max_leaf_above.pdf
       - figures/SI_mass_fraction.pdf

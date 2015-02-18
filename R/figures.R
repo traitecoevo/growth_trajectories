@@ -44,6 +44,30 @@ plant_info <- function(p) {
   x
 }
 
+## Code for trait deriative figure
+figure_trait_deriative <- function(type, trait_name="lma", canopy_openness=1,
+                                strategy=default_strategy()) {
+
+  strategy <- strategy
+  strategy[[trait_name]] <- 0.05
+  dat <- figure_rate_vs_size_data(canopy_openness, strategy)
+  strategy2 <- strategy
+  x <- strategy2[[trait_name]]
+  dx = 0.01 *x
+  strategy2[[trait_name]] <- x+dx
+  dat2 <- figure_rate_vs_size_data(canopy_openness, strategy2)
+
+  line1 <- (dat2$net_production - dat$net_production)/dx/dat$net_production
+  line2  <- (1/(dat2$dleaf_area_dleaf_mass * dat2$leaf_fraction)
+              - 1/(dat$dleaf_area_dleaf_mass * dat$leaf_fraction)) / dx /
+            1/(dat2$dleaf_area_dleaf_mass * dat2$leaf_fraction)
+  height <- dat$height
+
+  plot(dat[["height"]], line1, type="l", xlab="Height (m)", ylab= "relative change", ylim=c(0,20))
+  points(dat[["height"]], line2, type="l", col="red")
+}
+
+
 ## Code for the "rates vs size" figure set:
 figure_rate_vs_size <- function(type, canopy_openness=1,
                                 strategy=default_strategy()) {
@@ -60,7 +84,7 @@ figure_rate_vs_size <- function(type, canopy_openness=1,
 }
 
 figure_rate_vs_size_data <- function(canopy_openness, strategy) {
-  heights <- seq(Plant(strategy)$height, strategy$hmat, length.out=50)
+  heights <- seq(Plant(strategy)$height, strategy$hmat, length.out=100)
   env <- fixed_environment(canopy_openness)
   res <- run_plant_to_heights(heights, strategy, env)
   i <- res[["net_production"]] > 0

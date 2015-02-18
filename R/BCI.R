@@ -250,8 +250,8 @@ figure_BCI_data2 <- function(data) {
          col=make_transparent(cols[class], .6),
          bg=make_transparent(cols[class], .5))
 
-    segments(dt$xr[1,], dt$yr_i[1,], dt$xr[2,], dt$yr_i[2,],
-             col=cols, lwd=3, lty=2)
+    # segments(dt$xr[1,], dt$yr_i[1,], dt$xr[2,], dt$yr_i[2,],
+    #          col=cols, lwd=3, lty=2)
     ## segments(dt$xr[1,], dt$yr_w[1,], dt$xr[2,], dt$yr_w[2,],
     ##          col=cols, lwd=3, lty=3)
     segments(dt$xr[1,], dt$yr_j[1,], dt$xr[2,], dt$yr_j[2,],
