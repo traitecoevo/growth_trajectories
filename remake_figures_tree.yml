@@ -29,6 +29,10 @@ targets:
     command: figure_rate_vs_size(I("basal growth"))
     plot: large_square
 
+  figures/SI_lma_growth_derivative.pdf:
+    command: figure_trait_deriative (I("height growth"))
+    plot: wide
+
   figures/SI_lma_effects_at_diameters.pdf:
     command: trait_effects_plot(d_lma_diameter_abs)
     plot: large_square

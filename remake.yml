@@ -51,6 +51,7 @@ targets:
       - figures/SI_size_dhdt.pdf
       - figures/SI_size_dDdt.pdf
       - figures/SI_size_dastdt.pdf
+      - figures/SI_lma_growth_derivative.pdf
 
       - figures/SI_lma_effects_at_heights.pdf
       - figures/SI_rho_effects_at_heights.pdf
