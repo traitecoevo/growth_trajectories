@@ -73,11 +73,11 @@ Ecology letters
 
 
 Functional traits capture core differences in the strategies plants use
-to generate and invest surplus energy\citep{wright_world-wide_2004, chave_towards_2009,westoby_plant_2002}.
+to generate and invest surplus energy\citep{wright_world_wide_2004, chave_towards_2009,westoby_plant_2002}.
 
 - Traits reflect idea that although plants have same basic function, differ in some strategic ways, in terms of how they invest energy.
 - Data for prominent traits now exists for many of the world's 250000 plant species\citep{cornwell_functional_2014}.
-- Known that traits drive differences in multiple aspects of plant function, including mechanical strength, biomass partitioning, and rates of photosynthesis and tissue turnover\citep{wright_world-wide_2004,chave_towards_2009, westoby_plant_2002}.
+- Known that traits drive differences in multiple aspects of plant function, including mechanical strength, biomass partitioning, and rates of photosynthesis and tissue turnover\citep{wright_world_wide_2004,chave_towards_2009, westoby_plant_2002}.
 - Idea has taken hold that traits are useful for simplifying biodiversity, as such have been adopted both as a indicator of species' ecologies and as a target of evolution.
 
 While traits may link directly to aspects of plant function, attempts at using traits to explain patterns of whole-plant growth have had mixed success.
