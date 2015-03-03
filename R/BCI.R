@@ -3,68 +3,130 @@
 #Download BCI data
 # download function from package downloader provides wrapper
 # to download file so that works for https and across platforms
-BCI_download_50ha_plot_full <- function(dest) {
+BCI_download_50ha_plot_full<- function(dest) {
+  require(httr)
+  if(!is.character(dest)) stop('dest must be character')
+  if(file.exists(dest)) stop('dest already exists')
   url <-"https://repository.si.edu/bitstream/handle/10088/20925/bci.full.Rdata31Aug2012.zip"
-  download(url, dest, mode="wb")
+  GET(url, write_disk(f <- tempfile(fileext='.zip')), progress())
+  tryCatch({
+    ff <- unzip(f, exdir=tempdir())
+    e <- new.env()
+    lapply(ff, load, e)
+    BCI_50haplot <- do.call(rbind, mget(ls(e), e))
+  }, error=function(e) 
+    sprintf(':c something bad happened... but your file is here: %s', f))
+  save(BCI_50haplot, file=dest)
 }
 
 BCI_download_species_table <- function(dest) {
+  require(httr)
+  if(!is.character(dest)) stop('dest must be character')
+  if(file.exists(dest)) stop('dest already exists')
   url <-"https://repository.si.edu/bitstream/handle/10088/20925/bci.spptable.rdata"
-  download(url, dest, mode="wb")
-}
-
-#Load 50ha census data
-BCI_load_50ha_plot <- function(path_to_zip) {
-  tmp <- tempfile()
-  unzip(path_to_zip, exdir=tmp)
-  on.exit(unlink(tmp, recursive=TRUE))
-
-  files <- list.files(tmp, pattern=".rdata", full.names=TRUE)
-  tbl_df(ldply(list.files(tmp, pattern=".rdata", full.names=TRUE), function(x) load_rdata(x)))
+  GET(url, write_disk(f <- tempfile()), progress())
+  nm <- load(f)
+  BCI_nomenclature <- get(nm)
+  save(BCI_nomenclature, file=dest)
 }
 
 BCI_calculate_individual_growth <- function(BCI_50haplot, BCI_nomenclature) {
-
-  # Identifies individuals that return from the dead
-  is_zombie <- function(status) {
-    i <- seq_len(length(status)-1)
-    any(status[i] == 'D' & status[i+1] == 'A')
+  #Look up family
+  lookup_family <- function(tag, nomen){
+    i <- match(tag, tolower(nomen[['sp']]))
+    nomen$Family[i]
   }
-
+  
+  #Look up species code
+  lookup_latin <- function(tag, nomen){
+    nomen$latin <- paste(nomen$Genus, nomen$Species)
+    i <- match(tag, tolower(nomen[['sp']]))
+    nomen[['latin']][i]
+  }
+  
+  # Identifies individuals that return from the dead or are supposably refound
+  # i.e. Individuals given dbh=NA and then later given numeric value
+  # Note this function must be used prior to subsetting only observations with pom=1.3
+  is_zombie <- function(dbh) {
+    any(diff(is.na(dbh)) == -1)
+  }
+  
+  #Calculates growth rate as a function of past size
+  calculate_growth_rate <- function(x, t, f=function(y) y){
+    dt = diff(t)/365.25
+    if(any(dt < 0, na.rm=TRUE)){
+      stop("time must be sorted")
+    }
+    c(NA, diff(f(x))/dt)
+  }
+  
+  # Function to identify bad data. Adapted from function in CTFS R package
+  CTFS_sanity_check <- function(dbh, dbh_increment, dbasal_diam_dt) {
+    
+    slope <- 0.006214
+    intercept <- 0.9036 /1000   #convert from mm to m
+    error_limit <- 4
+    max_growth <- 75 / 1000     #convert from mm to m
+    
+    accept <- rep(TRUE, length(dbh))
+    # Remove records based on max growth rate
+    accept[dbasal_diam_dt > max_growth] <- FALSE
+    # Remove records based on min growth rate, estimated from allowbale error
+    allowable.decrease <- -error_limit * (slope * dbh + intercept)
+    accept[dbh_increment < allowable.decrease] <- FALSE
+    accept
+  }
+  
+  # function to calculate growth rate of tree, either absolute (default) or relative rgowth rate (set f=log)
+  calculate_growth_rate <- function(x, t, f = function(y) y) {
+    dt <- diff(t)/365.25
+    if (any(dt < 0, na.rm = TRUE)) {
+      stop("time must be sorted")
+    }
+    c(diff(f(x))/dt, NA)
+  }
+  
+  
+  
   names(BCI_50haplot) <- tolower(names(BCI_50haplot)) # lower case for all column names
-
+  
   data <- BCI_50haplot %>%
     arrange(sp, treeid, date) %>%
-    select(sp, treeid, nostems, exactdate, date, status, hom, dbh) %>%
+    select(sp, treeid, nostems, exactdate, dfstatus, pom, dbh) %>%
     mutate(species = lookup_latin(sp, BCI_nomenclature),
-          family = lookup_family(sp, BCI_nomenclature),
-          dbh=dbh/1000) %>%
-    group_by(treeid) %>%
-    # Remove zombies - plants recorded as dead that then reappear at later date
-    filter(!is_zombie(status)) %>%
+           family = lookup_family(sp, BCI_nomenclature),
+           dbh=dbh/1000) %>%
     # Remove stems from earlier census, measured with course resolution
-    filter(exactdate > "1990-02-06") %>%
-    # Only keep alive stems
-    filter(status=="A") %>%
-    #Remove plants where height of measurement is not close to 1.3
-    filter( abs(hom - 1.3) < 0.05) %>%   #NB hom ==1.3 does not work due to precision errors
-    # filter plants with multiple stems
+    filter(exactdate >= "1990-02-06") %>%
+    # Remove families that don't exhibit dbh growth e.g. palms
+    filter(!family %in% c('Arecaceae', 'Cyatheaceae', 'Dicksoniaceae', 'Metaxyaceae', 
+                          'Cibotiaceae', 'Loxomataceae', 'Culcitaceae', 'Plagiogyriaceae', 
+                          'Thyrsopteridaceae')) %>%
+    # Remove observations without a species code
+    filter(!is.na(sp)) %>%
+    # For each individual..
+    group_by(treeid) %>%
+    # Filter plants with multiple stems
     filter(max(nostems)==1) %>%
-    # Remove species from families that don't exhibit dbh growth, eg. palms
-    filter(!family %in% c('Arecaceae', 'Cyatheaceae', 'Dicksoniaceae', 'Metaxyaceae',
-                        'Cibotiaceae', 'Loxomataceae', 'Culcitaceae', 'Plagiogyriaceae',
-                        'Thyrsopteridaceae')) %>%
-  mutate(
+    # Remove zombies - individuals that are recorded as dead but reappear at later date
+    filter(!is_zombie(dbh)) %>%
+    # Remove plants where height of measurement is not close to 1.3
+    filter(pom ==1.3) %>%
+    # Only keep alive stems
+    filter(dfstatus=="alive") %>%
+    mutate(
+      # First measurement in 1990 ='1990-02-06'
+      julian = as.vector(julian(as.Date(exactdate,"%Y-%m-%d"), as.Date("1990-02-06", "%Y-%m-%d"))),
       dbh_increment = c(diff(dbh), NA),
-      dbasal_diam_dt = calculate_growth_rate(dbh, date),
-      dbasal_diam_dt_relative = calculate_growth_rate(dbh, date, log)
-      ) %>%
+      dbasal_diam_dt = calculate_growth_rate(dbh, julian),
+      dbasal_diam_dt_relative = calculate_growth_rate(dbh, julian, log)
+    ) %>%
     filter(
       !is.na(dbasal_diam_dt) &
-      !is.na(dbh_increment) &
-      CTFS_sanity_check(dbh, dbh_increment, dbasal_diam_dt)
-      ) %>%
-    select(species, family, status, dbh, dbasal_diam_dt)
+        !is.na(dbh_increment) &
+        CTFS_sanity_check(dbh, dbh_increment, dbasal_diam_dt)
+    ) %>%
+    select(species, family, dfstatus, dbh, dbasal_diam_dt)
 }
 
 BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
@@ -96,44 +158,7 @@ BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
   species_data
 }
 
-# function to calculate growth rate of tree, either absolute (default) or relative rgowth rate (set f=log)
-calculate_growth_rate <- function(x, t, f = function(y) y) {
-  dt <- diff(t)/365.25
-  if (any(dt < 0, na.rm = TRUE)) {
-    stop("time must be sorted")
-  }
-  c(diff(f(x))/dt, NA)
-}
 
-# Function to identify bad data. Adapted from function in CTFS R package
-CTFS_sanity_check <- function(dbh, dbh_increment, dbasal_diam_dt) {
-
-  slope <- 0.006214
-  intercept <- 0.9036 /1000   #convert from mm to m
-  error_limit <- 4
-  max_growth <- 75 / 1000     #convert from mm to m
-
-  accept <- rep(TRUE, length(dbh))
-  # Remove records based on max growth rate
-  accept[dbasal_diam_dt > max_growth] <- FALSE
-  # Remove records based on min growth rate, estimated from allowbale error
-  allowable.decrease <- -error_limit * (slope * dbh + intercept)
-  accept[dbh_increment < allowable.decrease] <- FALSE
-  accept
-}
-
-#Look up family
-lookup_family <- function(tag, nomen){
-  i <- match(tag, tolower(nomen[['sp6']]))
-  nomen$family[i]
-}
-
-#Look up species code
-lookup_latin <- function(tag, nomen){
-  nomen$latin <- paste(nomen$genus, nomen$species)
-  i <- match(tag, tolower(nomen[['sp6']]))
-  nomen[['latin']][i]
-}
 
 # fits quantile regression to data
 fit_quantile_regression <- function(y, x, tau) {
