@@ -15,7 +15,6 @@ BCI_download_species_table <- function(dest) {
 
 #Load 50ha census data
 BCI_load_50ha_plot <- function(path_to_zip) {
-
   tmp <- tempfile()
   unzip(path_to_zip, exdir=tmp)
   on.exit(unlink(tmp, recursive=TRUE))
