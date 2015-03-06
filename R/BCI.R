@@ -26,46 +26,55 @@ BCI_load_50ha_plot <- function(path_to_zip) {
 
 BCI_calculate_individual_growth <- function(BCI_50haplot, BCI_nomenclature) {
 
-  # Identifies individuals that return from the dead
-  is_zombie <- function(status) {
-    i <- seq_len(length(status)-1)
-    any(status[i] == 'D' & status[i+1] == 'A')
+  # Identifies individuals that return from the dead or are supposably refound
+  # i.e. Individuals given dbh=NA and then later given numeric value
+  # Note this function must be used prior to subsetting only observations with pom=1.3
+  is_zombie <- function(dbh) {
+    any(diff(is.na(dbh)) == -1)
   }
 
   names(BCI_50haplot) <- tolower(names(BCI_50haplot)) # lower case for all column names
 
   data <- BCI_50haplot %>%
     arrange(sp, treeid, date) %>%
-    select(sp, treeid, nostems, exactdate, date, status, hom, dbh) %>%
-    mutate(species = lookup_latin(sp, BCI_nomenclature),
-          family = lookup_family(sp, BCI_nomenclature),
-          dbh=dbh/1000) %>%
-    group_by(treeid) %>%
-    # Remove zombies - plants recorded as dead that then reappear at later date
-    filter(!is_zombie(status)) %>%
+    select(sp, treeid, nostems, censusid,exactdate, dfstatus, pom, dbh) %>%
+    mutate(
+      #census id for period 7 was entered incorrectly
+      censusid = ifelse(censusid==171, 7,censusid),
+      species = lookup_latin(sp, BCI_nomenclature),
+      family = lookup_family(sp, BCI_nomenclature),
+      dbh=dbh/1000) %>%
     # Remove stems from earlier census, measured with course resolution
-    filter(exactdate > "1990-02-06") %>%
-    # Only keep alive stems
-    filter(status=="A") %>%
-    #Remove plants where height of measurement is not close to 1.3
-    filter( abs(hom - 1.3) < 0.05) %>%   #NB hom ==1.3 does not work due to precision errors
-    # filter plants with multiple stems
-    filter(max(nostems)==1) %>%
-    # Remove species from families that don't exhibit dbh growth, eg. palms
+    filter(censusid >= 3) %>%
+    # Remove families that don't exhibit dbh growth e.g. palms
     filter(!family %in% c('Arecaceae', 'Cyatheaceae', 'Dicksoniaceae', 'Metaxyaceae',
-                        'Cibotiaceae', 'Loxomataceae', 'Culcitaceae', 'Plagiogyriaceae',
-                        'Thyrsopteridaceae')) %>%
-  mutate(
+                          'Cibotiaceae', 'Loxomataceae', 'Culcitaceae', 'Plagiogyriaceae',
+                          'Thyrsopteridaceae')) %>%
+    # Remove observations without a species code
+    filter(!is.na(sp)) %>%
+    # For each individual..
+    group_by(treeid) %>%
+    # Filter plants with multiple stems
+    filter(max(nostems)==1) %>%
+    # Remove zombies - individuals that are recorded as dead but reappear at later date
+    filter(!is_zombie(dbh)) %>%
+    # Remove plants where height of measurement is not close to 1.3
+    filter(pom ==1.3) %>%
+    # Only keep alive stems
+    filter(dfstatus=="alive") %>%
+    mutate(
+      # First measurement in 1990 ='1990-02-06'
+      julian = as.vector(julian(as.Date(exactdate,"%Y-%m-%d"), as.Date("1990-02-06", "%Y-%m-%d"))),
       dbh_increment = c(diff(dbh), NA),
-      dbasal_diam_dt = calculate_growth_rate(dbh, date),
-      dbasal_diam_dt_relative = calculate_growth_rate(dbh, date, log)
-      ) %>%
+      dbasal_diam_dt = calculate_growth_rate(dbh, julian),
+      dbasal_diam_dt_relative = calculate_growth_rate(dbh, julian, log)
+    ) %>%
     filter(
       !is.na(dbasal_diam_dt) &
-      !is.na(dbh_increment) &
-      CTFS_sanity_check(dbh, dbh_increment, dbasal_diam_dt)
-      ) %>%
-    select(species, family, status, dbh, dbasal_diam_dt)
+        !is.na(dbh_increment) &
+        CTFS_sanity_check(dbh, dbh_increment, dbasal_diam_dt)
+    ) %>%
+    select(censusid,species, family, dfstatus, dbh, dbasal_diam_dt)
 }
 
 BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
