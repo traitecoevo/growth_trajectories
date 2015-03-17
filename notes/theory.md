@@ -132,7 +132,7 @@ This equation shows that diameter growth rate is related to height growth rate (
 These are some of the phenomena that might be explained by such a model.
 
 ## Changing influence of traits on growth rate through ontogeny
-Model predicts that LMA has a large influence on growth rates when small, and a weak or non-existent relationship among larger individuals.This is consistent with experimental work on seedling growth rate and large tress\cite{poorter_are_2008, wright_functional_2010}. In contrast, wood density is predicted to have a small influence on the growth rates of seedlings, but a large influence on growth rates of adult plants. Thus WD is trait with largest effect on adult diameter growth rates, as observed. (See also for data on interactions between size, growth rate and lma \cite{kunstler_size-dependence_2009})
+Model predicts that LMA has a large influence on growth rates when small, and a weak or non-existent relationship among larger individuals.This is consistent with experimental work on seedling growth rate and large tress\cite{poorter-2008, wright-2010}. In contrast, wood density is predicted to have a small influence on the growth rates of seedlings, but a large influence on growth rates of adult plants. Thus WD is trait with largest effect on adult diameter growth rates, as observed. (See also for data on interactions between size, growth rate and lma \cite{kunstler-2009})
 
 Both patterns result from changes in the marginal cost of sapwood with increasing size. Neither low LMA or low wood density provide any benefits in generating income (in fact, low LMA decreases income because of increased leaf turnover); the benefits of these traits on growth comes from lowering tissue costs. As a plant increases in size, the marginal cost of sapwood increases, such that the marginal cost of leaf tissue - given by LMA - becomes increasingly important. At some point, the costs having low LMA (i.e. high leaf turnover) become sufficiently large to completely offset any advantage in cheap leaf deployment.
 
@@ -145,7 +145,7 @@ More generally, we could assess sensitivity of growth rate to different traits a
 
 
 ## Ontogenetic trend in LMA with size
-Widely observed, e.g. \cite{thomas_photosynthetic_2010}.
+Widely observed, e.g. \cite{thomas-2010}.
 This is because benefits of low LMA decline with size, so only left with cost. Thus all species predicted to increase LMA as get larger.
 
 Show lma maximising growth rate increases with size $\Rightarrow$ explains ontogenetic pattern in lma with size.

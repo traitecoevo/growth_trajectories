@@ -73,11 +73,11 @@ Ecology letters
 
 
 Functional traits capture core differences in the strategies plants use
-to generate and invest surplus energy\citep{wright_world_wide_2004, chave_towards_2009,westoby_plant_2002}.
+to generate and invest surplus energy\citep{wright_world-2004, chave-2009,westoby-2002}.
 
 - Traits reflect idea that although plants have same basic function, differ in some strategic ways, in terms of how they invest energy.
-- Data for prominent traits now exists for many of the world's 250000 plant species\citep{cornwell_functional_2014}.
-- Known that traits drive differences in multiple aspects of plant function, including mechanical strength, biomass partitioning, and rates of photosynthesis and tissue turnover\citep{wright_world_wide_2004,chave_towards_2009, westoby_plant_2002}.
+- Data for prominent traits now exists for many of the world's 250000 plant species\citep{cornwell-2014}.
+- Known that traits drive differences in multiple aspects of plant function, including mechanical strength, biomass partitioning, and rates of photosynthesis and tissue turnover\citep{wright_world-2004,chave-2009, westoby-2002}.
 - Idea has taken hold that traits are useful for simplifying biodiversity, as such have been adopted both as a indicator of species' ecologies and as a target of evolution.
 
 While traits may link directly to aspects of plant function, attempts at using traits to explain patterns of whole-plant growth have had mixed success.
@@ -212,7 +212,7 @@ Model reconciles idea that traits can have negative impact on carbon budget, but
 
 - Enquist 2007: sla and wd increase mass-production, where as in our theory effects on mass production are negative. (also contradicts earlier model from Enquist 1999, where argued wood density had no effect on mass production)
 
-Assumes low lma and wd used to reduce costs of building leaf and stem, ie. total leaf area and stem corss section remains same. In this way differs to assumptions of recent work by anten_role_2010, larjavaara_rethinking_2010.
+Assumes low lma and wd used to reduce costs of building leaf and stem, ie. total leaf area and stem corss section remains same. In this way differs to assumptions of recent work by anten-2010, larjavaara-2010.
 
 Model is realisation of several ideas that have been around for some time.
 
