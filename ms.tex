@@ -17,6 +17,11 @@
 \cfoot{}
 %\rfoot{\thepage}
 
+% allows for numbered referencing, as refquired by ecol letters
+\usepackage{etoolbox}
+\newbool{MyRefNumbers}
+\booltrue{MyRefNumbers} % comment to remove numbers in reference list
+
 \usepackage{natbib}
 \bibliographystyle{ecol_let}
 \setcitestyle{authoryear,open={(},close={)}}

@@ -3,32 +3,32 @@
 %% The following changes have been made to this file:
 
 %in FUNCTION format.names, the line
-	% "{vv~}{ll}{ jj}{ f{.}.}" 
-% must be changed to 
-	% "{vv~}{ll}{ jj}{, f{.}.}" %comma inserted by MK
+  % "{vv~}{ll}{ jj}{ f{.}.}"
+% must be changed to
+  % "{vv~}{ll}{ jj}{, f{.}.}" %comma inserted by MK
 
 % In FUNCTION format.names.ed, the line
-	% "{f{.}.~}{vv~}{ll}{ jj}"
+  % "{f{.}.~}{vv~}{ll}{ jj}"
 % must be replaced by
-	% "{vv~}{ll}{ jj}{, f{.}.}" % changed by MK
+  % "{vv~}{ll}{ jj}{, f{.}.}" % changed by MK
 
 % In FUNCTION incollection, after the line
-	% format.in.ed.booktitle "booktitle" output.check
+  % format.in.ed.booktitle "booktitle" output.check
 % the following line must be added:
-	% new.block % inserted MK
+  % new.block % inserted MK
 
-% In function book, after the line 
-	% format.btitle "title" output.check
+% In function book, after the line
+  % format.btitle "title" output.check
 % the following lines must be inserted:
-	% new.block 	% added MK
-	% format.edition output	% added MK
-	% new.block	% added MK
+  % new.block   % added MK
+  % format.edition output % added MK
+  % new.block % added MK
 % and the line
-	% format.edition output	% added MK
+  % format.edition output % added MK
 % must be deleted at the fourth-to-last line of the function.
 
 
-  
+
 %% This is file `ecol_let.bst',
 %% generated with the docstrip utility.
 %%
@@ -37,7 +37,7 @@
 %% merlin.mbs  (with options: `ay,nat,vonx,nm-rvv,dt-beg,yr-par,note-yr,vnum-x,volp-com,num-xser,pre-pub,edparxc,edby-par,edbyx,in-col,pp,ed,abr,ord,jabr,amper,and-xcom,etal-it,nfss,')
 %% ----------------------------------------
 %% *** bst file for Ecology Letters ***
-%% 
+%%
 %% Copyright 1994-2002 Patrick W Daly
  % ===============================================================
  % IMPORTANT NOTICE:
@@ -671,7 +671,7 @@ FUNCTION {output.bibitem}
   cite$ write$
   "}" write$
   newline$
-  ""
+  "\ifbool{MyRefNumbers}{\stepcounter{MyBibCount}\theMyBibCount.\\}{}"
   before.all 'output.state :=
 }
 
@@ -1046,9 +1046,9 @@ FUNCTION {book}
   format.date "year" output.check
   date.block
   format.btitle "title" output.check
-  new.block 	% added MK
-  format.edition output	% added MK
-  new.block	% added MK
+  new.block   % added MK
+  format.edition output % added MK
+  new.block % added MK
   crossref missing$
     { format.bvolume output
       new.block
@@ -1553,6 +1553,7 @@ FUNCTION {begin.bib}
     'skip$
     { preamble$ write$ newline$ }
   if$
+  "\newcounter{MyBibCount}\providebool{MyRefNumbers}" write$
   "\begin{thebibliography}{" number.label int.to.str$ * "}" *
   write$ newline$
   "\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi"
