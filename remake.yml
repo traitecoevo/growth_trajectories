@@ -36,7 +36,7 @@ targets:
       - ms.pdf
 
   ms.pdf:
-    command: tex_2_pdf("ms.tex")
+    command: latex_build("ms.tex")
     depends:
       - references.bib
       - figures/table-pars.tex
