@@ -67,23 +67,33 @@ figure_trait_deriative <- function(type, trait_name="lma", canopy_openness=1,
   points(dat[["height"]], line2, type="l", col="red")
 }
 
-
 ## Code for the "rates vs size" figure set:
-figure_rate_vs_size <- function(type, canopy_openness=1,
-                                strategy=default_strategy()) {
-  dat <- figure_rate_vs_size_data(canopy_openness, strategy)
-
+figure_rate_vs_size <- function(data, type) {
   yvars <- figure_rate_vs_size_cols(type)
-
   par(mfrow=c(1, length(yvars)), oma=c(3,1,1,1))
   for (v in yvars) {
-    plot(dat[["height"]], dat[[v]], type="l", xlab="", ylab= v, ylim=c(0, max(1,dat[[v]])))
+    plot(data[["height"]], data[[v]], type="l", xlab="", ylab= v, ylim=c(0, max(1,data[[v]])))
   }
   mtext("Height (m)", 1, cex=1, line=, outer=TRUE)
 
 }
 
-figure_rate_vs_size_data <- function(canopy_openness, strategy) {
+figure_rate_vs_size_panels <- function(data, type, path) {
+  yvars <- figure_rate_vs_size_cols(type)
+  for (v in yvars) {
+    filename <- file.path(path, sprintf("F2_%s_%s.pdf", type, v))
+    pdf(filename,width=5, height=5)
+    on.exit(dev.off())
+    par(oma=c(0,0,0,0), mar=rep(0.1,4))
+    plot(data[["height"]], data[[v]], type="l", ann=FALSE, axes=FALSE,
+      ylim=c(0, max(1,data[[v]])),
+      col="green", lwd=3)
+    box()
+
+  }
+}
+
+figure_rate_vs_size_data <- function(canopy_openness=1, strategy=default_strategy()) {
   heights <- seq(Plant(strategy)$height, strategy$hmat, length.out=100)
   env <- fixed_environment(canopy_openness)
   res <- run_plant_to_heights(heights, strategy, env)
@@ -92,15 +102,15 @@ figure_rate_vs_size_data <- function(canopy_openness, strategy) {
 }
 
 figure_rate_vs_size_cols <- function(type) {
-  if (type == "mass production") {
+  if (type == "mass_production") {
     c("net_production", "assimilation", "respiration", "turnover")
-  } else if (type == "height growth") {
+  } else if (type == "height_growth") {
     c("height_growth_rate", "dheight_dleaf_area", "leaf_fraction", "growth_fraction", "net_production")
-  } else if (type == "leaf area growth") {
+  } else if (type == "leaf_area_growth") {
     c("dleaf_area_dt", "leaf_fraction", "growth_fraction", "net_production")
-  } else if (type == "diameter growth") {
+  } else if (type == "diameter_growth") {
      c("dbasal_diam_dt", "leaf_fraction", "growth_fraction", "net_production")
-  } else if (type == "basal growth") {
+  } else if (type == "basal_growth") {
      c("dbasal_area_dt", "leaf_fraction", "growth_fraction", "net_production")
   } else {
     stop("Unknown type ", dQuote(type))

@@ -1,5 +1,5 @@
 latex_build <- function(filename, latex_engine="xelatex", bibtex=TRUE, dest_dir = "."){
-  build <- sprintf("%s -interaction=nonstopmode %s", latex_engine, filename)
+  build <- sprintf("%s %s", latex_engine, filename)
   basename <- tools::file_path_sans_ext(filename)
   system(build)
   if(bibtex){
