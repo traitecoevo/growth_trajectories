@@ -139,3 +139,22 @@ targets:
   figures/SI_lma_tradeoff.pdf:
     command: figure_lma_tradeoff(glopnet)
     plot: square
+
+  figures/fig2.pdf:
+    command: latex_build("fig2.tex", bibtex=FALSE, dest_dir=I("figures"))
+    depends:
+      - downloads/tree.png
+      - downloads/seedling.png
+      - figures/empty_box.pdf
+
+  figures/empty_box.pdf:
+    command: empty_box()
+    plot: med_square
+
+  downloads/seedling.png:
+    command: download_seedling_png(target_name)
+    cleanup_level: purge
+
+  downloads/tree.png:
+    command: download_tree_png(target_name)
+    cleanup_level: purge
