@@ -1,5 +1,5 @@
 \documentclass{beamer}
-\usepackage[size=a4, orientation=portrait]{beamerposter}
+\usepackage[size=custom, width=21, height=27, scale=1.0, orientation=portrait]{beamerposter}
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=0em,text margin right=0em}
 
@@ -71,7 +71,7 @@
 }
 
 
-\node at ($(current page.south)+ (0cm, 23cm)$) (top){};
+\node at ($(current page.south)+ (0cm, 20cm)$) (top){};
 
 \node[rectangle, anchor =south] at ($(top)+ (-5cm, 2cm)$){
   \includegraphics[height= 2cm]{downloads/seedling.png}};
@@ -129,7 +129,7 @@
 \othercol{3}{$\frac{\textrm{d}a_{\textrm{st}}}{\textrm{d}t}$}{figures/F2_basal_growth_dbasal_area_dt}{}
 \rowlabel{(6)}
 
-\textbox{$(current page.south)+ (0cm, 3cm)$}{Plant height (m)}
+\textbox{$(current page.south)+ (0cm, 0.5cm)$}{Plant height (m)}
 
 \newcommand{\colNum}{0.1}
 
