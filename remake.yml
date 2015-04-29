@@ -40,6 +40,7 @@ targets:
     depends:
       - references.bib
       - figures/table-pars.tex
+      - figures/allometry.pdf
       - figures/BCI_data.pdf
       - figures/BCI_data2.pdf
       - figures/growth_light.pdf
@@ -162,4 +163,15 @@ targets:
 
   downloads/tree.png:
     command: download_tree_png(target_name)
+    cleanup_level: purge
+
+  figures/allometry.pdf:
+    command: figure_assumptions(baad)
+    plot: wide
+
+  baad:
+    command: readRDS("downloads/baad.rds")
+
+  downloads/baad.rds:
+    command: download_baad(target_name)
     cleanup_level: purge
