@@ -42,17 +42,13 @@ targets:
       - figures/table-pars.tex
       - figures/allometry.pdf
       - figures/BCI_data.pdf
-      - figures/BCI_data2.pdf
+      - figures/figure_conceptual.pdf
       - figures/growth_light.pdf
       - figures/max_leaf_above.pdf
       - figures/SI_mass_fraction.pdf
       - figures/SI_lma_tradeoff.pdf
       - figures/SI_quantile_examples.pdf
 
-      - figures/SI_size_dpdt.pdf
-      - figures/SI_size_dhdt.pdf
-      - figures/SI_size_dDdt.pdf
-      - figures/SI_size_dastdt.pdf
       - figures/SI_lma_growth_derivative.pdf
 
       - figures/SI_lma_effects_at_heights.pdf
@@ -84,11 +80,6 @@ targets:
 
   downloads/bci.spptable.rdata:
     command: BCI_download_species_table(target_name)
-    cleanup_level: never
-    check: exists
-
-  downloads/50ha/bci.stem7.csv:
-    command: BCI_download_50ha_plot(target_name)
     cleanup_level: never
     check: exists
 
@@ -126,10 +117,6 @@ targets:
     command: read.csv("data/growth_model_pars.csv")
 
   figures/BCI_data.pdf:
-    command: figure_BCI_data(BCI_species_data)
-    plot: med_square
-
-  figures/BCI_data2.pdf:
     command: figure_BCI_data2(BCI_species_data)
     plot: wide
 
@@ -141,8 +128,8 @@ targets:
     command: figure_lma_tradeoff(glopnet)
     plot: square
 
-  figures/fig2.pdf:
-    command: latex_build("fig2.tex", bibtex=FALSE, dest_dir=I("figures"))
+  figures/figure_conceptual.pdf:
+    command: latex_build("figure_conceptual.tex", bibtex=FALSE, dest_dir=I("figures"))
     depends:
       - downloads/tree.png
       - downloads/seedling.png

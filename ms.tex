@@ -13,6 +13,7 @@
 % Fancy HEADER
 \usepackage{fancyhdr}
 \pagestyle{fancy}
+\setlength{\headheight}{15pt}
 \pagenumbering{arabic}
 \lhead{\itshape{\nouppercase{\leftmark}}}
 \chead{}
@@ -49,7 +50,6 @@
               unicode=false, % unicode breaks when used with xetex
               xetex]{hyperref}
 \hypersetup{breaklinks=true,
-            bookmarks=true,
             pdfauthor={},
             pdftitle={Untangling the link between traits, size and growth rate in plants},
             colorlinks=true,
@@ -175,8 +175,7 @@ species around the world.
 
 
 The results of this new analysis
-(Fig. \ref{f-BCI}) align closely with our theoretical predictions (Table
-\ref{tab:predictions}) showing how the effect of traits on growth
+(Fig. \ref{f-BCI}) align closely with our theoretical predictions  showing how the effect of traits on growth
 changes with plant size, with different traits exhibiting distinct
 size-dependent effects.
 
@@ -209,7 +208,7 @@ are compared against data from both a long-term
 plot \citep{condit-2012} and field
 experiment \citep{kitajima-2013} at Barro Colorado Island, Panama.
 We use a new method to estimate species potential growth rate,
-accounting for size specific effects (Fig. \ref{S-quantile_examples},
+accounting for size specific effects (Fig. \ref{fS-quantile_examples},
 see Methods for details). This new method allowed us to extract a more
 definite signal of trait effects than in previous
 studies \citep{wright-2010}.
@@ -240,14 +239,14 @@ function to be specified; this is where traits have an influence.  These two com
 \subsubsection{Standard model for mass production}
 
 We begin with a standard model for the amount of biomass available for
-growth, $dP / \textrm{d}t$, given by the difference between income
+growth, $\textrm{d}b / \textrm{d}t$, given by the difference between income
 (total photosynthesis) and losses (respiration and turnover) within the
 plant \citep{makela-1997, Thornley-2000, falster-2011}:
 
-\begin{equation}\label{eq:dPdt}
-\underbrace{\strut \frac{\textrm{d}P}{\textrm{d}t}}_\textrm{net biomass production}
-  = \underbrace{\strut Y}_\textrm{yield}
-    \big( \underbrace{\strut a_\textrm{l} \, A}_\textrm{photosynthesis} -
+\begin{equation}\label{eq:dbdt}
+\underbrace{\strut \frac{\textrm{d}b}{\textrm{d}t}}_\textrm{net biomass production}
+  = \underbrace{\strut y}_\textrm{yield}
+    \big( \underbrace{\strut a_\textrm{l} \, p}_\textrm{photosynthesis} -
      \underbrace{\strut \,\sum_\textrm{i=l,b,s,r}{m_\textrm{i} \, r_\textrm{i}}}_\textrm{respiration}\big)
     - \underbrace{\strut \sum_\textrm{i=l,b,s,r}{m_\textrm{i} \, k_\textrm{i}}}_\textrm{turnover}.
 \end{equation}
@@ -255,14 +254,14 @@ plant \citep{makela-1997, Thornley-2000, falster-2011}:
 Here, $m,r$, and $k$ refer to the mass, respiration rate, and
 turnover rate of different tissues, denoted by subscripts $l$=leaves,
 $b$=bark, $s$=sapwood and $r$=roots. $A$ is the assimilation
-rate of CO$_2$ per leaf area and $Y$ is yield: the fraction of
+rate of CO$_2$ per leaf area and $y$ is yield: the fraction of
 assimilated carbon fixed in biomass (the remaining fraction being lost
 as growth respiration) (see Table \ref{tab:params} for units and
 definitions). Photosynthesis is proportional to leaf area,
 $a_\textrm{l} = m_\textrm{l} / \phi$, where $\phi$ is leaf mass per area.
-The total mass of living tissues $m_\textrm{t}=m_\textrm{l}+m_\textrm{b}+m_\textrm{s}+m_\textrm{r}.$
+The total mass of living tissues $m_\textrm{a}=m_\textrm{l}+m_\textrm{b}+m_\textrm{s}+m_\textrm{r}.$
 
-The only potentially controversial element of in eq. \ref{eq:dPdt} is that it assumes tissues lost via turnover are replaced before energy is allocation to either new growth or reproduction \citep{Thornley-2000}. This assumption is likely to hold true for most woody plants, because the ..... However, the assumption may not hold for some herbs or annuals, where the swicth to reproduction often entails run-down in the vegtative part of the plant (refs XX) \citep{ Thornley-2000}.
+The only potentially controversial element of in eq. \ref{eq:dbdt} is that it assumes tissues lost via turnover are replaced before energy is allocation to either new growth or reproduction \citep{Thornley-2000}. This assumption is likely to hold true for most woody plants, because the ..... However, the assumption may not hold for some herbs or annuals, where the swicth to reproduction often entails run-down in the vegtative part of the plant (refs XX) \citep{ Thornley-2000}.
 
 \subsubsection{Decomposing height, basal area and diameter growth}
 
@@ -270,9 +269,9 @@ To model growth in either height, basal area or stem diameter requires that acco
 
 \begin{equation} \label{eq:dhdt}
 \underbrace{\strut\frac{\textrm{d}h}{\textrm{d}t}}_\textrm{height growth rate}= \underbrace{\strut\frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}}_\textrm{architecture}
-\times \underbrace{\strut\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}}_\textrm{marginal leaf deployment}
-\times \underbrace{\strut\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}}_\textrm{allocation to growth}
-\times \underbrace{\strut\frac{\textrm{d}P}{\textrm{d}t}}_\textrm{mass production}.
+\times \underbrace{\strut\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{a}}}_\textrm{marginal leaf deployment}
+\times \underbrace{\strut\frac{\textrm{d}m_\textrm{a}}{\textrm{d}b}}_\textrm{allocation to growth}
+\times \underbrace{\strut\frac{\textrm{d}b}{\textrm{d}t}}_\textrm{mass production}.
 \end{equation}
 
 The first term on the right of eq \ref{eq:dhdt},
@@ -282,22 +281,22 @@ strategy of the plant. Some species tend to leaf out more than grow
 tall, while other species emphasise vertical
 extension \citep{poorter-2006}.
 
-The second term, $\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{t}$,
+The second term, $\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{a}$,
 accounts for the marginal cost of deploying an additional unit of leaf
 area, including construction of the leaf itself and various support
-structures. As such, $\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{t}$
+structures. As such, $\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{a}$
 can itself be expressed as a sum of construction costs per unit leaf
 area:
 
 \begin{equation}\label{eq:daldmt}
-\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}
+\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{a}}
 = \big(\phi
  + \frac{\textrm{d}m_\textrm{s}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{b}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}}\big)^{-1}.
 \end{equation}
 
 The third term in eq \ref{eq:dhdt},
-$\textrm{d}m_\textrm{t} / \textrm{d}P$, gives the fraction of net
-biomass production (eq. \ref{eq:dPdt}) that is allocated to growth
+$\textrm{d}m_\textrm{a} / \textrm{d}P$, gives the fraction of net
+biomass production (eq. \ref{eq:dbdt}) that is allocated to growth
 rather than reproduction or storage.
 
 In a similar way, basal area ($a_\textrm{st}$) increment can be
@@ -310,7 +309,7 @@ elements as eq. \ref{eq:dhdt}:
 \begin{equation}\label{eq:dast}
 \frac{\textrm{d}a_\textrm{st}}{\textrm{d}t}=
 \left(\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}a_\textrm{l}} + \frac{\textrm{d}a_\textrm{sb}}{\textrm{d}a_\textrm{l}}\right) \times
-\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}} \times \frac{\textrm{d}m_\textrm{t}}{\textrm{d}P} \times \frac{\textrm{d}P}{\textrm{d}t} +\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t} .
+\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{a}} \times \frac{\textrm{d}m_\textrm{a}}{\textrm{d}b} \times \frac{\textrm{d}b}{\textrm{d}t} +\frac{\textrm{d}a_\textrm{sh}}{\textrm{d}t} .
 \end{equation}
 
 Diameter growth is then given by the geometric relationship between stem
@@ -366,7 +365,7 @@ growth rate. However, to fully account for the influence of $\phi$ on
 growth we must also account for the decrease in leaf turnover that
 results from superior leaf construction \citep{wright_world-2004}.
 This is achieved by linking the turnover rate of leaf in eq.
-\ref{eq:dPdt} to $\phi$. We use an allometric scaling relationship of
+\ref{eq:dbdt} to $\phi$. We use an allometric scaling relationship of
 the form $k_\textrm{l}=\alpha_4 \, \phi^{-\beta_4}$, which has been
 shown to describe patterns across diverse
 ecosystems \citep{wright_world-2004} (Fig. \ref{fS-leaf}).
@@ -388,7 +387,7 @@ i.e.$k_\textrm{ss}=\alpha_5 \, \rho^{-\beta_5}$, with $\beta_5 > 1$.
 
 Unlike leaf and stem traits, height at maturation ($h_m$) moderates
 growth by adjusting the amount of energy invested in growth, i.e.~the
-term $\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}$ in eqs.
+term $\frac{\textrm{d}m_\textrm{a}}{\textrm{d}b}$ in eqs.
 \ref{eq:dhdt} and \ref{eq:dast}.
 
 \subsection{Analysis}\label{analysis}
@@ -398,18 +397,18 @@ term $\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}$ in eqs.
 \newpage
 \section{Results and Discussion}\label{results}
 
-\subsection{Changes in growth rate with size}\label{changes-in-growth-rate-with-size}
+\subsection{Changes in growth rate with size}
 
 This new growth model captures the intrinsically size-dependent nature
-of plant growth (Table \ref{tab:predictions}a), recovering well-known
+of plant growth, recovering well-known
 empirical patterns \citep{sillett-2010, king-2011}. Height growth shows a hump-shaped pattern
 with size, first increasing then decreasing. This pattern results from
 systematic changes in the four components of eq. \ref{eq:dhdt} with size
-(Fig. \ref{f-hump}), including a strong decline in the fraction of plant
+(Fig. \ref{f-conceptual}), including a strong decline in the fraction of plant
 that is leaf declines with increasing size (Fig. \ref{f-mass_fraction}),
 and increasing reproductive allocation. In contrast, basal-area growth
-continues to increase with size \citep{sillett-2010,
-@stephenson-2014}, due to an increasing influence of stem
+continues to increase with size \citep{sillett-2010, stephenson-2014},
+due to an increasing influence of stem
 turnover. Diameter growth shows a weakly hump shaped
 curve \citep{herault-2011}, tapering off slightly at larger
 sizes, in part because of allometric effects (eq. \ref{eq:dDdt}, but
@@ -418,16 +417,16 @@ mainly because of increased reproductive allocation in older trees
 relative growth rates \citep{iida-2014}.
 
 
-\subsection{How traits influence growth rate}\label{how-traits-influence-growth-rate}
+\subsection{How traits influence growth rate}
 
-\subsubsection{LMA}\label{lma}
+\subsubsection{LMA}
 
 Unlike eq. \ref{eq:RGR}, eqs. \ref{eq:dhdt}, \ref{eq:dast} and
 \ref{eq:dDdt} predict a relationship between $\phi$ and growth that
 changes with plant size (Figs. \ref{f-BCI}, \ref{f-lma_growth_size}).
 Decreasing $\phi$ has two impacts on growth rate. First, lower
 $\phi$ increases marginal leaf deployment
-($\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{t}$ by economising on
+($\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{a}$ by economising on
 construction costs. Second, lower $\phi$ decreases net production
 ($\textrm{d}P / \textrm{d}t$), due to increased leaf turnover. Whether
 lower $\phi$ increases growth thus depends on the relative magnitude
@@ -440,7 +439,7 @@ supportive tissues (other terms in eq. \ref{eq:daldmt}) are larger (Fig.
 $\phi$ is no longer advantageous for growth (Fig.
 \ref{f-lma_growth_size}d).
 
-\subsubsection{Wood density}\label{wood-density}
+\subsubsection{Wood density}
 
 Under this scenario, decreasing $\rho$ provides an advantage in height
 growth only when the benefits of low $\rho$ outweigh the costs. This
@@ -450,22 +449,21 @@ and diameter growth, because high sapwood turnover also contributes to
 this growth measure. Thus diameter growth continues, even as net
 production approaches zero.
 
-\subsubsection{hmat}\label{hmax}
+\subsubsection{hmat}
 
  Greater height at maturation ($h_m$)
 can thus lead to a growth advantage by increasing
-$\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}$ (Table
-\ref{tab:predictions}). At smaller sizes, there is no differentiation
+$\frac{\textrm{d}m_\textrm{a}}{\textrm{d}b}$ . At smaller sizes, there is no differentiation
 among species, because most species are focusing on growth (Fig.
 \ref{f-BCI}). At larger sizes, individuals of some species are
 allocating a majority of their surplus energy to growth, leaving a
 strong signal in potential growth rate (Fig. \ref{f-BCI}).
 
 
-\subsubsection{Responisveness to light}\label{hmax}
+\subsubsection{Responisveness to light}
 
 Two other important predictions arise directly from linking traits to
-growth rate (Table \ref{tab:predictions}c). First, traits moderate the
+growth rate. First, traits moderate the
 responsiveness of growth to changes in light environment. This response
 arises simply because species with higher potential growth rate have
 greater potential plasticity. Recent analyses have shown that species
@@ -492,7 +490,7 @@ dbh \citep{ruger-2012}.
 
 Current theory emphasises the relationship between $\phi$ and the relative growth in plant mass
 \citep{lambers-1992, cornelissen-1996, wright_cross-2000,  enquist-2007},
-$\textrm{d}P / \textrm{d}t / m_\textrm{t}$. This relationship can be derived from eq. \ref{eq:dPdt}  by ...
+$\textrm{d}P / \textrm{d}t / m_\textrm{a}$. This relationship can be derived from eq. \ref{eq:dbdt}  by ...
 (see Appendix \ref{app:traits-RGR}).
 
 Recently realisation that allocation and turnover major areas of
@@ -522,7 +520,7 @@ Plasticity in trait values predicted from model:
 
 @Osazuwa-Peters-2014 - indreases in WD through ontogeny.
 
-\subsection{Shade tolerance}\label{how-traits-influence-growth-rate}
+\subsection{Shade tolerance}\label{shade-tolerance}
 
 Second, species with low $\phi$ and low $\rho$ are predicted to be
 less shade tolerant (Fig. \ref{f-wplcp}). At low $\phi$ ($\rho$),
@@ -596,12 +594,56 @@ Detecting trait signals in data.
 \end{itemize}
 
 
+\section{Acknowledgments}
+
+Figure 2 uses image by Tracey Saxby, IAN Image Library http://ian.umces.edu/imagelibrary.
+
+\newpage
+
+\bibliography{references}
 
 \newpage
 
 \section{Tables}\label{tables}
 
-\begin{table}[h]
+\begin{table}[ht]
+ \caption{Key variables
+%  $a = l + ss + sb +  r$,
+%  $m_{sh}$,
+%  $m_t = m_a + m_{sh}$,
+%  $st = stem total$
+}
+\centering
+
+{\footnotesize  % smaller font, double space
+ \begin{doublespace}
+  \begin{tabular}{p{2cm}p{2cm}p{7cm}}
+  \hline
+  Symbol & Unit & Description \\
+  \hline
+
+  $b$   & kg  & biomass originating from parent plant\\
+  $m_i$ & kg  & mass retained on plant in tissue $i$\\
+  $a_i$ & m$^2$  & surface-area or cross-sectional-area of tissue $i$\\
+  $h$   & m  & height of plant\\
+  $D$   & m  & diameter of plant stem\\
+
+  $y$ & kg kg$^{-1}$ & Yield; ratio of carbon fixed in mass per carbon assimilated \\
+  $p$ & kg yr$^{-1}$ m$^{-2}$  & photosynthesic rate per unit area \\
+  $r_i$ & kg yr$^{-1}$ kg$^{-1}$  & respiration per unit tissue mass \\
+  $k_i$ & yr$^{-1}$ & turnover rate for tissue \\
+  $A$ & kg yr$^{-1}$ & total plant photosynthesis \\
+  $R$ & kg yr$^{-1}$ & total plant respiration \\
+  $T$ & kg yr$^{-1}$ & total plant turnover \\
+  \hline
+  \end{tabular}
+\end{doublespace}}
+\label{tab:definitions}
+\end{table}
+
+\newpage
+
+\begin{table}[ht]
 \caption{Equations for an allometric growth model, based on functional balance assumption in {\textbf a}. }
 \centering
 
@@ -635,7 +677,6 @@ Detecting trait signals in data.
     $m_\textrm{sb} = b\, \theta \, \rho \, \eta_c \, a_\textrm{l} \, h $ &
     $\frac{\textrm{d}m_\textrm{sb}}{\textrm{d}a_\textrm{l}} = b \, \theta \, \rho \, \eta_c\big( h + a_\textrm{l} \, \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}} \big)$ &
     $\frac{\textrm{d}m_\textrm{sb}}{\textrm{d}t}  = \frac{\textrm{d}m_\textrm{sb}}{\textrm{d}a_\textrm{l}} \, \frac{\textrm{d}a_\textrm{l}}{\textrm{d}t}$ \\
-
   root mass &
     $m_\textrm{r} = \alpha_3 \, a_\textrm{l}$ &
     $\frac{\textrm{d}m_\textrm{r}}{\textrm{d}a_\textrm{l}} = \alpha_3$  &
@@ -659,7 +700,7 @@ NB -  theta is sapwood area per leaf area. In tree 2 has been opposite, but that
 
 \newpage
 
-\begin{table}[h]
+\begin{table}[ht]
 \caption{Effect of traits and related trade-offs on demography}
 \centering
 {\footnotesize  % smaller font, double space
@@ -669,9 +710,9 @@ NB -  theta is sapwood area per leaf area. In tree 2 has been opposite, but that
   & \multicolumn{8}{c}{\textbf{Effect of trait on}}\\
   & \textbf{Birth} & \multicolumn{5}{c|}{\textbf{Growth}} & \textbf{Mortality} & \textbf{Fecundity} \\
   & $h_0$
-  & $\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{t}}$
-  & $\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}$
-  & $\frac{\textrm{d}P}{\textrm{d}t}$
+  & $\frac{\textrm{d}a_\textrm{l}}{\textrm{d}m_\textrm{a}}$
+  & $\frac{\textrm{d}m_\textrm{a}}{\textrm{d}b}$
+  & $\frac{\textrm{d}b}{\textrm{d}t}$
   & $\frac{\textrm{d}a_\textrm{ss}}{\textrm{d}a_\textrm{l}}$
   & $\frac{1}{k_s}$ & &  \\\hline
   \textbf{This study}&&&&&&&&\\
@@ -689,14 +730,13 @@ NB -  theta is sapwood area per leaf area. In tree 2 has been opposite, but that
 \label{tab:trade-offs}
 \end{table}
 
-
 \newpage
 
 \section{Figures}\label{figures}
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
-\includegraphics{figures/BCI_data2.pdf}
+\includegraphics{figures/BCI_data.pdf}
 \caption{\textbf{The relationship between traits and potential growth
 rate varies with plant size.} For XXX species from tropical rain forest
 in Panama, we estimated the potential growth rate of individual's in
@@ -709,16 +749,17 @@ calculated from representative individuals in each species.
 
 \newpage
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
-\includegraphics{figures/SI_size_dhdt.pdf}
+\includegraphics{figures/figure_conceptual.pdf}
 \caption{\textbf{Conceptual framework for understanding size-dependent
-changes in growth rate.} \label{f-conceptual}}
+changes in growth rate.} Hump-shaped relationship between height growth rate and
+size. \label{f-conceptual}}
 \end{figure}
 
 \newpage
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/allometry.pdf}
 \caption{\textbf{Key assumptions of a functional balance and trait
@@ -735,7 +776,7 @@ assumption (see Supplementary text for details). \label{f-assumptions}}
 
 \newpage
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/growth_light.pdf}
 \caption{\textbf{Traits moderate the responsiveness of growth to changes
@@ -747,7 +788,7 @@ diameter and under a range of shading environments.
 
 \newpage
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/max_leaf_above.pdf}
 \caption{\textbf{The effect of traits on growth changes with size and
@@ -758,42 +799,33 @@ Possibly separate figure. \label{f-shifts}}
 
 \newpage
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/max_leaf_above.pdf}
 \caption{\textbf{Low construction cost leads to shade intolerance,
 because of costs of high turnover.} Panels show effect of traits on
 maximum amount of shading that can be endured before net production (eq.
-\ref{eq:dPdt}) reaches zero. Lines indicate relationship for plants of a
+\ref{eq:dbdt}) reaches zero. Lines indicate relationship for plants of a
 given height. \label{f-wplcp}}
 \end{figure}
 
+\clearpage
 
-\section{Acknowledgments}
-
-Figure 2 uses image by Tracey Saxby, IAN Image Library http://ian.umces.edu/imagelibrary.
-
-\newpage
-
-\bibliography{references}
-
-\newpage
 \begin{appendices}
 \setcounter{figure}{0} \renewcommand{\thefigure}{S\arabic{figure}}
 \setcounter{table}{0} \renewcommand{\thetable}{S\arabic{table}}
 
-
 \section{Relationship between traits and relative growth rate} \label{app:traits-RGR}
 
-We start with eq. \ref{eq:dPdt} for mass-based growth. For seedlings, which are
+We start with eq. \ref{eq:dbdt} for mass-based growth. For seedlings, which are
 young and mostly leaf, it is reasonable to ignore all turnover terms as
 well as the respiration terms for non-leaf tissues. Net production then
 becomes a linear function of leaf area and net photosynthesis per leaf
-area ($A_\textrm{net} = Y(A - r_\textrm{l})$), making relative growth
+area ($A_\textrm{net} = y(A - r_\textrm{l})$), making relative growth
 rate a linear function of $\phi$:
 
 \begin{equation}\label{eq:RGR}
-\underbrace{\strut\frac{\textrm{d}P}{\textrm{d}t}\frac{1}{m_\textrm{t}}}_\textrm{relative growth in mass}  \approx A_\textrm{net} \times \phi^{-1} \times \frac{m_\textrm{l}}{m_\textrm{t}}. \end{equation}
+\underbrace{\strut\frac{\textrm{d}b}{\textrm{d}t}\frac{1}{m_\textrm{a}}}_\textrm{relative growth in mass}  \approx A_\textrm{net} \times \phi^{-1} \times \frac{m_\textrm{l}}{m_\textrm{a}}. \end{equation}
 
 Although Eq. \ref{eq:RGR} captures patterns of growth in seedlings in
 relation to $\phi$\citep{wright_cross-2000}, this
@@ -898,12 +930,12 @@ by looking at the effect of
 traits on the components of growth rate (eq. \ref{eq:dhdt}. To make
 the analysis more tractable, we will assume we are dealing with a plant of
 given height where 100\% of available energy is allocated to growth,
-i.e. $\frac{\textrm{d}m_\textrm{t}}{\textrm{d}P}=1$. Note also
+i.e. $\frac{\textrm{d}m_\textrm{a}}{\textrm{d}b}=1$. Note also
 that by the assumptions of our model and above, traits do not influence
 $\frac{\textrm{d}h} {\textrm{d}a_\textrm{l}}$. Thus we have
 
 \begin{equation} \label{eq:G2}
-G = \frac{\textrm{d}h}{\textrm{d}t} = c_1   \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}  \frac{ \textrm{d}P} {\textrm{d}t} \right),
+G = \frac{\textrm{d}h}{\textrm{d}t} = c_1   \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{a}}  \frac{ \textrm{d}b} {\textrm{d}t} \right),
 \end{equation}
 
 where $c_1 = \frac{\textrm{d}h}{\textrm{d}a_\textrm{l}}$. Eq.
@@ -914,10 +946,10 @@ the derivative of $G$ with respect to some trait $x$  is given by
 
 \begin{equation} \label{eq:dG}
 \frac{\partial G} {\partial x} =
-\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\right)}{\partial x}
- \, \frac{ \textrm{d}P} {\textrm{d}t}
-+ \frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}
-\, \frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x}.
+\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{a}}\right)}{\partial x}
+ \, \frac{ \textrm{d}b} {\textrm{d}t}
++ \frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{a}}
+\, \frac{\partial \left( \frac{ \textrm{d}b} {\textrm{d}t}\right)}{\partial x}.
 \end{equation}
 
 If this derivative is positive (negative), there will be a positive (negative) relationship
@@ -926,9 +958,9 @@ between traits and growth at the height where it is evaluated.
 We further simplify by expanding the derivative of eq. \ref{eq:daldmt}:
 
 \begin{equation} \label{eq:da_dx}
-\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\right)}
-{\partial x} = -\left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}\ \right)^2
-\, \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
+\frac{\partial \left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{a}}\right)}
+{\partial x} = -\left(\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{a}}\ \right)^2
+\, \frac{\partial \left(\frac{\textrm{d}m_\textrm{a}} {\textrm{d}a_\textrm{l}}\right)
 }{\partial x}.
 \end{equation}
 
@@ -936,36 +968,36 @@ Combing eqs. \ref{eq:dG}-\ref{eq:da_dx}, we have
 
 \begin{equation} \label{eq:dG2}
 \frac{\partial G} {\partial x} =
-\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}
+\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{a}}
 \left(
-\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x}
-- \frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}
-\,  \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
+\frac{\partial \left( \frac{ \textrm{d}b} {\textrm{d}t}\right)}{\partial x}
+- \frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{a}}
+\,  \frac{\partial \left(\frac{\textrm{d}m_\textrm{a}} {\textrm{d}a_\textrm{l}}\right)
 }{\partial x}
- \, \frac{ \textrm{d}P} {\textrm{d}t}
+ \, \frac{ \textrm{d}b} {\textrm{d}t}
 \right).
 \end{equation}
 
-Since is $\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}>0$ always, the sign
+Since is $\frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{a}}>0$ always, the sign
 of $\frac{\partial G} {\partial x}$ depends on the terms inside the brackets on the
 RHS. Rearranging we find that $\frac
 {\partial G} {\partial x} < 0$ if
 
 \begin{equation}\label{eq:dg3}
-\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x}
-< \frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{t}}
-\,  \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
-}{\partial x} \, \frac{ \textrm{d}P} {\textrm{d}t},
+\frac{\partial \left( \frac{ \textrm{d}b} {\textrm{d}t}\right)}{\partial x}
+< \frac{\textrm{d}a_\textrm{l}} {\textrm{d}m_\textrm{a}}
+\,  \frac{\partial \left(\frac{\textrm{d}m_\textrm{a}} {\textrm{d}a_\textrm{l}}\right)
+}{\partial x} \, \frac{ \textrm{d}b} {\textrm{d}t},
 \end{equation}
 
 or equivalently
 \begin{equation}\label{eq:dg4}
 \frac{
-\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x} }
-{\frac{ \textrm{d}P} {\textrm{d}t}}
+\frac{\partial \left( \frac{ \textrm{d}b} {\textrm{d}t}\right)}{\partial x} }
+{\frac{ \textrm{d}b} {\textrm{d}t}}
 <
-\frac{ \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
-}{\partial x}}{\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}}.
+\frac{ \frac{\partial \left(\frac{\textrm{d}m_\textrm{a}} {\textrm{d}a_\textrm{l}}\right)
+}{\partial x}}{\frac{\textrm{d}m_\textrm{a}} {\textrm{d}a_\textrm{l}}}.
 \end{equation}
 
 In words, there will be a negative relationship between trait x and growth if the
@@ -978,33 +1010,33 @@ giving $\partial G /\partial x = 0$:
 
 \begin{equation}\label{eq:max}
 \frac{
-\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial x} }
-{\frac{ \textrm{d}P} {\textrm{d}t}}
+\frac{\partial \left( \frac{ \textrm{d}b} {\textrm{d}t}\right)}{\partial x} }
+{\frac{ \textrm{d}b} {\textrm{d}t}}
 =
-\frac{ \frac{\partial \left(\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}\right)
-}{\partial x}}{\frac{\textrm{d}m_\textrm{t}} {\textrm{d}a_\textrm{l}}}.
+\frac{ \frac{\partial \left(\frac{\textrm{d}m_\textrm{a}} {\textrm{d}a_\textrm{l}}\right)
+}{\partial x}}{\frac{\textrm{d}m_\textrm{a}} {\textrm{d}a_\textrm{l}}}.
 \end{equation}
 
 \subsection{Leaf construction cost}
 
 If the trait of interest is leaf-construction cost, i.e. $x=\phi$, we can expand
 eq. \ref{eq:dg4} as follows. Note that $\frac{\partial \left(\frac{\textrm{d}m_\textrm
-{t}} {\textrm{d}a_\textrm{l}}\right)}{\partial \phi} = 1$. Also, from eq. \ref{eq:dPdt} we obtain,
+{t}} {\textrm{d}a_\textrm{l}}\right)}{\partial \phi} = 1$. Also, from eq. \ref{eq:dbdt} we obtain,
 
-\begin{equation}\label{eq:dPdt2}
-\frac{dP}{\textrm{d}t} = c_2 - a_\textrm{l} a_4 \phi ^{1-B_4}
+\begin{equation}\label{eq:dbdt2}
+\frac{\textrm{d}b}{\textrm{d}t} = c_2 - a_\textrm{l} a_4 \phi ^{1-B_4}
 \end{equation}
 
 where
-$c_2 = Y ( a_\textrm{l} \, (A - r_\textrm{l}) + \sum_\textrm{i=b,s,r}{m_\textrm{i} \, r_\textrm{i}}) - (\sum_\textrm{i=b,s,r}{m_\textrm{i} \, hmax\textrm{i}})$
+$c_2 = y ( a_\textrm{l} \, (A - r_\textrm{l}) + \sum_\textrm{i=b,s,r}{m_\textrm{i} \, r_\textrm{i}}) - (\sum_\textrm{i=b,s,r}{m_\textrm{i} \, hmax\textrm{i}})$
 is independent of $\phi$, and thus
 
-\begin{equation}\label{eq:dPdt3}
-\frac{\partial \left( \frac{ \textrm{d}P} {\textrm{d}t}\right)}{\partial \phi}  =
+\begin{equation}\label{eq:dbdt3}
+\frac{\partial \left( \frac{ \textrm{d}b} {\textrm{d}t}\right)}{\partial \phi}  =
 (B_4-1) a_\textrm{l} a_4\phi ^{-B_4}.
 \end{equation}
 
-Eq. \ref{eq:dPdt3} shows that if $B4=1$, $\frac{ \textrm{d}P} {\textrm{d}t}$ is independent
+Eq. \ref{eq:dbdt3} shows that if $B4=1$, $\frac{ \textrm{d}b} {\textrm{d}t}$ is independent
 of $\phi$. In contrast, if $B4>1$ (which tends to be the case empirically), $\frac{ \textrm
 {d}P} {\textrm{d}t}$ increases as $\phi$ increases, more acutely at low $\phi$.
 
@@ -1026,7 +1058,7 @@ Do similar to previous section for wood construction cost.
 
 \section{Supplementary tables}\label{supplementary-tables}
 
-\begin{table}[h]
+\begin{table}[ht]
 \caption{Model parameters}
 \centering
 {\footnotesize  % smaller font, double space
@@ -1042,7 +1074,7 @@ Do similar to previous section for wood construction cost.
 
 \section{Supplementary figures}\label{supplementary-figures}
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/SI_quantile_examples.pdf}
 \caption{\textbf{Estimating potential growth rate via quantile
@@ -1053,7 +1085,9 @@ panel, estimated points in centre of interval.
 \label{fS-quantile_examples}}
 \end{figure}
 
-\begin{figure}[htbp]
+\newpage
+
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/SI_lma_tradeoff.pdf}
 \caption{\textbf{Leaf turnover decreases with leaf-construction cost.}
@@ -1063,34 +1097,10 @@ fitted to data from each site, with intensity of shading adjusted
 according to strength of the relationship.\label{fS-leaf}}
 \end{figure}
 
-\newpage
-
-\begin{figure}[htbp]
-\centering
-\includegraphics{figures/SI_size_dhdt.pdf}
-\caption{\textbf{Hump-shaped relationship between height growth rate and
-size.} \label{f-hump}}
-\end{figure}
 
 \newpage
 
-\begin{figure}[htbp]
-\centering
-\includegraphics{figures/SI_size_dDdt.pdf}
-\caption{\textbf{Hump-shaped relationship diameter growth and size.}
-\label{f-SI_size_dDdt}}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics{figures/SI_size_dDdt.pdf}
-\caption{\textbf{Basal area growth rate increases with size.}
-\label{f-SI_size_dastdt}}
-\end{figure}
-
-\newpage
-
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/SI_mass_fraction.pdf}
 \caption{\textbf{Change in allocation with size.}
@@ -1099,14 +1109,14 @@ size.} \label{f-hump}}
 
 \newpage
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/SI_lma_effects_at_diameters.pdf}
 \caption{\textbf{The expected correlation between leaf-construction cost
 and growth rate changes with plant size.} \label{f-lma_growth_size}}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/SI_lma_effects_at_diameters_relative.pdf}
 \caption{\textbf{The expected correlation between leaf-construction cost
@@ -1114,14 +1124,14 @@ and relative growth rate changes with plant size.}
 \label{f-lma_growth_size_relative}}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
-\includegraphics{figures/SI_lma_effects_at_diameters.pdf}
+\includegraphics{figures/SI_rho_effects_at_diameters.pdf}
 \caption{\textbf{The expected correlation between stem-construction cost
 and growth rate changes with plant size.} \label{f-rho_growth_size}}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/SI_rho_effects_at_diameters_relative.pdf}
 \caption{\textbf{The expected correlation between stem-construction cost
@@ -1129,14 +1139,14 @@ and relative growth rate changes with plant size.}
 \label{f-rho_growth_size_relative}}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/SI_hmat_effects_at_diameters.pdf}
 \caption{\textbf{The expected correlation between maximum height and
-growth rate changes with plant size.} \label{f-rho_growth_size}}
+growth rate changes with plant size.} \label{f-hmat_growth_size}}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \includegraphics{figures/SI_hmat_effects_at_diameters_relative.pdf}
 \caption{\textbf{The expected correlation between maximum height and
