@@ -1,5 +1,8 @@
-latex_build <- function(filename, latex_engine="xelatex", bibtex=TRUE, dest_dir = "."){
-  build <- sprintf("%s %s", latex_engine, filename)
+# interaction must be one of: batchmode, nonstopmode, scrollmode, errorstopmode
+# default combination causes latex to bail back to system on error
+
+latex_build <- function(filename, latex_engine="xelatex", bibtex=TRUE, dest_dir = ".", interaction="nonstopmode") {
+  build <- sprintf("%s -interaction=%s -halt-on-error -output-directory=%s %s", latex_engine, interaction, dest_dir, filename)
   basename <- tools::file_path_sans_ext(filename)
   system(build)
   if(bibtex){
@@ -7,16 +10,7 @@ latex_build <- function(filename, latex_engine="xelatex", bibtex=TRUE, dest_dir 
     system(build)
   }
   system(build)
-  remove_aux_files(filename)
-  if(dest_dir!="."){
-    dir.create(dest_dir, showWarnings = FALSE, recursive = TRUE)
-    system(sprintf("mv %s.pdf %s", basename, dest_dir))
-  }
-}
-
-latex_build2 <- function(filename, latex_engine="xelatex"){
-  system(sprintf('latexmk -pdf -pdflatex="%s -interaction=nonstopmode" %s', latex_engine, filename))
-  remove_aux_files(filename)
+  remove_aux_files(file.path(dest_dir, basename(filename)))
 }
 
 remove_aux_files <- function(filename) {
