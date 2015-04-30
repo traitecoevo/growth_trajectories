@@ -1,47 +1,31 @@
 default_strategy <- function() {
-  Strategy(B5=1.5,
-           k_l0=0.4565855/3,
+  Strategy(
            hmat=30.0,
            c_r1=0.8,
            c_r2=20,
-           k_s0=0.2,
            a1=2.17,
            B1=0.546)
-}
-
-run_plant_to_heights <- function(heights, strategy, env) {
-  f <- function(h, p) {
-    p$height <- h
-    run_plant(p, env)
-  }
-  ## NOTE: previously we checked through these results and filtered
-  ## out things that left NULL
-  do.call("rbind", lapply(heights, f, Plant(strategy)))
 }
 
 run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
                                time_max=Inf) {
   res <- grow_plant_to_size(Plant(strategy), sizes, size_variable,
                             env, time_max)
-  do.call("rbind", lapply(res$plant, plant_info))
+  lapply(res$plant, extract_plant_info, env=env) %>% rbind_list %>% data.frame
 }
 
-run_plant <- function(plant, env) {
-  plant$compute_vars_phys(env)
-  plant_info(plant)
-}
+extract_plant_info <- function(plant, env) {
 
-plant_info <- function(p) {
-  x <- as.data.frame(as.list(c(p$vars_size,
-                               p$vars_phys,
-                               p$vars_growth)))
+  p <- plant
+  p$compute_vars_phys(env)
+  p$compute_vars_growth()
+  x <- unlist(p$internals)
 
   # add relative measures
-  x$height_growth_rate_relative    <- x$height_growth_rate / x$height
-  x$dbasal_area_dt_relative        <- x$dbasal_area_dt / x$basal_area
-  x$dbasal_diam_dt_relative        <- x$dbasal_diam_dt / x$diameter
-  x$dabove_ground_mass_dt_relative <- x$dabove_ground_mass_dt / x$above_ground_mass
-  x
+  for(v in c("height", "area_stem", "diameter_stem", "mass_above_ground")) {
+    x[[sprintf("%s_dt_relative", v)]] <- x[[sprintf("%s_dt", v)]] / x[[v]]
+  }
+ x
 }
 
 ## Code for trait deriative figure
