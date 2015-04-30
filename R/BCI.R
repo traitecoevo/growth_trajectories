@@ -134,15 +134,16 @@ CTFS_sanity_check <- function(dbh, dbh_increment, dbasal_diam_dt) {
 
 # Look up family
 lookup_family <- function(tag, nomen){
-  i <- match(tag, tolower(nomen[['sp6']]))
-  nomen$family[i]
+  i <- match(tag, tolower(nomen[['sp']]))
+  nomen$Family[i]
 }
 
 # Look up species code
 lookup_latin <- function(tag, nomen){
-  nomen$latin <- paste(nomen$genus, nomen$species)
-  i <- match(tag, tolower(nomen[['sp6']]))
-  nomen[['latin']][i]
+
+  nomen$Latin <- paste(nomen$Genus, nomen$Species)
+  i <- match(tag, tolower(nomen[['sp']]))
+  nomen[['Latin']][i]
 }
 
 # fits quantile regression to data

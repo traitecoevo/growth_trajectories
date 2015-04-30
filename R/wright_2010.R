@@ -17,6 +17,7 @@ process_wright_2010 <- function(filename) {
                                   c("alchorneoide","alchorneoides"),
                                   c("Tabernaemont","Tabernaemontana"),
                                   c("Trattinnicki","Trattinnickia"),
+                                  c("princeps", "croatii"),
                                   c("$",""),
                                   c("-99.000000", "NA"),
                                   c("-99.00000", "NA"),
