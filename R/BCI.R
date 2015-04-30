@@ -1,6 +1,6 @@
-#List of functions used to manipulate and summarise data from BCI.
+# List of functions used to manipulate and summarise data from BCI.
 
-#Download BCI data
+# Download BCI data
 # download function from package downloader provides wrapper
 # to download file so that works for https and across platforms
 BCI_download_50ha_plot_full <- function(dest) {
@@ -13,7 +13,7 @@ BCI_download_species_table <- function(dest) {
   download(url, dest, mode="wb")
 }
 
-#Load 50ha census data
+# Load 50ha census data
 BCI_load_50ha_plot <- function(path_to_zip) {
 
   tmp <- tempfile()
@@ -26,9 +26,9 @@ BCI_load_50ha_plot <- function(path_to_zip) {
 
 BCI_calculate_individual_growth <- function(BCI_50haplot, BCI_nomenclature) {
 
-  # Identifies individuals that return from the dead or are supposably refound
+  # Identifies individuals that return from the dead or are supposedly re-found
   # i.e. Individuals given dbh=NA and then later given numeric value
-  # Note this function must be used prior to subsetting only observations with pom=1.3
+  # Note this function must be used prior to sub-setting only observations with pom = 1.3
   is_zombie <- function(dbh) {
     any(diff(is.na(dbh)) == -1)
   }
@@ -106,7 +106,7 @@ BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
   species_data
 }
 
-# function to calculate growth rate of tree, either absolute (default) or relative rgowth rate (set f=log)
+# function to calculate growth rate of tree, either absolute (default) or relative growth rate (set f=log)
 calculate_growth_rate <- function(x, t, f = function(y) y) {
   dt <- diff(t)/365.25
   if (any(dt < 0, na.rm = TRUE)) {
@@ -126,19 +126,19 @@ CTFS_sanity_check <- function(dbh, dbh_increment, dbasal_diam_dt) {
   accept <- rep(TRUE, length(dbh))
   # Remove records based on max growth rate
   accept[dbasal_diam_dt > max_growth] <- FALSE
-  # Remove records based on min growth rate, estimated from allowbale error
+  # Remove records based on min growth rate, estimated from allowable error
   allowable.decrease <- -error_limit * (slope * dbh + intercept)
   accept[dbh_increment < allowable.decrease] <- FALSE
   accept
 }
 
-#Look up family
+# Look up family
 lookup_family <- function(tag, nomen){
   i <- match(tag, tolower(nomen[['sp6']]))
   nomen$family[i]
 }
 
-#Look up species code
+# Look up species code
 lookup_latin <- function(tag, nomen){
   nomen$latin <- paste(nomen$genus, nomen$species)
   i <- match(tag, tolower(nomen[['sp6']]))
@@ -150,8 +150,8 @@ fit_quantile_regression <- function(y, x, tau) {
   rq(y ~ log10(x), tau = tau)
 }
 
-# Estimates value for y at given x (predict_at) by fitting quantile regression.  The cutoff value (p) for the gression is adjusted according to the number
-# of points in dataset. If there are few points, use default value for p. Otherwise cutrade-off based on top 20 points Returns predicted value of y at given
+# Estimates value for y at given x (predict_at) by fitting quantile regression.  The cut-off value (p) for the regression is adjusted according to the number
+# of points in dataset. If there are few points, use default value for p. Otherwise cut-off based on top 20 points Returns predicted value of y at given
 # value of x (predict_at)
 predict_via_quantile_regression <- function(x, y, p = 0.99, nmin = 50, predict_at = 10) {
   n <- length(y)
@@ -254,15 +254,11 @@ figure_BCI_data2 <- function(data) {
   par(mfrow=c(1, 3), oma=c(0, 4.1, 0, 0), mar=c(4.1, 2.1, .5, .5))
   for (trait in traits) {
     dt <- dat[[trait]]
-    plot(dbasal_diam_dt ~ x, dt$data, pch=21, xlim=xlim[[trait]], #ylim=ylim,
+    plot(dbasal_diam_dt ~ x, dt$data, pch=21, xlim=xlim[[trait]],
          log="xy", cex=cex, yaxt="n", xlab="", ylab="",
          col=make_transparent(cols[class], .6),
          bg=make_transparent(cols[class], .5))
 
-    # segments(dt$xr[1,], dt$yr_i[1,], dt$xr[2,], dt$yr_i[2,],
-    #          col=cols, lwd=3, lty=2)
-    ## segments(dt$xr[1,], dt$yr_w[1,], dt$xr[2,], dt$yr_w[2,],
-    ##          col=cols, lwd=3, lty=3)
     segments(dt$xr[1,], dt$yr_j[1,], dt$xr[2,], dt$yr_j[2,],
              col=cols, lwd=3)
     axis(2, las=1, labels=trait == traits[[1]])
@@ -312,18 +308,11 @@ figure_qunatile_examples <- function(BCI_individual_growth) {
         abline(f, lwd=1, col="red")
         points(at, predict(f, newdata = data.frame(x=at)), col="red", pch=16, cex=1.5)
       }
-
-
-
       if (i == last(nrow(size_range))) {
         mtext( example_species[j], 4, cex=cex_lab, line=2)
       }
-
-
     }
   }
-
   mtext("Diameter (m)", 1, cex=cex_lab, line=3, outer=TRUE)
   mtext(name_pretty("dbasal_diam_dt"), 2, line=3, outer=TRUE, cex=cex_lab)
-
 }
