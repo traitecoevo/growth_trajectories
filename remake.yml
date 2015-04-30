@@ -132,11 +132,11 @@ targets:
       - downloads/tree.png
       - downloads/seedling.png
       - figures/empty_box.pdf
-      - figures/F2_mass_production_net_production.pdf
-      - figures/F2_height_growth_height_growth_rate.pdf
-      - figures/F2_leaf_area_growth_dleaf_area_dt.pdf
-      - figures/F2_basal_growth_dbasal_area_dt.pdf
-      - figures/F2_diameter_growth_dbasal_diam_dt.pdf
+      - figures/F2_net_mass_production_dt_net_mass_production_dt.pdf
+      - figures/F2_height_dt_height_dt.pdf
+      - figures/F2_area_leaf_dt_area_leaf_dt.pdf
+      - figures/F2_area_stem_dt_area_stem_dt.pdf
+      - figures/F2_diameter_stem_dt_diameter_stem_dt.pdf
 
   figures/empty_box.pdf:
     command: empty_box()

@@ -16,17 +16,17 @@ suppressPackageStartupMessages({
 # First, look at plot: challenge is to move peak to left and pull down elevation of curve.
 data <- remake::make("BCI_species_data") %>%
   mutate(dbh=at) %>%
-  filter(!is.na(lma*rho*hmat*dbh*dbasal_diam_dt), dbh %in% c(0.01), hmat > 10) %>%
-  select(dbh, lma, rho, dbasal_diam_dt)
+  filter(!is.na(lma*rho*hmat*dbh*diameter_stem_dt), dbh %in% c(0.01), hmat > 10) %>%
+  select(dbh, lma, rho, diameter_stem_dt)
 
 d <- trait_effects_data("lma", "diameter")
 d <- d[d$size_class == 2L,]
 
-plot(data$lma, data$dbasal_diam_dt, las=1, log="x",
-     xlab=name_pretty("lma"), ylab=name_pretty("dbasal_diam_dt"),
+plot(data$lma, data$diameter_stem_dt, las=1, log="x",
+     xlab=name_pretty("lma"), ylab=name_pretty("diameter_stem_dt"),
      xlim=range(data$lma, d$lma),
-     ylim=range(data$dbasal_diam_dt, d$dbasal_diam_dt))
-lines(d$lma, d$dbasal_diam_dt, col="red")
+     ylim=range(data$diameter_stem_dt, d$diameter_stem_dt))
+lines(d$lma, d$diameter_stem_dt, col="red")
 
 # given a dbh x, traits and parameters, grows plant to right size and estimates growth rate
 growth <- function(x, trait, dbh, E=1,
@@ -34,7 +34,7 @@ growth <- function(x, trait, dbh, E=1,
   strategy[trait] <- x
   pp <- grow_plant_to_size(Plant(strategy), dbh, "diameter",
                            fixed_environment(E))
-  sapply(pp$plant, function(p) p$vars_growth[["dbasal_diam_dt"]])
+  sapply(pp$plant, function(p) p$vars_growth[["diameter_stem_dt"]])
 }
 
 # finds trait value in range that maximises growth rate at given size and light

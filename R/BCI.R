@@ -66,15 +66,15 @@ BCI_calculate_individual_growth <- function(BCI_50haplot, BCI_nomenclature) {
       # First measurement in 1990 ='1990-02-06'
       julian = as.vector(julian(as.Date(exactdate,"%Y-%m-%d"), as.Date("1990-02-06", "%Y-%m-%d"))),
       dbh_increment = c(diff(dbh), NA),
-      dbasal_diam_dt = calculate_growth_rate(dbh, julian),
-      dbasal_diam_dt_relative = calculate_growth_rate(dbh, julian, log)
+      diameter_stem_dt = calculate_growth_rate(dbh, julian),
+      diameter_stem_dt_relative = calculate_growth_rate(dbh, julian, log)
     ) %>%
     filter(
-      !is.na(dbasal_diam_dt) &
+      !is.na(diameter_stem_dt) &
         !is.na(dbh_increment) &
-        CTFS_sanity_check(dbh, dbh_increment, dbasal_diam_dt)
+        CTFS_sanity_check(dbh, dbh_increment, diameter_stem_dt)
     ) %>%
-    select(censusid,species, family, dfstatus, dbh, dbasal_diam_dt)
+    select(censusid,species, family, dfstatus, dbh, diameter_stem_dt)
 }
 
 BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
@@ -89,7 +89,7 @@ BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
     group_by(data, species) %>%
       filter(dbh >= min & dbh < max) %>%
       summarise(count = n(),
-        dbasal_diam_dt = predict_via_quantile_regression(dbh, dbasal_diam_dt, predict_at = at))
+        diameter_stem_dt = predict_via_quantile_regression(dbh, diameter_stem_dt, predict_at = at))
   }
 
   out <- ddply(size_range, 1, function(x) get_species_data(individual_growth, x[["min"]], x[["max"]], x[["at"]]))
@@ -98,7 +98,7 @@ BCI_calculate_species_traits <- function(individual_growth, wright_2010) {
   wright_2010 <- mutate(wright_2010, species = paste(genus, species))
 
   species_data <- merge(select(wright_2010, species, lma, rho, hmat), out, by = "species") %>%
-    filter(!is.na(dbasal_diam_dt)) %>%
+    filter(!is.na(diameter_stem_dt)) %>%
     arrange(species, at)
 
   names(species_data) <- tolower(names(species_data))
@@ -116,7 +116,7 @@ calculate_growth_rate <- function(x, t, f = function(y) y) {
 }
 
 # Function to identify bad data. Adapted from function in CTFS R package
-CTFS_sanity_check <- function(dbh, dbh_increment, dbasal_diam_dt) {
+CTFS_sanity_check <- function(dbh, dbh_increment, diameter_stem_dt) {
 
   slope <- 0.006214
   intercept <- 0.9036 /1000   #convert from mm to m
@@ -125,7 +125,7 @@ CTFS_sanity_check <- function(dbh, dbh_increment, dbasal_diam_dt) {
 
   accept <- rep(TRUE, length(dbh))
   # Remove records based on max growth rate
-  accept[dbasal_diam_dt > max_growth] <- FALSE
+  accept[diameter_stem_dt > max_growth] <- FALSE
   # Remove records based on min growth rate, estimated from allowable error
   allowable.decrease <- -error_limit * (slope * dbh + intercept)
   accept[dbh_increment < allowable.decrease] <- FALSE
@@ -183,7 +183,7 @@ figure_BCI_data <- function(data) {
       dsub <- dsplit[[i]]
       cex <- linear_rescale(log10(dsub$count), c(0.6, 2.5), log10(c(800, 10000)))
       x <- dsub[[trait]]
-      y <- dsub$dbasal_diam_dt
+      y <- dsub$diameter_stem_dt
 
       sm <- sma(y ~ x, log="xy", method="OLS")
 
@@ -205,7 +205,7 @@ figure_BCI_data <- function(data) {
       }
     }
   }
-  mtext(name_pretty("dbasal_diam_dt"), 2, line=3, outer=TRUE, cex=cex_lab)
+  mtext(name_pretty("diameter_stem_dt"), 2, line=3, outer=TRUE, cex=cex_lab)
 }
 
 figure_BCI_data2 <- function(data) {
@@ -221,14 +221,14 @@ figure_BCI_data2 <- function(data) {
     data$x <- data[[trait]]
     dsplit <- split(data, data$class)
     fits_i <- lapply(dsplit, function(d)
-                     lm(log10(dbasal_diam_dt) ~ log10(x), d))
+                     lm(log10(diameter_stem_dt) ~ log10(x), d))
 
     ## Next thing to try is weights.
     fits_w <- lapply(dsplit, function(d)
-                     lm(log10(dbasal_diam_dt) ~ log10(x), d,
+                     lm(log10(diameter_stem_dt) ~ log10(x), d,
                         weights=log(count)))
 
-    fits_j <- lm(log10(dbasal_diam_dt) ~ log10(x) * log(at), data,
+    fits_j <- lm(log10(diameter_stem_dt) ~ log10(x) * log(at), data,
                  weights=log(count))
 
     ## Generate a data set to do prediction with:
@@ -255,7 +255,7 @@ figure_BCI_data2 <- function(data) {
   par(mfrow=c(1, 3), oma=c(0, 4.1, 0, 0), mar=c(4.1, 2.1, .5, .5))
   for (trait in traits) {
     dt <- dat[[trait]]
-    plot(dbasal_diam_dt ~ x, dt$data, pch=21, xlim=xlim[[trait]],
+    plot(diameter_stem_dt ~ x, dt$data, pch=21, xlim=xlim[[trait]],
          log="xy", cex=cex, yaxt="n", xlab="", ylab="",
          col=make_transparent(cols[class], .6),
          bg=make_transparent(cols[class], .5))
@@ -264,7 +264,7 @@ figure_BCI_data2 <- function(data) {
              col=cols, lwd=3)
     axis(2, las=1, labels=trait == traits[[1]])
     if (trait == traits[[1]]) {
-      mtext(name_pretty("dbasal_diam_dt"), 2, xpd=NA, line=4, cex=cex_lab)
+      mtext(name_pretty("diameter_stem_dt"), 2, xpd=NA, line=4, cex=cex_lab)
     }
     mtext(name_pretty(trait), 1, line=3, cex=cex_lab)
   }
@@ -292,7 +292,7 @@ figure_qunatile_examples <- function(BCI_individual_growth) {
         dbh >= size_range[["min"]][i] & dbh < size_range[["max"]][i])
 
       x <- data[["dbh"]]
-      y <- data[["dbasal_diam_dt"]]
+      y <- data[["diameter_stem_dt"]]
       n <- length(y)
       plot(x, y, log="x", pch=16, col="grey", ann=FALSE, xaxt="n", yaxt="n", cex=1.2,
         ylim =  c(-1, 32) / 1000, xlim = as.numeric(size_range[i, c("min", "max")]))
@@ -315,5 +315,5 @@ figure_qunatile_examples <- function(BCI_individual_growth) {
     }
   }
   mtext("Diameter (m)", 1, cex=cex_lab, line=3, outer=TRUE)
-  mtext(name_pretty("dbasal_diam_dt"), 2, line=3, outer=TRUE, cex=cex_lab)
+  mtext(name_pretty("diameter_stem_dt"), 2, line=3, outer=TRUE, cex=cex_lab)
 }

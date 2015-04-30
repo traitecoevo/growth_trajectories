@@ -28,7 +28,7 @@ extract_plant_info <- function(plant, env) {
  x
 }
 
-## Code for trait deriative figure
+## Code for trait derivative figure
 figure_trait_deriative <- function(type, trait_name="lma", canopy_openness=1,
                                 strategy=default_strategy()) {
 
@@ -41,10 +41,10 @@ figure_trait_deriative <- function(type, trait_name="lma", canopy_openness=1,
   strategy2[[trait_name]] <- x+dx
   dat2 <- figure_rate_vs_size_data(canopy_openness, strategy2)
 
-  line1 <- (dat2$net_production - dat$net_production)/dx/dat$net_production
-  line2  <- (1/(dat2$dleaf_area_dleaf_mass * dat2$leaf_fraction)
-              - 1/(dat$dleaf_area_dleaf_mass * dat$leaf_fraction)) / dx /
-            1/(dat2$dleaf_area_dleaf_mass * dat2$leaf_fraction)
+  line1 <- (dat2$net_mass_production_dt - dat$net_mass_production_dt)/dx/dat$net_mass_production_dt
+  line2  <- (1/(dat2$darea_leaf_dmass_leaf * dat2$leaf_fraction)
+              - 1/(dat$darea_leaf_dmass_leaf * dat$leaf_fraction)) / dx /
+            1/(dat2$darea_leaf_dmass_leaf * dat2$leaf_fraction)
   height <- dat$height
 
   plot(dat[["height"]], line1, type="l", xlab="Height (m)", ylab= "relative change", ylim=c(0,20))
@@ -80,36 +80,36 @@ figure_rate_vs_size_panels <- function(data, type, path) {
 figure_rate_vs_size_data <- function(canopy_openness=1, strategy=default_strategy()) {
   heights <- seq(Plant(strategy)$height, strategy$hmat, length.out=100)
   env <- fixed_environment(canopy_openness)
-  res <- run_plant_to_heights(heights, strategy, env)
-  i <- res[["net_production"]] > 0
+  res <- run_plant_to_sizes(heights, "height", strategy, env, time_max=10000)
+  i <- res[["net_mass_production_dt"]] > 0
   res[i, ]
 }
 
 figure_rate_vs_size_cols <- function(type) {
-  if (type == "mass_production") {
-    c("net_production", "assimilation", "respiration", "turnover")
-  } else if (type == "height_growth") {
-    c("height_growth_rate", "dheight_dleaf_area", "leaf_fraction", "growth_fraction", "net_production")
-  } else if (type == "leaf_area_growth") {
-    c("dleaf_area_dt", "leaf_fraction", "growth_fraction", "net_production")
-  } else if (type == "diameter_growth") {
-     c("dbasal_diam_dt", "leaf_fraction", "growth_fraction", "net_production")
-  } else if (type == "basal_growth") {
-     c("dbasal_area_dt", "leaf_fraction", "growth_fraction", "net_production")
+  if (type == "net_mass_production_dt") {
+    c("net_mass_production_dt", "assimilation", "respiration", "turnover")
+  } else if (type == "height_dt") {
+    c("height_dt", "dheight_darea_leaf", "leaf_fraction", "growth_fraction", "net_mass_production_dt")
+  } else if (type == "area_leaf_dt") {
+    c("area_leaf_dt", "leaf_fraction", "growth_fraction", "net_mass_production_dt")
+  } else if (type == "diameter_stem_dt") {
+     c("diameter_stem_dt", "leaf_fraction", "growth_fraction", "net_mass_production_dt")
+  } else if (type == "area_stem_dt") {
+     c("area_stem_dt", "leaf_fraction", "growth_fraction", "net_mass_production_dt")
   } else {
     stop("Unknown type ", dQuote(type))
   }
 }
 
-figure_diameter_growth <- function(dat=NULL) {
+figure_diameter_stem_dt <- function(dat=NULL) {
   if (is.null(dat)) {
-    dat <- figure_diameter_growth_data()
+    dat <- figure_diameter_stem_dt_data()
   }
   diameters <- dat$diameters
   lai <- dat$lai
   traits <- dat$traits
 
-  ymax <- max(sapply(dat[traits], function(x) max(x$dbasal_diam_dt)))
+  ymax <- max(sapply(dat[traits], function(x) max(x$diameter_stem_dt)))
   ylim <- c(0, ymax * 1.1)
   cols <- rev(RColorBrewer::brewer.pal(length(lai) + 3, "Blues")[-(1:3)])
   par(mfcol=c(length(diameters), length(traits)),
@@ -118,7 +118,7 @@ figure_diameter_growth <- function(dat=NULL) {
     dat_v <- unname(split(dat[[v]], dat[[v]]$diameter_class))
     for (i in seq_along(diameters)) {
       dsub <- long_to_wide(dat_v[[i]], "canopy_openness",
-                           c(v, "dbasal_diam_dt"))
+                           c(v, "diameter_stem_dt"))
       matplot(dsub[[1]], dsub[[2]], type="l", col=cols, lty=1, log="x",
               ylim=ylim, xaxt="n", yaxt="n", xlab="", ylab="")
       axis(1, labels=i == length(diameters), las=1)
@@ -129,26 +129,26 @@ figure_diameter_growth <- function(dat=NULL) {
     }
     mtext(name_pretty(v), 1, cex=1, line=3.5)
   }
-  mtext(name_pretty("dbasal_diam_dt"), line=2.5, side=2, cex=1, outer=TRUE)
+  mtext(name_pretty("diameter_stem_dt"), line=2.5, side=2, cex=1, outer=TRUE)
   legend("topright", paste(rev(lai), "m2"), lty=1, col=cols, bty="n")
 }
 
-figure_diameter_growth_data <- function() {
+figure_diameter_stem_dt_data <- function() {
   diameters <- c(0.005, 0.01, 0.1, 0.2)
   vals <- list(lma=seq_log_range(trait_range("lma"),  20),
                rho=seq_log_range(trait_range("rho"), 20))
   lai <- c(0, 0.5, 1, 2, 3)
 
   canopy_openness <- exp(-Parameters()$c_ext * lai)
-  dat_lma <- figure_diameter_growth_data1(canopy_openness,
+  dat_lma <- figure_diameter_stem_dt_data1(canopy_openness,
                                          vals$lma, "lma", diameters)
-  dat_rho <- figure_diameter_growth_data1(canopy_openness,
+  dat_rho <- figure_diameter_stem_dt_data1(canopy_openness,
                                           vals$rho, "rho", diameters)
   list(traits=names(vals), lma=dat_lma, rho=dat_rho,
        diameters=diameters, lai=lai)
 }
 
-figure_diameter_growth_data1 <- function(canopy_openness,
+figure_diameter_stem_dt_data1 <- function(canopy_openness,
                                         trait_values, trait_name,
                                         diameters) {
   ## The innermost function "run_trait_in_environment" runs a single
@@ -163,7 +163,7 @@ figure_diameter_growth_data1 <- function(canopy_openness,
       res <- run_plant_to_sizes(diameters, "diameter", s, env)
       tmp <- cbind(trait_value)
       colnames(tmp) <- trait_name
-      cbind(tmp, res[c("diameter", "dbasal_diam_dt")],
+      cbind(tmp, res[c("diameter", "diameter_stem_dt")],
             diameter_class=seq_along(diameters))
     }
 
@@ -238,8 +238,8 @@ trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
   s <- default_strategy()
   env <- fixed_environment(1.0)
 
-  cols <- c("height_growth_rate", "dbasal_area_dt", "dbasal_diam_dt",
-            "dabove_ground_mass_dt")
+  cols <- c("height_dt", "area_stem_dt", "diameter_stem_dt",
+            "mass_above_ground_dt")
   if (relative) {
     cols <- paste0(cols, "_relative")
   }
@@ -293,9 +293,9 @@ figure_mass_fraction <- function() {
   xlab <- "Height (m)"
   ylab <- "Fraction of live mass"
 
-  vars <- c("leaf_mass", "root_mass", "bark_mass", "sapwood_mass",
+  vars <- c("mass_leaf", "root_mass", "bark_mass", "sapwood_mass",
             "heartwood_mass")
-  cols <- c(leaf_mass="forestgreen", root_mass="tan", bark_mass="orange",
+  cols <- c(mass_leaf="forestgreen", root_mass="tan", bark_mass="orange",
             sapwood_mass="firebrick2", heartwood_mass="brown")
   vars <- setdiff(vars, "heartwood_mass")
 

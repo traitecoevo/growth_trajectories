@@ -1,9 +1,9 @@
 targets:
   figures/growth_light.pdf:
-    command: figure_diameter_growth(diameter_growth_data)
+    command: figure_diameter_stem_dt(diameter_stem_dt_data)
     plot: square
-  diameter_growth_data:
-    command: figure_diameter_growth_data()
+  diameter_stem_dt_data:
+    command: figure_diameter_stem_dt_data()
 
   figures/max_leaf_above.pdf:
     command: figure_lcp_whole_plant()
@@ -16,39 +16,39 @@ targets:
   rate_vs_size_data:
     command: figure_rate_vs_size_data()
 
-  figures/F2_mass_production_net_production.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("mass_production"), I("figures"))
+  figures/F2_net_mass_production_dt_net_mass_production_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("net_mass_production_dt"), I("figures"))
 
-  figures/F2_height_growth_height_growth_rate.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("height_growth"), I("figures"))
+  figures/F2_height_dt_height_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("height_dt"), I("figures"))
 
-  figures/F2_leaf_area_growth_dleaf_area_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("leaf_area_growth"), I("figures"))
+  figures/F2_area_leaf_dt_area_leaf_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_leaf_dt"), I("figures"))
 
-  figures/F2_basal_growth_dbasal_area_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("basal_growth"), I("figures"))
+  figures/F2_area_stem_dt_area_stem_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_stem_dt"), I("figures"))
 
-  figures/F2_diameter_growth_dbasal_diam_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("diameter_growth"), I("figures"))
+  figures/F2_diameter_stem_dt_diameter_stem_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("diameter_stem_dt"), I("figures"))
 
   figures/SI_size_dpdt.pdf:
-    command: figure_rate_vs_size(rate_vs_size_data, I("mass_production"))
+    command: figure_rate_vs_size(rate_vs_size_data, I("net_mass_production_dt"))
     plot: wide
 
   figures/SI_size_dhdt.pdf:
-    command: figure_rate_vs_size(rate_vs_size_data, I("height_growth"))
+    command: figure_rate_vs_size(rate_vs_size_data, I("height_dt"))
     plot: wide
 
   figures/SI_size_dDdt.pdf:
-    command: figure_rate_vs_size(rate_vs_size_data, I("diameter_growth"))
+    command: figure_rate_vs_size(rate_vs_size_data, I("diameter_stem_dt"))
     plot: large_square
 
   figures/SI_size_dastdt.pdf:
-    command: figure_rate_vs_size(rate_vs_size_data, I("basal_growth"))
+    command: figure_rate_vs_size(rate_vs_size_data, I("area_stem_dt"))
     plot: large_square
 
   figures/SI_lma_growth_derivative.pdf:
-    command: figure_trait_deriative (I("height_growth"))
+    command: figure_trait_deriative (I("height_dt"))
     plot: wide
 
   figures/SI_lma_effects_at_diameters.pdf:
