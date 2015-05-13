@@ -19,6 +19,9 @@ targets:
   figures/F2_net_mass_production_dt_net_mass_production_dt.pdf:
     command: figure_rate_vs_size_panels(rate_vs_size_data, I("net_mass_production_dt"), I("figures"))
 
+  figures/F2_darea_leaf_dmass_live_darea_leaf_dmass_live.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("darea_leaf_dmass_live"), I("figures"))
+
   figures/F2_height_dt_height_dt.pdf:
     command: figure_rate_vs_size_panels(rate_vs_size_data, I("height_dt"), I("figures"))
 

@@ -133,6 +133,7 @@ targets:
       - downloads/seedling.png
       - figures/empty_box.pdf
       - figures/F2_net_mass_production_dt_net_mass_production_dt.pdf
+      - figures/F2_darea_leaf_dmass_live_darea_leaf_dmass_live.pdf
       - figures/F2_height_dt_height_dt.pdf
       - figures/F2_area_leaf_dt_area_leaf_dt.pdf
       - figures/F2_area_stem_dt_area_stem_dt.pdf

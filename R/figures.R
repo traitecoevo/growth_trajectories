@@ -4,11 +4,14 @@ default_strategy <- function() {
            c_r1=0.8,
            c_r2=20,
            a1=2.17,
-           B1=0.546)
+           B1=0.546,
+           k_l=0.4565855/3
+
+           )
 }
 
 run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
-                               time_max=Inf) {
+                               time_max=10000) {
   res <- grow_plant_to_size(Plant(strategy), sizes, size_variable,
                             env, time_max)
   lapply(res$plant, extract_plant_info, env=env) %>% rbind_list %>% data.frame
@@ -16,6 +19,7 @@ run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
 
 extract_plant_info <- function(plant, env) {
 
+  if(!is.null(plant))
   p <- plant
   p$compute_vars_phys(env)
   p$compute_vars_growth()
@@ -42,9 +46,9 @@ figure_trait_deriative <- function(type, trait_name="lma", canopy_openness=1,
   dat2 <- figure_rate_vs_size_data(canopy_openness, strategy2)
 
   line1 <- (dat2$net_mass_production_dt - dat$net_mass_production_dt)/dx/dat$net_mass_production_dt
-  line2  <- (1/(dat2$darea_leaf_dmass_leaf * dat2$leaf_fraction)
-              - 1/(dat$darea_leaf_dmass_leaf * dat$leaf_fraction)) / dx /
-            1/(dat2$darea_leaf_dmass_leaf * dat2$leaf_fraction)
+  line2  <- (1/(dat2$darea_leaf_dmass_leaf * dat2$darea_leaf_dmass_live)
+              - 1/(dat$darea_leaf_dmass_leaf * dat$darea_leaf_dmass_live)) / dx /
+            1/(dat2$darea_leaf_dmass_leaf * dat2$darea_leaf_dmass_live)
   height <- dat$height
 
   plot(dat[["height"]], line1, type="l", xlab="Height (m)", ylab= "relative change", ylim=c(0,20))
@@ -64,38 +68,39 @@ figure_rate_vs_size <- function(data, type) {
 
 figure_rate_vs_size_panels <- function(data, type, path) {
   yvars <- figure_rate_vs_size_cols(type)
+
   for (v in yvars) {
     filename <- file.path(path, sprintf("F2_%s_%s.pdf", type, v))
     pdf(filename,width=5, height=5)
-    on.exit(dev.off())
     par(oma=c(0,0,0,0), mar=rep(0.1,4))
     plot(data[["height"]], data[[v]], type="l", ann=FALSE, axes=FALSE,
-      ylim=c(0, max(1,data[[v]])),
+      ylim=c(0, max(1,data[[type]])),
       col="green", lwd=3)
     box()
-
+    dev.off()
   }
 }
 
 figure_rate_vs_size_data <- function(canopy_openness=1, strategy=default_strategy()) {
   heights <- seq(Plant(strategy)$height, strategy$hmat, length.out=100)
   env <- fixed_environment(canopy_openness)
-  res <- run_plant_to_sizes(heights, "height", strategy, env, time_max=10000)
-  i <- res[["net_mass_production_dt"]] > 0
-  res[i, ]
+  run_plant_to_sizes(heights, "height", strategy, env, time_max=10000)
 }
 
 figure_rate_vs_size_cols <- function(type) {
   if (type == "net_mass_production_dt") {
     c("net_mass_production_dt", "assimilation", "respiration", "turnover")
-  } else if (type == "height_dt") {
-    c("height_dt", "dheight_darea_leaf", "leaf_fraction", "growth_fraction", "net_mass_production_dt")
+  } else if (type == "darea_leaf_dmass_live") {
+    c("darea_leaf_dmass_live", "dmass_leaf_darea_leaf", "dmass_sapwood_darea_leaf", "dmass_bark_darea_leaf", "dmass_root_darea_leaf")
   } else if (type == "area_leaf_dt") {
-    c("area_leaf_dt", "leaf_fraction", "growth_fraction", "net_mass_production_dt")
-  } else if (type == "diameter_stem_dt") {
-     c("diameter_stem_dt", "leaf_fraction", "growth_fraction", "net_mass_production_dt")
+    c("area_leaf_dt", "darea_leaf_dmass_live", "fraction_allocation_growth", "net_mass_production_dt")
+  } else if (type == "height_dt") {
+    c("height_dt", "dheight_darea_leaf", "area_leaf_dt")
   } else if (type == "area_stem_dt") {
-     c("area_stem_dt", "leaf_fraction", "growth_fraction", "net_mass_production_dt")
+    c("area_stem_dt", "darea_leaf_dmass_live", "area_leaf_dt", "area_heartwood_dt")
+  } else if (type == "diameter_stem_dt") {
+    c("diameter_stem_dt", "ddiameter_stem_darea_stem", "area_stem_dt")
+
   } else {
     stop("Unknown type ", dQuote(type))
   }
