@@ -27,7 +27,7 @@ plot_options:
     height: 12
 
 include:
-  - remake_figures_tree.yml
+  - remake_figures_plant.yml
 
 targets:
   all:
@@ -117,9 +117,9 @@ targets:
     command: read.csv("data/wright_2004_locations.csv")
 
   figures/table-pars.tex:
-    command: table_tree_parameters(tree_parameters, target_name)
+    command: table_plant_parameters(plant_parameters, target_name)
 
-  tree_parameters:
+  plant_parameters:
     command: read.csv("data/growth_model_pars.csv")
 
   figures/BCI_data.pdf:
