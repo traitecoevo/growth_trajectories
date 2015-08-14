@@ -38,14 +38,6 @@ figure_lma_tradeoff <- function(data) {
          pch=16, col=col_table, cex=1, title=title)
 }
 
-download_baad <- function(destination_filename) {
-  url <-
-    "https://github.com/dfalster/baad/releases/download/v0.9.0/baad.rds"
-  download(url, destination_filename, mode="wb")
-  # download function from package downloader provides wrapper
-  # to download file so that works for https and across platforms
-}
-
 addIsoclines <- function(A= seq(-10,10),b=1,...){
   for(a in A) abline(a,b,lty="dotted",...)
 }

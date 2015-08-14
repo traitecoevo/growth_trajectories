@@ -22,4 +22,4 @@ r_packages:
   - RColorBrewer
 
 r_local_packages:
-  - ../tree2
+  - ../plant

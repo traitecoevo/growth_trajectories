@@ -7,7 +7,7 @@ source_dir <- function(path, ...) {
 }
 source_dir("R")
 
-library(tree2)
+library(plant)
 suppressPackageStartupMessages({
   library(plyr)
   library(dplyr)

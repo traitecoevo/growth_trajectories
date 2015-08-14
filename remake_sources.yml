@@ -1,6 +1,6 @@
-tree2:
+plant:
   source: github
-  repo: richfitz/tree2
+  repo: traitecoevo/plant
 
 smatr:
   source: bitbucket

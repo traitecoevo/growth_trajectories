@@ -1,21 +1,7 @@
 # List of functions used to manipulate and summarise data from BCI.
 
-# Download BCI data
-# download function from package downloader provides wrapper
-# to download file so that works for https and across platforms
-BCI_download_50ha_plot_full <- function(dest) {
-  url <-"https://repository.si.edu/bitstream/handle/10088/20925/bci.full.Rdata31Aug2012.zip"
-  download(url, dest, mode="wb")
-}
-
-BCI_download_species_table <- function(dest) {
-  url <-"https://repository.si.edu/bitstream/handle/10088/20925/bci.spptable.rdata"
-  download(url, dest, mode="wb")
-}
-
 # Load 50ha census data
 BCI_load_50ha_plot <- function(path_to_zip) {
-
   tmp <- tempfile()
   unzip(path_to_zip, exdir=tmp)
   on.exit(unlink(tmp, recursive=TRUE))

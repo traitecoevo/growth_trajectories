@@ -19,15 +19,3 @@ remove_aux_files <- function(filename) {
                       ".fdb_latexmk"))
   file.remove(aux.files[file.exists(aux.files)])
 }
-
-download_seedling_png <- function(destination_filename) {
-  url <-
-    "http://ian.umces.edu/imagelibrary/albums/userpics/10002/normal_ian-symbol-quercus-spp-oak-seedling.png"
-  download(url, destination_filename, mode="wb")
-}
-
-download_tree_png <- function(destination_filename) {
-  url <-
-    "http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-quercus-montana.png"
-  download(url, destination_filename, mode="wb")
-}

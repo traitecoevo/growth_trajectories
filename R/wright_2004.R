@@ -1,9 +1,3 @@
-download_wright_2004 <- function(destination_filename) {
-  url <-
-    "http://www.nature.com/nature/journal/v428/n6985/extref/nature02403-s2.xls"
-  download.file(url, destination_filename)
-}
-
 process_wright_2004 <- function(filename, sitevars) {
   d <- read.xlsx2(filename, sheetIndex = 1, startRow = 11, stringsAsFactors = FALSE, check.names = FALSE)
 

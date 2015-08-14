@@ -1,4 +1,4 @@
-# Fitting TREE to observed data
+# Fitting plant to observed data
 
 
 ```{r, echo=FALSE, results="hide"}
@@ -26,7 +26,7 @@ head(data)
 We now need a function taking as arguments size x, traits, parameters and returning estimated growth rate
 
 ```{r, echo=TRUE, results="hide"}
-library(tree2)
+library(plant)
 
 # given a dbh x, traits and parameters, grows plant to right size and estimates growth rate
 run_tree <- function(x, E=1, traits=list(), pars=list(),

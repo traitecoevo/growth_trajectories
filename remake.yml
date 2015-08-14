@@ -4,10 +4,9 @@ packages:
   - rmarkdown
   - smatr
   - quantreg
-  - tree2
+  - plant
   - xtable
   - RCurl
-  - downloader
   - RColorBrewer
 
 sources:
@@ -34,6 +33,15 @@ targets:
   all:
     depends:
       - ms.pdf
+
+  downloads:
+    depends:
+      - downloads/bci.full.Rdata31Aug2012.zip
+      - downloads/wright_2010.txt
+      - downloads/wright_2004.xls
+      - downloads/tree.png
+      - downloads/seedling.png
+      - downloads/baad.rds
 
   ms.pdf:
     command: latex_build("ms.tex")
@@ -74,12 +82,12 @@ targets:
     command: BCI_load_50ha_plot("downloads/bci.full.Rdata31Aug2012.zip")
 
   downloads/bci.full.Rdata31Aug2012.zip:
-    command: BCI_download_50ha_plot_full(target_name)
+    download: https://repository.si.edu/bitstream/handle/10088/20925/bci.full.Rdata31Aug2012.zip
     cleanup_level: never
     check: exists
 
   downloads/bci.spptable.rdata:
-    command: BCI_download_species_table(target_name)
+    download: https://repository.si.edu/bitstream/handle/10088/20925/bci.spptable.rdata
     cleanup_level: never
     check: exists
 
@@ -90,7 +98,7 @@ targets:
     command: process_wright_2010("downloads/wright_2010.txt")
 
   downloads/wright_2010.txt:
-    command: download_wright_2010(target_name)
+    download: http://www.esapubs.org/archive/ecol/E091/257/Supplement_20100505.txt
     cleanup_level: purge
     check: exists
 
@@ -101,7 +109,7 @@ targets:
     packages: xlsx
 
   downloads/wright_2004.xls:
-    command: download_wright_2004(target_name)
+    download: http://www.nature.com/nature/journal/v428/n6985/extref/nature02403-s2.xls
     cleanup_level: purge
     check: exists
 
@@ -144,11 +152,11 @@ targets:
     plot: med_square
 
   downloads/seedling.png:
-    command: download_seedling_png(target_name)
+    download: http://ian.umces.edu/imagelibrary/albums/userpics/10002/normal_ian-symbol-quercus-spp-oak-seedling.png
     cleanup_level: purge
 
   downloads/tree.png:
-    command: download_tree_png(target_name)
+    download: http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-quercus-montana.png
     cleanup_level: purge
 
   figures/allometry.pdf:
@@ -158,6 +166,7 @@ targets:
   baad:
     command: readRDS("downloads/baad.rds")
 
+  ## TODO: Update to use baad.data?
   downloads/baad.rds:
-    command: download_baad(target_name)
+    download: https://github.com/dfalster/baad/releases/download/v0.9.0/baad.rds
     cleanup_level: purge

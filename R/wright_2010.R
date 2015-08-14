@@ -1,8 +1,3 @@
-download_wright_2010 <- function(dest) {
-  url <- "http://www.esapubs.org/archive/ecol/E091/257/Supplement_20100505.txt"
-  download.file(url, dest)
-}
-
 process_wright_2010 <- function(filename) {
   # Correct names of species, anything with length > 12 was clipped
   corrections <- data.frame(rbind(c("costaricensi","costaricensis"),
