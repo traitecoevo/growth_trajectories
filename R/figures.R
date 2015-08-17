@@ -68,7 +68,7 @@ figure_rate_vs_size <- function(data, type) {
   yvars <- figure_rate_vs_size_cols(type)
   par(mfrow=c(1, length(yvars)), oma=c(3,1,1,1))
   for (v in yvars) {
-    plot(data[["height"]], data[[v]], type="l", xlab="", ylab= v, ylim=c(0, max(1,data[[v]])))
+    plot(data[["height"]], data[[v]], type="l", xlab="", ylab= v, ylim=c(0, max(1,data[[v]], na.rm=TRUE)))
   }
   mtext("Height (m)", 1, cex=1, line=, outer=TRUE)
 }
@@ -81,7 +81,7 @@ figure_rate_vs_size_panels <- function(data, type, path) {
     pdf(filename,width=5, height=5)
     par(oma=c(0,0,0,0), mar=rep(0.1,4))
     plot(data[["height"]], data[[v]], type="l", ann=FALSE, axes=FALSE,
-      ylim=c(0, max(1,data[[type]])),
+      ylim=c(0, max(1,data[[type]], na.rm=TRUE)),
       col="green", lwd=3)
     box()
     dev.off()
@@ -122,7 +122,7 @@ figure_diameter_stem_dt <- function(dat=NULL) {
   lai <- dat$lai
   traits <- dat$traits
 
-  ymax <- max(sapply(dat[traits], function(x) max(x$diameter_stem_dt)))
+  ymax <- max(sapply(dat[traits], function(x) max(x$diameter_stem_dt, na.rm=TRUE)))
   ylim <- c(0, ymax * 1.1)
   cols <- rev(RColorBrewer::brewer.pal(length(lai) + 3, "Blues")[-(1:3)])
   par(mfcol=c(length(diameters), length(traits)),
@@ -291,7 +291,7 @@ trait_effects_plot <- function(d) {
   growth_measures <- info$growth_measures
   dsplit <- split(d, d$size_class)
   trait <- info$trait_name
-  ylim <- lapply(d[growth_measures], range)
+  ylim <- lapply(d[growth_measures], range, na.rm=TRUE)
 
   par(oma=c(6, 6, 2, 1), mar=c(1, 1, 2, 1),
       mfrow=c(length(growth_measures), length(info$size_values)))
