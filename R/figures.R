@@ -9,18 +9,22 @@ default_strategy <- function() {
 }
 
 run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
-                               time_max=10000, filter=TRUE) {
+                               time_max=300, filter=FALSE) {
   pl <- FFW16_PlantPlus(strategy)
   res <- grow_plant_to_size(pl, sizes, size_variable, env, time_max,
                             warn=FALSE, filter=filter)
-  ## TODO: Deal with the case of all NULL, which does happen elsewhere.
-  lapply(res$plant, extract_plant_info, env=env) %>% rbind_list %>% data.frame
+  data.frame(rbind_list(lapply(res$plant, extract_plant_info, env=env)))
 }
 
 extract_plant_info <- function(plant, env) {
-  plant$compute_vars_phys(env)
-  plant$compute_vars_growth()
-  x <- unlist(plant$internals)
+  if (is.null(plant)) {
+    x <- unlist(FFW16_PlantPlus(FFW16_Strategy())$internals)
+    x[] <- NA_real_
+  } else {
+    plant$compute_vars_phys(env)
+    plant$compute_vars_growth()
+    x <- unlist(plant$internals)
+  }
   ## Add relative measures:
   v <- c("height", "area_stem", "diameter_stem", "mass_above_ground")
   x[sprintf("%s_dt_relative", v)] <- x[sprintf("%s_dt", v)] / x[v]
@@ -29,9 +33,15 @@ extract_plant_info <- function(plant, env) {
 
 ## Code for trait derivative figure
 ## TODO: Can grader help here?
-figure_trait_deriative <- function(type, trait_name="lma", canopy_openness=1,
-                                   strategy=default_strategy()) {
-  strategy[[trait_name]] <- 0.05
+figure_trait_derivative <- function(type, trait_name="lma", canopy_openness=1,
+                                    strategy=default_strategy()) {
+  p0 <- FFW16_Parameters(strategy_default=strategy)
+  ## strategy(trait_matrix( traits, p)
+
+  ## TODO: This seems tragically broken because it apparently computes
+  ## derivative with a value at 0.05 regardless of the trait?  I've
+  ## disabled that for now.
+  ## strategy[[trait_name]] <- 0.05
   dat <- figure_rate_vs_size_data(canopy_openness, strategy)
   strategy2 <- strategy
   x <- strategy2[[trait_name]]
@@ -47,7 +57,10 @@ figure_trait_deriative <- function(type, trait_name="lma", canopy_openness=1,
 
   plot(dat[["height"]], line1, type="l",
        xlab="Height (m)", ylab="relative change", ylim=c(0, 20))
-  points(dat[["height"]], line2, type="l", col="red")
+
+  ## TODO: this does not work because darea_leaf_dmass_leaf is no
+  ## longer calculated
+  ##   lines(dat[["height"]], line2, col="red")
 }
 
 ## Code for the "rates vs size" figure set:
@@ -79,7 +92,7 @@ figure_rate_vs_size_data <- function(canopy_openness=1,
                                      strategy=default_strategy()) {
   heights <- seq(FFW16_Plant(strategy)$height, strategy$hmat, length.out=100)
   env <- fixed_environment(canopy_openness)
-  run_plant_to_sizes(heights, "height", strategy, env, time_max=10000)
+  run_plant_to_sizes(heights, "height", strategy, env, time_max=300)
 }
 
 figure_rate_vs_size_cols <- function(type) {
@@ -151,6 +164,7 @@ figure_diameter_stem_dt_data <- function() {
 figure_diameter_stem_dt_data1 <- function(canopy_openness,
                                           trait_values, trait_name,
                                           diameters) {
+  p0 <- FFW16_Parameters(strategy_default=default_strategy())
   ## The innermost function "run_trait_in_environment" runs a single
   ## trait in a single light environment.
   ##
@@ -158,8 +172,7 @@ figure_diameter_stem_dt_data1 <- function(canopy_openness,
   ## traits (trait_values) in a single light environment.
   run_traits_in_environment <- function(canopy_openness) {
     run_trait_in_environment <- function(trait_value) {
-      s <- default_strategy()
-      s[[trait_name]] <- trait_value
+      s <- strategy(trait_matrix(trait_value, trait_name), p0)
       res <- run_plant_to_sizes(diameters, "diameter_stem", s, env)
       tmp <- cbind(trait_value)
       colnames(tmp) <- trait_name
@@ -195,7 +208,7 @@ plant_list_set_height <- function(x, height) {
 
 lcp_whole_plant_with_trait <- function(x, height,
                                        strategy=default_strategy()) {
-  plants <- plant_list(x, strategy)
+  plants <- plant_list(x, FFW16_Parameters(strategy_default=strategy))
   plant_list_set_height(plants, height)
   sapply(plants, lcp_whole_plant)
 }
@@ -213,7 +226,7 @@ figure_lcp_whole_plant <- function() {
 
     lcp <- sapply(heights, function(h)
                   lcp_whole_plant_with_trait(trait_matrix(x, trait), h, s))
-    lai <- log(lcp) / (-Parameters()$c_ext)
+    lai <- log(lcp) / (-FFW16_Parameters()$c_ext)
 
     matplot(x, lai, type="l", lty=1, col=cols, log="xy", ylim=ylim,
             xlab=name_pretty(trait), ylab=name_pretty("shading"),
@@ -256,7 +269,14 @@ trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
   ## object apparently.
   p <- FFW16_Parameters(strategy_default=default_strategy())
   ss <- strategy_list(traits, p)
-  ret <- do.call("rbind", lapply(ss, f))
+  dat <- lapply(ss, f)
+
+  dat <- vector("list", length(ss))
+  for (i in seq_along(ss)) {
+    dat[[i]] <- f(ss[[i]])
+  }
+
+  ret <- do.call("rbind", dat)
 
   attr(ret, "info") <- list(size_name=size_name,
                             size_values=size_values,
@@ -299,16 +319,16 @@ figure_mass_fraction <- function() {
   xlab <- "Height (m)"
   ylab <- "Fraction of live mass"
 
-  vars <- c("mass_leaf", "root_mass", "bark_mass", "sapwood_mass",
-            "heartwood_mass")
-  cols <- c(mass_leaf="forestgreen", root_mass="tan", bark_mass="orange",
-            sapwood_mass="firebrick2", heartwood_mass="brown")
-  vars <- setdiff(vars, "heartwood_mass")
+  vars <- c("mass_leaf", "mass_root", "mass_bark", "mass_sapwood",
+            "mass_heartwood")
+  cols <- c(mass_leaf="forestgreen", mass_root="tan", mass_bark="orange",
+            mass_sapwood="firebrick2", mass_heartwood="brown")
+  vars <- setdiff(vars, "mass_heartwood")
 
-  p <- FFW16_Plant(strategy)
+  p <- FFW16_PlantPlus(strategy)
   f <- function(h) {
     p$height <- h
-    x <- p$vars_size[vars]
+    x <- unlist(p$internals[vars])
     cumsum(x) / sum(x)
   }
   y <- t(sapply(heights, f))
@@ -323,7 +343,7 @@ figure_mass_fraction <- function() {
   }
   ylast <- c(0, y[nrow(y),])
   at <- (ylast[-1] + ylast[-length(ylast)]) / 2
-  axis(4, at=at, labels=sub("_mass", "", vars), las=1)
+  axis(4, at=at, labels=sub("mass_", "", vars), las=1)
 
   box()
 }

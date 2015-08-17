@@ -52,7 +52,7 @@ targets:
     plot: large_square
 
   figures/SI_lma_growth_derivative.pdf:
-    command: figure_trait_deriative (I("height_dt"))
+    command: figure_trait_derivative(I("height_dt"))
     plot: wide
 
   figures/SI_lma_effects_at_diameters.pdf:
