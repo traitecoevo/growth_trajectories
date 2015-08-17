@@ -2,6 +2,7 @@ targets:
   figures/growth_light.pdf:
     command: figure_diameter_stem_dt(diameter_stem_dt_data)
     plot: square
+
   diameter_stem_dt_data:
     command: figure_diameter_stem_dt_data()
 
@@ -95,26 +96,26 @@ targets:
 
   ## Data for the figures:
   d_lma_diameter_abs:
-    command: trait_effects_data(I("lma"), I("diameter"))
+    command: trait_effects_data(I("lma"), I("diameter_stem"))
   d_lma_height_abs:
     command: trait_effects_data(I("lma"), I("height"))
   d_lma_diameter_rel:
-    command: trait_effects_data(I("lma"), I("diameter"), TRUE)
+    command: trait_effects_data(I("lma"), I("diameter_stem"), TRUE)
   d_lma_height_rel:
     command: trait_effects_data(I("lma"), I("height"), TRUE)
   d_rho_diameter_abs:
-    command: trait_effects_data(I("rho"), I("diameter"))
+    command: trait_effects_data(I("rho"), I("diameter_stem"))
   d_rho_height_abs:
     command: trait_effects_data(I("rho"), I("height"))
   d_rho_diameter_rel:
-    command: trait_effects_data(I("rho"), I("diameter"), TRUE)
+    command: trait_effects_data(I("rho"), I("diameter_stem"), TRUE)
   d_rho_height_rel:
     command: trait_effects_data(I("rho"), I("height"), TRUE)
   d_hmat_diameter_abs:
-    command: trait_effects_data(I("hmat"), I("diameter"))
+    command: trait_effects_data(I("hmat"), I("diameter_stem"))
   d_hmat_height_abs:
     command: trait_effects_data(I("hmat"), I("height"))
   d_hmat_diameter_rel:
-    command: trait_effects_data(I("hmat"), I("diameter"), TRUE)
+    command: trait_effects_data(I("hmat"), I("diameter_stem"), TRUE)
   d_hmat_height_rel:
     command: trait_effects_data(I("hmat"), I("height"), TRUE)

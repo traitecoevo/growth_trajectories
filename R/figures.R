@@ -1,57 +1,52 @@
 default_strategy <- function() {
-  Strategy(
-           hmat=30.0,
-           c_r1=0.8,
-           c_r2=20,
-           a1=2.17,
-           B1=0.546,
-           k_l=0.4565855/3
-
-           )
+  FFW16_Strategy(
+    hmat = 30.0,
+    c_r1 = 0.8,
+    c_r2 = 20,
+    a1   = 2.17,
+    B1   = 0.546,
+    k_l  = 0.4565855 / 3)
 }
 
 run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
-                               time_max=10000) {
-  res <- grow_plant_to_size(Plant(strategy), sizes, size_variable,
-                            env, time_max)
+                               time_max=10000, filter=TRUE) {
+  pl <- FFW16_PlantPlus(strategy)
+  res <- grow_plant_to_size(pl, sizes, size_variable, env, time_max,
+                            warn=FALSE, filter=filter)
+  ## TODO: Deal with the case of all NULL, which does happen elsewhere.
   lapply(res$plant, extract_plant_info, env=env) %>% rbind_list %>% data.frame
 }
 
 extract_plant_info <- function(plant, env) {
-
-  if(!is.null(plant))
-  p <- plant
-  p$compute_vars_phys(env)
-  p$compute_vars_growth()
-  x <- unlist(p$internals)
-
-  # add relative measures
-  for(v in c("height", "area_stem", "diameter_stem", "mass_above_ground")) {
-    x[[sprintf("%s_dt_relative", v)]] <- x[[sprintf("%s_dt", v)]] / x[[v]]
-  }
- x
+  plant$compute_vars_phys(env)
+  plant$compute_vars_growth()
+  x <- unlist(plant$internals)
+  ## Add relative measures:
+  v <- c("height", "area_stem", "diameter_stem", "mass_above_ground")
+  x[sprintf("%s_dt_relative", v)] <- x[sprintf("%s_dt", v)] / x[v]
+  x
 }
 
 ## Code for trait derivative figure
+## TODO: Can grader help here?
 figure_trait_deriative <- function(type, trait_name="lma", canopy_openness=1,
-                                strategy=default_strategy()) {
-
-  strategy <- strategy
+                                   strategy=default_strategy()) {
   strategy[[trait_name]] <- 0.05
   dat <- figure_rate_vs_size_data(canopy_openness, strategy)
   strategy2 <- strategy
   x <- strategy2[[trait_name]]
-  dx = 0.01 *x
-  strategy2[[trait_name]] <- x+dx
+  dx = 0.01 * x
+  strategy2[[trait_name]] <- x + dx
   dat2 <- figure_rate_vs_size_data(canopy_openness, strategy2)
 
   line1 <- (dat2$net_mass_production_dt - dat$net_mass_production_dt)/dx/dat$net_mass_production_dt
   line2  <- (1/(dat2$darea_leaf_dmass_leaf * dat2$darea_leaf_dmass_live)
-              - 1/(dat$darea_leaf_dmass_leaf * dat$darea_leaf_dmass_live)) / dx /
-            1/(dat2$darea_leaf_dmass_leaf * dat2$darea_leaf_dmass_live)
+    - 1/(dat$darea_leaf_dmass_leaf * dat$darea_leaf_dmass_live)) / dx /
+              1/(dat2$darea_leaf_dmass_leaf * dat2$darea_leaf_dmass_live)
   height <- dat$height
 
-  plot(dat[["height"]], line1, type="l", xlab="Height (m)", ylab= "relative change", ylim=c(0,20))
+  plot(dat[["height"]], line1, type="l",
+       xlab="Height (m)", ylab="relative change", ylim=c(0, 20))
   points(dat[["height"]], line2, type="l", col="red")
 }
 
@@ -63,7 +58,6 @@ figure_rate_vs_size <- function(data, type) {
     plot(data[["height"]], data[[v]], type="l", xlab="", ylab= v, ylim=c(0, max(1,data[[v]])))
   }
   mtext("Height (m)", 1, cex=1, line=, outer=TRUE)
-
 }
 
 figure_rate_vs_size_panels <- function(data, type, path) {
@@ -81,8 +75,9 @@ figure_rate_vs_size_panels <- function(data, type, path) {
   }
 }
 
-figure_rate_vs_size_data <- function(canopy_openness=1, strategy=default_strategy()) {
-  heights <- seq(Plant(strategy)$height, strategy$hmat, length.out=100)
+figure_rate_vs_size_data <- function(canopy_openness=1,
+                                     strategy=default_strategy()) {
+  heights <- seq(FFW16_Plant(strategy)$height, strategy$hmat, length.out=100)
   env <- fixed_environment(canopy_openness)
   run_plant_to_sizes(heights, "height", strategy, env, time_max=10000)
 }
@@ -140,22 +135,22 @@ figure_diameter_stem_dt <- function(dat=NULL) {
 
 figure_diameter_stem_dt_data <- function() {
   diameters <- c(0.005, 0.01, 0.1, 0.2)
-  vals <- list(lma=seq_log_range(trait_range("lma"),  20),
+  vals <- list(lma=seq_log_range(trait_range("lma"), 20),
                rho=seq_log_range(trait_range("rho"), 20))
   lai <- c(0, 0.5, 1, 2, 3)
 
-  canopy_openness <- exp(-Parameters()$c_ext * lai)
+  canopy_openness <- exp(-FFW16_Parameters()$c_ext * lai)
   dat_lma <- figure_diameter_stem_dt_data1(canopy_openness,
-                                         vals$lma, "lma", diameters)
+                                           vals$lma, "lma", diameters)
   dat_rho <- figure_diameter_stem_dt_data1(canopy_openness,
-                                          vals$rho, "rho", diameters)
+                                           vals$rho, "rho", diameters)
   list(traits=names(vals), lma=dat_lma, rho=dat_rho,
        diameters=diameters, lai=lai)
 }
 
 figure_diameter_stem_dt_data1 <- function(canopy_openness,
-                                        trait_values, trait_name,
-                                        diameters) {
+                                          trait_values, trait_name,
+                                          diameters) {
   ## The innermost function "run_trait_in_environment" runs a single
   ## trait in a single light environment.
   ##
@@ -165,10 +160,10 @@ figure_diameter_stem_dt_data1 <- function(canopy_openness,
     run_trait_in_environment <- function(trait_value) {
       s <- default_strategy()
       s[[trait_name]] <- trait_value
-      res <- run_plant_to_sizes(diameters, "diameter", s, env)
+      res <- run_plant_to_sizes(diameters, "diameter_stem", s, env)
       tmp <- cbind(trait_value)
       colnames(tmp) <- trait_name
-      cbind(tmp, res[c("diameter", "diameter_stem_dt")],
+      cbind(tmp, res[c("diameter_stem", "diameter_stem_dt")],
             diameter_class=seq_along(diameters))
     }
 
@@ -232,15 +227,13 @@ figure_lcp_whole_plant <- function() {
 }
 
 trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
-  if (size_name == "diameter") {
+  if (size_name == "diameter_stem") {
     size_values <- c(0.0025, 0.01, 0.1, 0.5)
     titles <- sprintf("D=%0.2f (m)", size_values)
   } else {
     size_values <- c(0.25, 2, 8, 16)
     titles <- sprintf("H=%0.2f (m)", size_values)
   }
-  trait_values <- seq_log_range(trait_range(trait_name), 50)
-  s <- default_strategy()
   env <- fixed_environment(1.0)
 
   cols <- c("height_dt", "area_stem_dt", "diameter_stem_dt",
@@ -255,8 +248,16 @@ trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
     colnames(tmp) <- trait_name
     cbind(tmp, size_class=seq_along(size_values), pp[c(size_name, cols)])
   }
+
+  trait_values <- seq_log_range(trait_range(trait_name), 50)
   traits <- trait_matrix(trait_values, trait_name)
-  ret <- do.call("rbind", lapply(strategy_list(traits, s), f))
+
+  ## OK, strategy_list has totally changed; we need a Parameters
+  ## object apparently.
+  p <- FFW16_Parameters(strategy_default=default_strategy())
+  ss <- strategy_list(traits, p)
+  ret <- do.call("rbind", lapply(ss, f))
+
   attr(ret, "info") <- list(size_name=size_name,
                             size_values=size_values,
                             trait_name=trait_name,
@@ -304,7 +305,7 @@ figure_mass_fraction <- function() {
             sapwood_mass="firebrick2", heartwood_mass="brown")
   vars <- setdiff(vars, "heartwood_mass")
 
-  p <- Plant(strategy)
+  p <- FFW16_Plant(strategy)
   f <- function(h) {
     p$height <- h
     x <- p$vars_size[vars]
