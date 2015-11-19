@@ -1,16 +1,17 @@
 default_strategy <- function() {
-  FFW16_Strategy(
+  FF16_Strategy(
     hmat = 30.0,
-    c_r1 = 0.8,
-    c_r2 = 20,
-    a1   = 2.17,
-    B1   = 0.546,
-    k_l  = 0.4565855 / 3)
+    a_f1 = 0.8,
+    a_f2 = 20,
+    a_l1 = 2.17,
+    a_l2 = 0.546,
+    k_l  = 0.4565855 / 3
+      )
 }
 
 run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
                                time_max=300, filter=FALSE) {
-  pl <- FFW16_PlantPlus(strategy)
+  pl <- FF16_PlantPlus(strategy)
   res <- grow_plant_to_size(pl, sizes, size_variable, env, time_max,
                             warn=FALSE, filter=filter)
   data.frame(rbind_list(lapply(res$plant, extract_plant_info, env=env)))
@@ -18,7 +19,7 @@ run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
 
 extract_plant_info <- function(plant, env) {
   if (is.null(plant)) {
-    x <- unlist(FFW16_PlantPlus(FFW16_Strategy())$internals)
+    x <- unlist(FF16_PlantPlus(FF16_Strategy())$internals)
     x[] <- NA_real_
   } else {
     plant$compute_vars_phys(env)
@@ -35,7 +36,7 @@ extract_plant_info <- function(plant, env) {
 ## TODO: Can grader help here?
 figure_trait_derivative <- function(type, trait_name="lma", canopy_openness=1,
                                     strategy=default_strategy()) {
-  p0 <- FFW16_Parameters(strategy_default=strategy)
+  p0 <- FF16_Parameters(strategy_default=strategy)
   ## strategy(trait_matrix( traits, p)
 
   ## TODO: This seems tragically broken because it apparently computes
@@ -90,7 +91,7 @@ figure_rate_vs_size_panels <- function(data, type, path) {
 
 figure_rate_vs_size_data <- function(canopy_openness=1,
                                      strategy=default_strategy()) {
-  heights <- seq(FFW16_Plant(strategy)$height, strategy$hmat, length.out=100)
+  heights <- seq(FF16_Plant(strategy)$height, strategy$hmat, length.out=100)
   env <- fixed_environment(canopy_openness)
   run_plant_to_sizes(heights, "height", strategy, env, time_max=300)
 }
@@ -152,7 +153,7 @@ figure_diameter_stem_dt_data <- function() {
                rho=seq_log_range(trait_range("rho"), 20))
   lai <- c(0, 0.5, 1, 2, 3)
 
-  canopy_openness <- exp(-FFW16_Parameters()$c_ext * lai)
+  canopy_openness <- exp(-FF16_Parameters()$c_ext * lai)
   dat_lma <- figure_diameter_stem_dt_data1(canopy_openness,
                                            vals$lma, "lma", diameters)
   dat_rho <- figure_diameter_stem_dt_data1(canopy_openness,
@@ -164,7 +165,7 @@ figure_diameter_stem_dt_data <- function() {
 figure_diameter_stem_dt_data1 <- function(canopy_openness,
                                           trait_values, trait_name,
                                           diameters) {
-  p0 <- FFW16_Parameters(strategy_default=default_strategy())
+  p0 <- FF16_Parameters(strategy_default=default_strategy())
   ## The innermost function "run_trait_in_environment" runs a single
   ## trait in a single light environment.
   ##
@@ -208,7 +209,7 @@ plant_list_set_height <- function(x, height) {
 
 lcp_whole_plant_with_trait <- function(x, height,
                                        strategy=default_strategy()) {
-  plants <- plant_list(x, FFW16_Parameters(strategy_default=strategy))
+  plants <- plant_list(x, FF16_Parameters(strategy_default=strategy))
   plant_list_set_height(plants, height)
   sapply(plants, lcp_whole_plant)
 }
@@ -226,7 +227,7 @@ figure_lcp_whole_plant <- function() {
 
     lcp <- sapply(heights, function(h)
                   lcp_whole_plant_with_trait(trait_matrix(x, trait), h, s))
-    lai <- log(lcp) / (-FFW16_Parameters()$c_ext)
+    lai <- log(lcp) / (-FF16_Parameters()$k_I)
 
     matplot(x, lai, type="l", lty=1, col=cols, log="xy", ylim=ylim,
             xlab=name_pretty(trait), ylab=name_pretty("shading"),
@@ -267,7 +268,7 @@ trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
 
   ## OK, strategy_list has totally changed; we need a Parameters
   ## object apparently.
-  p <- FFW16_Parameters(strategy_default=default_strategy())
+  p <- FF16_Parameters(strategy_default=default_strategy())
   ss <- strategy_list(traits, p)
   dat <- lapply(ss, f)
 
@@ -325,7 +326,7 @@ figure_mass_fraction <- function() {
             mass_sapwood="firebrick2", mass_heartwood="brown")
   vars <- setdiff(vars, "mass_heartwood")
 
-  p <- FFW16_PlantPlus(strategy)
+  p <- FF16_PlantPlus(strategy)
   f <- function(h) {
     p$height <- h
     x <- unlist(p$internals[vars])

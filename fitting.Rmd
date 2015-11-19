@@ -31,9 +31,32 @@ library(plant)
 # given a dbh x, traits and parameters, grows plant to right size and estimates growth rate
 run_tree <- function(x, E=1, traits=list(), pars=list(),
                      strategy=default_strategy()) {
+
+  x <- c(0.005, 0.01)
+
+  env <- fixed_environment(1)
+  pl <- run_plant_to_sizes(x, "diameter", strategy, env, time_max=3000)
+
+
+  strategy=FF16_Strategy()
+  env <- fixed_environment(1)  
+  pl <- FF16_PlantPlus(strategy)
+  res <- grow_plant_to_size(pl, x, "diameter", env, time_max=3000)
+
+
+  x <- seq(FF16_Plant(strategy)$height, strategy$hmat, length.out=100)
+  env <- fixed_environment(canopy_openness)
+  run_plant_to_sizes(heights, "height", strategy, env, time_max=300)
+
+  pl <- FF16_PlantPlus(strategy)
+  res <- grow_plant_to_size(pl, sizes, size_variable, env, time_max,
+                            warn=FALSE, filter=filter)
+
+run_plant_to_sizes
+
   strategy[names(traits)] <- traits
   strategy[names(pars)] <- pars
-  pp <- grow_plant_to_size(Plant(strategy), x, "diameter",
+  pp <- grow_plant_to_size(pl, x, "diameter",
                            fixed_environment(E))
   sapply(pp$plant, function(p) p$vars_growth[["dbasal_diam_dt"]])
 }
