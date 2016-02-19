@@ -1,6 +1,13 @@
 targets:
-  figures/growth_light.pdf:
-    command: figure_diameter_stem_dt(diameter_stem_dt_data)
+  figures/growth_light_mass.pdf:
+    command: figure_dY_dt(mass_above_ground_dt_data)
+    plot: square
+
+  mass_above_ground_dt_data:
+    command: figure_mass_above_ground_dt_data()
+
+  figures/growth_light_dia.pdf:
+    command: figure_dY_dt(diameter_stem_dt_data)
     plot: square
 
   diameter_stem_dt_data:

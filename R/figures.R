@@ -115,56 +115,75 @@ figure_rate_vs_size_cols <- function(type) {
   }
 }
 
-figure_diameter_stem_dt <- function(dat=NULL) {
-  if (is.null(dat)) {
-    dat <- figure_diameter_stem_dt_data()
-  }
-  diameters <- dat$diameters
-  lai <- dat$lai
-  traits <- dat$traits
+figure_dY_dt <- function(dat) {
 
-  ymax <- max(sapply(dat[traits], function(x) max(x$diameter_stem_dt, na.rm=TRUE)))
+  vars <- dat[["vars"]]
+  sizes <- dat[["sizes"]]
+  lai <- dat[["lai"]]
+  traits <- dat[["traits"]]
+
+  ymax <- max(sapply(dat[traits], function(x) max(x[[vars[2]]], na.rm=TRUE)))
   ylim <- c(0, ymax * 1.1)
   cols <- rev(RColorBrewer::brewer.pal(length(lai) + 3, "Blues")[-(1:3)])
-  par(mfcol=c(length(diameters), length(traits)),
+  par(mfcol=c(length(sizes), length(traits)),
       oma=c(4, 5, 0, 1.5), mar=c(1, 1, 1, 1))
   for (v in traits) {
-    dat_v <- unname(split(dat[[v]], dat[[v]]$diameter_class))
-    for (i in seq_along(diameters)) {
+    dat_v <- unname(split(dat[[v]], dat[[v]]$class))
+    for (i in seq_along(sizes)) {
       dsub <- long_to_wide(dat_v[[i]], "canopy_openness",
-                           c(v, "diameter_stem_dt"))
+                           c(v, vars[2]))
       matplot(dsub[[1]], dsub[[2]], type="l", col=cols, lty=1, log="x",
-              ylim=ylim, xaxt="n", yaxt="n", xlab="", ylab="")
-      axis(1, labels=i == length(diameters), las=1)
+              #ylim = ylim,
+              xaxt="n", yaxt="n", xlab="", ylab="")
+      axis(1, labels=i == length(sizes), las=1)
       axis(2, labels=v == "lma", las=1)
       if (v == last(traits)) {
-        mtext(sprintf("D=%sm", diameters[[i]]), 4, cex=1, line=1)
+        mtext(dat[["label"]](sizes[[i]]), 4, cex=1, line=1)
       }
     }
     mtext(name_pretty(v), 1, cex=1, line=3.5)
   }
-  mtext(name_pretty("diameter_stem_dt"), line=2.5, side=2, cex=1, outer=TRUE)
+  mtext(name_pretty(vars[2]), line=2.5, side=2, cex=1, outer=TRUE)
   legend("topright", paste(rev(lai), "m2"), lty=1, col=cols, bty="n")
 }
 
+
 figure_diameter_stem_dt_data <- function() {
-  diameters <- c(0.005, 0.01, 0.1, 0.2)
+  ret <- figure_dY_dt_data(sizes =  c(0.005, 0.01, 0.1, 0.2),
+        vars = c("diameter_stem", "diameter_stem_dt")
+        )
+  ret[["label"]] <- function(x) sprintf("D=%sm",x)
+  ret
+}
+
+figure_mass_above_ground_dt_data <- function() {
+  ret <- figure_dY_dt_data(sizes =  c(0.005, 0.01, 0.1, 1, 10),
+        vars = c("mass_above_ground", "mass_above_ground_dt")
+        )
+  ret[["label"]] <- function(x) sprintf("M=%skg",x)
+  ret
+}
+
+figure_dY_dt_data <- function(sizes, vars) {
+
   vals <- list(lma=seq_log_range(trait_range("lma"), 20),
                rho=seq_log_range(trait_range("rho"), 20))
   lai <- c(0, 0.5, 1, 2, 3)
 
-  canopy_openness <- exp(-FF16_Parameters()$c_ext * lai)
-  dat_lma <- figure_diameter_stem_dt_data1(canopy_openness,
-                                           vals$lma, "lma", diameters)
-  dat_rho <- figure_diameter_stem_dt_data1(canopy_openness,
-                                           vals$rho, "rho", diameters)
-  list(traits=names(vals), lma=dat_lma, rho=dat_rho,
-       diameters=diameters, lai=lai)
+  canopy_openness <- exp(-FF16_Parameters()$k_I * lai)
+  dat_lma <- figure_dY_dt_data_worker(canopy_openness,
+                                           vals$lma, "lma", sizes, vars)
+  dat_rho <- figure_dY_dt_data_worker(canopy_openness,
+                                           vals$rho, "rho", sizes, vars)
+  list(vars = vars, traits=names(vals), lma=dat_lma, rho=dat_rho,
+       sizes=sizes, lai=lai,
+       label = function(x) sprintf("X=%s",x))
 }
 
-figure_diameter_stem_dt_data1 <- function(canopy_openness,
+figure_dY_dt_data_worker <- function(canopy_openness,
                                           trait_values, trait_name,
-                                          diameters) {
+                                          sizes,
+                                          vars) {
   p0 <- FF16_Parameters(strategy_default=default_strategy())
   ## The innermost function "run_trait_in_environment" runs a single
   ## trait in a single light environment.
@@ -174,11 +193,11 @@ figure_diameter_stem_dt_data1 <- function(canopy_openness,
   run_traits_in_environment <- function(canopy_openness) {
     run_trait_in_environment <- function(trait_value) {
       s <- strategy(trait_matrix(trait_value, trait_name), p0)
-      res <- run_plant_to_sizes(diameters, "diameter_stem", s, env)
+      res <- run_plant_to_sizes(sizes, vars[1], s, env)
       tmp <- cbind(trait_value)
       colnames(tmp) <- trait_name
-      cbind(tmp, res[c("diameter_stem", "diameter_stem_dt")],
-            diameter_class=seq_along(diameters))
+      cbind(tmp, res[vars],
+            class=seq_along(sizes))
     }
 
     env <- fixed_environment(canopy_openness)

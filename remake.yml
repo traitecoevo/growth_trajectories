@@ -51,7 +51,8 @@ targets:
       - figures/allometry.pdf
       - figures/BCI_data.pdf
       - figures/figure_conceptual.pdf
-      - figures/growth_light.pdf
+      - figures/growth_light_dia.pdf
+      - figures/growth_light_mass.pdf
       - figures/max_leaf_above.pdf
       - figures/SI_mass_fraction.pdf
       - figures/SI_lma_tradeoff.pdf
