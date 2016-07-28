@@ -1,4 +1,6 @@
 packages:
+  - callr
+  - baad.data
   - plyr
   - dplyr
   - rmarkdown
@@ -6,7 +8,6 @@ packages:
   - quantreg
   - plant
   - xtable
-  - RCurl
   - RColorBrewer
 
 sources:
@@ -44,9 +45,8 @@ targets:
       - downloads/baad.rds
 
   ms.pdf:
-    command: latex_build("ms.tex")
+    command: latex_build("ms.tex", bibliography="references.bib", clean=TRUE, engine=I("xelatex"))
     depends:
-      - references.bib
       - figures/table-pars.tex
       - figures/allometry.pdf
       - figures/BCI_data.pdf
@@ -136,7 +136,7 @@ targets:
     plot: square
 
   figures/figure_conceptual.pdf:
-    command: latex_build("figure_conceptual.tex", bibtex=FALSE, dest_dir=I("figures"))
+    command: latex_build("figure_conceptual.tex", output=target_name, engine=I("xelatex"), clean=TRUE)
     depends:
       - downloads/tree.png
       - downloads/seedling.png
@@ -165,9 +165,4 @@ targets:
     plot: wide
 
   baad:
-    command: readRDS("downloads/baad.rds")
-
-  ## TODO: Update to use baad.data?
-  downloads/baad.rds:
-    download: https://github.com/dfalster/baad/releases/download/v0.9.0/baad.rds
-    cleanup_level: purge
+    command: baad_data(I("1.0.0"))
