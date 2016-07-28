@@ -83,50 +83,50 @@
 
 \defineRow{0}{thisrow}
 \rowtitle{Biomass production}
-\firstcol{1}{$\frac{\textrm{d}b}{\textrm{d}t}$}{output/con/net_mass_production_dt_net_mass_production_dt}{}
+\firstcol{1}{$\frac{{\rm d}B}{{\rm d}t}$}{output/con/net_mass_production_dt_net_mass_production_dt}{}
 \othercol{2}{$\alpha_y$}{output/con/net_mass_production_dt_yield}{$\times$}
-\othercol{3}{$\Bigg(\textrm{P}$}{output/con/net_mass_production_dt_assimilation}{-}
-\othercol{4}{\ $\textrm{R}$}{output/con/net_mass_production_dt_respiration}{$\Bigg)$}
-\othercol{5}{$-\textrm{T}$}{output/con/net_mass_production_dt_turnover}{}
+\othercol{3}{$\Bigg({\rm P}$}{output/con/net_mass_production_dt_assimilation}{$-$}
+\othercol{4}{${\rm R}$}{output/con/net_mass_production_dt_respiration}{$\Bigg)$}
+\othercol{5}{$-{\rm T}$}{output/con/net_mass_production_dt_turnover}{}
 \rowlabel{(1)}
 
 \defineRow{1}{thisrow}
 \rowtitle{Construction costs}
-\firstcol{1}{$\frac{\textrm{d}a_{\textrm{l}}}{\textrm{d}m_{\textrm{t}}}$}{output/con/darea_leaf_dmass_live_darea_leaf_dmass_live}{$\Bigg($}
-\othercol{2}{$\frac{\textrm{d}m_{\textrm{l}}}{\textrm{d}a_{\textrm{l}}}$}{output/con/darea_leaf_dmass_live_dmass_leaf_darea_leaf}{+}
-\othercol{3}{$\frac{\textrm{d}m_{\textrm{ss}}}{\textrm{d}a_{\textrm{l}}}$}{output/con/darea_leaf_dmass_live_dmass_sapwood_darea_leaf}{+}
-\othercol{4}{$\frac{\textrm{d}m_{\textrm{sb}}}{\textrm{d}a_{\textrm{l}}}$}{output/con/darea_leaf_dmass_live_dmass_bark_darea_leaf}{+}
-\othercol{5}{$\frac{\textrm{d}m_{\textrm{r}}}{\textrm{d}a_{\textrm{l}}}$}{output/con/darea_leaf_dmass_live_dmass_root_darea_leaf}{$\Bigg)^{-1}$}
+\firstcol{1}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}M_{{\rm t}}}$}{output/con/darea_leaf_dmass_live_darea_leaf_dmass_live}{$\Bigg($}
+\othercol{2}{$\frac{{\rm d}M_{{\rm l}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_leaf_darea_leaf}{+}
+\othercol{3}{$\frac{{\rm d}M_{\textrm{ss}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_sapwood_darea_leaf}{+}
+\othercol{4}{$\frac{{\rm d}M_{{\rm sb}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_bark_darea_leaf}{+}
+\othercol{5}{$\frac{{\rm d}M_{{\rm r}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_root_darea_leaf}{$\Bigg)^{-1}$}
  \rowlabel{(2)}
 \defineRow{2}{thisrow}
 \rowtitle{Leaf-area growth}
-\firstcol{1}{$\frac{\textrm{d}a_{\textrm{l}}}{\textrm{d}t}$}{output/con/area_leaf_dt_area_leaf_dt}{}
-\othercol{2}{$\frac{\textrm{d}a_{\textrm{l}}}{\textrm{d}m_{\textrm{t}}}$}{output/con/area_leaf_dt_darea_leaf_dmass_live}{$\times$}
-\othercol{3}{$\frac{\textrm{d}m_{\textrm{t}}}{\textrm{d}b}$}{output/con/area_leaf_dt_fraction_allocation_growth}{$\times$}
-\othercol{4}{$\frac{\textrm{d}b}{\textrm{d}t}$}{output/con/area_leaf_dt_net_mass_production_dt}{}
+\firstcol{1}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/con/area_leaf_dt_area_leaf_dt}{}
+\othercol{2}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}M_{{\rm t}}}$}{output/con/area_leaf_dt_darea_leaf_dmass_live}{$\times$}
+\othercol{3}{$\frac{{\rm d}M_{{\rm t}}}{{\rm d}B}$}{output/con/area_leaf_dt_fraction_allocation_growth}{$\times$}
+\othercol{4}{$\frac{{\rm d}B}{{\rm d}t}$}{output/con/area_leaf_dt_net_mass_production_dt}{}
 \rowlabel{(3)}
 
 \defineRow{3}{thisrow}
 \rowtitle{Height growth}
-\firstcol{1}{$\frac{\textrm{d}h}{\textrm{d}t}$}{output/con/height_dt_height_dt}{}
-\othercol{2}{$\frac{\textrm{d}h}{\textrm{d}a_{\textrm{l}}}$}{output/con/height_dt_dheight_darea_leaf}{$\times$}
-\othercol{3}{$\frac{\textrm{d}a_{\textrm{l}}}{\textrm{d}t}$}{output/con/area_leaf_dt_area_leaf_dt}{}
+\firstcol{1}{$\frac{{\rm d}H}{{\rm d}t}$}{output/con/height_dt_height_dt}{}
+\othercol{2}{$\frac{{\rm d}H}{{\rm d}A_{{\rm l}}}$}{output/con/height_dt_dheight_darea_leaf}{$\times$}
+\othercol{3}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/con/area_leaf_dt_area_leaf_dt}{}
 \rowlabel{(4)}
 
 \defineRow{4}{thisrow}
 \rowtitle{Basal-area growth}
-\firstcol{1}{$\frac{\textrm{d}a_{\textrm{st}}}{\textrm{d}t}$}{output/con/area_stem_dt_area_stem_dt}{$\Bigg($}
-\othercol{2}{$\frac{\textrm{d}a_{\textrm{ss}}}{\textrm{d}a_{\textrm{l}}}$}{output/con/area_stem_dt_darea_sapwood_darea_leaf}{$+$}
-\othercol{3}{$\frac{\textrm{d}a_{\textrm{ss}}}{\textrm{d}a_{\textrm{l}}}$}{output/con/area_stem_dt_darea_bark_darea_leaf}{$\Bigg)$}
-\othercol{4}{\hspace{-0.2em}$\times\frac{\textrm{d}a_{\textrm{l}}}{\textrm{d}t}$}{output/con/area_stem_dt_area_leaf_dt}{$+$}
-\othercol{5}{$\frac{\textrm{d}a_{\textrm{sh}}}{\textrm{d}t}$}{output/con/area_stem_dt_area_heartwood_dt}{}
+\firstcol{1}{$\frac{{\rm d}A_{{\rm st}}}{{\rm d}t}$}{output/con/area_stem_dt_area_stem_dt}{$\Bigg($}
+\othercol{2}{$\frac{{\rm d}A_{\textrm{ss}}}{{\rm d}A_{{\rm l}}}$}{output/con/area_stem_dt_darea_sapwood_darea_leaf}{$+$}
+\othercol{3}{$\frac{{\rm d}A_{\textrm{sb}}}{{\rm d}A_{{\rm l}}}$}{output/con/area_stem_dt_darea_bark_darea_leaf}{\hspace{-0.3em}$\Bigg)$}
+\othercol{4}{\hspace{-0.4em}$\times\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/con/area_stem_dt_area_leaf_dt}{$+$}
+\othercol{5}{$\frac{{\rm d}A_{{\rm sh}}}{{\rm d}t}$}{output/con/area_stem_dt_area_heartwood_dt}{}
 \rowlabel{(5)}
 
 \defineRow{5}{thisrow}
 \rowtitle{Diameter growth}
-\firstcol{1}{$\frac{\textrm{d}D}{\textrm{d}t}$}{output/con/diameter_stem_dt_diameter_stem_dt}{}
-\othercol{2}{$\frac{D}{\textrm{d}a_{\textrm{st}}}$}{output/con/diameter_stem_dt_ddiameter_stem_darea_stem}{$\times$}
-\othercol{3}{$\frac{\textrm{d}a_{\textrm{st}}}{\textrm{d}t}$}{output/con/diameter_stem_dt_area_stem_dt}{}
+\firstcol{1}{$\frac{{\rm d}D}{{\rm d}t}$}{output/con/diameter_stem_dt_diameter_stem_dt}{}
+\othercol{2}{$\frac{{\rm d}D}{{\rm d}A_{{\rm st}}}$}{output/con/diameter_stem_dt_ddiameter_stem_darea_stem}{$\times$}
+\othercol{3}{$\frac{{\rm d}A_{{\rm st}}}{{\rm d}t}$}{output/con/diameter_stem_dt_area_stem_dt}{}
 \rowlabel{(6)}
 
 \textbox{$(current page.south)+ (0cm, 0.5cm)$}{Plant height (m)}
