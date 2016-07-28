@@ -75,13 +75,22 @@ figure_rate_vs_size <- function(data, type) {
 }
 
 figure_rate_vs_size_panels <- function(data, type, path) {
+
+  strategy=default_strategy()
+
   yvars <- figure_rate_vs_size_cols(type)
+
+  data[["yield"]] <- strategy[["a_y"]]
+  data[["dmass_leaf_darea_leaf"]] <- data[["mass_leaf"]] / data[["area_leaf"]]
+  data[["darea_sapwood_darea_leaf"]] <- data[["area_sapwood"]] / data[["area_leaf"]]
+  data[["darea_bark_darea_leaf"]] <- data[["area_bark"]] / data[["area_leaf"]]
 
   for (v in yvars) {
     filename <- file.path(path, sprintf("%s_%s.pdf", type, v))
     pdf(filename,width=5, height=5)
     par(oma=c(0,0,0,0), mar=rep(0.1,4))
     plot(data[["height"]], data[[v]], type="l", ann=FALSE, axes=FALSE,
+       xlim=c(0, 25),
   #    ylim=c(0, max(1,data[[type]], na.rm=TRUE)),
       col="green", lwd=3)
     box()
@@ -98,7 +107,7 @@ figure_rate_vs_size_data <- function(canopy_openness=1,
 
 figure_rate_vs_size_cols <- function(type) {
   if (type == "net_mass_production_dt") {
-    c("net_mass_production_dt", "assimilation", "respiration", "turnover")
+    c("net_mass_production_dt", "yield", "assimilation", "respiration", "turnover")
   } else if (type == "darea_leaf_dmass_live") {
     c("darea_leaf_dmass_live", "dmass_leaf_darea_leaf", "dmass_sapwood_darea_leaf", "dmass_bark_darea_leaf", "dmass_root_darea_leaf")
   } else if (type == "area_leaf_dt") {
@@ -106,7 +115,7 @@ figure_rate_vs_size_cols <- function(type) {
   } else if (type == "height_dt") {
     c("height_dt", "dheight_darea_leaf", "area_leaf_dt")
   } else if (type == "area_stem_dt") {
-    c("area_stem_dt", "darea_leaf_dmass_live", "area_leaf_dt", "area_heartwood_dt")
+    c("area_stem_dt", "darea_sapwood_darea_leaf", "darea_bark_darea_leaf", "area_leaf_dt", "area_heartwood_dt")
   } else if (type == "diameter_stem_dt") {
     c("diameter_stem_dt", "ddiameter_stem_darea_stem", "area_stem_dt")
 

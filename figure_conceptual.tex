@@ -84,10 +84,10 @@
 \defineRow{0}{thisrow}
 \rowtitle{Biomass production}
 \firstcol{1}{$\frac{\textrm{d}b}{\textrm{d}t}$}{output/con/net_mass_production_dt_net_mass_production_dt}{}
-\othercol{2}{$y$}{output/con/empty_box}{$\times$}
-\othercol{3}{$\Bigg(A$}{output/con/net_mass_production_dt_assimilation}{-}
-\othercol{4}{\ $R$}{output/con/net_mass_production_dt_respiration}{$\Bigg)$}
-\othercol{5}{$-T$}{output/con/net_mass_production_dt_turnover}{}
+\othercol{2}{$\alpha_y$}{output/con/net_mass_production_dt_yield}{$\times$}
+\othercol{3}{$\Bigg(\textrm{P}$}{output/con/net_mass_production_dt_assimilation}{-}
+\othercol{4}{\ $\textrm{R}$}{output/con/net_mass_production_dt_respiration}{$\Bigg)$}
+\othercol{5}{$-\textrm{T}$}{output/con/net_mass_production_dt_turnover}{}
 \rowlabel{(1)}
 
 \defineRow{1}{thisrow}
@@ -115,16 +115,17 @@
 
 \defineRow{4}{thisrow}
 \rowtitle{Basal-area growth}
-\firstcol{1}{$\frac{\textrm{d}a_{\textrm{st}}}{\textrm{d}t}$}{output/con/area_stem_dt_area_stem_dt}{}
-\othercol{2}{$\frac{\textrm{d}a_{\textrm{ss}}}{\textrm{d}a_{\textrm{l}}}$}{output/con/empty_box}{$\times$}
-\othercol{3}{$\frac{\textrm{d}a_{\textrm{l}}}{\textrm{d}t}$}{output/con/area_stem_dt_area_leaf_dt}{+}
-\othercol{4}{$\frac{\textrm{d}a_{\textrm{sh}}}{\textrm{d}t}$}{output/con/area_stem_dt_area_heartwood_dt}{}
+\firstcol{1}{$\frac{\textrm{d}a_{\textrm{st}}}{\textrm{d}t}$}{output/con/area_stem_dt_area_stem_dt}{$\Bigg($}
+\othercol{2}{$\frac{\textrm{d}a_{\textrm{ss}}}{\textrm{d}a_{\textrm{l}}}$}{output/con/area_stem_dt_darea_sapwood_darea_leaf}{$+$}
+\othercol{3}{$\frac{\textrm{d}a_{\textrm{ss}}}{\textrm{d}a_{\textrm{l}}}$}{output/con/area_stem_dt_darea_bark_darea_leaf}{$\Bigg)$}
+\othercol{4}{\hspace{-0.2em}$\times\frac{\textrm{d}a_{\textrm{l}}}{\textrm{d}t}$}{output/con/area_stem_dt_area_leaf_dt}{$+$}
+\othercol{5}{$\frac{\textrm{d}a_{\textrm{sh}}}{\textrm{d}t}$}{output/con/area_stem_dt_area_heartwood_dt}{}
 \rowlabel{(5)}
 
 \defineRow{5}{thisrow}
 \rowtitle{Diameter growth}
 \firstcol{1}{$\frac{\textrm{d}D}{\textrm{d}t}$}{output/con/diameter_stem_dt_diameter_stem_dt}{}
-\othercol{2}{$\frac{\sqrt{\pi}}{\sqrt{a_{\textrm{st}}}}$}{output/con/diameter_stem_dt_ddiameter_stem_darea_stem}{$\times$}
+\othercol{2}{$\frac{D}{\textrm{d}a_{\textrm{st}}}$}{output/con/diameter_stem_dt_ddiameter_stem_darea_stem}{$\times$}
 \othercol{3}{$\frac{\textrm{d}a_{\textrm{st}}}{\textrm{d}t}$}{output/con/diameter_stem_dt_area_stem_dt}{}
 \rowlabel{(6)}
 
