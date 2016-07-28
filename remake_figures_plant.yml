@@ -1,103 +1,103 @@
 targets:
-  figures/growth_light_mass.pdf:
+  output/growth_light_mass.pdf:
     command: figure_dY_dt(mass_above_ground_dt_data)
     plot: square
 
   mass_above_ground_dt_data:
     command: figure_mass_above_ground_dt_data()
 
-  figures/growth_light_dia.pdf:
+  output/growth_light_dia.pdf:
     command: figure_dY_dt(diameter_stem_dt_data)
     plot: square
 
   diameter_stem_dt_data:
     command: figure_diameter_stem_dt_data()
 
-  figures/max_leaf_above.pdf:
+  output/max_leaf_above.pdf:
     command: figure_lcp_whole_plant()
     plot: wide
 
-  figures/SI_mass_fraction.pdf:
+  output/SI_mass_fraction.pdf:
     command: figure_mass_fraction()
     plot: square
 
   rate_vs_size_data:
     command: figure_rate_vs_size_data()
 
-  figures/F2_net_mass_production_dt_net_mass_production_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("net_mass_production_dt"), I("figures"))
+  output/F2_net_mass_production_dt_net_mass_production_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("net_mass_production_dt"), I("output"))
 
-  figures/F2_darea_leaf_dmass_live_darea_leaf_dmass_live.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("darea_leaf_dmass_live"), I("figures"))
+  output/F2_darea_leaf_dmass_live_darea_leaf_dmass_live.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("darea_leaf_dmass_live"), I("output"))
 
-  figures/F2_height_dt_height_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("height_dt"), I("figures"))
+  output/F2_height_dt_height_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("height_dt"), I("output"))
 
-  figures/F2_area_leaf_dt_area_leaf_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_leaf_dt"), I("figures"))
+  output/F2_area_leaf_dt_area_leaf_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_leaf_dt"), I("output"))
 
-  figures/F2_area_stem_dt_area_stem_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_stem_dt"), I("figures"))
+  output/F2_area_stem_dt_area_stem_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_stem_dt"), I("output"))
 
-  figures/F2_diameter_stem_dt_diameter_stem_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("diameter_stem_dt"), I("figures"))
+  output/F2_diameter_stem_dt_diameter_stem_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("diameter_stem_dt"), I("output"))
 
-  figures/SI_size_dpdt.pdf:
+  output/SI_size_dpdt.pdf:
     command: figure_rate_vs_size(rate_vs_size_data, I("net_mass_production_dt"))
     plot: wide
 
-  figures/SI_size_dhdt.pdf:
+  output/SI_size_dhdt.pdf:
     command: figure_rate_vs_size(rate_vs_size_data, I("height_dt"))
     plot: wide
 
-  figures/SI_size_dDdt.pdf:
+  output/SI_size_dDdt.pdf:
     command: figure_rate_vs_size(rate_vs_size_data, I("diameter_stem_dt"))
     plot: large_square
 
-  figures/SI_size_dastdt.pdf:
+  output/SI_size_dastdt.pdf:
     command: figure_rate_vs_size(rate_vs_size_data, I("area_stem_dt"))
     plot: large_square
 
-  figures/SI_lma_growth_derivative.pdf:
+  output/SI_lma_growth_derivative.pdf:
     command: figure_trait_derivative(I("height_dt"))
     plot: wide
 
-  figures/SI_lma_effects_at_diameters.pdf:
+  output/SI_lma_effects_at_diameters.pdf:
     command: trait_effects_plot(d_lma_diameter_abs)
     plot: large_square
-  figures/SI_lma_effects_at_heights.pdf:
+  output/SI_lma_effects_at_heights.pdf:
     command: trait_effects_plot(d_lma_height_abs)
     plot: large_square
-  figures/SI_lma_effects_at_diameters_relative.pdf:
+  output/SI_lma_effects_at_diameters_relative.pdf:
     command: trait_effects_plot(d_lma_diameter_rel)
     plot: large_square
-  figures/SI_lma_effects_at_heights_relative.pdf:
+  output/SI_lma_effects_at_heights_relative.pdf:
     command: trait_effects_plot(d_lma_height_rel)
     plot: large_square
 
-  figures/SI_rho_effects_at_diameters.pdf:
+  output/SI_rho_effects_at_diameters.pdf:
     command: trait_effects_plot(d_rho_diameter_abs)
     plot: large_square
-  figures/SI_rho_effects_at_heights.pdf:
+  output/SI_rho_effects_at_heights.pdf:
     command: trait_effects_plot(d_rho_height_abs)
     plot: large_square
-  figures/SI_rho_effects_at_diameters_relative.pdf:
+  output/SI_rho_effects_at_diameters_relative.pdf:
     command: trait_effects_plot(d_rho_diameter_rel)
     plot: large_square
-  figures/SI_rho_effects_at_heights_relative.pdf:
+  output/SI_rho_effects_at_heights_relative.pdf:
     command: trait_effects_plot(d_rho_height_rel)
     plot: large_square
 
-  figures/SI_hmat_effects_at_diameters.pdf:
+  output/SI_hmat_effects_at_diameters.pdf:
     command: trait_effects_plot(d_hmat_diameter_abs)
     plot: large_square
-  figures/SI_hmat_effects_at_heights.pdf:
+  output/SI_hmat_effects_at_heights.pdf:
     command: trait_effects_plot(d_hmat_height_abs)
     plot: large_square
-  figures/SI_hmat_effects_at_diameters_relative.pdf:
+  output/SI_hmat_effects_at_diameters_relative.pdf:
     command: trait_effects_plot(d_hmat_diameter_rel)
     plot: large_square
-  figures/SI_hmat_effects_at_heights_relative.pdf:
+  output/SI_hmat_effects_at_heights_relative.pdf:
     command: trait_effects_plot(d_hmat_height_rel)
     plot: large_square
 

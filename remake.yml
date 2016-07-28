@@ -33,7 +33,7 @@ include:
 targets:
   all:
     depends:
-      - ms.pdf
+      - ms/ms.pdf
 
   downloads:
     depends:
@@ -42,36 +42,35 @@ targets:
       - downloads/wright_2004.xls
       - downloads/tree.png
       - downloads/seedling.png
-      - downloads/baad.rds
 
-  ms.pdf:
-    command: latex_build("ms.tex", bibliography="references.bib", clean=TRUE, engine=I("xelatex"))
+  ms/ms.pdf:
+    command: latex_build("ms/ms.tex", bibliography="ms/references.bib", engine=I("xelatex"))
     depends:
-      - figures/table-pars.tex
-      - figures/allometry.pdf
-      - figures/BCI_data.pdf
-      - figures/figure_conceptual.pdf
-      - figures/growth_light_dia.pdf
-      - figures/growth_light_mass.pdf
-      - figures/max_leaf_above.pdf
-      - figures/SI_mass_fraction.pdf
-      - figures/SI_lma_tradeoff.pdf
-      - figures/SI_quantile_examples.pdf
+      - output/table-pars.tex
+      - output/allometry.pdf
+      - output/BCI_data.pdf
+      - output/figure_conceptual.pdf
+      - output/growth_light_dia.pdf
+      - output/growth_light_mass.pdf
+      - output/max_leaf_above.pdf
+      - output/SI_mass_fraction.pdf
+      - output/SI_lma_tradeoff.pdf
+      - output/SI_quantile_examples.pdf
 
-      - figures/SI_lma_growth_derivative.pdf
+      - output/SI_lma_growth_derivative.pdf
 
-      - figures/SI_lma_effects_at_heights.pdf
-      - figures/SI_rho_effects_at_heights.pdf
-      - figures/SI_hmat_effects_at_heights.pdf
-      - figures/SI_lma_effects_at_heights_relative.pdf
-      - figures/SI_rho_effects_at_heights_relative.pdf
-      - figures/SI_hmat_effects_at_heights_relative.pdf
-      - figures/SI_lma_effects_at_diameters.pdf
-      - figures/SI_rho_effects_at_diameters.pdf
-      - figures/SI_hmat_effects_at_diameters.pdf
-      - figures/SI_lma_effects_at_diameters_relative.pdf
-      - figures/SI_rho_effects_at_diameters_relative.pdf
-      - figures/SI_hmat_effects_at_diameters_relative.pdf
+      - output/SI_lma_effects_at_heights.pdf
+      - output/SI_rho_effects_at_heights.pdf
+      - output/SI_hmat_effects_at_heights.pdf
+      - output/SI_lma_effects_at_heights_relative.pdf
+      - output/SI_rho_effects_at_heights_relative.pdf
+      - output/SI_hmat_effects_at_heights_relative.pdf
+      - output/SI_lma_effects_at_diameters.pdf
+      - output/SI_rho_effects_at_diameters.pdf
+      - output/SI_hmat_effects_at_diameters.pdf
+      - output/SI_lma_effects_at_diameters_relative.pdf
+      - output/SI_rho_effects_at_diameters_relative.pdf
+      - output/SI_hmat_effects_at_diameters_relative.pdf
 
   BCI_species_data:
     command: BCI_calculate_species_traits(BCI_individual_growth, wright_2010)
@@ -117,38 +116,38 @@ targets:
   glopnet_locations:
     command: read.csv("data/wright_2004_locations.csv")
 
-  figures/table-pars.tex:
+  output/table-pars.tex:
     command: table_plant_parameters(plant_parameters, target_name)
 
   plant_parameters:
     command: read.csv("data/growth_model_pars.csv")
 
-  figures/BCI_data.pdf:
+  output/BCI_data.pdf:
     command: figure_BCI_data2(BCI_species_data)
     plot: wide
 
-  figures/SI_quantile_examples.pdf:
+  output/SI_quantile_examples.pdf:
     command: figure_qunatile_examples(BCI_individual_growth)
     plot: large_square
 
-  figures/SI_lma_tradeoff.pdf:
+  output/SI_lma_tradeoff.pdf:
     command: figure_lma_tradeoff(glopnet)
     plot: square
 
-  figures/figure_conceptual.pdf:
+  output/figure_conceptual.pdf:
     command: latex_build("figure_conceptual.tex", output=target_name, engine=I("xelatex"), clean=TRUE)
     depends:
       - downloads/tree.png
       - downloads/seedling.png
-      - figures/empty_box.pdf
-      - figures/F2_net_mass_production_dt_net_mass_production_dt.pdf
-      - figures/F2_darea_leaf_dmass_live_darea_leaf_dmass_live.pdf
-      - figures/F2_height_dt_height_dt.pdf
-      - figures/F2_area_leaf_dt_area_leaf_dt.pdf
-      - figures/F2_area_stem_dt_area_stem_dt.pdf
-      - figures/F2_diameter_stem_dt_diameter_stem_dt.pdf
+      - output/empty_box.pdf
+      - output/F2_net_mass_production_dt_net_mass_production_dt.pdf
+      - output/F2_darea_leaf_dmass_live_darea_leaf_dmass_live.pdf
+      - output/F2_height_dt_height_dt.pdf
+      - output/F2_area_leaf_dt_area_leaf_dt.pdf
+      - output/F2_area_stem_dt_area_stem_dt.pdf
+      - output/F2_diameter_stem_dt_diameter_stem_dt.pdf
 
-  figures/empty_box.pdf:
+  output/empty_box.pdf:
     command: empty_box()
     plot: med_square
 
@@ -160,7 +159,7 @@ targets:
     download: http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-quercus-montana.png
     cleanup_level: purge
 
-  figures/allometry.pdf:
+  output/allometry.pdf:
     command: figure_assumptions(baad)
     plot: wide
 

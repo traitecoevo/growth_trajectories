@@ -3,7 +3,10 @@
 latex_build <- function(filename, bibliography=NULL, output=NULL,
                         chdir=TRUE, interaction="nonstopmode",
                         max_attempts=5L, clean=FALSE, engine="pdflatex") {
-  if (chdir && dirname(filename) != "") {
+
+  fileout <- sub(".tex$", ".pdf", filename)
+
+  if (chdir) {
     owd <- setwd(dirname(filename))
     on.exit(setwd(owd))
     filename <- basename(filename)
@@ -28,7 +31,7 @@ latex_build <- function(filename, bibliography=NULL, output=NULL,
   }
   for (i in seq_len(max_attempts)) {
     if (any(vapply(pat, isin, logical(1), res))) {
-      res <- run_latex(filename, interaction, engine, output_directory)
+      res <- run_latex(filename, interaction, engine)
     } else {
       break
     }
@@ -39,8 +42,10 @@ latex_build <- function(filename, bibliography=NULL, output=NULL,
   }
 
   if(!is.null(output)) {
-    fileout <- sub(".tex$", ".pdf", filename)
-    file.copy(fileout, output)
+    if (chdir) {
+      setwd(owd)
+    }
+    file.copy(fileout, output, TRUE)
     file.remove(fileout)
   }
 
