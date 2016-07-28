@@ -78,11 +78,11 @@ figure_rate_vs_size_panels <- function(data, type, path) {
   yvars <- figure_rate_vs_size_cols(type)
 
   for (v in yvars) {
-    filename <- file.path(path, sprintf("F2_%s_%s.pdf", type, v))
+    filename <- file.path(path, sprintf("%s_%s.pdf", type, v))
     pdf(filename,width=5, height=5)
     par(oma=c(0,0,0,0), mar=rep(0.1,4))
     plot(data[["height"]], data[[v]], type="l", ann=FALSE, axes=FALSE,
-      ylim=c(0, max(1,data[[type]], na.rm=TRUE)),
+  #    ylim=c(0, max(1,data[[type]], na.rm=TRUE)),
       col="green", lwd=3)
     box()
     dev.off()

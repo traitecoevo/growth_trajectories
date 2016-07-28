@@ -1,3 +1,4 @@
+last <- plant:::last
 
 read_csv <- function(filename, ...){
   read.csv(filename, stringsAsFactors=FALSE, ...)

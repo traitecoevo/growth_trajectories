@@ -1,8 +1,6 @@
 packages:
   - callr
   - baad.data
-  - plyr
-  - dplyr
   - rmarkdown
   - smatr
   - quantreg
@@ -44,29 +42,29 @@ targets:
   ms/ms.pdf:
     command: latex_build("ms/ms.tex", bibliography="ms/references.bib", engine=I("xelatex"))
     depends:
-      - output/table-pars.tex
-      - output/allometry.pdf
-      - output/figure_conceptual.pdf
-      - output/growth_light_dia.pdf
-      - output/growth_light_mass.pdf
-      - output/max_leaf_above.pdf
-      - output/SI_mass_fraction.pdf
-      - output/SI_lma_tradeoff.pdf
+      - output/main/table-pars.tex
+      - output/main/allometry.pdf
+      - output/main/figure_conceptual.pdf
+      - output/main/growth_light_dia.pdf
+      - output/main/growth_light_mass.pdf
+      - output/main/max_leaf_above.pdf
+      - output/SI/mass_fraction.pdf
+      - output/SI/lma_tradeoff.pdf
 
-      - output/SI_lma_growth_derivative.pdf
+      - output/SI/lma_growth_derivative.pdf
 
-      - output/SI_lma_effects_at_heights.pdf
-      - output/SI_rho_effects_at_heights.pdf
-      - output/SI_hmat_effects_at_heights.pdf
-      - output/SI_lma_effects_at_heights_relative.pdf
-      - output/SI_rho_effects_at_heights_relative.pdf
-      - output/SI_hmat_effects_at_heights_relative.pdf
-      - output/SI_lma_effects_at_diameters.pdf
-      - output/SI_rho_effects_at_diameters.pdf
-      - output/SI_hmat_effects_at_diameters.pdf
-      - output/SI_lma_effects_at_diameters_relative.pdf
-      - output/SI_rho_effects_at_diameters_relative.pdf
-      - output/SI_hmat_effects_at_diameters_relative.pdf
+      - output/SI/lma_effects_at_heights.pdf
+      - output/SI/rho_effects_at_heights.pdf
+      - output/SI/hmat_effects_at_heights.pdf
+      - output/SI/lma_effects_at_heights_relative.pdf
+      - output/SI/rho_effects_at_heights_relative.pdf
+      - output/SI/hmat_effects_at_heights_relative.pdf
+      - output/SI/lma_effects_at_diameters.pdf
+      - output/SI/rho_effects_at_diameters.pdf
+      - output/SI/hmat_effects_at_diameters.pdf
+      - output/SI/lma_effects_at_diameters_relative.pdf
+      - output/SI/rho_effects_at_diameters_relative.pdf
+      - output/SI/hmat_effects_at_diameters_relative.pdf
 
   glopnet:
     command: >
@@ -82,30 +80,30 @@ targets:
   glopnet_locations:
     command: read.csv("data/wright_2004_locations.csv")
 
-  output/table-pars.tex:
+  output/main/table-pars.tex:
     command: table_plant_parameters(plant_parameters, target_name)
 
   plant_parameters:
     command: read.csv("data/growth_model_pars.csv")
 
-  output/SI_lma_tradeoff.pdf:
+  output/SI/lma_tradeoff.pdf:
     command: figure_lma_tradeoff(glopnet)
     plot: square
 
-  output/figure_conceptual.pdf:
+  output/main/figure_conceptual.pdf:
     command: latex_build("figure_conceptual.tex", output=target_name, engine=I("xelatex"), clean=TRUE)
     depends:
       - downloads/tree.png
       - downloads/seedling.png
-      - output/empty_box.pdf
-      - output/F2_net_mass_production_dt_net_mass_production_dt.pdf
-      - output/F2_darea_leaf_dmass_live_darea_leaf_dmass_live.pdf
-      - output/F2_height_dt_height_dt.pdf
-      - output/F2_area_leaf_dt_area_leaf_dt.pdf
-      - output/F2_area_stem_dt_area_stem_dt.pdf
-      - output/F2_diameter_stem_dt_diameter_stem_dt.pdf
+      - output/con/empty_box.pdf
+      - output/con/net_mass_production_dt_net_mass_production_dt.pdf
+      - output/con/darea_leaf_dmass_live_darea_leaf_dmass_live.pdf
+      - output/con/height_dt_height_dt.pdf
+      - output/con/area_leaf_dt_area_leaf_dt.pdf
+      - output/con/area_stem_dt_area_stem_dt.pdf
+      - output/con/diameter_stem_dt_diameter_stem_dt.pdf
 
-  output/empty_box.pdf:
+  output/con/empty_box.pdf:
     command: empty_box()
     plot: med_square
 
@@ -117,7 +115,7 @@ targets:
     download: http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-quercus-montana.png
     cleanup_level: purge
 
-  output/allometry.pdf:
+  output/main/allometry.pdf:
     command: figure_assumptions(baad)
     plot: wide
 
