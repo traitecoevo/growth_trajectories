@@ -22,7 +22,7 @@
 \cfoot{}
 %\rfoot{\thepage}
 
-% allows for numbered referencing, as refquired by ecol letters
+% allows for numbered referencing, as required by ecol letters
 \usepackage{etoolbox}
 \newbool{MyRefNumbers}
 \booltrue{MyRefNumbers} % comment to remove numbers in reference list
@@ -66,10 +66,8 @@
 
 \author[1]{Daniel S. Falster}
 \author[1]{Richard G. FitzJohn}
-\author[2]{Joe Wright}
 
 \affil[1]{{\footnotesize Biological Sciences, Macquarie University, North Ryde, NSW 2109, Australia}}
-\affil[2]{{\footnotesize Center for Tropical Forest Science, Smithsonian Tropical Research Institute, Panama, Republic of Panama}}
 \renewcommand\Authands{ and }
 \date{\vspace{-3em}}
 
@@ -160,7 +158,7 @@ Effect of traits on shade tolerance also porrly udnerstood. Empirical -- shade
 
 (reich 1992, Niinements 2010, Gower-1993 - both show higher LAI in high LMA / long LL stands)
 
-Ulitmately, trait based understanding integrated wiht model of plant growth, also able to cpature patterns of growth through ontogeny. Growth rates tend to show hump-shaped relationship with size, when expressed as either height \citep{sillett-2010, king-2011} or diameter growth \citep{herault-2011}.  In contrast, basal-area growth continues to increase with size \citep{sillett-2010, stephenson-2014}, due to an increasing influence of stem turnover. All growth measures decrease sharply with size when expressed as relative growth rates \citep{rees-2010, iida-2014}. Shade tolerance tends to decrease with increasing size \citep{lusk-2006}, due to increasing costs of mainatining stems \citep{givnish-1988}
+Ultimately, trait based understanding integrated wiht model of plant growth, also able to cpature patterns of growth through ontogeny. Growth rates tend to show hump-shaped relationship with size, when expressed as either height \citep{sillett-2010, king-2011} or diameter growth \citep{herault-2011}.  In contrast, basal-area growth continues to increase with size \citep{sillett-2010, stephenson-2014}, due to an increasing influence of stem turnover. All growth measures decrease sharply with size when expressed as relative growth rates \citep{rees-2010, iida-2014}. Shade tolerance tends to decrease with increasing size \citep{lusk-2006}, due to increasing costs of mainatining stems \citep{givnish-1988}
 
 In this paper we provide a mechanistic framework for describing the potential
 effect of traits on growth throughout a plant's life-cycle, linking to
@@ -179,46 +177,6 @@ disentangling the effects of plant size, light environment and traits on
 growth rates, we hope to provide a solid theoretical foundation for trait
 ecology and thus provide a platform for understanding growth across diverse
 species around the world.
-
-
-The results of this new analysis
-(Fig. \ref{f-BCI}) align closely with our theoretical predictions  showing how the effect of traits on growth
-changes with plant size, with different traits exhibiting distinct
-size-dependent effects.
-
-
-
-\subsection{Empirical motivation}\label{fresh-empirical-motivation}
-
-To help illustrate the empirical patterns, we begin with a fresh analysis of
-growth dynamics in the long-term plot at Barro Colorado Island in Panama,
-where the growth rates for over 100 species have been recorded over the last
-30 years. Data from a long term plot \citep{condit-2012} are combined
-with results of experiment on seedlings \citep{kitajima-2013}, to better understand
-size-related patterns of growth. A prior analysis by
- \citet{wright-2010} found a moderate effect of wood density on
-growth rate, but almost no effect of LMA, and only a weak effect of HMAX. More recently,
- \citet{ruger-2012} showed
-
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  Effect of lma stronger than previously thought,
-\item
-  Bridges from seedling studies to adults
-\end{itemize}
-
-Results stronger than previously reported.
-
-Predictions
-are compared against data from both a long-term
-plot \citep{condit-2012} and field
-experiment \citep{kitajima-2013} at Barro Colorado Island, Panama.
-We use a new method to estimate species potential growth rate,
-accounting for size specific effects (Fig. \ref{fS-quantile_examples},
-see Methods for details). This new method allowed us to extract a more
-definite signal of trait effects than in previous
-studies \citep{wright-2010}.
 
 \section{Materials and Methods}\label{materials-and-methods}
 
@@ -430,7 +388,7 @@ relative growth rates \citep{iida-2014}.
 
 Unlike eq. \ref{eq:RGR}, eqs. \ref{eq:dhdt}, \ref{eq:dast} and
 \ref{eq:dDdt} predict a relationship between $\phi$ and growth that
-changes with plant size (Figs. \ref{f-BCI}, \ref{f-lma_growth_size}).
+changes with plant size ( \ref{f-lma_growth_size}).
 Decreasing $\phi$ has two impacts on growth rate. First, lower
 $\phi$ increases marginal leaf deployment
 ($\textrm{d}a_\textrm{l} / \textrm{d}m_\textrm{a}$ by economising on
@@ -461,10 +419,9 @@ production approaches zero.
  Greater height at maturation ($h_m$)
 can thus lead to a growth advantage by increasing
 $\frac{\textrm{d}m_\textrm{a}}{\textrm{d}b}$ . At smaller sizes, there is no differentiation
-among species, because most species are focusing on growth (Fig.
-\ref{f-BCI}). At larger sizes, individuals of some species are
+among species, because most species are focusing on growth. At larger sizes, individuals of some species are
 allocating a majority of their surplus energy to growth, leaving a
-strong signal in potential growth rate (Fig. \ref{f-BCI}).
+strong signal in potential growth rate.
 
 
 \subsubsection{Responsiveness to light}
@@ -741,18 +698,6 @@ NB -  theta is sapwood area per leaf area. In tree 2 has been opposite, but that
 
 \section{Figures}\label{figures}
 
-\begin{figure}[ht]
-\centering
-\includegraphics{BCI_data.pdf}
-\caption{\textbf{The relationship between traits and potential growth
-rate varies with plant size.} For XXX species from tropical rain forest
-in Panama, we estimated the potential growth rate of individual's in
-each species at a series of diameters $D$, indicated along right hand
-side. The size of circles in each panel indicates the number of data
-points used to estimate potential growth rate. Traits values were
-calculated from representative individuals in each species.
-\label{f-BCI}}
-\end{figure}
 
 \newpage
 
@@ -1090,19 +1035,6 @@ Do similar to previous section for wood construction cost.
 \newpage
 
 \section{Supplementary figures}\label{supplementary-figures}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI_quantile_examples.pdf}
-\caption{\textbf{Estimating potential growth rate via quantile
-regression.} Example for 4 species. Growth rate estimated at six sizes,
-by fitting lines within given size intervals. Lines fitted to 99th
-quantile, but only when n \textgreater{} 500. Except for left-hand
-panel, estimated points in centre of interval.
-\label{fS-quantile_examples}}
-\end{figure}
-
-\newpage
 
 \begin{figure}[ht]
 \centering
