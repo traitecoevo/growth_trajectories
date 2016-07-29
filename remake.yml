@@ -40,6 +40,7 @@ targets:
     depends:
       - output/main/table-pars.tex
       - output/main/allometry.pdf
+      - output/main/mass_fraction.pdf
       - output/main/figure_conceptual.pdf
       - output/main/growth_light_dia.pdf
       - output/main/growth_light_mass.pdf
@@ -50,7 +51,6 @@ targets:
     command: latex_build("ms/ms-supp.tex", bibliography="ms/references.bib", clean=FALSE)
     # Don't clean because we need info for cross references
     depends:
-      - output/SI/mass_fraction.pdf
       - output/SI/lma_tradeoff.pdf
       - output/SI/lma_growth_derivative.pdf
       - output/SI/lma_effects_at_heights.pdf
@@ -97,18 +97,8 @@ targets:
 
 # Tables & figures ------------------------
 
-  output/main/table-pars.tex:
-    command: table_plant_parameters(plant_parameters, target_name)
-
-  plant_parameters:
-    command: read.csv("data/growth_model_pars.csv")
-
-  output/SI/lma_tradeoff.pdf:
-    command: figure_lma_tradeoff(glopnet)
-    plot: square
-
   output/main/figure_conceptual.pdf:
-    command: latex_build("figure_conceptual.tex", output=target_name, engine=I("xelatex"), clean=TRUE)
+    command: latex_build("ms/figure_conceptual.tex", output=target_name, engine=I("xelatex"))
     depends:
       - downloads/tree.png
       - downloads/seedling.png
@@ -122,3 +112,7 @@ targets:
   output/main/allometry.pdf:
     command: figure_assumptions(baad)
     plot: wide
+
+  output/SI/lma_tradeoff.pdf:
+    command: figure_lma_tradeoff(glopnet)
+    plot: square

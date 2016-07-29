@@ -13,6 +13,9 @@
 \usefonttheme{serif}
 \usepackage{helvet}
 
+\usepackage{graphicx}
+\graphicspath{{../}}
+
 %----------------------------------------------------------------------------------------
 \begin{document}
 
@@ -51,8 +54,8 @@
 }
 
 \newcommand{\rowlabel}[1]{
-  \node at ($(thisrow) + (0.25cm, 0cm)$)[anchor=west, text width=2cm] {
-  \footnotesize {\color{orange!50}  #1}};
+  \node at ($(thisrow) + (-0.75cm, -0.3cm)$)[anchor=west, text width=2cm] {
+  \footnotesize {\color{orange!50}\begin{equation}\label{#1}\end{equation}}};
 }
 
 \newcommand{\firstcol}[4]{
@@ -82,52 +85,52 @@
   \textbox{$(top)+ (5cm, 6.25cm)$}{Adult}
 
 \defineRow{0}{thisrow}
-\rowtitle{Biomass production}
+\rowtitle{Biomass production rate}
 \firstcol{1}{$\frac{{\rm d}B}{{\rm d}t}$}{output/con/net_mass_production_dt_net_mass_production_dt}{}
 \othercol{2}{$\alpha_y$}{output/con/net_mass_production_dt_yield}{$\times$}
 \othercol{3}{$\Bigg({\rm P}$}{output/con/net_mass_production_dt_assimilation}{$-$}
 \othercol{4}{${\rm R}$}{output/con/net_mass_production_dt_respiration}{$\Bigg)$}
 \othercol{5}{$-{\rm T}$}{output/con/net_mass_production_dt_turnover}{}
-\rowlabel{(1)}
+\rowlabel{eq:dbdt}
 
 \defineRow{1}{thisrow}
-\rowtitle{Construction costs}
+\rowtitle{Leaf deployment per mass}
 \firstcol{1}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}M_{{\rm t}}}$}{output/con/darea_leaf_dmass_live_darea_leaf_dmass_live}{$\Bigg($}
 \othercol{2}{$\frac{{\rm d}M_{{\rm l}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_leaf_darea_leaf}{+}
-\othercol{3}{$\frac{{\rm d}M_{\textrm{ss}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_sapwood_darea_leaf}{+}
-\othercol{4}{$\frac{{\rm d}M_{{\rm sb}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_bark_darea_leaf}{+}
+\othercol{3}{$\frac{{\rm d}M_{{\rm s}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_sapwood_darea_leaf}{+}
+\othercol{4}{$\frac{{\rm d}M_{{\rm b}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_bark_darea_leaf}{+}
 \othercol{5}{$\frac{{\rm d}M_{{\rm r}}}{{\rm d}A_{{\rm l}}}$}{output/con/darea_leaf_dmass_live_dmass_root_darea_leaf}{$\Bigg)^{-1}$}
- \rowlabel{(2)}
+ \rowlabel{eq:daldmt}
 \defineRow{2}{thisrow}
-\rowtitle{Leaf-area growth}
+\rowtitle{Leaf-area growth rate}
 \firstcol{1}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/con/area_leaf_dt_area_leaf_dt}{}
 \othercol{2}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}M_{{\rm t}}}$}{output/con/area_leaf_dt_darea_leaf_dmass_live}{$\times$}
 \othercol{3}{$\frac{{\rm d}M_{{\rm t}}}{{\rm d}B}$}{output/con/area_leaf_dt_fraction_allocation_growth}{$\times$}
 \othercol{4}{$\frac{{\rm d}B}{{\rm d}t}$}{output/con/area_leaf_dt_net_mass_production_dt}{}
-\rowlabel{(3)}
+\rowlabel{eq:daldt}
 
 \defineRow{3}{thisrow}
-\rowtitle{Height growth}
+\rowtitle{Height growth rate}
 \firstcol{1}{$\frac{{\rm d}H}{{\rm d}t}$}{output/con/height_dt_height_dt}{}
 \othercol{2}{$\frac{{\rm d}H}{{\rm d}A_{{\rm l}}}$}{output/con/height_dt_dheight_darea_leaf}{$\times$}
 \othercol{3}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/con/area_leaf_dt_area_leaf_dt}{}
-\rowlabel{(4)}
+\rowlabel{eq:dhdt}
 
 \defineRow{4}{thisrow}
-\rowtitle{Basal-area growth}
+\rowtitle{Stem-area growth rate}
 \firstcol{1}{$\frac{{\rm d}A_{{\rm st}}}{{\rm d}t}$}{output/con/area_stem_dt_area_stem_dt}{$\Bigg($}
-\othercol{2}{$\frac{{\rm d}A_{\textrm{ss}}}{{\rm d}A_{{\rm l}}}$}{output/con/area_stem_dt_darea_sapwood_darea_leaf}{$+$}
+\othercol{2}{$\frac{{\rm d}A_{{\rm s}}}{{\rm d}A_{{\rm l}}}$}{output/con/area_stem_dt_darea_sapwood_darea_leaf}{$+$}
 \othercol{3}{$\frac{{\rm d}A_{\textrm{sb}}}{{\rm d}A_{{\rm l}}}$}{output/con/area_stem_dt_darea_bark_darea_leaf}{\hspace{-0.3em}$\Bigg)$}
 \othercol{4}{\hspace{-0.4em}$\times\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/con/area_stem_dt_area_leaf_dt}{$+$}
-\othercol{5}{$\frac{{\rm d}A_{{\rm sh}}}{{\rm d}t}$}{output/con/area_stem_dt_area_heartwood_dt}{}
-\rowlabel{(5)}
+\othercol{5}{$\frac{{\rm d}A_{{\rm h}}}{{\rm d}t}$}{output/con/area_stem_dt_area_heartwood_dt}{}
+\rowlabel{eq:dast}
 
 \defineRow{5}{thisrow}
-\rowtitle{Diameter growth}
+\rowtitle{Stem-diameter growth rate}
 \firstcol{1}{$\frac{{\rm d}D}{{\rm d}t}$}{output/con/diameter_stem_dt_diameter_stem_dt}{}
 \othercol{2}{$\frac{{\rm d}D}{{\rm d}A_{{\rm st}}}$}{output/con/diameter_stem_dt_ddiameter_stem_darea_stem}{$\times$}
 \othercol{3}{$\frac{{\rm d}A_{{\rm st}}}{{\rm d}t}$}{output/con/diameter_stem_dt_area_stem_dt}{}
-\rowlabel{(6)}
+\rowlabel{eq:dDdt}
 
 \textbox{$(current page.south)+ (0cm, 0.5cm)$}{Plant height (m)}
 

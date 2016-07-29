@@ -1,4 +1,11 @@
 targets:
+
+  plant_parameters:
+    command: read.csv("data/growth_model_pars.csv")
+
+  output/main/table-pars.tex:
+    command: table_plant_parameters(plant_parameters, target_name)
+
   output/main/growth_light_mass.pdf:
     command: figure_dY_dt(mass_above_ground_dt_data)
     plot: square
@@ -17,7 +24,7 @@ targets:
     command: figure_lcp_whole_plant()
     plot: wide
 
-  output/SI/mass_fraction.pdf:
+  output/main/mass_fraction.pdf:
     command: figure_mass_fraction()
     plot: square
 

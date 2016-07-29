@@ -62,16 +62,6 @@ fitted to datsa from each site, with intensity of shading adjusted
 according to strength of the relationship.\label{fS-leaf}}
 \end{figure}
 
-
-\newpage
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/mass_fraction.pdf}
-\caption{\textbf{Change in allocation with size.}
-\label{f-mass_fraction}}
-\end{figure}
-
 \newpage
 
 \begin{figure}[ht]
