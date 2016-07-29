@@ -1,86 +1,47 @@
-\documentclass[12pt, a4paper]{article}
-\RequirePackage[hmargin=2cm,vmargin=2cm]{geometry}
+\documentclass[a4paper,11pt]{article}
+\usepackage[osf]{mathpazo}
+\usepackage{ms}
+\usepackage[]{natbib}
+\usepackage{floatpag}
+\floatpagestyle{empty}
 
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{authblk} % allows for better author affiliations
+%\raggedright
+
+\usepackage{graphicx}
+
+% Enable cross referencing to Evidence document
+\usepackage{xr}
+\externaldocument{ms-supp}
+
+\input{ms-common-defs}
+\date{}
+
+\mstype{Research Article}
+
+\keywords{growth strategy, life-history traits, maximum height, ontogenetic stage, photosynthetic rate, plant development, seed mass, specific leaf area, wood density}
 
 %appendix
 \usepackage[title,titletoc,toc]{appendix}
 \usepackage{setspace}  % for double spacing
 
-% Fancy HEADER
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\setlength{\headheight}{15pt}
-\pagenumbering{arabic}
-\lhead{\itshape{\nouppercase{\leftmark}}}
-\chead{}
-\rhead{\thepage}
-%\lfoot{v }
-\cfoot{}
-%\rfoot{\thepage}
-
-% allows for numbered referencing, as required by ecol letters
-\usepackage{etoolbox}
-\newbool{MyRefNumbers}
-\booltrue{MyRefNumbers} % comment to remove numbers in reference list
-
-\usepackage{natbib}
-\bibliographystyle{ecol_let}
-\setcitestyle{authoryear,open={(},close={)}}
-
-\usepackage{graphicx}
-\graphicspath{{../output/}}
-
-% We will generate all images so they have a width \maxwidth. This means
-% that they will get their normal width if they fit onto the page, but
-% are scaled down if they would overflow the margins.
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
-\else\Gin@nat@width\fi}
-\makeatother
-
-\let\Oldincludegraphics\includegraphics
-\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
-
-\usepackage[rgb,dvipsnames]{xcolor}
-\definecolor{grey}{rgb}{0.5, 0.5, 0.5}
-
-\usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
-              xetex]{hyperref}
-\hypersetup{breaklinks=true,
-            pdfauthor={},
-            pdftitle={Untangling the link between traits, size and growth rate in plants},
-            colorlinks=true,
-            citecolor=black,
-            urlcolor=grey,
-            linkcolor=grey}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-
-\title{\LARGE Untangling the link between traits, size and growth rate in plants}
-
-\author[1]{Daniel S. Falster}
-\author[1]{Richard G. FitzJohn}
-
-\affil[1]{{\footnotesize Biological Sciences, Macquarie University, North Ryde, NSW 2109, Australia}}
-\renewcommand\Authands{ and }
-\date{\vspace{-3em}}
-
 \begin{document}
-
-\maketitle
-\thispagestyle{empty} % avoid header and footer on first page. Put after \maketitile, if using that
+\mstitlepage
+\noindent
+\parindent=1.5em
+\addtolength{\parskip}{.3em}
+\doublespacing
+\linenumbers
+\section{Summary}\label{abstract}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item We ...
+\end{enumerate}
 
 \section{Ideas}\label{abstract}
 
 New refs: \citep{Ishihara-2016, Duursma-2016, Gibert-2016, Falster-2016, Kunstler-2015,Falster-2015b, Falster-2015a,Wenk-2015,Li-2014}
 
-Table near intro summarising empricial patterns to be explained by integrated model?
+Table near intsro summarising empirical patterns to be explained by integrated model?
 
 Section 3.3 of King (2005) shows that the cost of turning over leaves, branches and fine roots may halve the height growth rate that could otherwise be attained.
 
@@ -475,16 +436,15 @@ budget, but still have positive influence on growth rates
 \end{itemize}
 
 Assumes low lma and wd used to reduce costs of building leaf and stem,
-ie. total leaf area and stem corss section remains same. In this way
-differs to assumptions of recent work by anten\_role\_2010,
-larjavaara\_rethinking\_2010.
+ie. total leaf area and stem cross section remains same. In this way
+differs to assumptions of recent work by \citep{Anten-2010}, \citep{Larjavaara-2010}.
 
 Model is realisation of several ideas that have been around for some
 time.
 
 Plasticity in trait values predicted from model:
 
-@Osazuwa-2014 - indreases in WD through ontogeny.
+\citep{Osazuwa-2014} - increases in WD through ontogeny.
 
 \subsection{Shade tolerance}\label{shade-tolerance}
 
@@ -496,7 +456,7 @@ needed to offset these costs. As previously suggested
 height because as size increase, the total amount of energy needed to
 offset respiratory and turnover costs in the stem also increases. These
 finding matches well known empirical patterns, where both $\phi$ and
-$\rho$ have been linked to shade tolerance \citep{Poorter-2006, Lusk-2008,osunkoya-1996}.
+$\rho$ have been linked to shade tolerance \citep{Poorter-2006, Lusk-2008,Osunkoya-1996}.
 
 Results fo poort \& binger for surival strongest for LL.
 
@@ -1017,94 +977,6 @@ with traits if
 \subsection{Wood construction cost}
 
 Do similar to previous section for wood construction cost.
-
-\newpage
-
-\section{Supplementary tables}\label{supplementary-tables}
-
-\begin{table}[ht]
-\caption{Model parameters}
-\centering
-{\footnotesize  % smaller font, double space
-\begin{doublespace}
-% \include{table-pars}
-
-\end{doublespace}
-}
-\label{tab:params}
-\end{table}
-
-\newpage
-
-\section{Supplementary figures}\label{supplementary-figures}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/lmA_tradeoff.pdf}
-\caption{\textbf{Leaf turnover decreases with leaf-construction cost.}
-Data from \citep{Wright-2004} for 678 species from 51 sites, each
-point giving a species-average. Lines show standardised major axis lines
-fitted to data from each site, with intensity of shading adjusted
-according to strength of the relationship.\label{fS-leaf}}
-\end{figure}
-
-
-\newpage
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/mass_fraction.pdf}
-\caption{\textbf{Change in allocation with size.}
-\label{f-mass_fraction}}
-\end{figure}
-
-\newpage
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/lmA_effects_at_diameters.pdf}
-\caption{\textbf{The expected correlation between leaf-construction cost
-and growth rate changes with plant size.} \label{f-lmA_growth_size}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/lmA_effects_at_diameters_relative.pdf}
-\caption{\textbf{The expected correlation between leaf-construction cost
-and relative growth rate changes with plant size.}
-\label{f-lmA_growth_size_relative}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/rho_effects_at_diameters.pdf}
-\caption{\textbf{The expected correlation between stem-construction cost
-and growth rate changes with plant size.} \label{f-rho_growth_size}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/rho_effects_at_diameters_relative.pdf}
-\caption{\textbf{The expected correlation between stem-construction cost
-and relative growth rate changes with plant size.}
-\label{f-rho_growth_size_relative}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/hmat_effects_at_diameters.pdf}
-\caption{\textbf{The expected correlation between maximum height and
-growth rate changes with plant size.} \label{f-hmat_growth_size}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/hmat_effects_at_diameters_relative.pdf}
-\caption{\textbf{The expected correlation between maximum height and
-relative growth rate changes with plant size.}
-\label{f-hmat_growth_size_relative}}
-\end{figure}
-
 
 \end{appendices}
 \end{document}

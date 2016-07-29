@@ -1,0 +1,130 @@
+\documentclass[10pt,twoside]{article}
+
+\usepackage{suppmat}
+\usepackage{listings}
+\usepackage[T1]{fontenc} % Better underscores, shockingly.
+
+
+\input{ms-common-defs}
+
+% We will generate all images so they have a width \maxwidth. This means
+% that they will get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+\titleprefix{Supporting information for:}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{secnumdepth}{0}
+
+\clearpage
+
+\section{Supporting Tables}\label{app:supp_info_table}
+
+
+
+\begin{table}[ht]
+\caption{Model parameters}
+\centering
+{\footnotesize  % smaller font, double space
+\begin{doublespace}
+% \include{table-pars}
+
+\end{doublespace}
+}
+\label{tab:params}
+\end{table}
+
+\newpage
+
+\section{Supporting Figures}\label{app:supp_info_figures}
+
+\begin{figure}[ht]
+\centering
+\includegraphics{SI/lma_tradeoff.pdf}
+\caption{\textbf{Leaf turnover decreases with leaf-construction cost.}
+Data from \citep{Wright-2004} for 678 species from 51 sites, each
+point giving a species-average. Lines show standardised major axis lines
+fitted to datsa from each site, with intensity of shading adjusted
+according to strength of the relationship.\label{fS-leaf}}
+\end{figure}
+
+
+\newpage
+
+\begin{figure}[ht]
+\centering
+\includegraphics{SI/mass_fraction.pdf}
+\caption{\textbf{Change in allocation with size.}
+\label{f-mass_fraction}}
+\end{figure}
+
+\newpage
+
+\begin{figure}[ht]
+\centering
+\includegraphics{SI/lma_effects_at_diameters.pdf}
+\caption{\textbf{The expected correlation between leaf-construction cost
+and growth rate changes with plant size.} \label{f-lma_growth_size}}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics{SI/lma_effects_at_diameters_relative.pdf}
+\caption{\textbf{The expected correlation between leaf-construction cost
+and relative growth rate changes with plant size.}
+\label{f-lma_growth_size_relative}}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics{SI/rho_effects_at_diameters.pdf}
+\caption{\textbf{The expected correlation between stem-construction cost
+and growth rate changes with plant size.} \label{f-rho_growth_size}}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics{SI/rho_effects_at_diameters_relative.pdf}
+\caption{\textbf{The expected correlation between stem-construction cost
+and relative growth rate changes with plant size.}
+\label{f-rho_growth_size_relative}}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics{SI/hmat_effects_at_diameters.pdf}
+\caption{\textbf{The expected correlation between maximum height and
+growth rate changes with plant size.} \label{f-hmat_growth_size}}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics{SI/hmat_effects_at_diameters_relative.pdf}
+\caption{\textbf{The expected correlation between maximum height and
+relative growth rate changes with plant size.}
+\label{f-hmat_growth_size_relative}}
+\end{figure}
+
+
+
+
+\clearpage
+
+\bibliography{references}
+
+\end{document}
+

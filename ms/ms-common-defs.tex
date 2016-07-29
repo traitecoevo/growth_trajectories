@@ -1,0 +1,42 @@
+
+\usepackage[rgb,dvipsnames]{xcolor}
+\definecolor{grey}{rgb}{0.5, 0.5, 0.5}
+
+\newcommand{\smurl}[1]{\url{#1}}
+\newcommand{\ud}{\ensuremath{\rm{d}}}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\newcommand{\email}[1]{\href{mailto:#1}{\texttt{#1}}}
+
+
+\title{Untangling the link between traits, size and growth rate in plants}
+\runninghead{I\lowercase{nfluence of traits on growth}}
+
+\author{Daniel S. Falster\textasteriskcentered \& Richard G. FitzJohn}
+
+\affiliation{Biological Sciences, Macquarie University NSW 2109, Australia
+\\
+\textasteriskcentered Correspondence author. E-mail: \texttt{adaptive.plant@gmail.com}
+}
+
+\usepackage{natbib}
+\bibliographystyle{ecol_let}
+\setcitestyle{authoryear,open={(},close={)}}
+% allows for numbered referencing, as required by ecol letters
+\usepackage{etoolbox}
+\newbool{MyRefNumbers}
+\booltrue{MyRefNumbers} % comment to remove numbers in reference list
+
+
+\usepackage{graphicx}
+\graphicspath{{../output/}}
+
+% We will generate all images so they have a width \maxwidth. This means
+% that they will get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+\else\Gin@nat@width\fi}
+\makeatother
+
+\let\Oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}

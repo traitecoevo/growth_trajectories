@@ -33,14 +33,10 @@ targets:
     depends:
       - ms/ms.pdf
 
-  downloads:
-    depends:
-      - downloads/wright_2004.xls
-      - downloads/tree.png
-      - downloads/seedling.png
+# Documents ------------------------
 
   ms/ms.pdf:
-    command: latex_build("ms/ms.tex", bibliography="ms/references.bib", engine=I("xelatex"))
+    command: latex_build("ms/ms.tex", bibliography="ms/references.bib")
     depends:
       - output/main/table-pars.tex
       - output/main/allometry.pdf
@@ -48,11 +44,15 @@ targets:
       - output/main/growth_light_dia.pdf
       - output/main/growth_light_mass.pdf
       - output/main/max_leaf_above.pdf
+      - ms/ms-supp.pdf
+
+  ms/ms-supp.pdf:
+    command: latex_build("ms/ms-supp.tex", bibliography="ms/references.bib", clean=FALSE)
+    # Don't clean because we need info for cross references
+    depends:
       - output/SI/mass_fraction.pdf
       - output/SI/lma_tradeoff.pdf
-
       - output/SI/lma_growth_derivative.pdf
-
       - output/SI/lma_effects_at_heights.pdf
       - output/SI/rho_effects_at_heights.pdf
       - output/SI/hmat_effects_at_heights.pdf
@@ -66,6 +66,10 @@ targets:
       - output/SI/rho_effects_at_diameters_relative.pdf
       - output/SI/hmat_effects_at_diameters_relative.pdf
 
+  ms/ms-supp.tex:
+    knitr: TRUE
+
+# Data ------------------------
   glopnet:
     command: >
       process_wright_2004("downloads/wright_2004.xls",
@@ -79,6 +83,19 @@ targets:
 
   glopnet_locations:
     command: read.csv("data/wright_2004_locations.csv")
+
+  downloads/seedling.png:
+    download: http://ian.umces.edu/imagelibrary/albums/userpics/10002/normal_ian-symbol-quercus-spp-oak-seedling.png
+    cleanup_level: purge
+
+  downloads/tree.png:
+    download: http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-quercus-montana.png
+    cleanup_level: purge
+
+  baad:
+    command: baad_data(I("1.0.0"))
+
+# Tables & figures ------------------------
 
   output/main/table-pars.tex:
     command: table_plant_parameters(plant_parameters, target_name)
@@ -95,7 +112,6 @@ targets:
     depends:
       - downloads/tree.png
       - downloads/seedling.png
-      - output/con/empty_box.pdf
       - output/con/net_mass_production_dt_net_mass_production_dt.pdf
       - output/con/darea_leaf_dmass_live_darea_leaf_dmass_live.pdf
       - output/con/height_dt_height_dt.pdf
@@ -103,21 +119,6 @@ targets:
       - output/con/area_stem_dt_area_stem_dt.pdf
       - output/con/diameter_stem_dt_diameter_stem_dt.pdf
 
-  output/con/empty_box.pdf:
-    command: empty_box()
-    plot: med_square
-
-  downloads/seedling.png:
-    download: http://ian.umces.edu/imagelibrary/albums/userpics/10002/normal_ian-symbol-quercus-spp-oak-seedling.png
-    cleanup_level: purge
-
-  downloads/tree.png:
-    download: http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-quercus-montana.png
-    cleanup_level: purge
-
   output/main/allometry.pdf:
     command: figure_assumptions(baad)
     plot: wide
-
-  baad:
-    command: baad_data(I("1.0.0"))
