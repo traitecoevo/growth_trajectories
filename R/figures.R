@@ -85,14 +85,29 @@ figure_rate_vs_size_panels <- function(data, type, path) {
   data[["darea_sapwood_darea_leaf"]] <- data[["area_sapwood"]] / data[["area_leaf"]]
   data[["darea_bark_darea_leaf"]] <- data[["area_bark"]] / data[["area_leaf"]]
 
+  get_col <- function(yvar){
+
+    cols <- RColorBrewer::brewer.pal(9, "Set1")
+    switch(yvar,
+      net_mass_production_dt=cols[1],
+      fraction_allocation_growth=cols[2],
+      darea_leaf_dmass_live =cols[3],
+      area_stem_dt =cols[4],
+      area_leaf_dt =cols[5],
+      "black")
+  }
+
   for (v in yvars) {
     filename <- file.path(path, sprintf("%s_%s.pdf", type, v))
-    pdf(filename,width=5, height=5)
-    par(oma=c(0,0,0,0), mar=rep(0.1,4))
+    pdf(filename,width=5, height=6)
+    par(oma=c(0,0,0,0), mar=c(6, 0.1,0.1,0.1))
     plot(data[["height"]], data[[v]], type="l", ann=FALSE, axes=FALSE,
        xlim=c(0, 25),
-  #    ylim=c(0, max(1,data[[type]], na.rm=TRUE)),
-      col="green", lwd=3)
+#       xaxs="i", yaxs = "i",
+      col=get_col(v), lwd=8)
+    if(type == "diameter_stem_dt" || (type == "area_stem_dt"  && v %in% c( "area_leaf_dt", "area_heartwood_dt"))){
+      axis(1, at=seq(0,30, by=10), tck=-0.05, cex.axis=4, mgp=c(3, 4, 0))
+    }
     box()
     dev.off()
   }
@@ -108,6 +123,8 @@ figure_rate_vs_size_data <- function(canopy_openness=1,
 figure_rate_vs_size_cols <- function(type) {
   if (type == "net_mass_production_dt") {
     c("net_mass_production_dt", "yield", "assimilation", "respiration", "turnover")
+  } else if (type == "mass_total_dt") {
+    c("mass_total_dt", "fraction_allocation_growth", "net_mass_production_dt", "mass_heartwood_dt")
   } else if (type == "darea_leaf_dmass_live") {
     c("darea_leaf_dmass_live", "dmass_leaf_darea_leaf", "dmass_sapwood_darea_leaf", "dmass_bark_darea_leaf", "dmass_root_darea_leaf")
   } else if (type == "area_leaf_dt") {
@@ -342,38 +359,35 @@ trait_effects_plot <- function(d) {
   mtext(name_pretty(trait), side=1, line=4, cex=1, outer=TRUE)
 }
 
-figure_mass_fraction <- function() {
-  heights <- seq(1, 50)
-  strategy <- default_strategy()
-  xlab <- "Height (m)"
-  ylab <- "Fraction of live mass"
+figure_mass_fraction <- function(data) {
 
   vars <- c("mass_leaf", "mass_root", "mass_bark", "mass_sapwood",
             "mass_heartwood")
-  cols <- c(mass_leaf="forestgreen", mass_root="tan", mass_bark="orange",
-            mass_sapwood="firebrick2", mass_heartwood="brown")
-  vars <- setdiff(vars, "mass_heartwood")
+  cols <- c(mass_leaf="forestgreen", mass_root="orange", mass_bark="firebrick2",
+            mass_sapwood="brown", mass_heartwood="tan")
 
-  p <- FF16_PlantPlus(strategy)
-  f <- function(h) {
-    p$height <- h
-    x <- unlist(p$internals[vars])
-    cumsum(x) / sum(x)
-  }
-  y <- t(sapply(heights, f))
+  data <- data[!is.na(data[["height"]]), ]
+  heights <- data[["height"]]
+  y <- apply( data[, vars], 1, function(x) { cumsum(x) / sum(x)})
+  y <- t(y)
 
-  par(mar=c(4.1, 4.1, 0.5, 6.1))
-  plot(NA, type="n", xlim=range(heights), ylim=c(0, 1), las=1,
-       xaxs="i", yaxs="i", xlab="Height (m)",
-       ylab="Fraction of live mass")
+  par(mar=c(2.1, 4.1, 0.5, 2))
+  plot(NA, type="n", xlim=c(0, 24), ylim=c(0, 1), las=1,
+       xaxs="i", yaxs="i", xlab="", ylab="", axes=FALSE)
+  axis(1, at = c(0,5,10,15,20), labels = c(0,NA,10,NA,20))
+  axis(2, at = c(0,0.25,0.5,0.75, 1), labels = c(0,NA,0.5,NA,1), las=1)
+
+  #mtext("Height (m)",1, cex=1.5, line=2.5)
+  mtext("Fraction of mass",2, cex=1.25, line=2.5)
+
   for (v in rev(vars)) {
     polygon(c(heights, last(heights), heights[1]), c(y[, v], 0, 0),
             col=cols[[v]], border=cols[[v]])
   }
-  ylast <- c(0, y[nrow(y),])
-  at <- (ylast[-1] + ylast[-length(ylast)]) / 2
-  axis(4, at=at, labels=sub("mass_", "", vars), las=1)
 
+  x <- c(2, 6, 10, 15, 22)
+  y <- c(0.15, 0.195, 0.2, 0.45, 0.8)
+  text(x,y, sub("mass_", "", vars), col="white")
   box()
 }
 

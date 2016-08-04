@@ -24,15 +24,21 @@ targets:
     command: figure_lcp_whole_plant()
     plot: wide
 
-  output/main/mass_fraction.pdf:
-    command: figure_mass_fraction()
-    plot: square
 
   rate_vs_size_data:
     command: figure_rate_vs_size_data()
 
+  output/main/mass_fraction.pdf:
+    command: figure_mass_fraction(rate_vs_size_data)
+    plot:
+      width: 10
+      height: 2
+
   output/con/net_mass_production_dt_net_mass_production_dt.pdf:
     command: figure_rate_vs_size_panels(rate_vs_size_data, I("net_mass_production_dt"), I("output/con"))
+
+  output/con/mass_total_dt_mass_total_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("mass_total_dt"), I("output/con"))
 
   output/con/darea_leaf_dmass_live_darea_leaf_dmass_live.pdf:
     command: figure_rate_vs_size_panels(rate_vs_size_data, I("darea_leaf_dmass_live"), I("output/con"))

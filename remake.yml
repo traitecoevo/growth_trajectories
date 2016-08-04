@@ -103,11 +103,13 @@ targets:
       - downloads/tree.png
       - downloads/seedling.png
       - output/con/net_mass_production_dt_net_mass_production_dt.pdf
+      - output/con/mass_total_dt_mass_total_dt.pdf
       - output/con/darea_leaf_dmass_live_darea_leaf_dmass_live.pdf
       - output/con/height_dt_height_dt.pdf
       - output/con/area_leaf_dt_area_leaf_dt.pdf
       - output/con/area_stem_dt_area_stem_dt.pdf
       - output/con/diameter_stem_dt_diameter_stem_dt.pdf
+      - output/main/mass_fraction.pdf
 
   output/main/allometry.pdf:
     command: figure_assumptions(baad)

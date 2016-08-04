@@ -77,9 +77,13 @@ plot_with_sma_by_var_within_group <- function(data, xvar,yvar,group="vegetation"
 
   col.table <- make.color.table(unique(data[[group]]))
 
+  # dlply <- function(data, group, f, ...) {
+  #   ds <- split(data, data[[group]])
+  #   lapply(ds, f, ...)
+  # }
+
   fits <- dlply(data, group, add.sma.by.group, xvar=xvar, yvar=yvar, col.table=col.table,
     smagroup="species",colorBygroup=group)
-
 
   get.significant.groups <- function(fit, p=0.1){
     if(is.null(fit)) return(FALSE)
