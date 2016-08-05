@@ -9,6 +9,10 @@ default_strategy <- function() {
       )
 }
 
+color_pallete <- function(n) {
+  RColorBrewer::brewer.pal(n, "Blues")
+}
+
 run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
                                time_max=300, filter=FALSE) {
   pl <- FF16_PlantPlus(strategy)
@@ -150,7 +154,7 @@ figure_dY_dt <- function(dat) {
 
   ymax <- max(sapply(dat[traits], function(x) max(x[[vars[2]]], na.rm=TRUE)))
   ylim <- c(0, ymax * 1.1)
-  cols <- rev(RColorBrewer::brewer.pal(length(lai) + 3, "Blues")[-(1:3)])
+  cols <- rev(color_pallete(length(lai) + 3)[-(1:3)])
   par(mfcol=c(length(sizes), length(traits)),
       oma=c(4, 5, 0, 1.5), mar=c(1, 1, 1, 1))
   for (v in traits) {
@@ -173,6 +177,14 @@ figure_dY_dt <- function(dat) {
   legend("topright", paste(rev(lai), "m2"), lty=1, col=cols, bty="n")
 }
 
+
+figure_height_dt_data <- function() {
+  ret <- figure_dY_dt_data(sizes =  c(0.5, 2, 10, 20),
+        vars = c("height", "height_dt")
+        )
+  ret[["label"]] <- function(x) sprintf("H=%sm",x)
+  ret
+}
 
 figure_diameter_stem_dt_data <- function() {
   ret <- figure_dY_dt_data(sizes =  c(0.005, 0.01, 0.1, 0.2),
@@ -268,7 +280,7 @@ figure_lcp_whole_plant <- function() {
     heights <- c(0.1, 2, 10, 20)
     x <- seq_log_range(xlim, 20)
     s <- default_strategy()
-    cols <- RColorBrewer::brewer.pal(length(heights) + 3, "Blues")[-(1:3)]
+    cols <- color_pallete(length(heights) + 3)[-(1:3)]
 
     lcp <- sapply(heights, function(h)
                   lcp_whole_plant_with_trait(trait_matrix(x, trait), h, s))

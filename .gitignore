@@ -1,6 +1,6 @@
 output
 figures
 downloads
-ms.pdf
+ms*.pdf
 .remake
 self

@@ -6,23 +6,30 @@ targets:
   output/main/table-pars.tex:
     command: table_plant_parameters(plant_parameters, target_name)
 
-  output/main/growth_light_mass.pdf:
-    command: figure_dY_dt(mass_above_ground_dt_data)
-    plot: square
+  output/main/growth_light_height.pdf:
+    command: figure_dY_dt(height_dt_data)
+    plot: 3x2
 
-  mass_above_ground_dt_data:
-    command: figure_mass_above_ground_dt_data()
+  height_dt_data:
+    command: figure_height_dt_data()
 
-  output/main/growth_light_dia.pdf:
+  output/SI/growth_light_dia.pdf:
     command: figure_dY_dt(diameter_stem_dt_data)
-    plot: square
+    plot: 3x2
 
   diameter_stem_dt_data:
     command: figure_diameter_stem_dt_data()
 
+  output/SI/growth_light_mass.pdf:
+    command: figure_dY_dt(mass_above_ground_dt_data)
+    plot: 3x2
+
+  mass_above_ground_dt_data:
+    command: figure_mass_above_ground_dt_data()
+
   output/main/max_leaf_above.pdf:
     command: figure_lcp_whole_plant()
-    plot: wide
+    plot: tall
 
 
   rate_vs_size_data:
