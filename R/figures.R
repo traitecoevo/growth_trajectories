@@ -156,9 +156,9 @@ figure_dY_dt <- function(dat) {
   ylim <- c(0, ymax * 1.1)
   cols <- rev(color_pallete(length(lai) + 3)[-(1:3)])
   par(mfcol=c(length(sizes), length(traits)),
-      oma=c(4, 5, 0, 1.5), mar=c(1, 1, 1, 1))
+      oma=c(4, 5, 0, 1.5), mar=c(1, 3, 1, 0.9))
   for (v in traits) {
-    dat_v <- unname(split(dat[[v]], dat[[v]]$class))
+    dat_v <- unname(split(dat$data[[v]], dat$data[[v]]$class))
     for (i in seq_along(sizes)) {
       dsub <- long_to_wide(dat_v[[i]], "canopy_openness",
                            c(v, vars[2]))
@@ -166,7 +166,8 @@ figure_dY_dt <- function(dat) {
               #ylim = ylim,
               xaxt="n", yaxt="n", xlab="", ylab="")
       axis(1, labels=i == length(sizes), las=1)
-      axis(2, labels=v == "lma", las=1)
+      #axis(2, labels=v == "narea", las=1)
+      axis(2, labels = TRUE, las=1)
       if (v == last(traits)) {
         mtext(dat[["label"]](sizes[[i]]), 4, cex=1, line=1)
       }
@@ -204,18 +205,23 @@ figure_mass_above_ground_dt_data <- function() {
 
 figure_dY_dt_data <- function(sizes, vars) {
 
-  vals <- list(lma=seq_log_range(trait_range("lma"), 20),
-               rho=seq_log_range(trait_range("rho"), 20))
+  vals <- list(narea=seq_log_range(trait_range("narea"), 40),
+               lma=seq_log_range(trait_range("lma"), 40),
+               rho=seq_log_range(trait_range("rho"), 40)
+               )
   lai <- c(0, 0.5, 1, 2, 3)
 
-  canopy_openness <- exp(-FF16_Parameters()$k_I * lai)
-  dat_lma <- figure_dY_dt_data_worker(canopy_openness,
-                                           vals$lma, "lma", sizes, vars)
-  dat_rho <- figure_dY_dt_data_worker(canopy_openness,
-                                           vals$rho, "rho", sizes, vars)
-  list(vars = vars, traits=names(vals), lma=dat_lma, rho=dat_rho,
-       sizes=sizes, lai=lai,
-       label = function(x) sprintf("X=%s",x))
+  canopy_openness <- exp(-default_parameters()$k_I * lai)
+  data <- lapply(names(vals), function(x)
+                    figure_dY_dt_data_worker(canopy_openness,
+                                           vals[[x]], x, sizes, vars))
+  names(data) <- names(vals)
+  list(vars = vars,
+      traits=names(vals),
+      data=data,
+      sizes=sizes,
+      lai=lai,
+      label = function(x) sprintf("X=%s",x))
 }
 
 figure_dY_dt_data_worker <- function(canopy_openness,
@@ -272,12 +278,12 @@ lcp_whole_plant_with_trait <- function(x, height,
 }
 
 figure_lcp_whole_plant <- function() {
-  op <- par(oma=c(0, 4, 1, 1), mar=c(4, 1, 1, 1), mfcol=c(1, 2))
-  for (trait in c("lma", "rho")) {
+  op <- par(oma=c(0, 4, 1, 1), mar=c(4, 1, 1, 1), mfrow=c(3, 1))
+  for (trait in c("narea", "lma", "rho")) {
     xlim <- trait_range(trait)
     ylim <- c(0.2, 5)
 
-    heights <- c(0.1, 2, 10, 20)
+    heights <- c(0.5, 2, 10, 20)
     x <- seq_log_range(xlim, 20)
     s <- default_strategy()
     cols <- color_pallete(length(heights) + 3)[-(1:3)]
@@ -289,7 +295,7 @@ figure_lcp_whole_plant <- function() {
     matplot(x, lai, type="l", lty=1, col=cols, log="xy", ylim=ylim,
             xlab=name_pretty(trait), ylab=name_pretty("shading"),
             yaxt="n")
-    axis(2, labels=trait == "lma", las=1)
+    axis(2, labels=TRUE, las=1)
     if (trait == "lma") {
       mtext(name_pretty("shading"), 2, line=3, xpd=NA)
     }

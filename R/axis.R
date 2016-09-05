@@ -1,7 +1,8 @@
 name_pretty <- function(trait) {
   switch(trait,
-         lma=expression(paste("Leaf-construction cost (kg ", m^-2, " )")),
+         lma=expression(paste("Leaf-mass per unit leaf area (kg ", m^-2, " )")),
          rho=expression(paste("Wood density (kg ", m^-3, " )")),
+         narea=expression(paste("Nitrogen per leaf area (kg ", m^-2, " )")),
          hmat="Height at maturation (m)",
          diameter_stem_dt=expression(paste("Diameter growth (m ", yr^-1, ")")),
          shading=expression(paste("Maximum leaf area above (", m^2, " )")),
@@ -24,6 +25,7 @@ trait_range <- function(trait) {
   switch(trait,
          lma=c(0.02, 1.0),
          rho=c(200,  1200),
+         narea =c(5E-4, 2E-2),
          hmat=c(3, 60),
          stop("No standard range for trait ", trait))
 }
