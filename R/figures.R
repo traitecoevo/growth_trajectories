@@ -1,12 +1,220 @@
-default_strategy <- function() {
-  FF16_Strategy(
+##' Hyperparameters for FF16 physiological model
+##' only difference to default hyperpar function is that
+##' kb=ks
+##' @title Hyperparameters for FF16 physiological model
+##' @param lma_0 Central (mean) value for leaf mass per area [kg /m2]
+##' @param B_kl1 Rate of leaf turnover at lma_0 [/yr]
+##' @param B_kl2 Scaling slope for phi in leaf turnover [dimensionless]
+##' @param rho_0 Central (mean) value for wood density [kg /m3]
+##' @param B_dI1 Rate of instantaneous mortality at rho_0 [/yr]
+##' @param B_dI2 Scaling slope for wood density in intrinsic mortality [dimensionless]
+##' @param B_ks1 Rate of sapwood turnover at rho_0 [/yr]
+##' @param B_ks2 Scaling slope for rho in sapwood turnover [dimensionless]
+##' @param B_rs1 CO_2 respiration per unit sapwood volume [mol / yr / m3 ]
+##' @param B_rb1 CO_2 respiration per unit sapwood volume [mol / yr / m3 ]
+##' @param B_f1 Cost of seed accessories per unit seed mass [dimensionless]
+##' @param narea nitrogen per leaf area [kg / m2]
+##' @param narea_0 central (mean) value for nitrogen per leaf area [kg / m2]
+##' @param B_lf1 Potential CO_2 photosynthesis at average leaf nitrogen [mol / d / m2]
+##' @param B_lf2 Curvature of leaf photosynthetic light response curve [dimensionless]
+##' @param B_lf3 Quantum yield of leaf photosynthetic light response curve [dimensionless]
+##' @param B_lf4 CO_2 respiration per unit leaf nitrogen [mol / yr / kg]
+##' @param B_lf5 Scaling exponent for leaf nitrogen in maximum leaf photosynthesis [dimensionless]
+##' @param k_I light extinction coefficient [dimensionless]
+##' @param latitude degrees from equator (0-90), used in solar model [deg]
+##' @export
+make_hyperpar2 <- function(
+                                lma_0=0.1978791,
+                                B_kl1=0.4565855,
+                                B_kl2=1.71,
+                                rho_0=608.0,
+                                B_dI1=0.01,
+                                B_dI2=0.0,
+                                B_ks1=0.2,
+                                B_ks2=0.0,
+                                B_rs1=4012.0,
+                                B_rb1=2.0*4012.0,
+                                B_f1 =3.0,
+                                narea=1.87e-3,
+                                narea_0=1.87e-3,
+                                B_lf1=5120.738 * 1.87e-3 * 24 * 3600 / 1e+06,
+                                B_lf2=0.5,
+                                B_lf3=0.04,
+                                B_lf4=21000,
+                                B_lf5=1,
+                                k_I=0.5,
+                                latitude=0) {
+  assert_scalar <- function(x, name=deparse(substitute(x))) {
+    if (length(x) != 1L) {
+      stop(sprintf("%s must be a scalar", name), call. = FALSE)
+    }
+  }
+  assert_scalar(lma_0)
+  assert_scalar(B_kl1)
+  assert_scalar(B_kl2)
+  assert_scalar(rho_0)
+  assert_scalar(B_dI1)
+  assert_scalar(B_dI2)
+  assert_scalar(B_ks1)
+  assert_scalar(B_ks2)
+  assert_scalar(B_rs1)
+  assert_scalar(B_rb1)
+  assert_scalar(B_f1)
+  assert_scalar(narea)
+  assert_scalar(narea_0)
+  assert_scalar(B_lf1)
+  assert_scalar(B_lf2)
+  assert_scalar(B_lf3)
+  assert_scalar(B_lf4)
+  assert_scalar(B_lf5)
+  assert_scalar(k_I)
+  assert_scalar(latitude)
+
+  function(m, s, filter=TRUE) {
+    with_default <- function(name, default_value=s[[name]]) {
+      rep_len(if (name %in% colnames(m)) m[, name] else default_value,
+              nrow(m))
+    }
+    lma       <- with_default("lma")
+    rho       <- with_default("rho")
+    omega     <- with_default("omega")
+    narea     <- with_default("narea", narea)
+
+    ## lma / leaf turnover relationship:
+    k_l   <- B_kl1 * (lma / lma_0) ^ (-B_kl2)
+
+    ## rho / mortality relationship:
+    d_I  <- B_dI1 * (rho / rho_0) ^ (-B_dI2)
+
+    ## rho / wood turnover relationship:
+    k_s  <- B_ks1 *  (rho / rho_0) ^ (-B_ks2)
+    k_b <- k_s
+
+    ## rho / sapwood respiration relationship:
+
+    ## Respiration rates are per unit mass, so this next line has the
+    ## effect of holding constant the respiration rate per unit volume.
+    ## So respiration rates per unit mass vary with rho, respiration
+    ## rates per unit volume don't.
+    r_s <- B_rs1 / rho
+    # bark respiration follows from sapwood
+    r_b <- B_rb1 / rho
+
+    ## omega / accessory cost relationship
+    a_f3 <- B_f1 * omega
+
+    ## Narea, photosynthesis, respiration
+
+    assimilation_rectangular_hyperbolae <- function(I, Amax, theta, QY) {
+      x <- QY * I + Amax
+      (x - sqrt(x^2 - 4 * theta * QY * I * Amax)) / (2 * theta)
+    }
+
+    ## Photosynthesis  [mol CO2 / m2 / yr]
+    approximate_annual_assimilation <- function(narea, latitude) {
+      E <- seq(0, 1, by=0.02)
+      ## Only integrate over half year, as solar path is symmetrical
+      D <- seq(0, 365/2, length.out = 10000)
+      I <- plant:::PAR_given_solar_angle(plant:::solar_angle(D, latitude = abs(latitude)))
+
+      Amax <- B_lf1 * (narea/narea_0) ^  B_lf5
+      theta <- B_lf2
+      QY <- B_lf3
+
+      AA <- NA * E
+
+      for (i in seq_len(length(E))) {
+        AA[i] <- 2 * plant:::trapezium(D, assimilation_rectangular_hyperbolae(
+                                    k_I * I * E[i], Amax, theta, QY))
+      }
+      if(all(diff(AA) < 1E-8)) {
+        # line fitting will fail if all have are zero, or potentially same value
+        ret <- c(last(AA), 0)
+        names(ret) <- c("p1","p2")
+      } else {
+        fit <- nls(AA ~ p1 * E/(p2 + E), data.frame(E = E, AA = AA), start = list(p1 = 100, p2 = 0.2))
+        ret <- coef(fit)
+      }
+      ret
+    }
+
+    # This needed in case narea has length zero, in which case trapezium fails
+    a_p1 <- a_p2 <- 0 * narea
+    ## TODO: Remove the 0.5 hardcoded default for k_I here, and deal
+    ## with this more nicely.
+    if (length(narea) > 0 || k_I != 0.5) {
+      i <- match(narea, unique(narea))
+      y <- vapply(unique(narea), approximate_annual_assimilation,
+                  numeric(2), latitude)
+      a_p1  <- y["p1", i]
+      a_p2  <- y["p2", i]
+    }
+
+    ## Respiration rates are per unit mass, so convert to mass-based
+    ## rate by dividing with lma
+    ## So respiration rates per unit mass vary with lma, while
+    ## respiration rates per unit area don't.
+    r_l  <- B_lf4 * narea / lma
+
+    extra <- cbind(k_l,                # lma
+                   d_I, k_s, k_b, r_s, r_b, # rho
+                   a_f3,               # omega
+                   a_p1, a_p2,         # narea
+                   r_l)                # lma, narea
+
+    overlap <- intersect(colnames(m), colnames(extra))
+    if (length(overlap) > 0L) {
+      stop("Attempt to overwrite generated parameters: ",
+           paste(overlap, collapse=", "))
+    }
+
+    ## Filter extra so that any column where all numbers are with eps
+    ## of the default strategy are not replaced:
+    if (filter) {
+      if (nrow(extra) == 0L) {
+        extra <- NULL
+      } else {
+        pos <- diff(apply(extra, 2, range)) == 0
+        if (any(pos)) {
+          eps <- sqrt(.Machine$double.eps)
+          x1 <- extra[1, pos]
+          x2 <- unlist(s[names(x1)])
+          drop <- abs(x1 - x2) < eps & abs(1 - x1/x2) < eps
+          if (any(drop)) {
+            keep <- setdiff(colnames(extra), names(drop)[drop])
+            extra <- extra[, keep, drop=FALSE]
+          }
+        }
+      }
+    }
+
+    if (!is.null(extra)) {
+      m <- cbind(m, extra)
+    }
+    m
+  }
+}
+
+default_parameters <- function() {
+
+  s <- FF16_Strategy(
     hmat = 30.0,
     a_f1 = 0.8,
     a_f2 = 20,
     a_l1 = 2.17,
     a_l2 = 0.546,
-    k_l  = 0.4565855 / 3
-      )
+    k_l  = 0.4565855 / 3)
+
+  FF16_Parameters(
+    hyperpar=make_hyperpar2(B_ks2=1.25),
+    strategy_default = s
+    )
+}
+
+default_strategy <- function() {
+
+  p <- default_parameters()
+  p$strategy_default
 }
 
 color_pallete <- function(n) {
@@ -23,7 +231,7 @@ run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
 
 extract_plant_info <- function(plant, env) {
   if (is.null(plant)) {
-    x <- unlist(FF16_PlantPlus(FF16_Strategy())$internals)
+    x <- unlist(FF16_PlantPlus(default_strategy())$internals)
     x[] <- NA_real_
   } else {
     plant$compute_vars_phys(env)
@@ -38,10 +246,8 @@ extract_plant_info <- function(plant, env) {
 
 ## Code for trait derivative figure
 ## TODO: Can grader help here?
-figure_trait_derivative <- function(type, trait_name="lma", canopy_openness=1,
-                                    strategy=default_strategy()) {
-  p0 <- FF16_Parameters(strategy_default=strategy)
-  ## strategy(trait_matrix( traits, p)
+figure_trait_derivative <- function(type, trait_name="lma", canopy_openness=1) {
+  strategy <- default_strategy()
 
   ## TODO: This seems tragically broken because it apparently computes
   ## derivative with a value at 0.05 regardless of the trait?  I've
@@ -180,7 +386,7 @@ figure_dY_dt <- function(dat) {
 
 
 figure_height_dt_data <- function() {
-  ret <- figure_dY_dt_data(sizes =  c(0.5, 2, 10, 20),
+  ret <- figure_dY_dt_data(sizes =  c(0.5, 2, 10, 15, 20),
         vars = c("height", "height_dt")
         )
   ret[["label"]] <- function(x) sprintf("H=%sm",x)
@@ -228,7 +434,6 @@ figure_dY_dt_data_worker <- function(canopy_openness,
                                           trait_values, trait_name,
                                           sizes,
                                           vars) {
-  p0 <- FF16_Parameters(strategy_default=default_strategy())
   ## The innermost function "run_trait_in_environment" runs a single
   ## trait in a single light environment.
   ##
@@ -236,7 +441,8 @@ figure_dY_dt_data_worker <- function(canopy_openness,
   ## traits (trait_values) in a single light environment.
   run_traits_in_environment <- function(canopy_openness) {
     run_trait_in_environment <- function(trait_value) {
-      s <- strategy(trait_matrix(trait_value, trait_name), p0)
+      s <- strategy(trait_matrix(trait_value, trait_name),
+              default_parameters())
       res <- run_plant_to_sizes(sizes, vars[1], s, env)
       tmp <- cbind(trait_value)
       colnames(tmp) <- trait_name
@@ -270,9 +476,8 @@ plant_list_set_height <- function(x, height) {
   invisible(x)
 }
 
-lcp_whole_plant_with_trait <- function(x, height,
-                                       strategy=default_strategy()) {
-  plants <- plant_list(x, FF16_Parameters(strategy_default=strategy))
+lcp_whole_plant_with_trait <- function(x, height) {
+  plants <- plant_list(x, default_parameters())
   plant_list_set_height(plants, height)
   sapply(plants, lcp_whole_plant)
 }
@@ -283,14 +488,13 @@ figure_lcp_whole_plant <- function() {
     xlim <- trait_range(trait)
     ylim <- c(0.2, 5)
 
-    heights <- c(0.5, 2, 10, 20)
-    x <- seq_log_range(xlim, 20)
-    s <- default_strategy()
+    heights <- c(0.5, 2, 10, 15, 20)
+    x <- seq_log_range(xlim, 60)
     cols <- color_pallete(length(heights) + 3)[-(1:3)]
 
     lcp <- sapply(heights, function(h)
-                  lcp_whole_plant_with_trait(trait_matrix(x, trait), h, s))
-    lai <- log(lcp) / (-FF16_Parameters()$k_I)
+                  lcp_whole_plant_with_trait(trait_matrix(x, trait), h))
+    lai <- log(lcp) / (-default_parameters()$k_I)
 
     matplot(x, lai, type="l", lty=1, col=cols, log="xy", ylim=ylim,
             xlab=name_pretty(trait), ylab=name_pretty("shading"),
@@ -329,10 +533,8 @@ trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
   trait_values <- seq_log_range(trait_range(trait_name), 50)
   traits <- trait_matrix(trait_values, trait_name)
 
-  ## OK, strategy_list has totally changed; we need a Parameters
-  ## object apparently.
-  p <- FF16_Parameters(strategy_default=default_strategy())
-  ss <- strategy_list(traits, p)
+  ## We need a Parameters object apparently.
+  ss <- strategy_list(traits, default_parameters())
   dat <- lapply(ss, f)
 
   dat <- vector("list", length(ss))
