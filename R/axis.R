@@ -5,7 +5,7 @@ name_pretty <- function(trait) {
          narea=expression(paste("Nitrogen per leaf area (kg ", m^-2, " )")),
          hmat="Height at maturation (m)",
          diameter_stem_dt=expression(paste("Diameter growth (m ", yr^-1, ")")),
-         shading=expression(paste("Maximum leaf area above (", m^2, " )")),
+         shading="WPLCP (0-1)",
          leaf_turnover=expression(paste("Leaf turnover rate (", yr^-1, " )")),
 
          height_dt=expression(paste("Height growth (m ", yr^-1, " )")),

@@ -15,7 +15,86 @@ nice_colors <- function(n = 80) {
   cols[1:n]
 }
 
+# Color settings
+my_cols <- function() {
+  c("#01ABE9","#1B346C","#F34B1A")  # Zissou palette, from http://wesandersonpalettes.tumblr.com/
+}
+
 make_transparent <- function(col, opacity = 0.5) {
   tmp <- col2rgb(col)/255
   rgb(tmp[1, ], tmp[2, ], tmp[3, ], alpha = opacity)
+}
+
+
+axis.log10 <- function(side=1, horiz=FALSE, labels=TRUE, baseAxis = TRUE, wholenumbers=T, labelEnds=T,las=1, at=NULL) {
+
+  fg <- par("fg")
+
+  if(is.null(at)){
+
+    #get range on axis
+    if(side ==1 | side ==3) {
+      r <- par("usr")[1:2]   #upper and lower limits of x-axis
+    } else {
+      r <- par("usr")[3:4] #upper and lower limits of y-axis
+    }
+
+    #make pertty intervals
+    at <- pretty(r)
+    #drop ends if desirbale
+    if(!labelEnds)
+      at <- at[at > r[1] & at < r[2]]
+  }
+  #restrict to whole numbers if desriable
+  if(wholenumbers)
+    at<-at[is.wholenumber(at)]
+
+  lab <- do.call(expression, lapply(at, function(i) bquote(10^.(i))))
+
+  #convert at if
+  if(baseAxis)
+    at<-10^at
+
+  #make labels
+  if ( labels )
+    axis(side, at=at, lab, col=if(horiz) fg else NA,
+         col.ticks=fg, las=las)
+  else
+    axis(side, at=at, FALSE, col=if(horiz) fg else NA,
+         col.ticks=fg, las=las)
+}
+
+is.wholenumber <-  function(x, tol = .Machine$double.eps^0.5) {
+  abs(x - round(x)) < tol
+}
+
+colour.by.category <- function(x, table) {
+ unname(table[x])
+}
+
+
+label <- function(text, px=0.03, py=NULL, ..., adj=c(0, 1)) {
+  if (is.null(py)) {
+    fin <- par("fin")
+    r <- fin[[1]] / fin[[2]]
+    if (r > 1) { # x is longer.
+      py <- 1 - px
+      px <- (1 - py) / r
+    } else {
+      py <- 1 - px * r
+    }
+  }
+  usr <- par("usr")
+  x <- usr[1] + px*(usr[2] - usr[1])
+  y <- usr[3] + py*(usr[4] - usr[3])
+
+  ## NOTE: base 10 log:
+  if (par("xlog")) {
+    x <- 10^x
+  }
+  if (par("ylog")) {
+    y <- 10^y
+  }
+
+  text(x, y, text, adj=adj, xpd=NA, ...)
 }

@@ -70,7 +70,7 @@ In this paper we show how a new mechanistic framework -- called {\plant} \citep{
 
 We build on the widespread approach used in many vegetation models of explicitly modelling the amounts in different tissues within the plant \citep[e.g.][]{Givnish-1988, Makela-1997, Moorcroft-2001, Sitch-2008, Falster-2011, King-2011, DeKauwe-2014} (Fig. \ref{fig:conceptual}a). Here we consider the masses $M_i$, areas $A_i$, and diameters $D_i$ of tissues, with the subscript $i$ indicating: l=leaf, b=bark and phloem, s=sapwood, h=heartwood, r=root, a=live (l+b+s+r), t=total (l+b+s+h+r), and st=stem total (s+b+h). The total mass of living tissue is then $M_{\rm a}=M_{\rm l}+M_{\rm b}+M_{\rm s}+M_{\rm r}$, and the standing mass of the plant is $M_{\rm t}=M_{\rm a}+M_{\rm h}$. A full list of variables, units and definitions is given in Table \ref{tab:definitions} and Table \ref{tab:traits}, with further detail on the parameter values applied given in Table \ref{tab:params}.
 
-We assume growth is fundamentally driven by energy income and subsequent distribution throughout the plant. According to a standard model, the amount of biomass available for growth, ${\rm d}B / {\rm d}t$ is given by the difference between income (photosynthesis) and losses (respiration and turnover) within the plant \citep{Makela-1997, Thornley-2000} (Fig. \ref{fig:conceptual}a, eqn \ref{eq:dbdt}). Photosynthesis is proportional to the average photosynthetic rate per unit leaf area $\bar{p}$ and total leaf area, $A_{\rm l} = M_{\rm l} / \phi$, where $\phi$ is leaf mass per leaf area. The constant $y$ in eqn \ref{eq:dbdt} converts mol CO$_2$ into units of biomass. We assume that  that $\bar{p}$ increases with light but with diminishing returns, and respiration and turnover rates of different tissues are constants that might differ by trait (see below). While many vegetation models use a detailed physiological model for calculating $\bar{p}$ and $r_{\rm i}$, e.g. as functions of temperature, such detail is not needed here. Even with detailed models, ${\rm d}B / {\rm d}t$ always comes down to simple subtraction of income and losses.
+We assume growth is fundamentally driven by energy income and subsequent distribution throughout the plant. According to a standard model, the amount of biomass available for growth, ${\rm d}B / {\rm d}t$ is given by the difference between income (photosynthesis) and losses (respiration and turnover) within the plant \citep{Makela-1997, Thornley-2000} (Fig. \ref{fig:conceptual}a, eqn \ref{eq:dbdt}). Photosynthesis is proportional to the average photosynthetic rate per unit leaf area $\bar{p}$ and total leaf area, $A_{\rm l} = M_{\rm l} / \phi$, where $\phi$ is leaf mass per leaf area. The constant $y$ in eqn \ref{eq:dbdt} converts mol CO$_2$ into units of biomass. We assume that $\bar{p}$ increases with light but with diminishing returns, and respiration and turnover rates of different tissues are constants that might differ by trait (see below). While many vegetation models use a detailed physiological model for calculating $\bar{p}$ and $r_{\rm i}$, e.g. as functions of temperature, such detail is not needed here. Even with detailed models, ${\rm d}B / {\rm d}t$ always comes down to simple subtraction of income and losses.
 
 \subsection{Decomposing of growth rates into components}
 
@@ -83,6 +83,13 @@ The growth rate in total standing mass of the plant, $\frac{{\rm d}M_{{\rm t}}}{
 The remaining growth rates (eqns \ref{eq:daldt}-\ref{eq:dDdt}) all depend on another variable, $\frac{{\rm d}A_{\rm l}} {{\rm d}M_{\rm a}}$, that accounts for the marginal cost of deploying an additional unit of leaf area, including construction of the leaf itself and support tissues of bark, sapwood and roots (eqn \ref{eq:daldmt}). The inverse of this term, $\frac{{\rm d}M_{\rm a} }{{\rm d}A_{\rm l}}$, is the whole plant construction cost per unit leaf area, which can be further decomposed as a sum of tissue-level construction costs per unit of leaf area, with one of these being $\phi = \frac{{\rm d}M_{\rm l} }{{\rm d}A_{\rm l}}$: the trait leaf mass per area.
 
 The rate of height growth (eqn \ref{eq:dhdt}) depends on an additional term, $\frac{{\rm d}H }{{\rm d}A_{\rm l}}$: the growth in plant height per unit growth in leaf area. This variable accounts for the architectural strategy of the plant. Some species tend to leaf out more than grow tall, while other species emphasise vertical extension \citep{Poorter-2006}. Meanwhile, basal area ($A_{\rm st}$) increment can be expressed as the sum of increments in sapwood, bark \& heartwood areas ($A_{\rm s}, A_{\rm b}, A_{\rm h}$ respectively): $\frac{{\rm d}A_{\rm st}}{{\rm d}t}= \frac{{\rm d}A_{\rm b}}{{\rm d}t} + \frac{{\rm d}A_{\rm s}}{{\rm d}t} + \frac{{\rm d}A_{\rm h}}{{\rm d}t}$. These in turn are related to ratios of sapwood or bark area per leaf area, and sapwood turnover (see eqn \ref{eq:dast}). Finally, diameter growth is then given by the geometric relationship between stem diameter ($D$) and $A_{\rm st}$ (eqn \ref{eq:dDdt}).
+
+\subsection{Shade tolerance}
+A useful measure of a plant's shade tolerance is the point at which photosynthetic gains just balance the costs of tissue turnover and respiration \citep{Givnish-1988,Baltzer-2007,Lusk-2013}, sometimes referred to as the the ``whole-plant light compensation point'' (\wplcp{}).  In general, the average assimilation rate per leaf area $\bar{p}$ is expected to increase with light level or canopy openness, $E$. The \wplcp can be estimated by solving the value of $E=E^*$ where $\frac{{\rm d}B} {{\rm d}t}(E)$ from eqn \ref{eq:dbdt} is zero, which occurs when:
+\begin{equation}\label{eq:wplcp}
+\bar{p}(E^*) =\frac{\sum \, M_{\rm i} \left(k_{\rm i} y + r_{\rm i}\right)}{A_{\rm l}}.
+\end{equation}
+Here $\bar{p}(E)$ is the rate of photosynthesis at canopy openness $E$. Below we express
 
 \subsection{A functional-balance model for plant construction}
 
@@ -97,7 +104,7 @@ As noted above, most of eqns in Fig. \ref{fig:conceptual} arise as mathematical 
 
 Assumption 1 accounts for the architectural layout of the plant. Assumptions 2-4 are implementations of the pipe model \citep{Shinozaki-1964}, whereby the area of conducting tissues are proportional to leaf area. To describe the vertical distribution of leaf area within the canopy of an individual plant, we follow the model of \citet{Yokozawa-1995}, which can account for a variety of canopy profiles through a single parameter $\eta_c$, varying from 0-1. Low values result in a conical canopy, as seen in many conifers, while higher values give a top-weighted canopy profile similar to those seen among angiosperms.
 
-The functional-balance assumptions are well-supported by data, at least to first approximation. Fig. \ref{fig:assumptions} shows data sourced from the Biomass and Allometry Database (\textsc{baad}) \citep{Falster-2015b}, which includes records for 21084 individuals on 656 species for various size metrics of individual plants. Dashed lines indicate the slope of predictions under functional-balance assumptions in Table \ref{tab:allometry}a. As is evident, the lines fitted within each species roughly align with predicted functional-balance assumption.
+The functional-balance assumptions are well-supported by data, at least to first approximation. Fig. \ref{fig:assumptions} shows data sourced from the Biomass and Allometry Database (\textsc{baad}) \citep{Falster-2015b}, which includes records for 21084 individuals on 656 species for various size metrics of individual plants. Dashed lines indicate the slope of predictions under functional-balance assumptions in Table \ref{tab:allometry}a. As is evident, the lines fitted within each species roughly align with predicted functional-balance assumption Fig. \ref{fig:assumptions}a-c.
 
 Combined, these assumptions in Table \ref{tab:allometry}a lead directly to equations describing the mass of sapwood and bark in relation to leaf, and the amount of leaf in relation to height (Table \ref{tab:allometry}b). Substituting from Table \ref{tab:allometry} into eqns \ref{eq:dhdt}, \ref{eq:dast}, \ref{eq:dDdt} then gives a the necessary components in Fig. \ref{fig:conceptual} and thereby an explicit model for plant growth in relation to size. Note also that no assumptions are made about the diameter and total mass of the stem in relation to other components, e.g. height: these relationships arise as emergent properties, via integrating stem turnover (eqns \ref{eq:ha}- \ref{eq:hm}).
 
@@ -105,7 +112,7 @@ The most important prediction arising from the eqns in Table \ref{tab:allometry}
 \begin{equation}\label{eq:msml}
 \frac{M_{\rm b} + M_{\rm s}}{A_{\rm l}} = (1+ \alpha_{\rm b1}) \,\theta \, \rho \, \eta_c \, H.
 \end{equation}
-Note that $\alpha_{\rm b1}, \theta, \rho, \eta_c$ are traits, i.e. properties that are assumed approximately constant through ontogeny, so that their product is a constant. Again, the predicted relationship is supported by available data from the \textsc{baad} (Fig. \ref{fig:support_costs}).
+Note that $\alpha_{\rm b1}, \theta, \rho, \eta_c$ are traits, i.e. properties that are assumed approximately constant through ontogeny, so that their product is a constant. Again, the predicted relationship is supported by available data from the \textsc{baad} (Fig. \ref{fig:assumptions}d).
 
 \subsection{Trait-based trade-offs}
 
@@ -201,7 +208,7 @@ Variation in $\phi$ also moderates the response of growth to changes in light, w
 
 \subsection{Shade tolerance}
 
-Define as \textsc{wplcp}
+
 
 Second, species with low $\phi$ and low $\rho$ are predicted to be less shade tolerant (Fig. \ref{fig:wplcp}). At low $\phi$ ($\rho$), leaf (sapwood) turnover is higher and thus a greater light income is needed to offset these costs. As previously suggested \citep{Givnish-1988}, shade-tolerance also decreases with height because as size increase, the total amount of energy needed to offset respiratory and turnover costs in the stem also increases. These finding matches well known empirical patterns, where both $\phi$ and $\rho$ have been linked to shade tolerance \citep{Poorter-2006, Lusk-2008,Osunkoya-1996}.
 
@@ -249,7 +256,7 @@ Assumes low lma and wd used to reduce costs of building leaf and stem, ie. total
 \begin{itemize}
   \item \citet{Ishihara-2016}
   \item  \citet{Enquist-2007}: sla and wd increase mass-production, where as in our theory effects on mass production are negative. (also contradicts earlier model from \citet{Enquist-1999}, where argued wood density had no effect on mass production)
-  \item \citet{Ryan-2006}: reviewed evidence for hydraulic limitation of tree height. Designed to explain decrease in height growth rate for trees. Found mixed support: some species experience decreases in physiological function with height, especially very large species \citep{Koch-2004}, but certainly not not all species \citep{Ryan-2006}. Important to emphasise that demographic patterns observed by \citep{Ryan-2006} (decreases in height growth rate, no decrease in biomass growth) predicted from theory here, without invoking hydraulic limitation. So hydraulic limitation may amplify size related effects but not root cause.
+  \item \citet{Ryan-2006}: reviewed evidence for hydraulic limitation of tree height. Designed to explain decrease in height growth rate for trees. Found mixed support: some species experience decreases in physiological function with height, especially very large species \citep{Koch-2004}, but certainly not all species \citep{Ryan-2006}. Important to emphasise that demographic patterns observed by \citep{Ryan-2006} (decreases in height growth rate, no decrease in biomass growth) predicted from theory here, without invoking hydraulic limitation. So hydraulic limitation may amplify size related effects but not root cause.
   \item \citet{King-2005} Section 3.3 of King  shows that the cost of turning over leaves, branches and fine roots may halve the height growth rate that could otherwise be attained. \citet{King-1999} also predicts a change in the SLA optimising growth rate, via a cross correlation with self shading. Basically, the much greater path length from roots to leaves in trees vs. seedlings results in a much greater increment in support cost per increment in crown area for trees. This explanation is treated by the growth model of \citet{King-1999}, which predicts that the SLA maximizing growth rate declines as seedlings grow larger, even before the onset of leaf turnover.
   \item \citet{King-1999}:
   \item \citet{Li-2014}:
@@ -260,7 +267,7 @@ Assumes low lma and wd used to reduce costs of building leaf and stem, ie. total
 
 The only potentially controversial element of in eqn \ref{eq:dbdt} is that it assumes tissues lost via turnover are replaced before energy is allocated to either new growth (i.e. growth that leads to a net increase in $M_{\rm l}, M_{\rm b}, M_{\rm s}$ or $M_{\rm r}$ or reproduction \citep{Thornley-2000}. This assumption is likely to hold true for most woody plants and perennials, but may not hold for some herbs or annuals, where the switch to reproduction often entails run-down in the vegetative part of the plant (refs XX).
 
-In what follows, the assumption of exact isometry is non-critical, what matters is that the amount of live biomass (i.e. excluding heartwood) needed to support an extra unit of leaf area increases with height (as Fig. \ref{fig:support_costs}).  Note that similar increases in construction and maintenance costs with plant size are embedded within various models of plant function \citep[e.g.][]{Givnish-1988, Makela-1997}.
+In what follows, the assumption of exact isometry is non-critical, what matters is that the amount of live biomass (i.e. excluding heartwood) needed to support an extra unit of leaf area increases with height (as Fig. \ref{fig:assumptions}d).  Note that similar increases in construction and maintenance costs with plant size are embedded within various models of plant function \citep[e.g.][]{Givnish-1988, Makela-1997}.
 
 
 The list of functional traits that are known to differ among plant species is already long and ever-increasing. However, far fewer have well established tradeoffs.
@@ -536,46 +543,36 @@ size. \label{fig:conceptual}}
 \centering
 \includegraphics{main/assumptions.pdf}
 \caption{\textbf{Key assumptions of a functional balance model for plant construction}. Data are from the \textsc{baad} \citep{Falster-2015b}. Each dot is a single plant. Lines show standardised major axis lines fitted by species, with intensity of shading adjusted according to strength of the relationship. Dashed lines indicate slope of predictions under functional-balance assumptions in Table \ref{tab:allometry}. 
+The dark line shows the relationship assumed in this paper.
 \label{fig:assumptions}}
 \end{figure}
 
-\begin{figure}[ht]
-\centering
-\includegraphics{main/support_costs.pdf}
-\caption{\textbf{Amount of live stem tissue per unit leaf area increases with plant height}. Data are from the \textsc{baad} \citep{Falster-2015b}. Each dot is a single plant. Plants \textless{}  1m tall were assumed to have no heartwood. Lines show standardised major axis lines fitted by species, with intensity of shading adjusted according to strength of the relationship. Dashed lines indicate slope of 1, being the prediction of the model in Table \ref{tab:allometry}. The dark line shows the relationship assumed in this paper.
-\label{fig:support_costs}}
-\end{figure}
 \newpage
 
 \begin{figure}[ht]
 \centering
 \includegraphics{main/growth_light_height.pdf}
-\caption{\textbf{Effects of some traits on height growth changes with plant size.} Panels show predicted relationship between specific trait and height growth rate, for a plant of specified height and under a range of shading environments.
+\caption{\textbf{Three different responses of growth rate to changes in size, with traits.} Panels show predicted relationship between specific trait and height growth rate, for a plant of specified height and under a range of shading environments.
 \label{fig:growth_light_height}}
 \end{figure}
 
+% \newpage
+
+% \begin{figure}[ht]
+% \centering
+% \includegraphics{main/max_leaf_above.pdf}
+% \caption{\textbf{The effect of traits on growth changes with size and
+% light environment.} Traits moderate the responsiveness of growth to changes in light
+% environmentThis figure needs to show more of key result with respect to size.
+% Possibly separate figure. \label{fig:shifts}}
+% \end{figure}
 
 \newpage
 
 \begin{figure}[ht]
 \centering
 \includegraphics{main/max_leaf_above.pdf}
-\caption{\textbf{The effect of traits on growth changes with size and
-light environment.} Traits moderate the responsiveness of growth to changes in light
-environmentThis figure needs to show more of key result with respect to to size.
-Possibly separate figure. \label{fig:shifts}}
-\end{figure}
-
-\newpage
-
-\begin{figure}[ht]
-\centering
-\includegraphics{main/max_leaf_above.pdf}
-\caption{\textbf{Low construction cost leads to shade intolerance,
-because of costs of high turnover.} Panels show effect of traits on
-maximum amount of shading that can be endured before net production (eqn
-\ref{eq:dbdt}) reaches zero. Lines indicate relationship for plants of a
-given height. \label{fig:wplcp}}
+\caption{\textbf{Effect of traits on shade tolerance.} Panels show effect of traits on maximum amount of shading that can be endured before net production (eqn \ref{eq:dbdt}) reaches zero. Lines indicate relationship for plants of a given height. \label{fig:wplcp}}
 \end{figure}
 
 \clearpage

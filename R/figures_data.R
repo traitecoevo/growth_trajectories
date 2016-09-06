@@ -120,13 +120,14 @@ plot_with_sma_by_spp <- function(data, xvar, yvar, location=NULL, isoclines=NULL
 
   fit <- sma(data[[yvar]]~data[[xvar]]*data[["species"]], log="xy")
 
-  plot(fit, type='l', col=cols[9], p.lines.transparent=0.1, add=TRUE,..., lwd=1)
+  plot(fit, type='l', col=cols[8], p.lines.transparent=0.1, add=TRUE,..., lwd=1)
 
   invisible(fit)
 }
 
 
 figure_assumptions <- function(baad){
+
 
   data <- baad[["data"]]
 
@@ -138,34 +139,37 @@ figure_assumptions <- function(baad){
   i <- is.na(data[["sap"]]) & !is.na(data[["a.stba"]]) & !is.na(data[["h.t"]]) & data[["h.t"]] < 1
   data[["sap"]][i] <- data[["a.stba"]][i]/(1.2)
 
-  xlim <- c(5E-6, 1E4)
+  xlim <- c(1E-5, 1E4)
 
-  par(mfrow = c(3,1), mar=c(5, 5, 0.5, 0.5), oma=c(0,0,3,0))
+  mylabel <- function(txt) label(txt, -0.25, 1.1, xpd=NA, cex=1.5)
+  s <- default_strategy()
+  x <- seq_log_range(c(1E-6, 2E6), 100)
+
+  par(mfrow = c(2,2), mar=c(5, 7, 3, 0.5), oma=c(0,0,0,0))
   plot_with_sma_by_spp(data,"a.lf", "h.t",
     ylim=c(1.5E-3, 1.5E2), xlim=xlim,
-    ylab="Height (m)", xlab=NULL,location="topleft",
+    ylab="Height (m)", xlab=expression(paste("Leaf area (",m^2,")")), location="topleft",
     isoclines=0.5, A= seq(-10,10))
-  mtext("a) Architectural layout", 3, line=1)
+
+  lines(x, s$a_l1*x^s$a_l2, lwd=2)
+  mylabel("a) Architectural layout")
   legend("bottomright", legend = "Slope = 0.5", bty = "n", cex=1)
 
   plot_with_sma_by_spp(data,"a.lf", "sap",
     xlim=xlim, ylim=c(1E-9, 1E1),
-    ylab=expression(paste("Sapwood area (",m^2,")")), xlab=NULL,location="topleft",
+    ylab=expression(paste("Sapwood area (",m^2,")")), xlab=expression(paste("Leaf area (",m^2,")")),location="topleft",
     isoclines=1, A= seq(-15,10, by=2))
-  mtext("b) Pipe model", 3, line=1)
+  lines(x, s$theta*x, lwd=2)
+  mylabel("b) Pipe model")
   legend("bottomright", legend = "Slope = 1", bty = "n", cex=1)
 
   plot_with_sma_by_spp(data,"a.lf", "m.rt",
     xlim=xlim, ylim=c(1E-8, 1E2),
     ylab="Mass of fine roots (kg)", xlab=expression(paste("Leaf area (",m^2,")")),location="topleft",
     isoclines=1, A= seq(-10,10, by=2))
-  mtext("c) Roots", 3, line=1)
+  lines(x, s$a_r1*x, lwd=2)
+  mylabel("c) Roots")
   legend("bottomright", legend = "Slope = 1", bty = "n", cex=1)
-
-}
-
-
-figure_support_per_leaf_area <- function(baad){
 
   data <- baad[["data"]]
 
@@ -179,67 +183,15 @@ figure_support_per_leaf_area <- function(baad){
 
   plot_with_sma_by_spp(data,"h.t", "msal",
     xlim=c(1E-3, 1E2), ylim=c(1E-4, 1E1),
-    ylab=expression(paste("Mass of sapwood and bark per unit leaf area (kg ",m^-2,")")), xlab="Height (m)",location="topleft",
+    ylab=expression(paste("Mass sapwood + bark / leaf area (kg ",m^-2,")")), xlab="Height (m)",location="topleft",
     isoclines=1, A= seq(-10,10, by=1))
 
   # Now plot expected relationship from model
   # Ms = (1+a_b1)*theta*rho*eta_c*Al*H --> ms/al = (1+a_b1)*theta*rho*eta_c*H
-  x <- seq_log_range(c(1E-3, 2E2), 100)
-  s <- default_strategy()
   eta_c <- 1 - 2/(1 + s$eta) + 1/(1 + 2*s$eta)
-  lines(x, (1+s$a_b1)*s$theta*s$rho*eta_c*x)
+  lines(x, (1+s$a_b1)*s$theta*s$rho*eta_c*x, lwd=2)
   legend("bottomright", legend = "Slope = 1", bty = "n", cex=1)
+  mylabel("d) Live stem mass per leaf area")
 
 }
 
-
-axis.log10 <- function(side=1, horiz=FALSE, labels=TRUE, baseAxis = TRUE, wholenumbers=T, labelEnds=T,las=1, at=NULL) {
-
-  fg <- par("fg")
-
-  if(is.null(at)){
-
-    #get range on axis
-    if(side ==1 | side ==3) {
-      r <- par("usr")[1:2]   #upper and lower limits of x-axis
-    } else {
-      r <- par("usr")[3:4] #upper and lower limits of y-axis
-    }
-
-    #make pertty intervals
-    at <- pretty(r)
-    #drop ends if desirbale
-    if(!labelEnds)
-      at <- at[at > r[1] & at < r[2]]
-  }
-  #restrict to whole numbers if desriable
-  if(wholenumbers)
-    at<-at[is.wholenumber(at)]
-
-  lab <- do.call(expression, lapply(at, function(i) bquote(10^.(i))))
-
-  #convert at if
-  if(baseAxis)
-    at<-10^at
-
-  #make labels
-  if ( labels )
-    axis(side, at=at, lab, col=if(horiz) fg else NA,
-         col.ticks=fg, las=las)
-  else
-    axis(side, at=at, FALSE, col=if(horiz) fg else NA,
-         col.ticks=fg, las=las)
-}
-
-is.wholenumber <-  function(x, tol = .Machine$double.eps^0.5) {
-  abs(x - round(x)) < tol
-}
-
-make.transparent <- function(col, opacity=0.5) {
-  tmp <- col2rgb(col)/255
-  rgb(tmp[1,], tmp[2,], tmp[3,], alpha=opacity)
-}
-
-colour.by.category <- function(x, table) {
- unname(table[x])
-}

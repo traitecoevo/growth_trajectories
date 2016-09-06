@@ -202,7 +202,7 @@ default_parameters <- function() {
     a_f1 = 0.8,
     a_f2 = 20,
     a_l1 = 2.17,
-    a_l2 = 0.546,
+    a_l2 = 0.5,
     k_l  = 0.4565855 / 3)
 
   FF16_Parameters(
@@ -301,9 +301,9 @@ figure_rate_vs_size_panels <- function(data, type, path) {
     switch(yvar,
       net_mass_production_dt=cols[1],
       fraction_allocation_growth=cols[2],
-      darea_leaf_dmass_live =cols[3],
+      darea_leaf_dmass_live =cols[8],
       area_stem_dt =cols[4],
-      area_leaf_dt =cols[5],
+      area_leaf_dt ="lightgreen",
       "black")
   }
 
@@ -483,28 +483,35 @@ lcp_whole_plant_with_trait <- function(x, height) {
 }
 
 figure_lcp_whole_plant <- function() {
-  op <- par(oma=c(0, 4, 1, 1), mar=c(4, 1, 1, 1), mfrow=c(3, 1))
+
+  mylabel <- function(txt) label(txt, -0.2, 1.2, xpd=NA, cex=1.5)
+
+  op <- par(oma=c(0, 2, 3, 0), mar=c(5, 3, 1, 1), mfrow=c(1,3))
+  lab = list(narea="a", lma= "b", rho = "c")
   for (trait in c("narea", "lma", "rho")) {
     xlim <- trait_range(trait)
-    ylim <- c(0.2, 5)
+    ylim <- c(0, 1)
 
-    heights <- c(0.5, 2, 10, 15, 20)
-    x <- seq_log_range(xlim, 60)
+    heights <- c(0.5, 5, 10, 20)
+    x <- seq_log_range(xlim, 100)
     cols <- color_pallete(length(heights) + 3)[-(1:3)]
 
     lcp <- sapply(heights, function(h)
                   lcp_whole_plant_with_trait(trait_matrix(x, trait), h))
-    lai <- log(lcp) / (-default_parameters()$k_I)
-
-    matplot(x, lai, type="l", lty=1, col=cols, log="xy", ylim=ylim,
-            xlab=name_pretty(trait), ylab=name_pretty("shading"),
-            yaxt="n")
+    matplot(x, lcp, type="l", lty=1, col=cols, log="x", ylim=ylim,
+            xlab="", ylab="", yaxt="n")
     axis(2, labels=TRUE, las=1)
-    if (trait == "lma") {
-      mtext(name_pretty("shading"), 2, line=3, xpd=NA)
+
+    mylabel(sprintf("%s)", lab[[trait]]))
+
+    mtext(name_pretty(trait), 1, line=3.5, cex=0.8)
+    if(trait=="narea"){
+        mtext(name_pretty("shading"), 2, line=3.5, cex=0.8)
     }
   }
-  legend("bottomright", paste(heights, "m"), lty=1, col=cols, bty="n")
+  mtext(name_pretty("shading"), 1, line=1, xpd=NA, outer=TRUE)
+
+  legend("topright", paste(heights, "m"), lty=1, col=cols, bty="n")
 }
 
 trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
@@ -583,8 +590,11 @@ figure_mass_fraction <- function(data) {
 
   vars <- c("mass_leaf", "mass_root", "mass_bark", "mass_sapwood",
             "mass_heartwood")
-  cols <- c(mass_leaf="forestgreen", mass_root="orange", mass_bark="firebrick2",
-            mass_sapwood="brown", mass_heartwood="tan")
+
+  cols <- RColorBrewer::brewer.pal(9, "YlOrBr")
+
+  cols <- c(mass_leaf="forestgreen", mass_root=cols[4], mass_bark=cols[6],
+            mass_sapwood=cols[7], mass_heartwood=cols[9])
 
   data <- data[!is.na(data[["height"]]), ]
   heights <- data[["height"]]

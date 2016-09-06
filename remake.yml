@@ -2,11 +2,12 @@ packages:
   - callr
   - baad.data
   - rmarkdown
-  - smatr
-  - quantreg
   - plant
   - xtable
   - RColorBrewer
+  - rstan
+  - dplyr
+  - knitr
 
 sources:
   - R
@@ -46,7 +47,6 @@ targets:
     depends:
       - output/main/table-pars.tex
       - output/main/assumptions.pdf
-      - output/main/support_costs.pdf
       - output/main/figure_conceptual.pdf
       - output/main/growth_light_height.pdf
       - output/main/max_leaf_above.pdf
@@ -99,8 +99,8 @@ targets:
     download: http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-quercus-montana.png
     cleanup_level: purge
 
-  baad:
-    command: baad_data(I("1.0.0"))
+  fit_a.lf_h.t:
+    command: fit_variables_baad(I("a.lf"), I("h.t"))
 
 # Tables & figures ------------------------
 
@@ -120,11 +120,7 @@ targets:
 
   output/main/assumptions.pdf:
     command: figure_assumptions(baad)
-    plot: tall
-
-  output/main/support_costs.pdf:
-    command: figure_support_per_leaf_area(baad)
-    plot: square
+    plot: med_square
 
   output/SI/lma_tradeoff.pdf:
     command: figure_lma_tradeoff(glopnet)

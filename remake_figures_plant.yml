@@ -29,7 +29,9 @@ targets:
 
   output/main/max_leaf_above.pdf:
     command: figure_lcp_whole_plant()
-    plot: tall
+    plot:
+      width: 9
+      height: 3
 
 
   rate_vs_size_data:

@@ -55,7 +55,7 @@
 
 \newcommand{\rowlabel}[1]{
   \node at ($(thisrow) + (-0.75cm, -0.3cm)$)[anchor=west, text width=2cm] {
- {\color{orange!50}\begin{equation}\label{#1}\end{equation}}};
+ {\color{black!30}\begin{equation}\label{#1}\end{equation}}};
 }
 
 \newcommand{\firstcol}[4]{
@@ -176,7 +176,7 @@
 \defineRow{6}{rowSix}
 \defineCol{rowSix}{\colNum}{F}
 
-\tikzstyle{s1}=[->,line width=2pt, draw=orange!50]
+\tikzstyle{s1}=[->,line width=2pt, draw=black!20]
 
 \draw [s1] (A) to [bend right, looseness=0.75] (C);
 \draw [s1] (A) to [bend right] (B1);
