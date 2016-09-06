@@ -80,7 +80,7 @@ figure_lma_tradeoff <- function(data, fit_lma_tradeoff) {
 }
 
 
-figure_assumptions <- function(fit_a.lf_h.t,  fit_a.lf_sap, fit_a.lf_m.rf, fit_a.lf_msal){
+figure_assumptions <- function(fit_a.lf_h.t,  fit_a.lf_sap, fit_a.lf_m.rf, fit_h.t_msal){
 
   xlim <- c(1E-5, 1E4)
 
@@ -120,7 +120,7 @@ figure_assumptions <- function(fit_a.lf_h.t,  fit_a.lf_sap, fit_a.lf_m.rf, fit_a
   # Now plot expected relationship from model
   lines(x, s$a_r1*x, lwd=2)
 
-  figure_fit_by_group_stan(fit_a.lf_msal, isoclines=1,
+  figure_fit_by_group_stan(fit_h.t_msal, isoclines=1,
     A=seq(-10,10,by=2), col.l = cols[8])
   myaxislabel(expression(paste("Mass sapwood + bark / leaf area (kg ",m^-2,")")),2)
   myaxislabel("Height (m)", 1)

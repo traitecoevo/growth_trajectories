@@ -117,7 +117,7 @@ targets:
       - output/main/mass_fraction.pdf
 
   output/main/assumptions.pdf:
-    command: figure_assumptions(fit_a.lf_h.t, fit_a.lf_sap, fit_a.lf_m.rf, fit_a.lf_msal)
+    command: figure_assumptions(fit_a.lf_h.t, fit_a.lf_sap, fit_a.lf_m.rf, fit_h.t_msal)
     plot: med_square
 
   fit_a.lf_h.t:
@@ -132,8 +132,8 @@ targets:
     command: fit_SMA_baad(I("a.lf"), I("sap"))
     check: exists
 
-  fit_a.lf_msal:
-    command: fit_SMA_baad(I("a.lf"), I("msal"))
+  fit_h.t_msal:
+    command: fit_SMA_baad(I("h.t"), I("msal"))
     check: exists
 
   fit_lma_tradeoff:
