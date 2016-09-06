@@ -217,7 +217,7 @@ default_strategy <- function() {
   p$strategy_default
 }
 
-color_pallete <- function(n) {
+color_pallete <- function(n=9) {
   RColorBrewer::brewer.pal(n, "Blues")
 }
 

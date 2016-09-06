@@ -5,9 +5,10 @@ packages:
   - plant
   - xtable
   - RColorBrewer
-  - rstan
   - dplyr
   - knitr
+  - parallel
+  - rstan
 
 sources:
   - R
@@ -56,7 +57,7 @@ targets:
     command: latex_build("ms/ms-supp.tex", bibliography="ms/references.bib", clean=FALSE)
     # Don't clean because we need info for cross references
     depends:
-      - output/SI/lma_tradeoff.pdf
+      # - output/SI/lma_tradeoff.pdf
       - output/SI/growth_light_dia.pdf
       - output/SI/growth_light_mass.pdf
       - output/SI/lma_growth_derivative.pdf
@@ -99,9 +100,6 @@ targets:
     download: http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-quercus-montana.png
     cleanup_level: purge
 
-  fit_a.lf_h.t:
-    command: fit_variables_baad(I("a.lf"), I("h.t"))
-
 # Tables & figures ------------------------
 
   output/main/figure_conceptual.pdf:
@@ -119,9 +117,29 @@ targets:
       - output/main/mass_fraction.pdf
 
   output/main/assumptions.pdf:
-    command: figure_assumptions(baad)
+    command: figure_assumptions(fit_a.lf_h.t, fit_a.lf_sap, fit_a.lf_m.rf, fit_a.lf_msal)
     plot: med_square
 
+  fit_a.lf_h.t:
+    command: fit_SMA_baad(I("a.lf"), I("h.t"))
+    check: exists
+
+  fit_a.lf_m.rf:
+    command: fit_SMA_baad(I("a.lf"), I("m.rf"))
+    check: exists
+
+  fit_a.lf_sap:
+    command: fit_SMA_baad(I("a.lf"), I("sap"))
+    check: exists
+
+  fit_a.lf_msal:
+    command: fit_SMA_baad(I("a.lf"), I("msal"))
+    check: exists
+
+  fit_lma_tradeoff:
+    command: fit_SMA_lma(glopnet)
+    check: exists
+
   output/SI/lma_tradeoff.pdf:
-    command: figure_lma_tradeoff(glopnet)
+    command: figure_lma_tradeoff(glopnet, fit_lma_tradeoff)
     plot: square
