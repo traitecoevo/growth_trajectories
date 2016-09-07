@@ -226,7 +226,7 @@ run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
   pl <- FF16_PlantPlus(strategy)
   res <- grow_plant_to_size(pl, sizes, size_variable, env, time_max,
                             warn=FALSE, filter=filter)
-  data.frame(rbind_list(lapply(res$plant, extract_plant_info, env=env)))
+  bind_rows(lapply(res$plant, extract_plant_info, env=env))
 }
 
 extract_plant_info <- function(plant, env) {
@@ -241,7 +241,8 @@ extract_plant_info <- function(plant, env) {
   ## Add relative measures:
   v <- c("height", "area_stem", "diameter_stem", "mass_above_ground")
   x[sprintf("%s_dt_relative", v)] <- x[sprintf("%s_dt", v)] / x[v]
-  x
+
+  data.frame(t(x))
 }
 
 ## Code for trait derivative figure
@@ -358,8 +359,6 @@ figure_dY_dt <- function(dat) {
   lai <- dat[["lai"]]
   traits <- dat[["traits"]]
 
-  ymax <- max(sapply(dat[traits], function(x) max(x[[vars[2]]], na.rm=TRUE)))
-  ylim <- c(0, ymax * 1.1)
   cols <- rev(color_pallete(length(lai) + 3)[-(1:3)])
   par(mfcol=c(length(sizes), length(traits)),
       oma=c(4, 5, 0, 1.5), mar=c(1, 3, 1, 0.9))
@@ -369,10 +368,8 @@ figure_dY_dt <- function(dat) {
       dsub <- long_to_wide(dat_v[[i]], "canopy_openness",
                            c(v, vars[2]))
       matplot(dsub[[1]], dsub[[2]], type="l", col=cols, lty=1, log="x",
-              #ylim = ylim,
               xaxt="n", yaxt="n", xlab="", ylab="")
       axis(1, labels=i == length(sizes), las=1)
-      #axis(2, labels=v == "narea", las=1)
       axis(2, labels = TRUE, las=1)
       if (v == last(traits)) {
         mtext(dat[["label"]](sizes[[i]]), 4, cex=1, line=1)

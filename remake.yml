@@ -57,7 +57,7 @@ targets:
     command: latex_build("ms/ms-supp.tex", bibliography="ms/references.bib", clean=FALSE)
     # Don't clean because we need info for cross references
     depends:
-      # - output/SI/lma_tradeoff.pdf
+      - output/SI/lma_tradeoff.pdf
       - output/SI/growth_light_dia.pdf
       - output/SI/growth_light_mass.pdf
       - output/SI/lma_growth_derivative.pdf
