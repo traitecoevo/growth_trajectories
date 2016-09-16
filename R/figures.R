@@ -38,7 +38,7 @@ make_hyperpar2 <- function(
                                 narea=1.87e-3,
                                 narea_0=1.87e-3,
                                 B_lf1=5120.738 * 1.87e-3 * 24 * 3600 / 1e+06,
-                                B_lf2=0.5,
+                                B_lf2=0.75,
                                 B_lf3=0.04,
                                 B_lf4=21000,
                                 B_lf5=1,
@@ -198,15 +198,15 @@ make_hyperpar2 <- function(
 default_parameters <- function() {
 
   s <- FF16_Strategy(
-    hmat = 30.0,
+    hmat = 15.0,
     a_f1 = 0.8,
-    a_f2 = 20,
+    a_f2 = 10,
     a_l1 = 2.17,
     a_l2 = 0.5,
     k_l  = 0.4565855 / 3)
 
   FF16_Parameters(
-    hyperpar=make_hyperpar2(B_ks2=1.25),
+    hyperpar=make_hyperpar2(B_ks2=1.25, B_lf5=0.5, B_lf4=21000*0.75),
     strategy_default = s
     )
 }
@@ -217,8 +217,19 @@ default_strategy <- function() {
   p$strategy_default
 }
 
-color_pallete <- function(n=9) {
-  RColorBrewer::brewer.pal(n, "Blues")
+color_pallete1 <- function(n) {
+  RColorBrewer::brewer.pal(n+3, "Blues")[-(1:3)]
+}
+
+color_pallete2 <- function() {
+  RColorBrewer::brewer.pal(n=9, "Blues")
+}
+
+color_pallete3 <- function() {
+
+  cols <- RColorBrewer::brewer.pal(9, "YlOrBr")
+  c(mass_leaf="forestgreen", mass_root=cols[4], mass_bark=cols[6],
+            mass_sapwood=cols[7], mass_heartwood=cols[9])
 }
 
 run_plant_to_sizes <- function(sizes, size_variable, strategy, env,
@@ -243,36 +254,6 @@ extract_plant_info <- function(plant, env) {
   x[sprintf("%s_dt_relative", v)] <- x[sprintf("%s_dt", v)] / x[v]
 
   data.frame(t(x))
-}
-
-## Code for trait derivative figure
-## TODO: Can grader help here?
-figure_trait_derivative <- function(type, trait_name="lma", canopy_openness=1) {
-  strategy <- default_strategy()
-
-  ## TODO: This seems tragically broken because it apparently computes
-  ## derivative with a value at 0.05 regardless of the trait?  I've
-  ## disabled that for now.
-  ## strategy[[trait_name]] <- 0.05
-  dat <- figure_rate_vs_size_data(canopy_openness, strategy)
-  strategy2 <- strategy
-  x <- strategy2[[trait_name]]
-  dx = 0.01 * x
-  strategy2[[trait_name]] <- x + dx
-  dat2 <- figure_rate_vs_size_data(canopy_openness, strategy2)
-
-  line1 <- (dat2$net_mass_production_dt - dat$net_mass_production_dt)/dx/dat$net_mass_production_dt
-  line2  <- (1/(dat2$darea_leaf_dmass_leaf * dat2$darea_leaf_dmass_live)
-    - 1/(dat$darea_leaf_dmass_leaf * dat$darea_leaf_dmass_live)) / dx /
-              1/(dat2$darea_leaf_dmass_leaf * dat2$darea_leaf_dmass_live)
-  height <- dat$height
-
-  plot(dat[["height"]], line1, type="l",
-       xlab="Height (m)", ylab="relative change", ylim=c(0, 20))
-
-  ## TODO: this does not work because darea_leaf_dmass_leaf is no
-  ## longer calculated
-  ##   lines(dat[["height"]], line2, col="red")
 }
 
 ## Code for the "rates vs size" figure set:
@@ -326,7 +307,7 @@ figure_rate_vs_size_panels <- function(data, type, path) {
 
 figure_rate_vs_size_data <- function(canopy_openness=1,
                                      strategy=default_strategy()) {
-  heights <- seq(FF16_Plant(strategy)$height, strategy$hmat, length.out=100)
+  heights <- seq(FF16_Plant(strategy)$height, 30, length.out=200)
   env <- fixed_environment(canopy_openness)
   run_plant_to_sizes(heights, "height", strategy, env, time_max=300)
 }
@@ -356,29 +337,50 @@ figure_dY_dt <- function(dat) {
 
   vars <- dat[["vars"]]
   sizes <- dat[["sizes"]]
-  lai <- dat[["lai"]]
+  E <- dat[["E"]]
   traits <- dat[["traits"]]
 
-  cols <- rev(color_pallete(length(lai) + 3)[-(1:3)])
-  par(mfcol=c(length(sizes), length(traits)),
-      oma=c(4, 5, 0, 1.5), mar=c(1, 3, 1, 0.9))
-  for (v in traits) {
-    dat_v <- unname(split(dat$data[[v]], dat$data[[v]]$class))
-    for (i in seq_along(sizes)) {
+  cols <- rev(color_pallete1(length(E)))
+  par(mfrow=c(length(sizes), length(traits)),
+      oma=c(4, 5, 0, 1.5), mar=c(1, 1, 1, 0.9))
+
+  extract_f <- function(v, i, dat) {
+      dat_v <- unname(split(dat$data[[v]], dat$data[[v]]$class))
       dsub <- long_to_wide(dat_v[[i]], "canopy_openness",
                            c(v, vars[2]))
-      matplot(dsub[[1]], dsub[[2]], type="l", col=cols, lty=1, log="x",
-              xaxt="n", yaxt="n", xlab="", ylab="")
-      axis(1, labels=i == length(sizes), las=1)
-      axis(2, labels = TRUE, las=1)
-      if (v == last(traits)) {
-        mtext(dat[["label"]](sizes[[i]]), 4, cex=1, line=1)
-      }
-    }
-    mtext(name_pretty(v), 1, cex=1, line=3.5)
   }
-  mtext(name_pretty(vars[2]), line=2.5, side=2, cex=1, outer=TRUE)
-  legend("topright", paste(rev(lai), "m2"), lty=1, col=cols, bty="n")
+  for (i in seq_along(sizes)) {
+
+    dat2 <- lapply(traits, extract_f, i, dat)
+    names(dat2) <- traits
+    ymax <- max(sapply(dat2, function(x) max(x[[2]],  na.rm=TRUE)))
+    for (v in traits) {
+      dsub <- dat2[[v]]
+      matplot(dsub[[1]], dsub[[2]], type="n", log="x",
+              xaxt="n", yaxt="n", xlab="", ylab="",
+              ylim = c(0, ymax*1.05))
+      usr <- par("usr")
+      rect(1E-5, -1, 1E4, 2*ymax, col = make_transparent("grey", 0.3), border=NA)
+      obs <- trait_range_obs(v)
+      rect(obs[1], -1, obs[2], 2*ymax, col = "white", border=NA)
+      box()
+      matplot(dsub[[1]], dsub[[2]], type="l", col=cols, lty=1, add=TRUE)
+
+      # axes
+      axis.log10(1, labels = (i == length(sizes)), las=1)
+      axis(2, labels = (v == traits[1] ), las=1, at = seq(0, 20, by=get_by(ymax)))
+      if (v == last(traits)) {
+        mtext(dat[["label"]](sizes[[i]]), 4, cex=0.9, line=1)
+      }
+      if (i == length(sizes)) {
+        mtext(name_pretty(v), 1, cex=0.9, line=3)
+      }
+
+    }
+  }
+  mtext(name_pretty(vars[2]), line=3, side=2, cex=0.9 , outer=TRUE)
+
+  legend("topright", legend = E, lty=1, col=rev(cols), bty="n", cex=0.5)
 }
 
 
@@ -398,6 +400,14 @@ figure_diameter_stem_dt_data <- function() {
   ret
 }
 
+figure_area_stem_dt_data <- function() {
+  ret <- figure_dY_dt_data(sizes =  c(1E-5, 1E-4, 1E-3, 5E-2),
+        vars = c("area_stem", "area_stem_dt")
+        )
+  ret[["label"]] <- function(x) sprintf("A=%sm",x)
+  ret
+}
+
 figure_mass_above_ground_dt_data <- function() {
   ret <- figure_dY_dt_data(sizes =  c(0.005, 0.01, 0.1, 1, 10),
         vars = c("mass_above_ground", "mass_above_ground_dt")
@@ -406,24 +416,25 @@ figure_mass_above_ground_dt_data <- function() {
   ret
 }
 
-figure_dY_dt_data <- function(sizes, vars) {
-
-  vals <- list(narea=seq_log_range(trait_range("narea"), 40),
+figure_dY_dt_data <- function(sizes, vars,
+    vals = list(
+               hmat=seq_log_range(trait_range("hmat"), 40),
+               narea=seq_log_range(trait_range("narea"), 40),
                lma=seq_log_range(trait_range("lma"), 40),
                rho=seq_log_range(trait_range("rho"), 40)
-               )
-  lai <- c(0, 0.5, 1, 2, 3)
+               ),
+    E = c(1, 0.75, 0.5, 0.25)
+    ) {
 
-  canopy_openness <- exp(-default_parameters()$k_I * lai)
   data <- lapply(names(vals), function(x)
-                    figure_dY_dt_data_worker(canopy_openness,
+                    figure_dY_dt_data_worker(E,
                                            vals[[x]], x, sizes, vars))
   names(data) <- names(vals)
   list(vars = vars,
       traits=names(vals),
       data=data,
       sizes=sizes,
-      lai=lai,
+      E=E,
       label = function(x) sprintf("X=%s",x))
 }
 
@@ -460,6 +471,7 @@ figure_dY_dt_data_worker <- function(canopy_openness,
 ## Convert from long format to wide format -- not very general, used
 ## once.
 long_to_wide <- function(dat, group, cols) {
+
   dsub <- unname(split(dat, dat[[group]]))
   ret <- lapply(cols, function(i) sapply(dsub, "[[", i))
   names(ret) <- cols
@@ -473,30 +485,49 @@ plant_list_set_height <- function(x, height) {
   invisible(x)
 }
 
-lcp_whole_plant_with_trait <- function(x, height) {
-  plants <- plant_list(x, default_parameters())
-  plant_list_set_height(plants, height)
-  sapply(plants, lcp_whole_plant)
+figure_lcp_trait_data <- function() {
+
+  f <- function(x, height) {
+    plants <- plant_list(x, default_parameters())
+    plant_list_set_height(plants, height)
+    sapply(plants, lcp_whole_plant)
+  }
+
+  heights <- c(0.5, 5, 10, 20)
+  traits <- c("narea", "lma", "rho")
+  lcp <- list()
+  x <- list()
+
+  for (trait in traits) {
+    x[[trait]] <- seq_log_range(trait_range(trait), 250)
+    lcp[[trait]] <- sapply(heights, function(h)
+                                      f(trait_matrix(x[[trait]], trait), h))
+  }
+  list(traits=traits, heights=heights, x=x, lcp=lcp)
 }
 
-figure_lcp_whole_plant <- function() {
+figure_lcp_trait <- function(data) {
 
   mylabel <- function(txt) label(txt, -0.2, 1.2, xpd=NA, cex=1.5)
 
-  op <- par(oma=c(0, 2, 3, 0), mar=c(5, 3, 1, 1), mfrow=c(1,3))
+  cols <- color_pallete1(length(data[["heights"]]))
+
+  par(oma=c(0, 2, 3, 0), mar=c(5, 3, 1, 1), mfrow=c(1,3))
   lab = list(narea="a", lma= "b", rho = "c")
-  for (trait in c("narea", "lma", "rho")) {
-    xlim <- trait_range(trait)
-    ylim <- c(0, 1)
 
-    heights <- c(0.5, 5, 10, 20)
-    x <- seq_log_range(xlim, 100)
-    cols <- color_pallete(length(heights) + 3)[-(1:3)]
+  for (trait in data[["traits"]]) {
+    matplot(data[["x"]][[trait]], data[["lcp"]][[trait]],
+            type="n", log="x", ylim=c(0,1),
+            xlab="", ylab="", yaxt="n", xaxt="n")
+    rect(1E-5, -1, 1E4, 10, col = make_transparent("grey", 0.3), border=NA)
+    obs <- trait_range_obs(trait)
+    rect(obs[1], -1, obs[2], 10, col = "white", border=NA)
+    box()
 
-    lcp <- sapply(heights, function(h)
-                  lcp_whole_plant_with_trait(trait_matrix(x, trait), h))
-    matplot(x, lcp, type="l", lty=1, col=cols, log="x", ylim=ylim,
-            xlab="", ylab="", yaxt="n")
+    matplot(data[["x"]][[trait]], data[["lcp"]][[trait]],
+              type="l", lty=1, col=cols, add=TRUE)
+
+    axis.log10(1, labels=TRUE, las=1)
     axis(2, labels=TRUE, las=1)
 
     mylabel(sprintf("%s)", lab[[trait]]))
@@ -508,90 +539,87 @@ figure_lcp_whole_plant <- function() {
   }
   mtext(name_pretty("shading"), 1, line=1, xpd=NA, outer=TRUE)
 
-  legend("topright", paste(heights, "m"), lty=1, col=cols, bty="n")
+  legend("topright", paste(data[["heights"]], "m"), lty=1, col=cols, bty="n")
 }
 
-trait_effects_data <- function(trait_name, size_name, relative=FALSE) {
-  if (size_name == "diameter_stem") {
-    size_values <- c(0.0025, 0.01, 0.1, 0.5)
-    titles <- sprintf("D=%0.2f (m)", size_values)
-  } else {
-    size_values <- c(0.25, 2, 8, 16)
-    titles <- sprintf("H=%0.2f (m)", size_values)
-  }
-  env <- fixed_environment(1.0)
+figure_lcp_schematic <- function() {
 
-  cols <- c("height_dt", "area_stem_dt", "diameter_stem_dt",
-            "mass_above_ground_dt")
-  if (relative) {
-    cols <- paste0(cols, "_relative")
-  }
+  # calculates respiration, turnover and lcp for plant
+  get_data <- function(height, strategy) {
+    pl <- FF16_PlantPlus(strategy)
+    pl$height <- height
+    env <- fixed_environment(1)
+    pl$compute_vars_phys(env)
 
-  f <- function(s) {
-    pp <- run_plant_to_sizes(size_values, size_name, s, env)
-    tmp <- cbind(s[[trait_name]])
-    colnames(tmp) <- trait_name
-    cbind(tmp, size_class=seq_along(size_values), pp[c(size_name, cols)])
-  }
-
-  trait_values <- seq_log_range(trait_range(trait_name), 50)
-  traits <- trait_matrix(trait_values, trait_name)
-
-  ## We need a Parameters object apparently.
-  ss <- strategy_list(traits, default_parameters())
-  dat <- lapply(ss, f)
-
-  dat <- vector("list", length(ss))
-  for (i in seq_along(ss)) {
-    dat[[i]] <- f(ss[[i]])
+    ret <- list(
+      E_star = lcp_whole_plant(pl),
+      turnover = data.frame(
+                leaf=pl$internals$mass_leaf*s$k_l,
+                root=pl$internals$mass_root*s$k_r,
+                bark=pl$internals$mass_bark*s$k_b,
+                sapwood=pl$internals$mass_sapwood*s$k_s)/
+                  pl$internals$area_leaf,
+      respiration = data.frame(
+                leaf=pl$internals$mass_leaf*s$r_l,
+                root=pl$internals$mass_root*s$r_r,
+                bark=pl$internals$mass_bark*s$r_b,
+                sapwood=pl$internals$mass_sapwood*s$r_s)/
+                  pl$internals$area_leaf * (s$a_bio * s$a_y),
+      internals = pl$internals)
+    ret$all <- ret$respiration + ret$turnover
+    ret
   }
 
-  ret <- do.call("rbind", dat)
+  s=default_strategy()
 
-  attr(ret, "info") <- list(size_name=size_name,
-                            size_values=size_values,
-                            trait_name=trait_name,
-                            trait_values=trait_values,
-                            growth_measures=cols)
-  ret
-}
+  cols <- color_pallete3()
+  names(cols) <- sub("mass_", "", names(cols))
+  E <- seq(0, 1, length.out=50)
+  heights <- c(1, 5, 10, 20)
+  data <- lapply(heights, get_data, s)
 
-trait_effects_plot <- function(d) {
-  info <- attr(d, "info")
-  growth_measures <- info$growth_measures
-  dsplit <- split(d, d$size_class)
-  trait <- info$trait_name
-  ylim <- lapply(d[growth_measures], range, na.rm=TRUE)
+  par(oma=c(0, 0, 0, 0), mar=c(5, 5, 1, 4))
+  plot(NA, xlab = "", ylab="", xaxs="i", yaxs="i",
+      xlim=c(0,1), ylim=c(0, 2.5), las=1)
+  mtext("Canopy openness, E (0-1)", 1, line=3)
+  mtext(expression(paste("Mass production or loss (kg ", m^-2~yr^-1, ")")), 2, line=3)
 
-  par(oma=c(6, 6, 2, 1), mar=c(1, 1, 2, 1),
-      mfrow=c(length(growth_measures), length(info$size_values)))
-  for (g in growth_measures) {
-    for (i in seq_along(info$size_values)) {
-      plot(dsplit[[i]][[trait]], dsplit[[i]][[g]], type="l",
-           ylim=ylim[[g]], log="x", xaxt="n", yaxt="n")
-      axis(1, labels=g == last(growth_measures))
-      axis(2, labels=i == 1, las=1)
-      if (i == 1L) {
-        mtext(name_pretty(g), 2, line=3)
-      }
-      if (g == growth_measures[[1]]) {
-        title <- sprintf("%s=%s (m)", toupper(substr(info$size_name,1,1)), prettyNum(info$size_values[[i]]))
-        mtext(title, side=3, line=0.5, cex=1)
-      }
-    }
+  # colour background
+  rect(0, 0, 1, 2.5, col = cols["bark"], border=NA)
+
+  # leaf and root for smallest size
+  x <- data[[1]]$all
+  rect(0, 0, 1, x[,"leaf"], col = cols["leaf"], border=NA)
+  rect(0, x[,"leaf"], 1, x[,"root"]+x[,"leaf"], col = cols["root"], border=NA)
+
+  # add lines for each height
+  for(i in seq_along(heights)){
+    y <- sum(data[[i]]$all)
+    abline(h=y)
+    axis(4, at = y, labels = sprintf("H=%dm", heights[i]), las=1)
+    abline(v=data[[i]]$E_star, lty="dotted")
   }
-  mtext(name_pretty(trait), side=1, line=4, cex=1, outer=TRUE)
+
+  # photosynthesis per leaf area
+  A <- (s$a_bio * s$a_y) * (s$a_p1 * E / (E + s$a_p2))
+  # white above line, acts as clipping mask for everything above
+  polygon(c(E, 1, 0, 0), c(A, 10, 10, 0), col="white", border=NA)
+  #now add the line
+  points(E, A, type="l", lty="dashed", lwd=2)
+
+  # add dots for E_star at each height
+  for(i in seq_along(heights)){
+    points(data[[i]]$E_star, sum(data[[i]]$all), pch=16)
+  }
+
+  # labels
+  text(rep(0.8,3), c(0.4, 0.875, 1.7), c("leaf", "root", "sapwood+bark"), col="white")
 }
 
 figure_mass_fraction <- function(data) {
 
-  vars <- c("mass_leaf", "mass_root", "mass_bark", "mass_sapwood",
-            "mass_heartwood")
-
-  cols <- RColorBrewer::brewer.pal(9, "YlOrBr")
-
-  cols <- c(mass_leaf="forestgreen", mass_root=cols[4], mass_bark=cols[6],
-            mass_sapwood=cols[7], mass_heartwood=cols[9])
+  cols <- color_pallete3()
+  vars <- names(cols)
 
   data <- data[!is.na(data[["height"]]), ]
   heights <- data[["height"]]
@@ -604,7 +632,6 @@ figure_mass_fraction <- function(data) {
   axis(1, at = c(0,5,10,15,20), labels = c(0,NA,10,NA,20))
   axis(2, at = c(0,0.25,0.5,0.75, 1), labels = c(0,NA,0.5,NA,1), las=1)
 
-  #mtext("Height (m)",1, cex=1.5, line=2.5)
   mtext("Fraction of mass",2, cex=1.25, line=2.5)
 
   for (v in rev(vars)) {
@@ -615,11 +642,5 @@ figure_mass_fraction <- function(data) {
   x <- c(2, 6, 10, 15, 22)
   y <- c(0.15, 0.195, 0.2, 0.45, 0.8)
   text(x,y, sub("mass_", "", vars), col="white")
-  box()
-}
-
-empty_box <- function() {
-  par(oma=c(0,0,0,0), mar=rep(0.1,4))
-  plot(1,1, ann=FALSE, axes=FALSE, type='n')
   box()
 }

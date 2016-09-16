@@ -88,7 +88,7 @@ figure_assumptions <- function(fit_a.lf_h.t,  fit_a.lf_sap, fit_a.lf_m.rf, fit_h
   myaxislabel <- function(txt, side) mtext(txt, side, line =3.5)
   mylegend <- function(txt) legend("bottomright", legend = txt, bty = "n", cex=1)
 
-  cols <- color_pallete()
+  cols <- color_pallete2()
   s <- default_strategy()
   x <- seq_log_range(c(1E-6, 2E6), 100)
 

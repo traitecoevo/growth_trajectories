@@ -47,10 +47,11 @@ targets:
     command: latex_build("ms/ms.tex", bibliography="ms/references.bib")
     depends:
       - output/main/table-pars.tex
-      - output/main/assumptions.pdf
       - output/main/figure_conceptual.pdf
+      - output/main/lcp_schematic.pdf
+      - output/main/assumptions.pdf
       - output/main/growth_light_height.pdf
-      - output/main/max_leaf_above.pdf
+      - output/main/lcp_trait.pdf
       - ms/ms-supp.pdf
 
   ms/ms-supp.pdf:
@@ -60,19 +61,7 @@ targets:
       - output/SI/lma_tradeoff.pdf
       - output/SI/growth_light_dia.pdf
       - output/SI/growth_light_mass.pdf
-      - output/SI/lma_growth_derivative.pdf
-      - output/SI/lma_effects_at_heights.pdf
-      - output/SI/rho_effects_at_heights.pdf
-      - output/SI/hmat_effects_at_heights.pdf
-      - output/SI/lma_effects_at_heights_relative.pdf
-      - output/SI/rho_effects_at_heights_relative.pdf
-      - output/SI/hmat_effects_at_heights_relative.pdf
-      - output/SI/lma_effects_at_diameters.pdf
-      - output/SI/rho_effects_at_diameters.pdf
-      - output/SI/hmat_effects_at_diameters.pdf
-      - output/SI/lma_effects_at_diameters_relative.pdf
-      - output/SI/rho_effects_at_diameters_relative.pdf
-      - output/SI/hmat_effects_at_diameters_relative.pdf
+      - output/SI/growth_light_area.pdf
 
   ms/ms-supp.tex:
     knitr: TRUE
@@ -92,21 +81,11 @@ targets:
   glopnet_locations:
     command: read.csv("data/wright_2004_locations.csv")
 
-  downloads/seedling.png:
-    download: http://ian.umces.edu/imagelibrary/albums/userpics/10002/normal_ian-symbol-quercus-spp-oak-seedling.png
-    cleanup_level: purge
-
-  downloads/tree.png:
-    download: http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-quercus-montana.png
-    cleanup_level: purge
-
 # Tables & figures ------------------------
 
   output/main/figure_conceptual.pdf:
     command: latex_build("ms/figure_conceptual.tex", output=target_name, engine=I("xelatex"))
     depends:
-      - downloads/tree.png
-      - downloads/seedling.png
       - output/con/net_mass_production_dt_net_mass_production_dt.pdf
       - output/con/mass_total_dt_mass_total_dt.pdf
       - output/con/darea_leaf_dmass_live_darea_leaf_dmass_live.pdf

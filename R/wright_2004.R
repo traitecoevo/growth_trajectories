@@ -56,10 +56,11 @@ process_wright_2004 <- function(filename, sitevars) {
   data[["lma"]] <- data[["lma"]]/1000
   ## Convert to Kg from g
   data[["n.area"]] <- data[["n.area"]]/1000
-  ## Convert to mol/kg/yr from micro-mol/g/s
-  data[["a.area"]] <- (data[["a.area"]] * 31557.6) * 10^-6
-  ## Convert to mol/kg/yr from micro-mol/g/s
-  data[["rd.area"]] <- (data[["rd.area"]] * 31557.6) * 10^-6
+  ## Convert to mol/m2/d from micro-mol/m2/s
+  data[["a.area"]] <- (data[["a.area"]] * 24 * 3600) * 10^-6
+
+  ## Convert to mol/m2/d from micro-mol/m2/s
+  data[["rd.area"]] <- (data[["rd.area"]] * 24 * 3600) * 10^-6
 
   ## Convert to years from month
   data[["leaflifespan"]] <- data[["leaflifespan"]]/12

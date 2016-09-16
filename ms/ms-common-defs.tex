@@ -7,17 +7,18 @@
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
 \newcommand{\email}[1]{\href{mailto:#1}{\texttt{#1}}}
 \newcommand{\plant}{\texttt{plant}}
-\newcommand{\wplcp}{\textsc{WPLCP}}
+\newcommand{\wplcp}{\textsc{wplcp}}
+\newcommand{\sma}{\textsc{sma}}
 
 
 
-\title{Growth trajectories: How functional traits influence plant growth}
-\runninghead{O\lowercase{n the influence of traits on growth}}
+\title{Growth trajectories: how functional traits influence plant growth}
+\runninghead{H\lowercase{ow traits influence growth}}
 
 \author{Daniel S. Falster\textsuperscript{\textasteriskcentered} \& Richard G. FitzJohn}
 \affiliation{Biological Sciences, Macquarie University NSW 2109, Australia
 \\
-\textsuperscript{\textasteriskcentered} Correspondence author. E-mail: \texttt{adaptive.plant@gmail.com}
+\textsuperscript{\textasteriskcentered} Correspondence author. E-mail: \email{adaptive.plant@gmail.com}
 }
 
 \usepackage{natbib}
@@ -28,6 +29,9 @@
 \newbool{MyRefNumbers}
 \booltrue{MyRefNumbers} % comment to remove numbers in reference list
 
+\pdfminorversion=4 % tell pdflatex to generate PDF in version 1.4
+% Needed for problem-free conversion on manuscript central (arrgh)
+% http://timotheepoisot.fr/2013/06/24/manuscript-central-pdf-fix/
 
 \usepackage{graphicx}
 \graphicspath{{../output/}}

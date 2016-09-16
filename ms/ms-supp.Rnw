@@ -16,7 +16,7 @@
 \makeatother
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
-\titleprefix{Supporting information for:}
+\titleprefix{Supporting Materials for:}
 
 \date{}
 
@@ -52,6 +52,7 @@
 
 \section{Supporting Figures}\label{app:supp_info_figures}
 
+
 \begin{figure}[ht]
 \centering
 \includegraphics{SI/lma_tradeoff.pdf}
@@ -69,11 +70,23 @@ according to strength of the relationship.\label{fS-leaf}}
 \centering
 \includegraphics{SI/growth_light_dia.pdf}
 \caption{\textbf{Traits moderate the responsiveness of growth to changes
-in light environment (diameter growth).} Panels show predicted relationship between
-specific trait and diameter growth rate, for a plant of specified
+in light environment (stem-diameter growth).} Panels show predicted relationship between specific trait and diameter growth rate, for a plant of specified
 diameter and under a range of shading environments.
 \label{fig:growth_light_dia}}
 \end{figure}
+
+\newpage
+
+
+\begin{figure}[ht]
+\centering
+\includegraphics{SI/growth_light_area.pdf}
+\caption{\textbf{Traits moderate the responsiveness of growth to changes
+in light environment (stem-area growth).} Panels show predicted relationship between specific trait and diameter growth rate, for a plant of specified
+diameter and under a range of shading environments.
+\label{fig:growth_light_area}}
+\end{figure}
+
 
 \newpage
 
@@ -88,53 +101,6 @@ mass and under a range of shading environments.
 \end{figure}
 
 \newpage
-
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/lma_effects_at_diameters.pdf}
-\caption{\textbf{The expected correlation between leaf-mass per unit leaf area
-and growth rate changes with plant size.} \label{f-lma_growth_size}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/lma_effects_at_diameters_relative.pdf}
-\caption{\textbf{The expected correlation between leaf-mass per unit leaf area
-and relative growth rate changes with plant size.}
-\label{f-lma_growth_size_relative}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/rho_effects_at_diameters.pdf}
-\caption{\textbf{The expected correlation between wood density
-and growth rate changes with plant size.} \label{f-rho_growth_size}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/rho_effects_at_diameters_relative.pdf}
-\caption{\textbf{The expected correlation between wood density
-and relative growth rate changes with plant size.}
-\label{f-rho_growth_size_relative}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/hmat_effects_at_diameters.pdf}
-\caption{\textbf{The expected correlation between maximum height and
-growth rate changes with plant size.} \label{f-hmat_growth_size}}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics{SI/hmat_effects_at_diameters_relative.pdf}
-\caption{\textbf{The expected correlation between maximum height and
-relative growth rate changes with plant size.}
-\label{f-hmat_growth_size_relative}}
-\end{figure}
-
 
 
 

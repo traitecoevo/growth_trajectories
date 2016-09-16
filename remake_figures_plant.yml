@@ -20,6 +20,13 @@ targets:
   diameter_stem_dt_data:
     command: figure_diameter_stem_dt_data()
 
+  output/SI/growth_light_area.pdf:
+    command: figure_dY_dt(area_stem_dt_data)
+    plot: 3x2
+
+  area_stem_dt_data:
+    command: figure_area_stem_dt_data()
+
   output/SI/growth_light_mass.pdf:
     command: figure_dY_dt(mass_above_ground_dt_data)
     plot: 3x2
@@ -27,12 +34,20 @@ targets:
   mass_above_ground_dt_data:
     command: figure_mass_above_ground_dt_data()
 
-  output/main/max_leaf_above.pdf:
-    command: figure_lcp_whole_plant()
+  output/main/lcp_schematic.pdf:
+    command: figure_lcp_schematic()
+    plot:
+      width: 6
+      height: 4
+
+  output/main/lcp_trait.pdf:
+    command: figure_lcp_trait(lcp_trait_data)
     plot:
       width: 9
       height: 3
 
+  lcp_trait_data:
+      command: figure_lcp_trait_data()
 
   rate_vs_size_data:
     command: figure_rate_vs_size_data()
@@ -63,88 +78,3 @@ targets:
 
   output/con/diameter_stem_dt_diameter_stem_dt.pdf:
     command: figure_rate_vs_size_panels(rate_vs_size_data, I("diameter_stem_dt"), I("output/con"))
-
-  output/SI/size_dpdt.pdf:
-    command: figure_rate_vs_size(rate_vs_size_data, I("net_mass_production_dt"))
-    plot: wide
-
-  output/SI/size_dhdt.pdf:
-    command: figure_rate_vs_size(rate_vs_size_data, I("height_dt"))
-    plot: wide
-
-  output/SI/size_dDdt.pdf:
-    command: figure_rate_vs_size(rate_vs_size_data, I("diameter_stem_dt"))
-    plot: large_square
-
-  output/SI/size_dastdt.pdf:
-    command: figure_rate_vs_size(rate_vs_size_data, I("area_stem_dt"))
-    plot: large_square
-
-  output/SI/lma_growth_derivative.pdf:
-    command: figure_trait_derivative(I("height_dt"))
-    plot: wide
-
-  output/SI/lma_effects_at_diameters.pdf:
-    command: trait_effects_plot(d_lma_diameter_abs)
-    plot: large_square
-  output/SI/lma_effects_at_heights.pdf:
-    command: trait_effects_plot(d_lma_height_abs)
-    plot: large_square
-  output/SI/lma_effects_at_diameters_relative.pdf:
-    command: trait_effects_plot(d_lma_diameter_rel)
-    plot: large_square
-  output/SI/lma_effects_at_heights_relative.pdf:
-    command: trait_effects_plot(d_lma_height_rel)
-    plot: large_square
-
-  output/SI/rho_effects_at_diameters.pdf:
-    command: trait_effects_plot(d_rho_diameter_abs)
-    plot: large_square
-  output/SI/rho_effects_at_heights.pdf:
-    command: trait_effects_plot(d_rho_height_abs)
-    plot: large_square
-  output/SI/rho_effects_at_diameters_relative.pdf:
-    command: trait_effects_plot(d_rho_diameter_rel)
-    plot: large_square
-  output/SI/rho_effects_at_heights_relative.pdf:
-    command: trait_effects_plot(d_rho_height_rel)
-    plot: large_square
-
-  output/SI/hmat_effects_at_diameters.pdf:
-    command: trait_effects_plot(d_hmat_diameter_abs)
-    plot: large_square
-  output/SI/hmat_effects_at_heights.pdf:
-    command: trait_effects_plot(d_hmat_height_abs)
-    plot: large_square
-  output/SI/hmat_effects_at_diameters_relative.pdf:
-    command: trait_effects_plot(d_hmat_diameter_rel)
-    plot: large_square
-  output/SI/hmat_effects_at_heights_relative.pdf:
-    command: trait_effects_plot(d_hmat_height_rel)
-    plot: large_square
-
-  ## Data for the figures:
-  d_lma_diameter_abs:
-    command: trait_effects_data(I("lma"), I("diameter_stem"))
-  d_lma_height_abs:
-    command: trait_effects_data(I("lma"), I("height"))
-  d_lma_diameter_rel:
-    command: trait_effects_data(I("lma"), I("diameter_stem"), TRUE)
-  d_lma_height_rel:
-    command: trait_effects_data(I("lma"), I("height"), TRUE)
-  d_rho_diameter_abs:
-    command: trait_effects_data(I("rho"), I("diameter_stem"))
-  d_rho_height_abs:
-    command: trait_effects_data(I("rho"), I("height"))
-  d_rho_diameter_rel:
-    command: trait_effects_data(I("rho"), I("diameter_stem"), TRUE)
-  d_rho_height_rel:
-    command: trait_effects_data(I("rho"), I("height"), TRUE)
-  d_hmat_diameter_abs:
-    command: trait_effects_data(I("hmat"), I("diameter_stem"))
-  d_hmat_height_abs:
-    command: trait_effects_data(I("hmat"), I("height"))
-  d_hmat_diameter_rel:
-    command: trait_effects_data(I("hmat"), I("diameter_stem"), TRUE)
-  d_hmat_height_rel:
-    command: trait_effects_data(I("hmat"), I("height"), TRUE)
