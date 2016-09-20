@@ -31,7 +31,7 @@ make_hyperpar2 <- function(
                                 B_dI1=0.01,
                                 B_dI2=0.0,
                                 B_ks1=0.2,
-                                B_ks2=0.0,
+                                B_ks2=1.25, #0.0,
                                 B_rs1=4012.0,
                                 B_rb1=2.0*4012.0,
                                 B_f1 =3.0,
@@ -40,8 +40,8 @@ make_hyperpar2 <- function(
                                 B_lf1=5120.738 * 1.87e-3 * 24 * 3600 / 1e+06,
                                 B_lf2=0.75,
                                 B_lf3=0.04,
-                                B_lf4=21000,
-                                B_lf5=1,
+                                B_lf4=21000*0.75,
+                                B_lf5=0.5,
                                 k_I=0.5,
                                 latitude=0) {
   assert_scalar <- function(x, name=deparse(substitute(x))) {
@@ -206,7 +206,7 @@ default_parameters <- function() {
     k_l  = 0.4565855 / 3)
 
   FF16_Parameters(
-    hyperpar=make_hyperpar2(B_ks2=1.25, B_lf5=0.5, B_lf4=21000*0.75),
+    hyperpar=make_hyperpar2(),
     strategy_default = s
     )
 }

@@ -46,7 +46,6 @@ targets:
   ms/ms.pdf:
     command: latex_build("ms/ms.tex", bibliography="ms/references.bib")
     depends:
-      - output/main/table-pars.tex
       - output/main/figure_conceptual.pdf
       - output/main/lcp_schematic.pdf
       - output/main/assumptions.pdf
@@ -58,6 +57,8 @@ targets:
     command: latex_build("ms/ms-supp.tex", bibliography="ms/references.bib", clean=FALSE)
     # Don't clean because we need info for cross references
     depends:
+      - data/growth_model_pars_core.csv
+      - data/growth_model_pars_hyper.csv
       - output/SI/lma_tradeoff.pdf
       - output/SI/growth_light_dia.pdf
       - output/SI/growth_light_mass.pdf

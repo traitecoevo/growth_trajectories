@@ -6,10 +6,6 @@ plant:
   source: github
   repo: traitecoevo/plant
 
-smatr:
-  source: bitbucket
-  repo: remkoduursma/smatr
-
 baad.data:
   source: github
   repo: traitecoevo/baad.data

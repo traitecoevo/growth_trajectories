@@ -1,11 +1,5 @@
 targets:
 
-  plant_parameters:
-    command: read.csv("data/growth_model_pars.csv")
-
-  output/main/table-pars.tex:
-    command: table_plant_parameters(plant_parameters, target_name)
-
   output/main/growth_light_height.pdf:
     command: figure_dY_dt(height_dt_data)
     plot: 3x2
@@ -78,3 +72,4 @@ targets:
 
   output/con/diameter_stem_dt_diameter_stem_dt.pdf:
     command: figure_rate_vs_size_panels(rate_vs_size_data, I("diameter_stem_dt"), I("output/con"))
+
