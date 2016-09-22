@@ -1,5 +1,4 @@
 packages:
-  - callr
   - baad.data
   - rmarkdown
   - plant

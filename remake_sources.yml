@@ -1,7 +1,3 @@
-callr:
-  source: github
-  repo: traitecoevo/callr
-
 plant:
   source: github
   repo: traitecoevo/plant
