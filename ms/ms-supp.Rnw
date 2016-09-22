@@ -3,6 +3,7 @@
 \usepackage{suppmat}
 \usepackage{listings}
 \usepackage[T1]{fontenc} % Better underscores
+\usepackage{longtable}
 
 \input{ms-common-defs}
 
