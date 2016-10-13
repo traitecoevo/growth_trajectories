@@ -1,5 +1,14 @@
 targets:
 
+  output/main/growth_light_height_grid.pdf:
+    command: figure_dY_dt_grid(height_dt_data_grid)
+    plot:
+      width: 10
+      height: 4
+
+  height_dt_data_grid:
+    command: figure_height_dt_data_grid()
+
   output/main/growth_light_height.pdf:
     command: figure_dY_dt(height_dt_data)
     plot: 3x2

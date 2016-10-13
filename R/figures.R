@@ -221,8 +221,11 @@ color_pallete1 <- function(n) {
   RColorBrewer::brewer.pal(n+3, "Blues")[-(1:3)]
 }
 
-color_pallete2 <- function() {
-  RColorBrewer::brewer.pal(n=9, "Blues")
+color_pallete2 <- function(n=9) {
+  if(n <= 9)
+    RColorBrewer::brewer.pal(n=n, "Blues")
+  else
+    colorRampPalette(brewer.pal(9,"Blues")[-(1)])(n)
 }
 
 color_pallete3 <- function() {
@@ -383,12 +386,102 @@ figure_dY_dt <- function(dat) {
   legend("topright", legend = E, lty=1, col=rev(cols), bty="n", cex=0.5)
 }
 
-
 figure_height_dt_data <- function() {
   ret <- figure_dY_dt_data(sizes =  c(0.5, 2, 10, 15, 20),
         vars = c("height", "height_dt")
         )
   ret[["label"]] <- function(x) sprintf("H=%sm",x)
+  ret
+}
+
+
+figure_dY_dt_grid <- function(dat) {
+
+  vars <- dat[["vars"]]
+  sizes <- dat[["sizes"]]
+  E <- dat[["E"]]
+  traits <- dat[["traits"]]
+
+  par(oma=c(4, 5, 0, 3), mar=c(1, 1, 1, 0.9))
+
+  layout(matrix(1:5, 1, 5, byrow = TRUE), c(1, 1, 1, 1, 0.3), c(1))
+
+  nz <- 100
+  cols <- rev(colorRampPalette(brewer.pal(9,"RdYlBu"))(nz))
+  zmax <- 3
+  levels <- seq_range(c(0, zmax), nz)
+
+  for (v in traits) {
+
+    out <- collapse_grid(dat$data[[v]], "class", v, "height_dt")
+    x <- log10(out[[v]])
+    y <- dat[["sizes"]]
+    z <- out[["height_dt"]]
+
+    # cap z data
+    z[z > zmax] <- zmax
+
+    # make plot boundaries
+    xlim <- range(x)
+    ylim <- range(y)
+    plot.new()
+    plot.window(xlim = xlim, ylim = ylim, "", xaxs = "i", yaxs = "i", las = 1)
+    box()
+    rect(xlim[1], ylim[1], xlim[2], ylim[2], col="grey")
+
+    # add contour
+    .filled.contour(x,y,z, levels, cols)
+
+    # Calculate maximum of x for each value of y
+    # index_max <- function(y) {
+    #   if(all(is.na(y))) return(NA)
+    #   which(y==max(y, na.rm=TRUE))
+    # }
+    # x_max <-  x[unlist(apply(out[["height_dt"]], 2, index_max))]
+    # lines(x_max, y, lwd=2)
+
+    # axes
+    axis.log10(1, labels = TRUE, las=1, baseAxis=FALSE)
+    axis(2, labels = (v == traits[1] ), las=1, at = seq(0, 20, by=5))
+    mtext(name_pretty(v), 1, cex=0.9, line=3)
+  }
+
+  mtext("Height (m)", line=3, side=2, cex=0.9 , outer=TRUE)
+  plot_colorbar(cols, levels, 6, "Height growth rate (m/yr)")
+}
+
+
+plot_colorbar <- function(cols, levels, nticks = 5, lab="") {
+
+  min <- min(levels)
+  max <- max(levels)
+  ticks <- seq(min, max, len=nticks)
+  scale <- (length(cols)-1)/(max-min)
+  plot(c(0,10), c(min,max), type='n', bty='n', xaxt='n',
+      xaxs='i', yaxs='i', xlab='', yaxt='n', ylab='')
+  axis(4, ticks, las=1)
+  mtext(lab, side=3, line=1)
+
+  for (i in 1:(length(cols)-1)) {
+    y = (i-1)/scale + min
+    rect(0,y,10,y+1/scale, col=cols[i], border=NA)
+  }
+  box()
+}
+
+figure_height_dt_data_grid <- function(E=c(1)) {
+  n <- 100
+  ret <- figure_dY_dt_data(
+        sizes =  seq_range(c(0.25, 20), n),
+        vars = c("height", "height_dt"),
+        vals = list(
+               hmat=seq_log_range(trait_range("hmat"), n),
+               narea=seq_log_range(trait_range("narea"), n),
+               lma=seq_log_range(trait_range("lma"), n),
+               rho=seq_log_range(trait_range("rho"), n)
+              ),
+        E = E
+    )
   ret
 }
 
