@@ -19,6 +19,9 @@
 %----------------------------------------------------------------------------------------
 \begin{document}
 
+% Needed to set equation counter, following inclusion of figure 1
+\setcounter{equation}{2}
+
 \begin{tikzpicture}[remember picture, overlay]
 
 \newcommand{\rowspace}{3}
@@ -97,11 +100,11 @@
 \defineRow{0}{thisrow}
 \rowtitle{Biomass production}
 \firstcol{1}{$\frac{{\rm d}B}{{\rm d}t}$}{output/con/net_mass_production_dt_net_mass_production_dt}{}
-\othercol{2}{\scriptsize $\quad c$}{output/con/net_mass_production_dt_yield}{}
+\othercol{2}{\hspace{-1em} \scriptsize $\alpha_{\rm \tiny bio} \alpha_{\rm \tiny y}$}{output/con/net_mass_production_dt_yield}{}
 \othercol{3}{\hspace{-1em}$\times\Bigg($\hspace{-0.3em}\scriptsize$A_{\rm l} \bar{p}$}{output/con/net_mass_production_dt_assimilation}{}
 \othercol{4}{\hspace{-1em}-$\Sigma$\scriptsize $M_{\rm i} r_{\rm i}$}{output/con/net_mass_production_dt_respiration}{\hspace{-0.5em}$\Bigg)$}
 \othercol{5}{\hspace{-0.75em}-$\Sigma$\scriptsize $M_{\rm i} k_{\rm i}$}{output/con/net_mass_production_dt_turnover}{}
-\rowlabel{eq:dbdt}
+\rowlabel{eq:dbdt_2}
 
 \defineRow{1}{thisrow}
 \rowtitle{Mass growth}
