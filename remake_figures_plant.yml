@@ -61,24 +61,24 @@ targets:
       width: 10
       height: 2
 
-  output/con/net_mass_production_dt_net_mass_production_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("net_mass_production_dt"), I("output/con"))
+  output/conn/net_mass_production_dt_net_mass_production_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("net_mass_production_dt"), I("output/conn"))
 
-  output/con/mass_total_dt_mass_total_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("mass_total_dt"), I("output/con"))
+  output/conn/mass_total_dt_mass_total_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("mass_total_dt"), I("output/conn"))
 
-  output/con/darea_leaf_dmass_live_darea_leaf_dmass_live.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("darea_leaf_dmass_live"), I("output/con"))
+  output/conn/darea_leaf_dmass_live_darea_leaf_dmass_live.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("darea_leaf_dmass_live"), I("output/conn"))
 
-  output/con/height_dt_height_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("height_dt"), I("output/con"))
+  output/conn/height_dt_height_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("height_dt"), I("output/conn"))
 
-  output/con/area_leaf_dt_area_leaf_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_leaf_dt"), I("output/con"))
+  output/conn/area_leaf_dt_area_leaf_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_leaf_dt"), I("output/conn"))
 
-  output/con/area_stem_dt_area_stem_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_stem_dt"), I("output/con"))
+  output/conn/area_stem_dt_area_stem_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_stem_dt"), I("output/conn"))
 
-  output/con/diameter_stem_dt_diameter_stem_dt.pdf:
-    command: figure_rate_vs_size_panels(rate_vs_size_data, I("diameter_stem_dt"), I("output/con"))
+  output/conn/diameter_stem_dt_diameter_stem_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("diameter_stem_dt"), I("output/conn"))
 

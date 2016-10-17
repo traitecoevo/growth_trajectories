@@ -5,3 +5,4 @@ ms*.pdf
 ms/ms-supp.tex
 .remake
 self
+.Rproj.user
