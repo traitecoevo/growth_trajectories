@@ -218,7 +218,7 @@ default_strategy <- function() {
 }
 
 color_pallete1 <- function(n) {
-  RColorBrewer::brewer.pal(n+3, "Blues")[-(1:3)]
+  RColorBrewer::brewer.pal(n+1, "Blues")[-(1)]
 }
 
 color_pallete2 <- function(n=9) {
@@ -343,7 +343,7 @@ figure_dY_dt <- function(dat) {
   E <- dat[["E"]]
   traits <- dat[["traits"]]
 
-  cols <- rev(color_pallete1(length(E)))
+  cols <- color_pallete1(length(E))
   par(mfrow=c(length(sizes), length(traits)),
       oma=c(4, 5, 0, 1.5), mar=c(1, 1, 1, 0.9))
 
@@ -383,7 +383,7 @@ figure_dY_dt <- function(dat) {
   }
   mtext(name_pretty(vars[2]), line=3, side=2, cex=0.9 , outer=TRUE)
 
-  legend("topright", legend = E, lty=1, col=rev(cols), bty="n", cex=0.5)
+  legend("topright", legend = E, lty=1, col=rev(cols), bty="n", cex=0.9)
 }
 
 figure_height_dt_data <- function() {
@@ -603,7 +603,7 @@ figure_lcp_trait <- function(data) {
 
   mylabel <- function(txt) label(txt, -0.2, 1.2, xpd=NA, cex=1.5)
 
-  cols <- color_pallete1(length(data[["heights"]]))
+  cols <- rev(color_pallete1(length(data[["heights"]])))
 
   par(oma=c(0, 2, 3, 0), mar=c(5, 3, 1, 1), mfrow=c(1,3))
   lab = list(narea="a", lma= "b", rho = "c")
