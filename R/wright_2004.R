@@ -1,5 +1,6 @@
-process_wright_2004 <- function(filename, sitevars) {
-  d <- read.xlsx2(filename, sheetIndex = 1, startRow = 11, stringsAsFactors = FALSE, check.names = FALSE)
+process_wright_2004 <- function(filename) {
+
+  d <- read_excel(filename, sheet = 1, skip = 10)
 
   ## Do some name translations:
   tr <- c("Code"="Code",
@@ -44,10 +45,7 @@ process_wright_2004 <- function(filename, sitevars) {
   d_unlogged <- as.data.frame(10^d[i_log])
   names(d_unlogged) <- sub(re, "", names(d_unlogged))
 
-  d <- cbind(d[-c(i_log)], d_unlogged)
-
-  # add location info
-  data <- merge(d, sitevars, by.x = "Dataset", by.y = "dataset_location")
+  data <- cbind(d[-c(i_log)], d_unlogged)
 
   # lowercase names
   names(data) <- tolower(names(data))

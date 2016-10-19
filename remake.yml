@@ -69,17 +69,13 @@ targets:
 # Data ------------------------
   glopnet:
     command: >
-      process_wright_2004("downloads/wright_2004.xls",
-                          glopnet_locations)
-    packages: xlsx
+      process_wright_2004("downloads/wright_2004.xls")
+    packages: readxl
 
   downloads/wright_2004.xls:
     download: http://www.nature.com/nature/journal/v428/n6985/extref/nature02403-s2.xls
     cleanup_level: purge
     check: exists
-
-  glopnet_locations:
-    command: read.csv("data/wright_2004_locations.csv")
 
 # Tables & figures ------------------------
 
