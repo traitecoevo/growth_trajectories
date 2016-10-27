@@ -79,6 +79,18 @@ targets:
 
 # Tables & figures ------------------------
 
+  figures:
+    depends:
+      - output/main/figure_conceptual.pdf
+      - output/main/lcp_schematic.pdf
+      - output/main/assumptions.pdf
+      - output/main/growth_light_height.pdf
+      - output/main/lcp_trait.pdf
+      - output/SI/lma_tradeoff.pdf
+      - output/SI/growth_light_dia.pdf
+      - output/SI/growth_light_mass.pdf
+      - output/SI/growth_light_area.pdf
+
   output/main/figure_conceptual.pdf:
     command: latex_build("ms/figure_conceptual.tex", output=target_name, engine=I("xelatex"))
     depends:

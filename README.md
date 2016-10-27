@@ -1,67 +1,67 @@
-# Analysis investigating how the influence of traits on growth changes with size
+# Trajectories: how functional traits influence plant growth and shade tolerance across the life-cycle
 
-The paper will be based on presentation at Intecol2013: Falster, Daniel (2013): Growth trajectories: a new way of understanding the influence of traits on plant growth. http://dx.doi.org/10.6084/m9.figshare.775379
+This repository contains code needed to reproduce the article:
 
-# Setup
+Falster DS, Duursma R, FitzJohn R (2016) **Growth trajectories: how functional traits influence plant growth**. *bioRxiv*: 083451. [10.1101/083451](http://doi.org/10.1101/083451)
 
-Install all required packages with
+The paper is based on a presentation at Intecol 2013 in London:
 
+Falster, Daniel (2013): **Growth trajectories: a new way of understanding the influence of traits on plant growth**. [10.6084/m9.figshare.775379](http://dx.doi.org/10.6084/m9.figshare.775379)
+
+## Instructions
+
+Recreating all the figures from the paper will take around 2 hrs. Mostly this is because the of the MCMC sampling done to fit lines for figure 3.
+
+### Install relevant software
+
+All analyses were done in `R`. You need to [download this repository](https://github.com/traitecoevo/growth_trajectories/archive/master.zip), and then open an R session with working directory set to the root of the project.
+
+To compile the paper, including figures and supplementary material we use the [remake](https://github.com/richfitz/remake) package for R. You can install remake using the `devtools` package (run `install.packages("devtools")` to install devtools if needed):
+
+```r
+devtools::install_github("richfitz/storr", dependencies=TRUE)
+devtools::install_github("richfitz/remake", dependencies=TRUE)
 ```
+
+Our analysis uses data from the [Biomass and Allometry Database](https://github.com/dfalster/baad). Access to that dataset is obtained via installing the [baad.data](https://github.com/traitecoevo/baad.data) package:
+```r
+devtools::install_github("richfitz/datastorr")
+devtools::install_github("traitecoevo/baad.data")
+```
+
+We use a number of other packages, which can be easily installed by remake:
+
+```r
 remake::install_missing_packages()
 ```
 
-Best to install `smatr` from github to avoid warnings in the plotting function in the CRAN version:
+Finally, compiling the figure 1 and the paper requires a reasonably complete LaTeX installation (e.g. [MacTeX](https://tug.org/mactex/) for OSX or [MikTex](http://miktex.org/) for windows). The LaTeX compilation will depend on a few packages from CTAN, make sure to allow automatic package installation by your LaTeX distribution.
 
+### Recreating the figures and paper
+
+To generate all figures, analyses, and manuscript (PDF, using LaTeX), simply do:
+
+```r
+remake::make()
 ```
-devtools::install_bitbucket("remkoduursma/smatr")
+
+To reproduce only the figures run:
+
+```r
+remake::make("figures")
 ```
 
-(this will be done by remake if smatr is not installed already).
+To make only one of the figures, run a command like
 
-# Variables
+```r
+remake::make("output/main/lcp_schematic.pdf")
+```
 
-TRAITS
+The list of targets can be gleaned from the file `remake.yml`.
 
-- "lma"
-- "hmat"
-- "rho"
 
-SIZE
+If you find remake confusing and prefer to run plain R, you can use remake to build a script `build.R`that produces a given output, e.g.
 
-- "height"
-- "basal_area"
-- "dbh"
-
-GROWTH
-
-- "height_growth_rate"
-- "height_rgr"
-- "dbasal_diam_dt"
-- "dbh_rgr"
-- "ba_gr"
-- "ba_rgr"
-- "mt_gr"
-- "mt_rgr"
-
-OTHER
-
-- "leaf_turnover_rate"
-- "leaf_area_above"
-
-TREE_VARS
-
-_["dleaf_area_dleaf_mass"]=1/strategy->lma,
-_["leaf_fraction"]=vars.leaf_fraction,
-_["growth_fraction"]=1-vars.reproduction_fraction,
-_["net_production"]=vars.net_production,
-_["dmass_sapwood_dmass_leaf"]=dmass_sapwood_dmass_leaf(),
-_["dmass_bark_dmass_leaf"]=dmass_bark_dmass_leaf(),
-_["dmass_root_dmass_leaf"]=dmass_root_dmass_leaf(),
-_["dleaf_area_dt"]=dleaf_area_dt(),
-_["dsapwood_area_dt"]=dsapwood_area_dt(),
-_["dbark_area_dt"]=dbark_area_dt(),
-_["dheartwood_area_dt"]=dheartwood_area_dt(),
-_["dheartwood_mass_dt"]=sapwood_turnover(),
-_["dbasal_area_dt"]=dbasal_area_dt(),
-_["dbasal_diam_dbasal_area"]=dbasal_diam_dbasal_area(),
-_["dbasal_diam_dt"]=dbasal_diam_dt()
+```r
+remake::make_script(filename="build.R")
+```
