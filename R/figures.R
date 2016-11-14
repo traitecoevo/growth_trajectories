@@ -386,8 +386,8 @@ figure_dY_dt <- function(dat) {
   legend("topright", legend = E, lty=1, col=rev(cols), bty="n", cex=0.9)
 }
 
-figure_height_dt_data <- function() {
-  ret <- figure_dY_dt_data(sizes =  c(0.5, 2, 10, 15, 20),
+figure_height_dt_data <- function(sizes =  c(0.5, 2, 10, 15, 20)) {
+  ret <- figure_dY_dt_data(sizes =  sizes,
         vars = c("height", "height_dt")
         )
   ret[["label"]] <- function(x) sprintf("H=%sm",x)

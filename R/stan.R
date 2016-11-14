@@ -139,7 +139,8 @@ figure_fit_by_group <- function(data, isoclines=NULL, A=NULL,
   if(!is.null(isoclines))
     add_isoclines(A=A, b=isoclines)
 
-  points(df[,1], df[,2],  type= 'p', col=col, pch=16)
+  if(!is.null(col))
+    points(df[,1], df[,2],  type= 'p', col=col, pch=16)
 
   mtext(xlab, 1, line=3)
   mtext(ylab, 2, line=3)
@@ -189,10 +190,7 @@ figure_fit_by_group_stan <- function(fit_stan, isoclines=NULL,
 }
 
 add_isoclines <- function(A=NULL, b=NULL,...){
-  if(is.null(A)) {
-    A <- seq(-10,10)
-  }
-  if(is.null(b)) {
+  if(!is.null(A) & ! is.null(b)) {
     b <- 1
   }
   for(a in A) abline(a,b,lty="dotted",...)

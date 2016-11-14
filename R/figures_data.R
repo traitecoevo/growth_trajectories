@@ -132,3 +132,52 @@ figure_assumptions <- function(fit_a.lf_h.t,  fit_a.lf_sap, fit_a.lf_m.rf, fit_h
   lines(x, (1+s$a_b1)*s$theta*s$rho*eta_c*x, lwd=2)
 }
 
+
+
+figure_assumption_talk <- function(fit, show_data=TRUE){
+
+  xlim <- c(1E-5, 1E4)
+
+  mylegend <- function(txt) legend("bottomright", legend = txt, bty = "n", cex=1.5)
+  myaxislabel <- function(txt, side) mtext(txt, side, line =3.5, cex=1.5)
+
+  cols <- color_pallete2()
+  s <- default_strategy()
+  x <- seq_log_range(c(1E-6, 2E6), 100)
+
+  par(mar=c(5, 5.5, 0.5, 0.5), oma=c(0,0,0,0))
+
+  isoclines <- 1
+
+  if(fit$data$yvar == "h.t"){
+    isoclines <- 0.5
+    ylab <- "Height (m)"
+    y <- s$a_l1*x^s$a_l2
+  } else if(fit$data$yvar == "sap"){
+    ylab <-   expression(paste("Sapwood area (",m^2,")"))
+    y <- s$theta*x
+  } else if(fit$data$yvar == "m.rf"){
+    ylab <-  "Mass of fine roots (kg)"
+    y <- s$a_r1*x
+  }
+
+  if(show_data) {
+    figure_fit_by_group_stan(fit, isoclines=isoclines, A=NULL,
+      col.l = "darkgreen", col.p = "grey")
+  } else {
+    figure_fit_by_group_stan(fit, isoclines=isoclines, A=NULL,
+      col.l = NULL, col.p = NULL)
+  }
+
+
+  mylegend(sprintf("Slope =%0.1f\n\n",isoclines))
+
+  if(show_data)
+    mylegend(sprintf("%d individuals, %d species", fit$data$n_obs, fit$data$n_groups))
+
+  myaxislabel(ylab,2)
+  myaxislabel(expression(paste("Leaf area (",m^2,")")),1)
+
+  # Now plot expected relationship from model
+  lines(x, y, lwd=2)
+}
