@@ -94,7 +94,7 @@ figure_assumptions <- function(fit_a.lf_h.t,  fit_a.lf_sap, fit_a.lf_m.rf, fit_h
 
   par(mfrow = c(2,2), mar=c(5, 7, 3, 0.5), oma=c(0,0,0,0))
 
-  figure_fit_by_group_stan(fit_a.lf_h.t, isoclines=0.5, col.l = cols[8])
+  figure_fit_by_group_stan(fit_a.lf_h.t, col.l = cols[8])
   myaxislabel("Height (m)",2)
   myaxislabel(expression(paste("Leaf area (",m^2,")")),1)
   mylegend("Slope = 0.5")
@@ -102,8 +102,7 @@ figure_assumptions <- function(fit_a.lf_h.t,  fit_a.lf_sap, fit_a.lf_m.rf, fit_h
   # Now plot expected relationship from model
   lines(x, s$a_l1*x^s$a_l2, lwd=2)
 
-  figure_fit_by_group_stan(fit_a.lf_sap, isoclines=1,
-    A= seq(-15,10, by=2), col.l = cols[8])
+  figure_fit_by_group_stan(fit_a.lf_sap, col.l = cols[8])
   myaxislabel(expression(paste("Sapwood area (",m^2,")")),2)
   myaxislabel(expression(paste("Leaf area (",m^2,")")),1)
   mylegend("Slope = 1")
@@ -111,8 +110,7 @@ figure_assumptions <- function(fit_a.lf_h.t,  fit_a.lf_sap, fit_a.lf_m.rf, fit_h
   # Now plot expected relationship from model
   lines(x, s$theta*x, lwd=2)
 
-  figure_fit_by_group_stan(fit_a.lf_m.rf, isoclines=1,
-    A=seq(-10,10,by=2), col.l = cols[8])
+  figure_fit_by_group_stan(fit_a.lf_m.rf, col.l = cols[8])
   myaxislabel("Mass of fine roots (kg)",2)
   myaxislabel(expression(paste("Leaf area (",m^2,")")),1)
   mylegend("Slope = 1")
@@ -120,8 +118,7 @@ figure_assumptions <- function(fit_a.lf_h.t,  fit_a.lf_sap, fit_a.lf_m.rf, fit_h
   # Now plot expected relationship from model
   lines(x, s$a_r1*x, lwd=2)
 
-  figure_fit_by_group_stan(fit_h.t_msal, isoclines=1,
-    A=seq(-10,10,by=2), col.l = cols[8])
+  figure_fit_by_group_stan(fit_h.t_msal, col.l = cols[8])
   myaxislabel(expression(paste("Mass sapwood + bark / leaf area (kg ",m^-2,")")),2)
   myaxislabel("Height (m)", 1)
   mylegend("Slope = 1")
