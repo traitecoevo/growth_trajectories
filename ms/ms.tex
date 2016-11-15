@@ -1,11 +1,6 @@
-\documentclass[a4paper,11pt]{article}
-\usepackage[osf]{mathpazo}
-\usepackage{ms}
-\usepackage[]{natbib}
-\usepackage{floatpag}
-\floatpagestyle{empty}
+\documentclass[9pt,twocolumn,twoside]{pnas-new}
 
-% Enable new column type -- centered with fixed width
+% Enable new column type -- centered with fixed
 % Following http://texblog.org/2008/05/07/fwd-equal-cell-width-right-and-centre-aligned-content/
 \usepackage{array}
 \newcolumntype{x}[1]{%
@@ -19,64 +14,196 @@ $(\theequation)$%
 \label{#1}
 }
 
-%\raggedright
-
 \usepackage{graphicx}
+\graphicspath{{../output/}}
 
-% Enable cross referencing to external documents
+\newcommand{\smurl}[1]{\url{#1}}
+\newcommand{\ud}{\ensuremath{\rm{d}}}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\newcommand{\email}[1]{\href{mailto:#1}{\texttt{#1}}}
+\newcommand{\plant}{\texttt{plant}}
+\newcommand{\wplcp}{\textsc{wplcp}}
+\newcommand{\sma}{\textsc{sma}}
+
+\templatetype{pnasresearcharticle} % Choose template
+% {pnasresearcharticle} = Template for a two-column research article
+% {pnasmathematics} = Template for a one-column mathematics article
+% {pnasinvited} = Template for a PNAS invited submission
+
+% Enable cross referencing to Evidence document
 \usepackage{xr}
-\externaldocument{ms-supp}
+\externaldocument{supp}
 \externaldocument{figure_conceptual}
 
-% Input common definitions from external file
-\input{ms-common-defs}
-\date{}
+\title{Trajectories: how functional traits influence plant growth and shade tolerance across the life-cycle}
 
-\mstype{Research Article}
+% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
+\author[a,1]{Daniel S. Falster}
+\author[b]{Remko A. Duursma}
+\author[a,c]{Richard G. FitzJohn}
 
-\keywords{growth rate, life-history, ontogeny, size, leaf mass per area, wood density, shade-tolerance, seed mass, height at maturation, leaf nitrogen}
+% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
+\affil[a]{Department of Biological Sciences, Macquarie University NSW 2109, Australia}
+\affil[b]{Hawkesbury Institute for the Environment, Western Sydney University, Locked Bag 1797, Penrith NSW 2751, Australia}
+\affil[c]{Imperial College, London, United Kingdom}
 
-\begin{document}
-\mstitlepage
-\noindent
-\parindent=1.5em
-\addtolength{\parskip}{.3em}
-% \doublespacing
-% \linenumbers
+% Please give the surname of the lead author for the running footer
+\leadauthor{Falster}
 
-% \tableofcontents
-% Consider Ecol Letters "Ideas and Perspectives": maximum of 7500 words (main text), and 10 figures, tables or boxes.
+% Please add here a significance statement to explain the relevance of your work
+% 120 words
+\significancestatement{ Authors must submit a 120-word maximum statement about the significance of their research paper written at a level understandable to an undergraduate educated scientist outside their field of speciality. The primary goal of the Significance Statement is to explain the relevance of the work in broad context to a broad readership. The Significance Statement appears in the paper itself and is required for all research papers. Authors must submit a 120-word maximum statement about the significance of their research paper written at a level understandable to an undergraduate educated scientist outside their field of speciality. The primary goal of the Significance Statement is to explain the relevance of the work in broad context to a broad readership. The Significance Statement appears in the paper itself.
+}
 
-\section{Abstract}
+% Please include corresponding author, author contribution and author declaration information
+\authorcontributions{D.F. designed the study; D.F and R.F performed the analysis. All authors contributed to the writing of this manuscript.}
 
+\authordeclaration{The authors declare that they have no competing financial interests.}
+\correspondingauthor{\textsuperscript{1}To whom correspondence should be addressed. E-mail: adaptive.plant@gmail.com}
+
+% Keywords are not mandatory, but authors are strongly encouraged to provide them. If provided, please include two to five keywords, separated by the pipe symbol, e.g:
+\keywords{growth rate $|$ traits $|$ trees $|$ wood density}
+
+% 250 words
+\begin{abstract}
 Plant species differ in many functional traits that drive differences in rates of photosynthesis, biomass allocation, and tissue turnover. Yet, it remains unclear how -- and even if -- such traits influence whole-plant growth, with the simple linear relationships predicted by existing theory often lacking empirical support. Here we present a new theoretical framework for understanding the effect of diverse functional traits on plant growth and shade-tolerance, extending a widely-used theoretical model that links growth rate in seedlings with a single leaf trait to explicitly include influences of size, light environment, and five other prominent traits: seed mass, height at maturation, leaf mass per unit leaf area, leaf nitrogen per unit leaf area, and wood density. Based on biomass production and allocation, this framework explains why the influence of prominent traits on growth rate and shade tolerance often varies with plant size and why the impact of size on growth varies among traits. Considering  growth rate in height, we demonstrate why the influence of: i) leaf mass per unit leaf area is strong in small plants but weakens with size, ii) leaf nitrogen per unit leaf area does not change with size, iii) wood density is present across sizes but is strongest at intermediate sizes, iv) height at maturation strengthens with size, and v) seed mass decreases with size. Moreover, we show how traits moderate plant responses to light environment and also determine shade tolerance, supporting diverse empirical results. By disentangling the effects of plant size, light environment and traits on growth rates, our results provide a solid theoretical foundation for understanding growth across diverse species around the world.
+\end{abstract}
 
-\section{Introduction}
+\dates{This manuscript was compiled on \today}
+\doi{\url{www.pnas.org/cgi/doi/10.1073/pnas.XXXXXXXXXX}}
 
-Functional traits capture core differences in the strategies plants use to generate and invest resources \citep{Westoby-2002, Wright-2004, Chave-2009}. Although most woody plants have the same basic physiological function and key resource requirements (carbon, nutrients and water), species differ considerably in the rates at which resources are acquired, invested into different tissues, and lost via turnover. During the last two decades, trade-offs related to some prominent traits have been quantified, with values for traits such as leaf mass per unit leaf area, wood density, and seed size now available for up to 10\% of the world's 250000 plant species \citep{Cornwell-2014}. As data has accumulated, researchers are increasingly looking to traits to predict patterns in plant growth, demography, life history and performance \citep{Poorter-2008, Wright-2010, VanKleunen-2010, Adler-2014}. In this article we outline the mechanisms by which the growth of individual plants is influenced by various functional traits, as well as plant size and the light environment.
+\dates{This manuscript was compiled on \today}
+\doi{\url{www.pnas.org/cgi/doi/10.1073/pnas.XXXXXXXXXX}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+% Optional adjustment to line up main text (after abstract) of first page with line numbers, when using both lineno and twocolumn options.
+% You should only change this length when you've finalized the article contents.
+\verticaladjustment{-2pt}
+
+\maketitle
+\thispagestyle{firststyle}
+\ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
+
+% If your first paragraph (i.e. with the \dropcap) contains a list environment (quote, quotation, theorem, definition, enumerate, itemize...), the line after the list may have some extra indentation. If this is the case, add \parshape=0 to the end of the list environment.
+
+\dropcap{F}unctional traits capture core differences in the strategies plants use to generate and invest resources \citep{Westoby-2002, Wright-2004, Chave-2009}. Although most woody plants have the same basic physiological function and key resource requirements (carbon, nutrients and water), species differ considerably in the rates at which resources are acquired, invested into different tissues, and lost via turnover. During the last two decades, trade-offs related to some prominent traits have been quantified, with values for traits such as leaf mass per unit leaf area, wood density, and seed size now available for up to 10\% of the world's 250000 plant species \citep{Cornwell-2014}. As data has accumulated, researchers are increasingly looking to traits to predict patterns in plant growth, demography, life history and performance \citep{Poorter-2008, Wright-2010, VanKleunen-2010, Adler-2014}. In this article we outline the mechanisms by which the growth of individual plants is influenced by various functional traits, as well as plant size and the light environment.
 
 While the influence of traits on elements of plant physiological function has been increasingly quantified and understood, attempts at using traits to predict demographic rates have met with mixed success \citep{Poorter-2006, Poorter-2008,Wright-2010,Herault-2011,Paine-2015}. In seedlings, the leaf mass per unit leaf area (LMA) -- the central element of the leaf economics spectrum \citep{Wright-2004} -- was found to be tightly correlated with relative growth rate in plant mass \citep{Lambers-1992, Cornelissen-1996, Wright-2000}, as predicted from a simple mathematical model of growth rate (see below). LMA and leaf lifespan, itself closely correlated with LMA, were also linked to height growth rate for small seedlings and saplings \citep{Reich-1992, Poorter-2006}. These early successes prompted researchers to search for similar relationships in large plants. However, the results showed that in saplings and trees, LMA was not correlated with growth rate \citep{Poorter-2008, Wright-2010, Herault-2011, Paine-2015}. Meanwhile, other traits such as wood density showed strong relationships to growth in large plants \citep{Wright-2010,Herault-2011}, but less so in small plants \citep{Castro-1998}. Clearly, traits do not correlate simply and consistently to growth rate.
 
-Recently, it has become clear that the effect of traits on plant growth can be modified by plant size \citep{Falster-2011, Ruger-2012, Iida-2014, Visser-2016, Gibert-2016}. A recent meta-analysis of 103 studies reporting \textgreater 500 correlations by \citet{Gibert-2016} provides the most compelling evidence. \citet{Gibert-2016} showed that the strength of the correlation between some traits (including LMA and maximum height) and growth rate was modified by size, while for other traits (including wood density and assimilation rate per leaf area) the sign of the correlation remained the same, irrespective of size. Importantly, \citet{Gibert-2016} proposed putative mechanism to explain their results. In this paper, we test these mechanisms by providing a fully functioning model of plant growth.
+Recently, it has become clear that the effect of traits on plant growth can be modified by plant size \citep{Falster-2011, Ruger-2012, Iida-2014, Visser-2016, Gibert-2016}. A recent meta-analysis of 103 studies reporting \textgreater 500 correlations provides the most compelling evidence\citep{Gibert-2016}. That study showed that the strength of the correlation between some traits (including LMA and maximum height) and growth rate was modified by size, while for other traits (including wood density and assimilation rate per leaf area) the sign of the correlation remained the same, irrespective of size. Importantly, they proposed putative mechanisms to explain their results \citep{Gibert-2016}. In this paper, we test these mechanisms by providing a fully functioning model of plant growth.
 
-Interpreting diverse empirical results seeking to link traits to growth rate is challenging because, until the paper by \citet{Gibert-2016}, we lacked any clear expectations on why the effect of traits may be moderated by size. Generating appropriate expectations is one of the primary roles for theory \citep{Kokko-2007}. A widely-used equation for seedlings suggests that, all else being equal, a seedling's relative growth rate in mass is linearly and negatively related to LMA \citep{Lambers-1992, Cornelissen-1996, Wright-2000}. An extension of the model suggests a similar relationship should hold at larger plant sizes \citep{Enquist-2007}. But as noted above, the prediction for large plants is not supported by empirical results. Meanwhile, theoretical predictions on how other traits should influence growth are largely absent. Without further guidance, many researchers expected traits to linearly map onto growth rates, i.e. there is a ``fast'' and ``slow'' growth end for each trait \citep[e.g.][]{Grime-1977, Poorter-2008, Chave-2009, Paine-2015}.
+
+\begin{table}[!ht]
+\caption{Empirical phenomena explained via the framework presented in this paper.}
+\begin{tabular}{p{8cm}}
+\toprule
+\textbf{Change in growth rate with increasing size (Fig. \ref{fig:conceptual})}\\
+ Net biomass production: Hump-shaped \citep{Givnish-1988, Koch-2004} \\
+ Plant mass: Increasing \citep{Sillett-2010, Stephenson-2014} \\
+ Height: Hump-shaped \citep{Ryan-2006, Sillett-2010, King-2011} \\
+ Stem-diameter: Hump-shaped \citep{Canham-2004, Canham-2006, Herault-2011} \\
+ \textsc{rgr} (all variables): decreasing \citep{Rees-2010, Iida-2014}\\
+\textbf{Effect of traits on growth rate (Fig. \ref{fig:growth_light_height})}\\
+ $\omega$: low values $\rightarrow$ smaller seedlings, lower absolute, higher relative \citep{Gibert-2016} \\
+ $H_{\rm m}$: low values $\rightarrow$ slower growth at at larger sizes \citep{Gibert-2016}\\
+ $\nu$: low values $\uparrow$ growth irrespective of size, but only in high light \citep{Gibert-2016}\\
+ $\phi$: low values $\uparrow$ growth when small, not at mid-large sizes \citep{Gibert-2016}\\
+ $\rho$: low values $\uparrow$ growth, except at largest sizes \citep{Gibert-2016}\\
+\textbf{Responsiveness of growth rate to changes in light, $E$ (Fig. \ref{fig:growth_light_height})}\\
+ $\nu$: high values respond more \\
+ $\phi$: low values respond more \\
+ $\rho$: low values respond more\citep{Ruger-2012}\\
+\textbf{Shade tolerance, \textsc{wplcp} (Fig. \ref{fig:wplcp})}\\
+ Decreasing with size \citep{Givnish-1988, Kneeshaw-2006, Lusk-2008}\\
+ $\nu$: low values $\uparrow$ shade tolerant \citep{Messier-1999, Craine-2005,Baltzer-2007}\\
+ $\phi$: low values $\downarrow$ shade tolerant \citep{Messier-1999, Poorter-2006, Baltzer-2007, Lusk-2008}$^3$, higher \textsc{lai} \citep{Reich-1992, Gower-1993, Niinemets-2010} \\
+ $\rho$: low values less shade tolerant \citep{Osunkoya-1996}\\
+  \bottomrule
+  \end{tabular}
+\addtabletext{The traits are: seed mass ($\omega$), height at maturation ($H_{{\rm mat}}$), leaf nitrogen content per unit leaf area ($\nu$)$^1$, leaf mass per area ($\phi$)$^2$, and wood density ($\rho$). See Tables \ref{tab:definitions} and \ref{tab:traits} for further details. textsc{lai} = leaf area index. Footnotes: $^1$ Similar responses are predicted for maximum photosynthetic rate per leaf area \& dark respiration rate per leaf area. Here these terms are directly related to $\nu$. $^2$ Similar responses are predicted for leaf lifespan. Here this terms is directly related to $\phi$. $^3$ \citep{Baltzer-2007} reports a strongs relationship between \textsc{wplcp} and respiration rate measured per unit leaf area and mass.}
+\label{tab:phenomena}
+\end{table}
+
+
+\begin{figure}[!hb]
+\centering
+\includegraphics[width=\linewidth]{main/figure_conceptual.pdf}
+\caption{Conceptual framework linking growth rate to plant size and traits.
+\textbf{a)} Shows how the distribution of mass in a typical plant varies with size.
+\textbf{b)} Equations describing the rates of biomass production and growth in various dimensions of the plant. In the first line the symbol $\sum$ means ``sum'', across tissues, where $i = {\rm l,b,sr}$. The grey numbers indicate equation numbers referred to in the main text. The insets show how the different metrics change intrinsically with plant height, when applying the ``functional-balance'' model in Table \ref{tab:allometry}. Colours highlight where the same metric appears repeatedly in different equations. For a full list of variable names see Table \ref{tab:definitions}.}
+\label{fig:conceptual}
+\end{figure}
+
+Interpreting diverse empirical results seeking to link traits to growth rate is challenging because, until the paper by \citep{Gibert-2016}, we lacked any clear expectations on why the effect of traits may be moderated by size. Generating appropriate expectations is one of the primary roles for theory \citep{Kokko-2007}. A widely-used equation for seedlings suggests that, all else being equal, a seedling's relative growth rate in mass is linearly and negatively related to LMA \citep{Lambers-1992, Cornelissen-1996, Wright-2000}. An extension of the model suggests a similar relationship should hold at larger plant sizes \citep{Enquist-2007}. But as noted above, the prediction for large plants is not supported by empirical results. Meanwhile, theoretical predictions on how other traits should influence growth are largely absent. Without further guidance, many researchers expected traits to linearly map onto growth rates, i.e. there is a ``fast'' and ``slow'' growth end for each trait \citep[e.g.][]{Grime-1977, Poorter-2008, Chave-2009, Paine-2015}.
 
 One possible reason that theoretical predictions have either been lacking or not been supported is that the effects of traits in existing theory are realised mainly via influences on primary productivity (photosynthesis - respiration) \citep{Wright-2000, Enquist-2007}. By contrast, the physiology of traits such as LMA and wood density suggests they have influence by altering the allocation of biomass among different tissues, rather than changing mass production \citep{Falster-2011, Duursma-2016, Gibert-2016}. A second concern for theory focussed on mass production is that measuring mass production is really only practical for small plants that can be easily harvested. For larger plants, growth is more often measured as increment in either diameter or height. For example, stem diameter growth has been measured for many decades across many thousands of plots across the globe \citep{Purves-2008, Anderson-2015, Kunstler-2016}. As we outline below, mass production is only one of the factors influencing diameter growth; theory considering only primary production therefore offers limited insight.
 
-Here we show how a new mechanistic growth model -- called {\plant} \citep{Falster-2016} -- can explain diverse empirical phenomena, including a size-dependent effect of traits on growth and an effect of traits on shade tolerance (Table \ref{tab:phenomena}), and thereby offer new insights into the way traits influence plant demography across the life-cycle. Broadly, the {\plant} model builds on several approaches to modelling production and allocation of biomass \citep[e.g.][]{Givnish-1988, Yokozawa-1995,Makela-1997, Moorcroft-2001, Sitch-2008, Falster-2011, King-2011, Gibert-2016}. Our primary focus in this article is to explain the pattern that has been gradually emerging -- that the effect of traits on plant growth is modified by plant size \citep{Ruger-2012, Iida-2014, Gibert-2016}. Based on the same decomposition of growth rates as is implemented in the {\plant} model and used below \citep[from][]{Falster-2011}, \citet{Gibert-2016} argued conceptually why the effect of traits on growth should change with size. Here we extend the results of \citet{Gibert-2016} to provide a full, functioning model and use this to show, from the point of view of primary production and allocation, how and why the effect of some traits on growth rates changes with size. We also show how our approach can account for other phenomena, including changes in growth and shade tolerance with traits, individual size, and light environment. Our view is that trait-based approaches -- which aim to explain differences among species -- should be integrated within a general model of plant growth, and thus should also be able to capture patterns of growth through ontogeny. Growth rates tend to show hump-shaped relationship with size, when expressed as either height \citep{Sillett-2010, King-2011} or diameter growth \citep{Canham-2004, Canham-2006, Herault-2011} or biomass production \citep{Givnish-1988, Koch-2004}. In contrast, the growth rate of standing plant mass continues to increase with size \citep{Sillett-2010, Stephenson-2014}. All growth measures decrease sharply with size when expressed as relative growth rates \citep{Rees-2010, Iida-2014}. Shade tolerance also varies among species, correlates with traits \citep{Messier-1999, Lusk-2008, Poorter-2006}, and tends to decrease with increasing size \citep{Givnish-1988, Kneeshaw-2006, Lusk-2008}. These diverse phenomena -- summarised in Table \ref{tab:phenomena} -- are deserving of a comprehensive and integrated explanation.
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.9\linewidth]{main/lcp_schematic.pdf}
+\caption{\textbf{Conceptual framework linking shade-tolerance to plant size and traits,}
+adapted from \citep{Givnish-1988}.
+Shade tolerance is the level of canopy openness $E$ where photosynthetic income (dashed line) intersects with the sum of respiration and turnover costs over tissues (solid black lines). The black circles indicate the point of intersection for plants with different heights. All income and cost is expressed in units of dry mass produced  per unit leaf area per year. Note the costs of sapwood and bark increases with height.
+Traits can impact on shade tolerance by, in the case of leaf nitrogen content, shifting the income line up or down, or in the case of leaf mass per unit leaf area or wood density, causing the cost components to increase or decrease.
+\label{fig:wplcp_idea}}
+\end{figure}
 
-\section{Framework for understanding the effects of traits on growth}
+
+\begin{table}[!hb]
+ \caption{Variables of the \texttt{FF16} physiological model from {\plant} used in this analysis.}
+\centering
+\begin{tabular}{p{0.5cm}p{2cm}p{5cm}}
+\toprule
+Symbol & Unit & Description \\
+\midrule
+\multicolumn{3}{l}{\textbf{Traits (constant through ontogeny)}}\\
+$\omega$ & kg & Seed mass  \\
+$H_{{\rm mat}}$ & m & Height at maturation\\
+$\nu$ & $\mathrm{kg}\,\mathrm{m}^{-2}$ & Leaf nitrogen per unit leaf area  \\
+$\phi$ & $\mathrm{kg}\,\mathrm{m}^{-2}$ & Leaf mass per area \\
+$\rho$ & $\mathrm{kg}\,\mathrm{m}^{-3}$ & Wood density \\
+\multicolumn{3}{l}{\textbf{State variables (may vary through ontogeny)}} \\
+$H$ & m & Height of a plant\\
+$B$ & kg & Biomass originating from parent plant\\
+$D$ & m & Stem diameter\\
+$M_i$ & kg & Mass of tissue type $i$ retained on plant \\
+$A_i$ & m$^2$ & Surface area or area of cross-section of tissue type $i$\\
+$p,\bar{p}$ & mol yr$^{-1}$ m$^{-2}$ & Photosynthetic rate per unit area \\
+$r_i$ & mol yr$^{-1}$ kg$^{-1}$  & Respiration rate per unit mass of tissue type $i$ \\
+$k_i$ & yr$^{-1}$ & Turnover rate for tissue type $i$ \\
+\multicolumn{3}{l}{\textbf{Environmental variables (fixed)}} \\
+$E$ & & Canopy openness\\
+\multicolumn{3}{l}{\textbf{Other parameters (constant throughout)}} \\
+$\alpha_{\rm y}$ &  & Yield -- fraction of carbon fixed converted into mass\\
+$\alpha_{\rm bio}$  & $\mathrm{kg}\,\mathrm{mol}^{-1}$ & Biomass per mol carbon \\
+$\eta_c$ & & Crown-shape parameter\\
+$\theta$ &  & Sapwood area per unit leaf area\\
+$\alpha_{\rm l1}$ & m & Height of plant with leaf area of 1m$^2$ \\
+$\alpha_{\rm r1}$ & $\mathrm{kg}\,\mathrm{m}^{-2}$ & Root mass per unit leaf area \\
+$\alpha_{\rm b1}$ &  & Ratio of bark area to sapwood area\\
+\bottomrule
+\end{tabular}
+ \addtabletext{For mass ($M$), respiration ($r$), and turnover ($k$)
+variables, subscripts refer to any of the following tissues: \({\rm l}\) = leaves, \({\rm b}\) = bark, \({\rm s}\) = sapwood,
+\({\rm r}\) = roots, \({\rm a}\) = all living tissue. For area \(A\) variables, subscripts refer to any of the following: \({\rm l}\) = leaves, \({\rm st}\) = total stem cross-section, \({\rm s}\) = sapwood cross-section, \({\rm b}\) = bark cross-section, \({\rm h}\) = heartwood cross-section.}
+\label{tab:definitions}
+\end{table}
+
+
+Here we show how a new mechanistic growth model -- called {\plant} \citep{Falster-2016} -- can explain diverse empirical phenomena, including a size-dependent effect of traits on growth and an effect of traits on shade tolerance (Table \ref{tab:phenomena}), and thereby offer new insights into the way traits influence plant demography across the life-cycle. Broadly, the {\plant} model builds on several approaches to modelling production and allocation of biomass \citep[e.g.][]{Givnish-1988, Yokozawa-1995,Makela-1997, Moorcroft-2001, Sitch-2008, Falster-2011, King-2011, Gibert-2016}. Our primary focus in this article is to explain the pattern that has been gradually emerging -- that the effect of traits on plant growth is modified by plant size \citep{Ruger-2012, Iida-2014, Gibert-2016}. Based on the same decomposition of growth rates as is implemented in the {\plant} model and used below \citep[from][]{Falster-2011}, \citep{Gibert-2016} argued conceptually why the effect of traits on growth should change with size. Here we extend the results of \citep{Gibert-2016} to provide a full, functioning model and use this to show, from the point of view of primary production and allocation, how and why the effect of some traits on growth rates changes with size. We also show how our approach can account for other phenomena, including changes in growth and shade tolerance with traits, individual size, and light environment. Our view is that trait-based approaches -- which aim to explain differences among species -- should be integrated within a general model of plant growth, and thus should also be able to capture patterns of growth through ontogeny. Growth rates tend to show hump-shaped relationship with size, when expressed as either height \citep{Sillett-2010, King-2011} or diameter growth \citep{Canham-2004, Canham-2006, Herault-2011} or biomass production \citep{Givnish-1988, Koch-2004}. In contrast, the growth rate of standing plant mass continues to increase with size \citep{Sillett-2010, Stephenson-2014}. All growth measures decrease sharply with size when expressed as relative growth rates \citep{Rees-2010, Iida-2014}. Shade tolerance also varies among species, correlates with traits \citep{Messier-1999, Lusk-2008, Poorter-2006}, and tends to decrease with increasing size \citep{Givnish-1988, Kneeshaw-2006, Lusk-2008}. These diverse phenomena -- summarised in Table \ref{tab:phenomena} -- are deserving of a comprehensive and integrated explanation.
+
+\section*{Framework for understanding the effects of traits on growth}
 
 The {\plant} model builds on the widespread approach used in many vegetation models of explicitly modelling the amounts of biomass in different tissues within a plant \citep[e.g.][]{Givnish-1988, Makela-1997, Moorcroft-2001, Sitch-2008, Falster-2011, King-2011, DeKauwe-2014} (Fig. \ref{fig:conceptual}a). We consider the masses $M_i$, areas $A_i$, and diameters $D_i$ of tissues, where the subscripts indicates tissue type: l=leaf, b=bark and phloem, s=sapwood, h=heartwood, r=root, a=alive (l+b+s+r), t=total (l+b+s+h+r), and st=stem total (s+b+h). The total mass of living tissue is then $M_{\rm a}=M_{\rm l}+M_{\rm b}+M_{\rm s}+M_{\rm r}$, and the standing mass of the plant is $M_{\rm t}=M_{\rm a}+M_{\rm h}$. A summary of all variables, units and definitions is given in Table \ref{tab:definitions}-\ref{tab:traits}, with further details on the parameter values applied given in Tables \ref{tab:params_core}--\ref{tab:params_hyper}.
 
 We assume growth is fundamentally driven by biomass production and its subsequent distribution throughout the plant. Applying a standard approach, the amount of biomass available for growth, $\frac{{\rm d}B}{{\rm d}t}$ is given by the difference between income (photosynthesis) and losses (respiration and turnover) within the plant \citep{Makela-1997, Thornley-2000}:
 \begin{equation}\label{eq:dbdt}
-\underbrace{\strut \frac{{\rm d}B}{{\rm d}t}}_\textrm{net biomass production}
-= \underbrace{\strut \alpha_{\rm bio} }_\textrm{mass per C} \,
-\underbrace{\strut \alpha_{\rm y} }_\textrm{yield}
-\big( \underbrace{\strut A_{\rm l} \, \bar{p}(E)}_\textrm{photosynthesis} -
-\underbrace{\strut \, \sum_{i = {\rm l}, {\rm b}, {\rm s}, {\rm r}}{M_i \, r_i}}_\textrm{respiration}\big)
-- \underbrace{\strut \sum_{i = {\rm l}, {\rm b}, {\rm s},  {\rm r}}{M_i \, k_i}}_\textrm{turnover}.
+\frac{{\rm d}B}{{\rm d}t}
+= \alpha_{\rm bio} \,
+\alpha_{\rm y}
+\big( A_{\rm l} \, \bar{p}(E) -
+\, \sum_{i = {\rm l}, {\rm b}, {\rm s}, {\rm r}}{M_i \, r_i}\big)
+- \sum_{i = {\rm l}, {\rm b}, {\rm s},  {\rm r}}{M_i \, k_i}.
 \end{equation}
 Photosynthesis is the product of the average photosynthetic rate per unit leaf area ($\bar{p}(E)$) and total leaf area ($A_{\rm l}$). We assume that $\bar{p}$ increases with canopy openness $E$, as per a standard light-response curve (Fig. \ref{fig:wplcp_idea}; for details, see Supplementary Materials), and respiration and turnover rates of different tissues are constants that might differ with traits (see below). The constants $\alpha_{\rm y}$ and $\alpha_{\rm bio}$ account for growth respiration and the conversion of CO$_2$ into units of biomass, respectively. While the {\plant} model can easily accommodate competitive shading via influences on $E$, in this analysis we grow individual plants under a fixed light environment, so that we can better understand the intrinsic trait- and size-related effects. We also do not yet consider any traits influencing levels of self-shading. Also, many vegetation models use a more-detailed physiological model for calculating $\bar{p}$ and $r_{\rm i}$, e.g. as functions of temperature. Such detail is not needed here because it will not change general model behaviour, even it would alter  he absolute values of predicted growth rates. Even with detailed models, $\frac{{\rm d}B}{{\rm d}t}$ always comes down to simple subtraction of income and losses.
 
@@ -87,330 +214,32 @@ Earlier studies focussing on seedlings used a mathematical model to relate the t
 \frac{{\rm d}B}{{\rm d}t}\frac{1}{M_{\rm a}}  \approx P_{\rm net} \times \phi^{-1} \times \frac{M_{\rm l}}{M_{\rm a}}, \end{equation}
 where $P_{\rm net} = \alpha_{\rm bio} \, \alpha_{\rm y}\,(\bar{p}(E) - r_{\rm l})$. Although eqn \ref{eq:RGR} captures patterns of growth in seedlings in relation to $\phi$ \citep{Wright-2000}, this approximation does not easily extend to the variables that are routinely collected for large trees: namely plant height ($H$), stem-basal area ($A_{\rm st}$) or stem diameter $D$. The derivations below makes these links clear.
 
-\subsection{Decomposition of growth rates into components}
-
-% Update equation counter, following inclusion of figure 1
-\setcounter{equation}{9}
-
-To model growth in either plant height ($H$), leaf area ($A_{\rm l}$), basal stem area ($ A_{\rm st}$), standing mass ($M_{\rm t}$) or stem diameter ($D$) requires that we account not just for net mass production, but also for the costs of building new tissues, allocation to reproduction, and architectural layout. Mathematically, these growth rates can be decomposed into a product of physiologically relevant terms \citep{Falster-2011, Gibert-2016}. Relevant equations are given in Fig. \ref{fig:conceptual}b, (eqns \ref{eq:dMtdt}-\ref{eq:dDdt}). As is evident in eqn  Fig. \ref{fig:conceptual}b, the growth rate in plant weight ($\frac{\ud M_{\rm t} }{\ud t}$; eqn \ref{eq:dMtdt}), leaf area ($\frac{\ud A_{\rm l}}{\ud t}$; eqn \ref{eq:daldt}), height ($\frac{\ud H}{\ud t}$; eqn \ref{eq:dhdt}), stem basal area ($\frac{\ud  A_{\rm st}}{\ud t}$; eqn \ref{eq:dast}), and stem diameter ($\frac{\ud D}{\ud t}$; eqn \ref{eq:dDdt}) all share some terms in common. Many of the terms in Fig. \ref{fig:conceptual} also vary intrinsically with size. The insets in Fig. \ref{fig:conceptual}b show the size-related patterns in different variables for a typical plant, obtained from applying the specific allocation model in the next section.
-
-The growth rate of all size metrics in eqns \ref{eq:dMtdt}-\ref{eq:dDdt} depends on the product of biomass production $\frac{{\rm d}B} {{\rm d}t}$ (from eqn \ref{eq:dbdt}) and the fraction of biomass allocated to growth of the plant, $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$, which varies from 0-1. The remaining  $1- \frac{{\rm d}M_{\rm a}}{{\rm d}B}$ fraction of mass produced is allocated to reproduction. In plants, $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ starts high, 1.0 for seedlings, and then decreases through ontogeny, potentially to zero in fully mature plants \citep{Wenk-2015}. Note also that $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ is the allocation of biomass \emph{after} replacing parts lost due to turnover. So a plant with $\frac{{\rm d}M_{\rm a}}{{\rm d}B}=0$ will continue to produce some new leaves and increase in stem diameter, even if the net amount of live mass $M_{\rm a}$ is not increasing.
-
-The growth rate in the total standing mass of the plant (eqn \ref{eq:dMtdt}) is then the sum of heartwood formation (=sapwood turnover) and any increment in live mass.
-
-The remaining growth rates (eqns \ref{eq:daldt}-\ref{eq:dDdt}) all depend on another variable, $\frac{{\rm d}A_{\rm l}} {{\rm d}M_{\rm a}}$, that accounts for the marginal cost of deploying an additional unit of leaf area, including construction of the leaf itself and supporting  bark, sapwood and roots (eqn \ref{eq:daldmt}). The inverse of this term, $\frac{{\rm d}M_{\rm a} }{{\rm d}A_{\rm l}}$, is the whole plant construction cost per unit leaf area, which can be further decomposed as a sum of tissue-level construction costs per unit of leaf area, with one of these being $\phi = \frac{{\rm d}M_{\rm l} }{{\rm d}A_{\rm l}}$: the trait leaf mass per area.
-
-The rate of height growth (eqn \ref{eq:dhdt}) depends on an additional term, $\frac{{\rm d}H }{{\rm d}A_{\rm l}}$: the growth in plant height per unit growth in leaf area. This variable accounts for the architectural strategy of the plant. Some species tend to leaf out more than grow tall, while other species emphasise vertical extension \citep{Poorter-2006}.
-
-The rate of stem-basal-area growth (eqn \ref{eq:dast}) can be expressed as the sum of increments in sapwood, bark and heartwood areas ($A_{\rm s}, A_{\rm b}, A_{\rm h}$ respectively): $\frac{{\rm d}A_{\rm st}}{{\rm d}t}= \frac{{\rm d}A_{\rm b}}{{\rm d}t} + \frac{{\rm d}A_{\rm s}}{{\rm d}t} + \frac{{\rm d}A_{\rm h}}{{\rm d}t}$. These in turn are related to ratios of sapwood and bark area per leaf area, and sapwood turnover (see eqn \ref{eq:dast}).
-
-Finally, the rate of stem-diameter growth (eqn \ref{eq:dDdt}) is given by a geometric relationship between stem diameter ($D$) and stem area ($A_{\rm st}$). Note that we make no assumptions about the relationship of stem diameter to height or leaf area: these arise as emergent properties, via integration of stem turnover (eqns \ref{eq:ha}- \ref{eq:htm}).
-
-\subsection{Shade tolerance}
-
-Eqn \ref{eq:dbdt} can also be used to estimate a measure of shade tolerance: the light level at which a plant's photosynthetic gains just balance the costs of tissue turnover and respiration \citep{Givnish-1988, Baltzer-2007, Lusk-2013} (the ``whole-plant-light-compensation point'', {\wplcp}). In general, average assimilation rate per leaf area $\bar{p}$ increases with light level or canopy openness, $E$. The {\wplcp} can be estimated by solving for the the value of canopy openness $E=E^*$ giving $\frac{{\rm d}B} {{\rm d}t}(E)=0$ (Fig. \ref{fig:wplcp_idea}). From eqn \ref{eq:dbdt}, this occurs when
-\begin{equation}\label{eq:wplcp}
-\bar{p}(E^*) =\frac{\sum_{i={\rm l,b,s,r}} \, M_{\rm i} \left(\frac{k_{\rm i}}{y} + r_{\rm i}\right)}{A_{\rm l}}.
-\end{equation}
-The {\wplcp} occurs at the points where the photosynthetic production (per unit leaf area) line intersects with the sum of maintenance and respiration costs (per unit leaf area) for each tissue (Fig. \ref{fig:wplcp_idea}). Traits can influence the {\wplcp} if they effect either carbon uptake or costs (respiration, turnover). Also, since the amount of stem support increases with plant height, the {\wplcp} also naturally increases with height \citep{Givnish-1988} (Fig. \ref{fig:wplcp_idea}).
-
-\subsection{A functional-balance model for plant construction}
-
-It worth noting that because eqns \ref{eq:dMtdt}-\ref{eq:wplcp} are derived using standard rules of addition, multiplication and differentiation, they hold for any potential growth model where biomass allocation is important. To make explicit predictions via this framework, then requires an explicit model of plant construction and function; i.e. we must put quantify all the terms in Fig. \ref{fig:conceptual}b.
-
-The {\plant} package adopts a model of plant construction and function that can be considered a first-order functional-balance or function-equilibrium model, similar to those implemented by \citet{Makela-1997} and \citet{Moorcroft-2001}. We could also call it ``isometric'', because the assumptions see area-based metrics scaling to the first-power of other area-based metrics, and to the square-power of length-based metrics, such as height \citep{Huxley-1932}. Table \ref{tab:allometry} provides key equations of the model (see \citealt{Falster-2016} for full derivation). In particular, we assume that as a plant grows:
-\begin{description}
-\item[Assumption 1:] Its height scales to the 0.5 power of its leaf area (eqn \ref{eq:ha}).
-\item[Assumptions 2:] The cross-sectional area of sapwood in the stem is proportional to its leaf area (eqn \ref{eq:as}).
-\item[Assumptions 3:] The cross-sectional area of bark and phloem in the stem  is proportional to its leaf area (eqn \ref{eq:ab}).
-\item[Assumptions 4:] The cross-sectional area of root surface area and therefore mass is proportional to its leaf area (eqn \ref{eq:mr}).
-\item[Assumption 5:] The vertical distribution of leaf within the plant's canopy, relative to the plant's height, remains constant.
-\end{description}
-Assumption 1 accounts for the architectural layout of the plant. Assumptions 2-4 are realisations of the pipe model \citep{Shinozaki-1964}, whereby the cross-sectional area of conducting tissues are proportional to leaf area. To describe the vertical distribution of leaf area within the canopy of an individual plant (assumption 5), we use the model of \citet{Yokozawa-1995}, which can account for a variety of canopy profiles through a single parameter $\eta_c$, varying from 0-1 (for details, see Supplementary Materials).
-
-Combined, the functional-balance assumptions from Table \ref{tab:allometry}a lead directly to equations describing the mass of sapwood and bark in relation to leaf, and the amount of leaf in relation to height (Table \ref{tab:allometry}b). Substituting from Table \ref{tab:allometry} into eqns \ref{eq:dhdt}, \ref{eq:dast}, \ref{eq:dDdt} then gives all the necessary terms needed to implement the growth model described in Fig. \ref{fig:conceptual}.
-
-\subsection{Trait-based trade-offs}
-
-We now consider how trait-based trade-offs enter into the above growth model. It is essential that any trait includes both a benefit and cost in terms of plant function and/or life history; otherwise we would expect ever-increasing trait values towards more beneficial values. For present purposes, we consider five prominent traits for which we can posit specific costs and benefits, outlined in Table \ref{tab:traits}. In postulating potential benefits and costs, we consider only those thought to arise as direct biophysical consequences of varying a trait. The trade-offs are then implemented as follows.
-\begin{description}
-\item[Seed mass, $\omega$:] There is a direct energetic trade-off between a plant's fecundity and the size of its seeds. Moreover, we assume larger seeds result in larger seedlings; this seed-size number tradeoff translates into a demographic tradeoff between the number of seedlings produced by a parent and their initial size.
-\item[Height at maturation, $H_{{\rm mat}}$:] This trait moderates an inevitable energetic trade-off between growth and reproduction, that operates at all times through the lifestyle. Mass invested in growth cannot be invested in reproduction. To describe how the fraction of mass allocated to reproduction, $1- \frac{{\rm d}M_{{\rm a}}}{{\rm d}B}$, changes through ontogeny, we assume a function $r(H, H_{{\rm mat}}) = \frac{r_{\rm r1}} {1.0 + \exp\left(r_{\rm r2} \left(1 - H / H_{{\rm mat}}\right)\right)}$, where $H_{{\rm mat}}$ is height at maturation, $r_{\rm r1}$ is the maximum possible allocation (0-1) and $r_{\rm r2}$ determines the sharpness of the transition. The exact shape of this function is non-critical, what is important is that plants shift from a period of investing mainly in growth to investing mainly in reproduction. The trait $H_{{\rm mat}}$ then describes the size at which this shift occurs, with direct biophysical consequences for growth.
-\item[Nitrogen per unit leaf area,  $\nu$:] We allow for the maximum photosynthetic capacity of the leaf to vary with leaf nitrogen per unit area, as $A_{\rm max} = \beta_{{\rm lf1}} \, \left(\frac{\nu}{\nu_0}\right)^{\beta_{{\rm lf5}}}$, where $\beta_{{\rm lf1}}$, $\nu_0$ and $\beta_{{\rm lf5}}$ are constants. Respiration rates per unit leaf area are also assumed to vary linearly with leaf nitrogen per unit area, as $\beta_{{\rm lf4}}\, \nu$.
-\item[Leaf mass per unit area, $\phi$:] This trait directly influences growth by changing $\frac{{\rm d}A_{\rm l}}{{\rm d}M_{\rm a}}$ (Table \ref{tab:allometry}). In addition, we link $\phi$ to the rate of leaf turnover ($k_{\rm l}$), based on a widely observed scaling relationship from \citet{Wright-2004}: $k_{\rm l} = \beta_{{\rm kl1}} \, \left(\frac{\phi}{\phi_0}\right)^{-\beta_{{\rm kl2}}}$ where $\beta_{{\rm kl1}}$, $\phi_0$ and $\beta_{{\rm kl2}}$ are empirical constants. Following \citet{Wright-2004}, the rate of leaf respiration per unit area is assumed independent of $\phi$, as such the mass-based rate is adjusted accordingly whenever $\phi$ is varied.
-\item[Wood density, $\rho$:] This trait directly influences growth by changing $\frac{{\rm d}A_{\rm l}}{{\rm d}M_{\rm a}}$ (Table \ref{tab:allometry}). In addition, we link $\rho$ to the rate of sapwood and bark turnover, mirroring the relationship assumed for leaf turnover: $k_{\rm b} = k_{\rm s} = \beta_{{\rm ks1}} \, \left(\frac{\rho}{\rho_0}\right)^{-\beta_{{\rm ks2}}}$ where $\beta_{{\rm ks1}}$, $\rho_0$ and $\rho_{{\rm ks2}}$ are empirical constants. The rate of sapwood and bark respiration per unit stem volume is assumed to be independent of $\rho$, as such the mass-based rate is adjusted accordingly whenever $\rho$ is varied. There is very little data on rates of sapwood turnover and respiration in relation to wood density, so this latter assumption is more speculative than the equivalent assumption for leaves, which is well supported empirically.
- \end{description}
-
-\section{Methods}
-
-The growth model described above has been implemented as the \texttt{FF16} physiological model within the {\plant} package \citep{Falster-2016} for \textsc{r} \citep{R-2015}. The {\plant} package also makes use of supporting packages \texttt{Rcpp} \citep{Eddelbuettel-2013} and the Boost Library for C++\citep{Schaling-2014}, via the package \texttt{BH} \citep{Eddelbuettel-2015}. To encode the trait-based trade-offs described above, we use the capacity to in {\plant} to provide a ``hyper-parameterisation'' function, which enables various parameters to covary with traits (for full details see Supplementary Materials -- A).
-
-For the most part, parameters used in the current analysis were sourced from \citet{Falster-2016} (see Tables \ref{tab:params_core}--\ref{tab:params_hyper} for values). The only exceptions are: i) parameters affecting the relationships between various size metrics and leaf area, outlined in Table \ref{tab:allometry}a, estimated from data described below, and ii) parameters describing the function for reproductive allocation. By default, we set $r_{\rm r1}=0.8$ and $r_{\rm r2}=10$, implying a relatively rapid transition to reproduction at $H=H_{{\rm mat}}$ (see panel for $\frac{{\rm d}M_{{\rm a}}}{{\rm d}B}$ in Fig. \ref{fig:conceptual}).
-
-The functional-balance assumptions listed in Table \ref{tab:allometry}a were evaluated using data from the Biomass and Allometry Database \citep[\textsc{baad}][]{Falster-2015b}, which includes records for various size metrics from 21084 individual plants across 656 species. We fit standardised major axis ({\sma}) lines \citep{Warton-2006} to characterise bivariate relationships. We implemented a hierarchical model structure, where the distribution of slopes and intercepts among groups is assumed to come from normal distributions. The means and variances of these distributions are then fit as part of the model-fitting procedure.
-
-The analyses presented employ best practises in scientific computing, as defined by \citet{Wilson-2014}, and are fully reproducible, via code available at
-\href{https://github.com/traitecoevo/growth\_trajectories}{github.com/traitecoevo/growth\_trajectories}.
-
-\section{Results}
-
-\subsection{Model assumptions}
-
-To verify model assumptions we compared the assumptions outlined in Table \ref{tab:allometry}a to data sourced from the \textsc{baad} \citep{Falster-2015b}. Additionally, we evaluated an important prediction arising from the eqns in Table \ref{tab:allometry}a, that the amount of live stem tissue supporting each unit of leaf area increases linearly with height, as per the equation
-\begin{equation}\label{eq:msml}
-\frac{M_{\rm b} + M_{\rm s}}{A_{\rm l}} = (1+ \alpha_{\rm b1}) \,\theta \, \rho \, \eta_c \, H.
-\end{equation}
-Note that $\alpha_{\rm b1}, \theta, \rho, \eta_c$ are all traits, i.e. properties that are assumed approximately constant through ontogeny for any given species. Fig. \ref{fig:assumptions} shows that the three functional-balance assumptions outlined in Table \ref{tab:allometry}a and the relationship in eqn \ref{eq:msml} are all well-supported by the available data. The solid lines indicate {\sma} lines fit to each species in the dataset. Dashed lines indicate the slope of predictions under functional-balance assumptions in Table \ref{tab:allometry}a and eqn \ref{eq:msml}. As expected, species differed in elevation, but less so in the slope of the fitted lines; with slopes aligning with those predicted by the functional-balance assumptions.
-
-\subsection{Changes in growth rate with size}
-
-Our growth model suggests an intrinsically size-dependent pattern of biomass-production and growth, which aligns with well-known empirical patterns (Table \ref{tab:phenomena}). The panels in Fig. \ref{fig:conceptual} show the expected patterns for a typical woody plant, obtained by applying the functional-balance model encoded in {\plant}. Biomass production shows a hump-shaped pattern with size, decreasing at larger sizes as the turnover and respiration of sapwood and bark increase. Height growth also shows a hump-shaped pattern with size, first increasing then decreasing. This pattern results from systematic changes in the four components of eqn \ref{eq:dhdt} with size, including a strong decline in the fraction of plant that is leaf declines with increasing size (Fig. \ref{fig:conceptual}), increasing reproductive allocation (Fig. \ref{fig:conceptual}), and declining mass production. In contrast, basal-area growth continues to increase with size, due to an increasing influence of stem turnover. Diameter growth shows a weakly hump shaped curve, tapering off slightly at larger sizes, in part because of the allometric conversion from basal area to diameter (eqn \ref{eq:dDdt}), and in part because of increased reproductive allocation in older trees (Fig \ref{fig:conceptual}). All growth measures decrease sharply with size when expressed as relative growth rates (results not shown).
-
-\subsection{Changes in height growth rate with traits}
-
-We analysed the response of growth rate to five different traits under the assumed trade-offs (Table \ref{tab:traits}). We considered changes in absolute and relative growth rates for mass, height, stem area and stem diameter. The first two traits considered modify behaviour primarily at the start and end of an individual's growth trajectory, and are therefore termed ``ontogenetic traits''. The remaining three traits are termed ``development traits'' because they moderate the rate of movement along an individual's growth trajectory. Across the five different traits, we observed four relatively distinct types of response. These responses are summarised in Table \ref{tab:responses} and described in more detail below.
-
-\subsubsection{Ontogenetic traits}
-
-\noindent{\bf Seed size, $\omega$.}
-Increasing $\omega$ in our model causes seedlings to be larger and fecundity to decrease. As such, the only effect of seed size on growth comes from changing the plant's initial  size. The plots in Fig. \ref{fig:conceptual}, which show changes in growth rate with plant size, also express the expected changes in the growth of seedlings due to changes in seed size. Under similar light conditions, larger seedlings are predicted to have faster absolute growth rates in all metrics  because of their greater total leaf area. At the same time, relative growth rate is predicted to decrease with size, because the ratio of leaf area to support mass decreases with plant size. As plants grow, differences in initial mass will decrease in importance, relative to other factors influencing growth through the life-cycle. As a result, the correlations between seed size and growth rate observed for seedlings disappear among larger plants.
-
-\noindent{\bf Height at maturation, $H_{{\rm mat}}$.}
-$H_{{\rm mat}}$ moderates growth by adjusting the amount of energy invested in growth, i.e.~the term $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ in eqns \ref{eq:dhdt} and \ref{eq:dast}. Greater $H_{{\rm mat}}$ can thus lead to a growth advantage by increasing $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ (Fig. \ref{fig:growth_light_height}). At smaller sizes, there is no differentiation among species, because most individuals are focusing on growth. At larger sizes, individuals of some species are allocating a larger fraction of biomass to reproduction, which reduces their growth rate relative to those species with greater $H_{{\rm mat}}$ (Fig. \ref{fig:growth_light_height}).
-
-\subsubsection{Development traits}
-
-The remaining three traits ($\nu$, $\phi$, \& $\rho$) moderate growth rates at a point along an individual's growth trajectory (Fig. \ref{fig:growth_light_height}).
-
-\noindent{\bf Leaf nitrogen content per leaf area, $\nu$.} The response of growth rate to changes in $\nu$ is relatively straightforward: there is an optimum value of $\nu$ that maximises height growth rate in a given light environment $E$ and does not vary with height (Fig. \ref{fig:growth_light_height}). As $E$ increases from low to high, the optimal $\nu$ also increases. The invariance of the growth-trait relationship with respect to size arises as follows. The direct physiological effect of $\nu$ is to increase the maximum potential photosynthetic rate of leaves, with a cost of higher respiration rate. Both the cost and benefits of $\nu$ appear within $\frac{ {\rm d}B} {{\rm d}t}$, implying the direction of correlation between trait and growth rate depends crucially on the change in mass production per $\nu$.
-From eqn \ref{eq:dbdt}, $\frac{\partial \left( \frac{ {\rm d}B} {{\rm d}t}\right)}{\partial nu} = A_{\rm l} \, (\frac{ \partial \bar{p}(E)}{\partial nu}  - \frac{ \partial r_{\rm l}}{\partial nu} )$. Since both and $\bar{p}(E)$ and $r_{\rm l}$ are expressed per unit area and independent of height, the optimal value is also independent of plant height.
-
-\noindent{\bf Leaf mass per unit leaf area, $\phi$.}
-Unlike $\nu$, the response of growth rate to changes in $\phi$ varies strongly with plant height, with the relationship moving like a wave across the trait spectrum (Fig. \ref{fig:growth_light_height}). As a result, the value of $\phi$ that optimises plant growth increases with plant size, and the direction of correlation between height growth rate and $\phi$ shifts from negative to positive, as plants increase in height. Decreasing $\phi$ has two impacts on height growth rate. First, lower $\phi$ increases the leaf deployment per mass invested $(\frac{{\rm d}A_{\rm l}}{{\rm d}M_{\rm a}})$ by economising on construction costs. Second, lower $\phi$ decreases net production $(\frac{{\rm d}B}{{\rm d}t})$, due to increased leaf turnover. Whether lower $\phi$ increases growth thus depends on the relative magnitude of these two effects. When plants are small the effect on leaf deployment rate is larger and so decreasing $\phi$ increases growth rate. When plants are large, the influence of $\phi$ on leaf deployment rate is diminished, because the cost of building other supportive tissues (other terms in eqn \ref{eq:daldmt}) is larger (Fig. \ref{fig:conceptual}). The net result is that at larger sizes, low $\phi$ is no longer advantageous for growth (Fig. \ref{fig:growth_light_height}).
-
-\noindent{\bf Wood density, $\rho$.}
-As for leaves, lower cost of stem construction (lower $\rho$) decreases the cost of deploying a unit of leaf area, and may thereby increase growth rates (Fig. \ref{fig:growth_light_height}). In contrast to $\phi$, the benefits of cheaper stem construction become more pronounced at larger sizes, as an increasingly large fraction of the plant is wood (Fig. \ref{fig:conceptual}a). Thus, $\rho$ has only a weak effect on growth rates for small plants, but a strong effect for intermediate to large plants. As the plant becomes very tall (H \textgreater 15m), the benefits of low $\rho$ finally begin to diminish.
-
-\subsection{Changes in other growth rates with trait}
-
-The results reported above and shown in Fig. \ref{fig:growth_light_height} focus on height growth rate (eqn \ref{eq:dhdt}). Corresponding results for growth rates in stem diameter (eqn \ref{eq:dDdt}), stem basal area (eqn \ref{eq:dast}), and above-ground mass (eqn \ref{eq:dMtdt}) are provided in Figs. \ref{fig:growth_light_dia}--Fig. \ref{fig:growth_light_mass} of the Supplementary Materials. In each figure, plants were grown to a suitable diameter, area, or mass. As such, changes in relative growth rates with traits show a similar patterns as absolute growth rates.
-
-We find that for seed mass, leaf nitrogen, leaf mass per area and height at maturation, the patterns of growth rate in stem diameter, stem area, or above-ground mass with respect to traits mirror those observed with respect to heigh growth (Table \ref{tab:responses}). The only trait where a slightly different response was observed was for wood density. Whereas the effect of wood density on height growth tended to diminish slightly at larger sizes (Fig. \ref{fig:growth_light_height}), the effect became even stronger when measuring growth rate in stem diameter, stem area or above-ground mass. Recall that sapwood lost via turnover is turns into heartwood. Whereas the loss of sapwood diverts energy away from height growth rate, the faster accumulation of heartwood actually accelerates the growth of stem diameter and area.
-
-\subsection{Responsiveness of growth rate to light}
-
-The predictions in Figs. \ref{fig:growth_light_height} and \ref{fig:growth_light_dia}-\ref{fig:growth_light_mass} illustrate how traits impact on growth rate under different light environments and at different sizes. An additional outcome that arises directly from these analyses is that traits moderate the responsiveness of growth to changes in light environment. This response arises because individuals with higher potential growth rate naturally have greater potential plasticity in growth. Our results therefore support findings that species with low $\rho$ increase growth more substantially with increases in light (Table \ref{tab:phenomena}). Variation in $\phi$ also moderates the response of growth to changes in light, with species having the lowest $\phi$ being most responsive. However, unlike for $\rho$, the effect appears only for the smallest size classes.
-
-\subsection{Shade tolerance}
-Combining eqn \ref{eq:wplcp} with the function-balance model in Table \ref{tab:allometry} leads to the a more specific expression for calculating {\wplcp}, as the value of $E^*$ that gives
-\begin{equation}\label{eq:wplcp_2}
-\bar{p}(E^*) =
-      \phi \left(\frac{k_{\rm l}}{y} + r_{\rm l}\right) +
-      \left(\theta \, \rho \, \eta_c \, H\right)
-        \left(b\left(\frac{k_{\rm b}}{y} + r_{\rm b}\right)
-            + \left(\frac{k_{\rm s}}{y} + r_{\rm s}\right)\right) +
-      \alpha_{\rm r1} \left(\frac{k_{\rm r}}{y} + r_{\rm r}\right).
-\end{equation}
-Eqn \ref{eq:wplcp_2} indicates {\wplcp} will increase approximately linearly with $H$ and potentially vary with traits $\nu$, $\phi$, and $\rho$. With some further manipulations, it is possible to show that {\wplcp} will decrease with $\phi$ if $\beta_{{\rm kl2}} >1$. Likewise {\wplcp} will decrease with $\rho$ if $\beta_{{\rm ks2}} >1$. The parameters $\beta_{{\rm kl2}}$ and $\beta_{{\rm ks2}}$ give the slope relating tissue turnover rate to $\phi$ and $\rho$, respectively. Since in this analysis, we have assumed these criteria to hold, species with low $\phi$ and low $\rho$ are predicted to be less shade tolerant because of disproportionate increases in turnover costs (Fig. \ref{fig:wplcp}). At low $\phi$ ($\rho$), leaf (sapwood) turnover is higher and thus a greater light income is needed to offset these costs. {\wplcp} also decreases with height because as size increases, the total amount of carbon needed to offset respiratory and turnover costs in the stem also increases \citep{Givnish-1988}. In addition, {\wplcp} varies with $\nu$. At small sizes, {\wplcp} increases with $\nu$ across the band of values typically observed in real plants, i.e. high leaf nitrogen makes seedlings shade intolerant. At larger sizes, as net production declines to zero, {\wplcp} begins to increase again for very low values of $\nu$. All of these patterns match empirically observed patterns (Table \ref{tab:phenomena}).
-
-\section{Discussion}
-
-Using a model relating plant physiological function and carbon allocation to five prominent traits, we have shown how traits impact on plant growth across the life cycle. This approach extends a widely-used theoretical model for seedlings, which links mass-based growth rate to the trait leaf mass per unit leaf area \citep{Lambers-1992, Wright-2000}, to explicitly include influences of size, light environment, and other prominent traits. During the last two decades, functional traits have captured the attention of ecologists, in large part because of the ability to organise the world's plant species along standard dimensions \citep{Westoby-2002}. However, it has remained unclear how or whether prominent traits influence growth outcomes \citep{Poorter-2008, Wright-2010,Paine-2015}. Matching a growing amount of empirical evidence (Table \ref{tab:phenomena}), this study outlines when and why the direction or strength of correlation between traits and growth rate shifts with plant size. Moreover, we show that different traits and trade-offs generate different types of response. Combined with the available empirical evidence, these results demand a fundamental shift in our understanding of plant ecological strategies, away from one in which species are thought to have a fixed growth strategy throughout their life (from slow to fast growth) \citep[e.g.][]{Grime-1977, Adler-2014, Paine-2015} to one in which traits define a size-dependent growth trajectory \citep{Gibert-2016}. Moreover, we find that growth trajectories and the ranking of traits across them are also moderated by the light environment; while traits that minimise costs of tissue respiration and / or turnover also make plants more shade tolerant (i.e. lower \textsc{wplcp}), as is empirically observed \citep{Messier-1999, Craine-2005, Poorter-2006, Baltzer-2007, Lusk-2008}. The {\plant} model, used here, builds on and extends several related approaches, wherein emergent outcomes such as height, diameter and mass growth arise from the interaction of different tissues and traits \citep[e.g.][]{Givnish-1988, Makela-1997, Moorcroft-2001}. This approach is quite different to models derived from metabolic scaling theory (\textsc{mst}), which derive everything from a single master ``scaling'' equation for mass growth and have thus far been unable to account for size-dependent changes in the correlation between traits and growth rate \citep{Enquist-1999, Enquist-2007}. Our approach is also fundamentally different from statistically-fitted growth models \citep[e.g.][]{Herault-2011, Ruger-2012, Iida-2014} in that it predicts rather than statistically tests for trait-based effects. In this sense, our model is designed to both explain observed phenomena (Table \ref{tab:phenomena}) and also generate new hypotheses.
-
-\subsection{Generalising to other traits and trade-offs}
-
-The model presented here extends a widely-used theoretical model for seedlings, which links mass-based growth rate to the trait $\phi$ \citep{Lambers-1992, Wright-2000}, to larger plants and other traits. Importantly, the seedling model can be derived as a special case of our extended approach. Unlike the original model for seedlings (eqn \ref{eq:RGR}), the new model also predicts a relationship between $\phi$ and growth rate that changes with size. In particular, the correlation shifts from being strongly negative in seedlings to being absent, or even possibly positive in larger plants (Fig. \ref{fig:growth_light_height}), irrespective of whether growth rate is estimate via height, stem diameter, stem area or total mass. This shift, which matches empirical evidence \citep{Poorter-2008, Wright-2010, Herault-2011, Paine-2015, Gibert-2016}, occurs because the benefits of cheap leaf deployment diminish with plant size. As seedlings, leaves comprise a large part of the plant (Fig. \ref{fig:conceptual}a). Decreasing $\phi$ then has an overwhelmingly positive effect on height and diameter growth rate because the effect of increasing $\frac{\ud A_{\rm l}}{\ud M_{\rm l}}$ is large compared to the other terms in eqn \ref{eq:daldmt}. As plants increase in size, however, the amount of supporting tissue increases (Fig \ref{fig:assumptions}d), decreasing the benefit of cheaper leaf construction in eqn \ref{eq:daldmt}. Consequently, the effect of $\phi$ on leaf turnover comes to dominate at larger sizes, and as such, the effect of $\phi$ on height, diameter and, mass growth shifts from negative to either flat or mildly positive  (Table \ref{tab:responses}).
-
-The list of functional traits that are known to differ among plant species is long and ever-increasing \citep{Perez-2013}. While we have focussed on understanding the effects of five specific traits on growth rate, the framework presented can be extended to generate hypotheses about other traits and trade-offs. The main criteria for including new traits is that a clear trade-off has been established, with benefits and/or costs that ultimately translate into biomass or carbon, and can therefore be embedded within the eqns in Fig. \ref{fig:conceptual}b. While the list of plant traits that have been measured is extensive, clear trade-offs have been established for only a few of these. A well-developed  trade-off must include two opposing forces, that operate at some point in the organisms life cycle. It is not necessary that benefit and cost both enter into Fig. \ref{fig:conceptual}; for example wood density is sometimes viewed as a trade-off between the costs of tissue construction and the rate of stem mortality. In that case, the costs of lower wood density would not appear within the eqns in Fig. \ref{fig:conceptual}b, so lower wood density would always increase growth rate.
-
-Our framework also highlights what is needed for traits to impact on growth rate and shade tolerance. While traits can influence many aspects of plant function, these  influences must operate via the pathways outlined in Fig. \ref{fig:conceptual} if the trait is going to impact on growth. For example, many studies have focused on traits related to plant hydraulics, such as vessel size and increased sapwood area per leaf area \citep{Zanne-2010}. These traits will inevitably influence the rate of photosynthesis per leaf area ($\bar{p}$ in eqn \ref{eq:dbdt}) by altering conductance of water to the leaf. The potential costs of larger vessel size might be higher rates of stem turnover, which would appear in the term $k_{\rm s}$ in eqn \ref{eq:dbdt}. The costs of increased sapwood area per leaf area is increased allocation to stem, a factor which is already included in our framework via the parameter $\theta$ (Table \ref{tab:allometry}). The effect of both these traits on growth rate should be expected to vary with plant size.
-
-\subsection{Implications for trait-based approaches}
-
-There are some broad implications of our work for our understanding of plant ecological strategies and plant growth.
-
-First, our results highlight the importance of allocation decisions and turnover costs in determining growth dynamics.
-Much of current ecosystem research focusses on factors effecting primary production -- photosynthesis, respiration, and resultant fluxes of carbon -- with less attention devoted to allocation and turnover (\citealp{Friend-2014}; \citealp[for comparisons of models see][]{Sitch-2008, DeKauwe-2014}). Yet, for four of the five traits considered here, trait values do not influence net primary production. In fact, the analysis with $\phi$ shows that increased growth rate can occur even at a distinct cost to the plant's carbon budget. Low $\phi$ results in high leaf turnover, such that individuals with a $\phi$ have lower mass production. It is this property that makes them shade intolerant. And yet they can still achieve a growth advantage (when small), because the benefits of cheap leaf construction outweigh the costs of high leaf turnover.
-
-% - \citet{King-2005} shows that the cost of turning over leaves, branches and fine roots may halve the height growth rate that could otherwise be attained.
-
-Second, our results demand a shift in the way plant species are sometimes described as, being of fast or slow growth. To the extent the ranking of growth rates among individuals differing in traits shifts with either plant size or light environment, it is not possible to describe a species via a single point along a spectrum from slow to fast growth. Such a spectrum is implied by many of theoretical models used in community ecology, including Grime's \textsc{csr} triangle, the r-K spectrum, and coexistence models base on the Lotka-Volterra system of equations \citep[e.g.][]{Grime-1977,Chesson-2000}. Researchers using functional traits have also tended to describe species as fast or slow growing \citep[e.g.][]{Adler-2014, Diaz-2016}. Our results suggest a more-nuanced approach. Plants that are fast growing as seedlings may not be fast growing as saplings or adults, or under low light. Plants that are fast growing as adults may not be fast growing as seedlings. This more-nuanced perspective tends to mirror observed demographic patterns, where juvenile and adult growth rates are sometimes only loosely correlated \citep{Rees-2001}.
-
-Third, our results suggest that even if traits define a potential growth trajectory, researchers seeking to link traits to growth rate must probe deeper into the data than simply looking for a linear relationship between traits and average growth, to recover the expected relationships. None of the predicted relationships between traits and growth is linear across the range of sizes and light environments tested. As such, we should not be surprised if the mean growth rate across individuals spanning a range of sizes or light environments is only weakly or not correlated with traits \citep[e.g.][]{Poorter-2008,Paine-2015}. Controlling for size, site and light environment will be essential for detecting significant patterns \citep[e.g.][]{Gibert-2016}, as will having a clear expectation for the hypothesised relationship.
-
-While our theory has succeeded in explaining some observed phenomena (Table \ref{tab:phenomena}), the test for good theory is that it also makes new predictions that enable the theory to be further refined and tested. To that end, we can make a further prediction arising from our results, which is that the trait $\phi$ should increase through ontogeny for all individuals, across all species. Such shifts have been observed across a variety of species \citet{King-1999,Thomas-1999,Koch-2004}. Since the value of cheap leaf construction diminishes with size, it pays for plants -- and especially those with low $\phi$ -- to increase their $\phi$ as they grow larger. \citet{King-1999} made a similar prediction for a single species of \emph{Eucalyptus}, but here we can extend the idea across species. While trait-based research largely focusses on differences among species, it has long been recognised that traits also vary among individuals within a species and within individuals \citep{Westoby-2002}. This hypothesis attempts to give meaning to some of that variation, and shows how variation across and within species might be understood within a single framework.
-
-\subsection{Comparison with other frameworks}
-
-As noted above, the {\plant} model is closely related to models used in several other studies, including those by \citet{Givnish-1988, Yokozawa-1995, Makela-1997, King-1999, King-2005, Moorcroft-2001, Li-2014}, and in particular those by \citet{Makela-1997} and \citet{Moorcroft-2001}. These models have several properties in common, including that they all have growth being driven by the gross amount of photosynthetic income; have photosynthesis increasing non-linearly with light and leaf nitrogen content; and that they consider the costs of respiration and turnover in different tissues. Many models also make functional-balance assumptions, for example linking the cross-section of sapwood to leaf area \citep{Givnish-1988, Yokozawa-1995, Makela-1997, King-2005, Moorcroft-2001}. We note that an assumption of exact functional balance is not critical for our results, what matters is that the amount of live biomass (i.e. excluding heartwood) needed to support an extra unit of leaf area increases with height (as Fig. \ref{fig:assumptions}d). Some models also differ from in that they directly link a plant's stem diameter to its height, e.g. \citet{Yokozawa-1995, King-1999, Moorcroft-2001, Li-2014}, whereas we let this scaling arise as an emergent outcome of growth and sapwood turnover. Again, we expect this difference will not affect the main results.
-
-A feature distinguishing our model from most of those mentioned above is the explicit linking to trait-based trade-offs. While such a linkage was also made by \citet{Moorcroft-2001} in the \textsc{ed} model; analyses using \textsc{ed} have mainly focussed on ecosystem-level outcomes rather than the growth of individual plants. Because of its underlying similarities, we expect the dynamics reported here to be also present within the \textsc{ed} model. \citet{King-1999} also connected his model of growth for a single species to the trait $\phi$, and like the current study, predicted a gradual flattening out of the relationship between $\phi$ and growth rate with size (as in Fig. \ref{fig:growth_light_height}), because the influence of cheap leaf construction decreased with size. In our study however, there was additional cost of increased leaf turnover, that further penalised low $\phi$ strategies when plants were large.
-
-Perhaps the two most controversial elements of our approach concerns the assumptions about tissue replacement and reproductive allocation. Many vegetation models determine allocation based on net primary production (photosynthesis - respiration), whereas we also subtracted tissues lost via turnover before distributing surplus biomass. This is because we assume tissues lost via turnover are replaced before carbon is allocated to either new growth (i.e. growth that leads to a net increase in $M_{\rm l}, M_{\rm b}, M_{\rm s}$ or $M_{\rm r}$) or reproduction \citep{Thornley-2000}. This assumption is likely to hold true for most woody plants and perennials, but may not hold for some herbs or annuals, where the switch to reproduction may entail a run-down in the vegetative part of the plant. The second assumption we make is that when mature, plants allocate a substantial fraction of their surplus carbon to reproduction. While it remains unclear just how much adult plants might allocate to reproduction, recent reviews suggest the fraction may be high \citep{Thomas-2011, Wenk-2015}. Moreover, a long line of theoretical models indicate that allocation should increase as plants age \citep[reviewed by ][]{Wenk-2015}. Reproductive allocation is given little attention in models of ecosystem flux \citep[e.g.][]{Sitch-2008, DeKauwe-2014}. For example in the \textsc{ed} model, a fixed 30\% of net primary production is allocated to reproduction, irrespective of plant size. In the case of growth, differences in reproductive allocation offer a clear pathway for explaining patterns linking a plants maximum size to the growth rate of large individuals \citep[e.g.][]{Wright-2010}.
-
-Another class of model dealing explicitly with size-related effects includes those derived from the metabolic scaling theory (\textsc{mst}) of ecology \citep{Enquist-1999, Enquist-2007}. Several points suggest our new framework provides a better explanation to the growth phenomena in Table \ref{tab:phenomena} than the \textsc{mst} framework. First, the \textsc{mst}-derived model suggests diameter growth continues to increase as plants grow, whereas empirical data suggests growth rate declines for larger plants \citep{Canham-2004, Canham-2006, Herault-2011}. Second, the \textsc{mst} model does not allow for the effects of traits to vary with plant size. Predicted effects are for a linear increase in growth with decreases in either $\phi$ and lower $\rho$, that apply irrespective of size. However, at least for $\phi$ such effects in large trees have not been observed.
-
-\subsection{Closing remarks}
-
-Overall we have shown how diverse phenomena related to plant growth can be understood with a model accounting for processes generating photosynthetic income and allocating this among different tissues. The need to consider effects of plant size, alongside trait-based differences among species, has has long been recognised in trait-based research \cite[e.g.][]{Givnish-1988, Thomas-1999, Moorcroft-2001, Westoby-2002, Enquist-2007}. Here we have provided a framework for achieving this. By disentangling the effects of plant size, light environment and traits on growth rates, our results provide a solid theoretical foundation for trait ecology and thus provide a platform for understanding growth across diverse species around the world.
-
-\section{Acknowledgements}
-
-We thank J Camac, A Gibert, G Kunstler, C Prentice, E Wenk, M Westoby, I Wright, and SJ Wright for helpful discussions; J Camac for introducing us to the \texttt{stan} framework, and D Warton for discussions about {\sma} line fitting. Falster was supported by an Australian Research Council discovery grant (DP110102086). FitzJohn was supported by the Science and Industry Endowment Fund (RP04-174). The authors have no conflicts of interest to declare.
-
-\section{Supplementary Materials}
-
-\noindent A -- Additional details on the \texttt{FF16} growth model
-
-\noindent B -- Supplementary Tables
-
-\noindent C -- Supplementary Figures
-
-\vspace{10em}
-
-\newpage
-\section{Tables and Figures}
-
-
-\begin{table}[ht]
-\caption{\textbf{Key empirical phenomena explained via the framework presented in this paper.}
-Select references are provided for each phenomena, with preference for meta-analyses, where available. The traits considered are: seed mass ($\omega$), height at maturation ($H_{{\rm mat}}$), leaf nitrogen content per unit leaf area ($\nu$)$^1$, leaf mass per area ($\phi$)$^2$, and wood density ($\rho$). See Tables \ref{tab:definitions} and \ref{tab:traits} for further details. Abbreviations: \textsc{rgr}=relative growth ratel \textsc{lai} = leaf area index.
-}
-{\footnotesize
-{
-  \begin{tabular}{p{0.01cm}p{7.5cm}p{7cm}}
-  \\
-  \hline
-  \multicolumn{2}{l}{ Phenomena} & References \\
-  \hline
-  \multicolumn{3}{l}{\bf{Change in growth rate with increasing size} (Fig. \ref{fig:conceptual})}\\
-  & Net biomass production: Hump-shaped & \citet{Givnish-1988, Koch-2004} \\
-  & Plant mass: Increasing & \citet{Sillett-2010, Stephenson-2014} \\
-  & Height: Hump-shaped &  \citet{Ryan-2006, Sillett-2010, King-2011} \\
-  & Stem-diameter: Hump-shaped &  \citet{Canham-2004, Canham-2006, Herault-2011} \\
-  & Stem-area: unknown & \\
-  & \textsc{rgr} (all variables): decreasing & \citet{Rees-2010, Iida-2014}\\
-  \\
-  \multicolumn{3}{l}{\bf{Effect of traits on growth rate} (Fig. \ref{fig:growth_light_height})}\\
-  & $\omega$: low values produce smaller seedlings, resulting in lower absolute growth but higher \textsc{rgr}. & Meta-analysis by \citet{Gibert-2016} \\
-  & $H_{\rm m}$: low values slow growth, but only at larger sizes & Meta-analysis by \citet{Gibert-2016}\\
-  & $\nu$: low values increase growth irrespective of size, but only in high light & Meta-analysis by \citet{Gibert-2016}\\
-  & $\phi$: low values increase growth when small, not at mid-large sizes & Meta-analysis by \citet{Gibert-2016}\\
-  & $\rho$: low values increase growth, except at largest sizes & Meta-analysis by \citet{Gibert-2016}\\
-
-  \\ \multicolumn{3}{l}{\bf{Responsiveness of growth rate to changes in light, $E$} (Fig. \ref{fig:growth_light_height})}\\
-  & $\nu$: high values respond more to $E$, changes ranking of growth rate across species & \\
-  & $\phi$: low values respond more to $E$, does not change ranking of growth rate across species & \\
-  & $\rho$: low values respond more to $E$, does not change ranking of growth rate across species & \citet{Ruger-2012}\\
-
-  \\ \multicolumn{3}{l}{\bf{Shade tolerance, \textsc{wplcp}} (Fig. \ref{fig:wplcp})}\\
-  & Decreasing with size & \citet{Givnish-1988, Kneeshaw-2006, Lusk-2008}\\
-  & $\nu$: low values more shade tolerant &  \citet{Messier-1999, Craine-2005,Baltzer-2007}\\
-  & $\phi$: low values less shade tolerant & \citet{Messier-1999, Poorter-2006, Baltzer-2007, Lusk-2008}$^3$\\
-  & \quad $\rightarrow$ stands have higher \textsc{lai} &  \citet{Reich-1992, Gower-1993, Niinemets-2010} \\
-  & $\rho$: low values less shade tolerant  &  \citet{Osunkoya-1996}\\
-  \hline
-  \end{tabular}
-  }
-$^1$ Similar responses are predicted for maximum photosynthetic rate per leaf area, or dark respiration rate per leaf area. Here these terms are directly related to $\nu$.\\
-$^2$ Similar responses are predicted for leaf lifespan. In our analysis this terms is directly related to $\phi$.\\
-$^3$ Note also that the article by \citet{Baltzer-2007} reports a very strong relationship between \textsc{wplcp} and respiration rate measured on either area or mass basis.\\
-
-}
-\label{tab:phenomena}
-\end{table}
-
-\newpage
-
-\begin{table}[ht]
- \caption{\textbf{Key variables of the \texttt{FF16} physiological model from {\plant}, and used in this analysis.}. For mass ($M$), respiration ($r$), and turnover ($k$)
-variables, subscripts refer to any of the following tissues: \({\rm l}\) = leaves, \({\rm b}\) = bark, \({\rm s}\) = sapwood,
-\({\rm r}\) = roots, \({\rm a}\) = all living tissue. For area \(A\) variables, subscripts refer to any of the following: \({\rm l}\) = leaves, \({\rm st}\) = total stem cross-section, \({\rm s}\) = sapwood cross-section, \({\rm b}\) = bark cross-section, \({\rm h}\) = heartwood cross-section.}
-\centering
-{\footnotesize 
-\begin{tabular}{p{0.1cm}p{2cm}p{2.5cm}p{8cm}}
-\\
-\hline
-& Symbol & Unit & Description \\
-\hline
-\multicolumn{4}{l}{\textbf{Environmental variables}} \\
-& $E$ & & Canopy openness\\
-\multicolumn{4}{l}{\textbf{State variables (may vary through ontogeny)}} \\
-& $H$ & m & Height of a plant\\
-& $B$ & kg & Biomass originating from parent plant\\
-& $D$ & m & Stem diameter\\
-& $M_i$ & kg & Mass of tissue type $i$ retained on plant \\
-& $A_i$ & m$^2$ & Surface area or area of cross-section of tissue type $i$\\
-& $p,\bar{p}$ & mol yr$^{-1}$ m$^{-2}$ & Photosynthetic rate per unit area \\
-& $r_i$ & mol yr$^{-1}$ kg$^{-1}$  & Respiration rate per unit mass of tissue type $i$ \\
-& $k_i$ & yr$^{-1}$ & Turnover rate for tissue type $i$ \\
-
-\multicolumn{4}{l}{\textbf{Traits (constant through ontogeny)}} \\
-& $\omega$ & kg & Seed mass  \\
-& $H_{{\rm mat}}$ & m & Height at maturation\\
-& $\nu$ & $\mathrm{kg}\,\mathrm{m}^{-2}$ & Leaf nitrogen per unit leaf area  \\
-& $\phi$ & $\mathrm{kg}\,\mathrm{m}^{-2}$ & Leaf mass per area \\
-& $\rho$ & $\mathrm{kg}\,\mathrm{m}^{-3}$ & Wood density \\
-\multicolumn{4}{l}{\textbf{Other parameters (constant through ontogeny)}} \\
-& $\alpha_{\rm y}$ &  & Yield -- fraction of carbon fixed converted into mass\\
-& $\alpha_{\rm bio}$  & $\mathrm{kg}\,\mathrm{mol}^{-1}$ & Biomass per mol carbon \\
-& $\eta_c$ & & Crown-shape parameter\\
-& $\theta$ &  & Sapwood area per unit leaf area\\
-& $\alpha_{\rm l1}$ & m & Height of plant with leaf area of 1m$^2$ \\
-& $\alpha_{\rm r1}$ & $\mathrm{kg}\,\mathrm{m}^{-2}$ & Root mass per unit leaf area \\
-& $\alpha_{\rm b1}$ &  & Ratio of bark area to sapwood area\\
-\hline
-\end{tabular}
-}
-\label{tab:definitions}
-\end{table}
-
-
-
-\newpage
-
-\begin{table}[ht]
- \caption{\textbf{Key trade-offs for the five traits considered here.}
-For each trait we list the benefit and cost of increased trait values, as encoded into the {\plant} model.
+\begin{table}[t]
+ \caption{Key trade-offs (benefit and cost) for the five traits considered, as encoded into the {\plant} model.
  }
 \centering
-{\footnotesize
-\raggedright
-  \begin{tabular}{p{3cm}p{3cm}p{3cm}p{4cm}}
-  \\
-  \hline
-  Name &  Benefit & Cost & References \\
-  \hline
-  \\
-  Seed mass, $\omega$ & $\uparrow$ size seedlings & $\downarrow$  maternal fecundity & \citet{Moles-2006}\\
-  \\
-  Height at maturation, $H_{{\rm mat}}$  & $\uparrow$ growth & $\downarrow$ fecundity & \citet{Thomas-2011, Wenk-2015}\\
-\\
-  Leaf nitrogen per unit leaf area, $\nu$ & $\uparrow$ photosynthesis in high light & $\uparrow$ respiration rate & \citet{Wright-2004}\\
-  \\
-  Leaf mass per unit leaf area, $\phi$ & $\downarrow$ leaf turnover & $\uparrow$ cost building leaf & \citet{Wright-2004}\\
-  \\
-  Wood density, $\rho$ & $\downarrow$ sapwood turnover & $\uparrow$ cost building stem & \citet{Chave-2009}\\
-  \\
-  \hline
+  \begin{tabular}{p{0.5cm}p{3.0cm}p{2.5cm}p{1cm}}
+  \toprule
+  Trait &  Benefit & Cost & Ref. \\
+  \midrule
+  $\omega$ & $\uparrow$ size seedlings & $\downarrow$ fecundity & \citep{Moles-2006}\\
+  $H_{{\rm mat}}$  & $\uparrow$ growth & $\downarrow$ fecundity & \citep{Thomas-2011, Wenk-2015}\\
+  $\nu$ & $\uparrow$ photosynthesis (high light) & $\uparrow$ respiration rate & \citep{Wright-2004}\\
+  $\phi$ & $\downarrow$ leaf turnover & $\uparrow$ cost building leaf & \citep{Wright-2004}\\
+  $\rho$ & $\downarrow$ sapwood turnover & $\uparrow$ cost building stem & \citep{Chave-2009}\\
+  \bottomrule
   \end{tabular}
-}
 \label{tab:traits}
 \end{table}
 
-\newpage
 
-\begin{table}[ht]
-\caption{ \textbf{Equations for a ``functional-balance'' model of plant construction.}
-The first column of part \textbf{a} provides cores assumptions between various size metrics and leaf area. Eqns in the middle and right columns of \textbf{b}, and in \textbf{b} can then be derived from the assumptions in the left column of \textbf{a}.
-The column ``Eqn'' indicates equation numbers referred to in the main text.
-See Table \ref{tab:definitions} for a list of variable names and definitions.
-}
+\begin{table*}
+\caption{Equations for a ``functional-balance'' model of plant construction. See Table \ref{tab:definitions} for a list of variable names and definitions.}
 \centering
-
-{\footnotesize
-  \begin{tabular}{p{0.1cm}p{2.5cm}p{3cm}p{4cm}p{2.5cm}p{0.75cm}}\\ \\ \hline
-  & Variable & Function & Marginal cost & Growth rate & Eqn\\ \hline
+  \begin{tabular}{p{0.1cm}p{2.5cm}p{3cm}p{4cm}p{2.5cm}p{0.75cm}}
+  \toprule
+  & Variable & Function & Marginal cost & Growth rate & Eqn\\
+  \midrule
   \multicolumn{6}{l}{\textbf{a) Functional-balance assumptions}} \\
   & Height &
     $H = \alpha_{\rm l1} \, A_{\rm l}^{0.5}$ &
@@ -451,13 +280,147 @@ See Table \ref{tab:definitions} for a list of variable names and definitions.
     $M_{\rm h} = \int_0^t \frac{{\rm d}M_{\rm h}}{{\rm d}t}(t^\prime) \, dt^\prime$ &
      &
     $\frac{{\rm d}M_{\rm h}}{{\rm d}t} = k_{\rm s} \, M_{\rm s}$ & \eqncounter{eq:htm} \\
-    \\
-  \hline
-\end{tabular}}
+  \bottomrule
+\end{tabular}
+\addtabletext{\\The first column of part \textbf{a} provides cores assumptions between various size metrics and leaf area. Eqns in the middle and right columns of \textbf{b}, and in \textbf{b} can then be derived from the assumptions in the left column of \textbf{a}.
+The column ``Eqn'' indicates equation numbers referred to in the main text.
+}
 \label{tab:allometry}
-\end{table}
+\end{table*}
 
-\newpage
+
+\subsection{Decomposition of growth rates into components}
+
+% Update equation counter, following inclusion of figure 1
+\setcounter{equation}{9}
+
+To model growth in either plant height ($H$), leaf area ($A_{\rm l}$), basal stem area ($ A_{\rm st}$), standing mass ($M_{\rm t}$) or stem diameter ($D$) requires that we account not just for net mass production, but also for the costs of building new tissues, allocation to reproduction, and architectural layout. Mathematically, these growth rates can be decomposed into a product of physiologically relevant terms \citep{Falster-2011, Gibert-2016}. Relevant equations are given in Fig. \ref{fig:conceptual}b, (eqns \ref{eq:dMtdt}-\ref{eq:dDdt}). As is evident in eqn  Fig. \ref{fig:conceptual}b, the growth rate in plant weight ($\frac{\ud M_{\rm t} }{\ud t}$; eqn \ref{eq:dMtdt}), leaf area ($\frac{\ud A_{\rm l}}{\ud t}$; eqn \ref{eq:daldt}), height ($\frac{\ud H}{\ud t}$; eqn \ref{eq:dhdt}), stem basal area ($\frac{\ud  A_{\rm st}}{\ud t}$; eqn \ref{eq:dast}), and stem diameter ($\frac{\ud D}{\ud t}$; eqn \ref{eq:dDdt}) all share some terms in common. Many of the terms in Fig. \ref{fig:conceptual} also vary intrinsically with size. The insets in Fig. \ref{fig:conceptual}b show the size-related patterns in different variables for a typical plant, obtained from applying the specific allocation model in the next section.
+
+The growth rate of all size metrics in eqns \ref{eq:dMtdt}-\ref{eq:dDdt} depends on the product of biomass production $\frac{{\rm d}B} {{\rm d}t}$ (from eqn \ref{eq:dbdt}) and the fraction of biomass allocated to growth of the plant, $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$, which varies from 0-1. The remaining  $1- \frac{{\rm d}M_{\rm a}}{{\rm d}B}$ fraction of mass produced is allocated to reproduction. In plants, $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ starts high, 1.0 for seedlings, and then decreases through ontogeny, potentially to zero in fully mature plants \citep{Wenk-2015}. Note also that $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ is the allocation of biomass \emph{after} replacing parts lost due to turnover. So a plant with $\frac{{\rm d}M_{\rm a}}{{\rm d}B}=0$ will continue to produce some new leaves and increase in stem diameter, even if the net amount of live mass $M_{\rm a}$ is not increasing.
+
+The growth rate in the total standing mass of the plant (eqn \ref{eq:dMtdt}) is then the sum of heartwood formation (=sapwood turnover) and any increment in live mass.
+
+The remaining growth rates (eqns \ref{eq:daldt}-\ref{eq:dDdt}) all depend on another variable, $\frac{{\rm d}A_{\rm l}} {{\rm d}M_{\rm a}}$, that accounts for the marginal cost of deploying an additional unit of leaf area, including construction of the leaf itself and supporting  bark, sapwood and roots (eqn \ref{eq:daldmt}). The inverse of this term, $\frac{{\rm d}M_{\rm a} }{{\rm d}A_{\rm l}}$, is the whole plant construction cost per unit leaf area, which can be further decomposed as a sum of tissue-level construction costs per unit of leaf area, with one of these being $\phi = \frac{{\rm d}M_{\rm l} }{{\rm d}A_{\rm l}}$: the trait leaf mass per area.
+
+The rate of height growth (eqn \ref{eq:dhdt}) depends on an additional term, $\frac{{\rm d}H }{{\rm d}A_{\rm l}}$: the growth in plant height per unit growth in leaf area. This variable accounts for the architectural strategy of the plant. Some species tend to leaf out more than grow tall, while other species emphasise vertical extension \citep{Poorter-2006}.
+
+The rate of stem-basal-area growth (eqn \ref{eq:dast}) can be expressed as the sum of increments in sapwood, bark and heartwood areas ($A_{\rm s}, A_{\rm b}, A_{\rm h}$ respectively): $\frac{{\rm d}A_{\rm st}}{{\rm d}t}= \frac{{\rm d}A_{\rm b}}{{\rm d}t} + \frac{{\rm d}A_{\rm s}}{{\rm d}t} + \frac{{\rm d}A_{\rm h}}{{\rm d}t}$. These in turn are related to ratios of sapwood and bark area per leaf area, and sapwood turnover (see eqn \ref{eq:dast}).
+
+Finally, the rate of stem-diameter growth (eqn \ref{eq:dDdt}) is given by a geometric relationship between stem diameter ($D$) and stem area ($A_{\rm st}$). Note that we make no assumptions about the relationship of stem diameter to height or leaf area: these arise as emergent properties, via integration of stem turnover (eqns \ref{eq:ha}- \ref{eq:htm}).
+
+\subsection{Shade tolerance}
+
+Eqn \ref{eq:dbdt} can also be used to estimate a measure of shade tolerance: the light level at which a plant's photosynthetic gains just balance the costs of tissue turnover and respiration \citep{Givnish-1988, Baltzer-2007, Lusk-2013} (the ``whole-plant-light-compensation point'', {\wplcp}). In general, average assimilation rate per leaf area $\bar{p}$ increases with light level or canopy openness, $E$. The {\wplcp} can be estimated by solving for the the value of canopy openness $E=E^*$ giving $\frac{{\rm d}B} {{\rm d}t}(E)=0$ (Fig. \ref{fig:wplcp_idea}). From eqn \ref{eq:dbdt}, this occurs when
+\begin{equation}\label{eq:wplcp}
+\bar{p}(E^*) =\frac{\sum_{i={\rm l,b,s,r}} \, M_{\rm i} \left(\frac{k_{\rm i}}{y} + r_{\rm i}\right)}{A_{\rm l}}.
+\end{equation}
+The {\wplcp} occurs at the points where the photosynthetic production (per unit leaf area) line intersects with the sum of maintenance and respiration costs (per unit leaf area) for each tissue (Fig. \ref{fig:wplcp_idea}). Traits can influence the {\wplcp} if they effect either carbon uptake or costs (respiration, turnover). Also, since the amount of stem support increases with plant height, the {\wplcp} also naturally increases with height \citep{Givnish-1988} (Fig. \ref{fig:wplcp_idea}).
+
+\subsection{A functional-balance model for plant construction}
+
+It worth noting that because eqns \ref{eq:dMtdt}-\ref{eq:wplcp} are derived using standard rules of addition, multiplication and differentiation, they hold for any potential growth model where biomass allocation is important. To make explicit predictions via this framework, then requires an explicit model of plant construction and function; i.e. we must put quantify all the terms in Fig. \ref{fig:conceptual}b.
+
+The {\plant} package adopts a model of plant construction and function that can be considered a first-order functional-balance or function-equilibrium model, similar to those implemented by \citep{Makela-1997} and \citep{Moorcroft-2001}. We could also call it ``isometric'', because the assumptions see area-based metrics scaling to the first-power of other area-based metrics, and to the square-power of length-based metrics, such as height \citep{Huxley-1932}. Table \ref{tab:allometry} provides key equations of the model (see \citealt{Falster-2016} for full derivation). In particular, we assume that as a plant grows:
+\textbf{1)} Its height scales to the 0.5 power of its leaf area (eqn \ref{eq:ha});
+\textbf{2)} The cross-sectional area of sapwood in the stem is proportional to its leaf area (eqn \ref{eq:as});
+\textbf{3)} The cross-sectional area of bark and phloem in the stem  is proportional to its leaf area (eqn \ref{eq:ab});
+\textbf{4)} The cross-sectional area of root surface area and therefore mass is proportional to its leaf area (eqn \ref{eq:mr}); and \textbf{5)} The vertical distribution of leaf within the plant's canopy, relative to the plant's height, remains constant.
+Assumption 1 accounts for the architectural layout of the plant. Assumptions 2-4 are realisations of the pipe model \citep{Shinozaki-1964}, whereby the cross-sectional area of conducting tissues are proportional to leaf area. To describe the vertical distribution of leaf area within the canopy of an individual plant (assumption 5), we use the model of \citep{Yokozawa-1995}, which can account for a variety of canopy profiles through a single parameter $\eta_c$, varying from 0-1 (for details, see Supplementary Materials).
+
+Combined, the functional-balance assumptions from Table \ref{tab:allometry}a lead directly to equations describing the mass of sapwood and bark in relation to leaf, and the amount of leaf in relation to height (Table \ref{tab:allometry}b). Substituting from Table \ref{tab:allometry} into eqns \ref{eq:dhdt}, \ref{eq:dast}, \ref{eq:dDdt} then gives all the necessary terms needed to implement the growth model described in Fig. \ref{fig:conceptual}.
+
+
+\subsection{Trait-based trade-offs}
+
+We now consider how trait-based trade-offs enter into the above growth model. It is essential that any trait includes both a benefit and cost in terms of plant function and/or life history; otherwise we would expect ever-increasing trait values towards more beneficial values. For present purposes, we consider five prominent traits for which we can posit specific costs and benefits, outlined in Table \ref{tab:traits}. In postulating potential benefits and costs, we consider only those thought to arise as direct biophysical consequences of varying a trait. The trade-offs are then implemented as follows.
+
+ \section*{Results}
+
+
+\begin{figure}[!hb]
+\centering
+\includegraphics[width=.95\linewidth]{main/assumptions.pdf}
+\caption{Assumptions of a functional balance model for plant construction.
+Each dot is a single plant from the \textsc{baad} \citep{Falster-2015b}.
+Blue lines indicate the show standardised major axis of the bivariate cloud for each species. Dotted lines indicate slope of predictions under functional-balance assumptions in Table \ref{tab:allometry}. The dark line shows the relationship assumed in the {\plant} model and applied throughout the paper.
+}
+\label{fig:assumptions}
+\end{figure}
+
+\subsection{Model assumptions}
+
+To verify model assumptions we compared the assumptions outlined in Table \ref{tab:allometry}a to data sourced from the \textsc{baad} \citep{Falster-2015b}. Additionally, we evaluated an important prediction arising from the eqns in Table \ref{tab:allometry}a, that the amount of live stem tissue supporting each unit of leaf area increases linearly with height, as per the equation
+\begin{equation}\label{eq:msml}
+\frac{M_{\rm b} + M_{\rm s}}{A_{\rm l}} = (1+ \alpha_{\rm b1}) \,\theta \, \rho \, \eta_c \, H.
+\end{equation}
+Note that $\alpha_{\rm b1}, \theta, \rho, \eta_c$ are all traits, i.e. properties that are assumed approximately constant through ontogeny for any given species. Fig. \ref{fig:assumptions} shows that the three functional-balance assumptions outlined in Table \ref{tab:allometry}a and the relationship in eqn \ref{eq:msml} are all well-supported by the available data. The solid lines indicate {\sma} lines fit to each species in the dataset. Dashed lines indicate the slope of predictions under functional-balance assumptions in Table \ref{tab:allometry}a and eqn \ref{eq:msml}. As expected, species differed in elevation, but less so in the slope of the fitted lines; with slopes aligning with those predicted by the functional-balance assumptions.
+
+\subsection{Changes in growth rate with size}
+
+Our growth model suggests an intrinsically size-dependent pattern of biomass-production and growth, which aligns with well-known empirical patterns (Table \ref{tab:phenomena}). The panels in Fig. \ref{fig:conceptual} show the expected patterns for a typical woody plant, obtained by applying the functional-balance model encoded in {\plant}. Biomass production shows a hump-shaped pattern with size, decreasing at larger sizes as the turnover and respiration of sapwood and bark increase. Height growth also shows a hump-shaped pattern with size, first increasing then decreasing. This pattern results from systematic changes in the four components of eqn \ref{eq:dhdt} with size, including a strong decline in the fraction of plant that is leaf declines with increasing size (Fig. \ref{fig:conceptual}), increasing reproductive allocation (Fig. \ref{fig:conceptual}), and declining mass production. In contrast, basal-area growth continues to increase with size, due to an increasing influence of stem turnover. Diameter growth shows a weakly hump shaped curve, tapering off slightly at larger sizes, in part because of the allometric conversion from basal area to diameter (eqn \ref{eq:dDdt}), and in part because of increased reproductive allocation in older trees (Fig \ref{fig:conceptual}). All growth measures decrease sharply with size when expressed as relative growth rates (results not shown).
+
+\subsection{Changes in height growth rate with traits}
+
+We analysed the response of growth rate to five different traits under the assumed trade-offs (Table \ref{tab:traits}). We considered changes in absolute and relative growth rates for mass, height, stem area and stem diameter. The first two traits considered modify behaviour primarily at the start and end of an individual's growth trajectory, and are therefore termed ``ontogenetic traits''. The remaining three traits are termed ``development traits'' because they moderate the rate of movement along an individual's growth trajectory. Across the five different traits, we observed four relatively distinct types of response. These responses are summarised in Table \ref{tab:responses} and described in more detail below.
+
+\subsubsection{Ontogenetic traits}
+
+Seed size. Increasing $\omega$ in our model causes seedlings to be larger and fecundity to decrease. As such, the only effect of seed size on growth comes from changing the plant's initial  size. The plots in Fig. \ref{fig:conceptual}, which show changes in growth rate with plant size, also express the expected changes in the growth of seedlings due to changes in seed size. Under similar light conditions, larger seedlings are predicted to have faster absolute growth rates in all metrics  because of their greater total leaf area. At the same time, relative growth rate is predicted to decrease with size, because the ratio of leaf area to support mass decreases with plant size. As plants grow, differences in initial mass will decrease in importance, relative to other factors influencing growth through the life-cycle. As a result, the correlations between seed size and growth rate observed for seedlings disappear among larger plants.
+
+Height at maturation. $H_{{\rm mat}}$ moderates growth by adjusting the amount of energy invested in growth, i.e.~the term $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ in eqns \ref{eq:dhdt} and \ref{eq:dast}. Greater $H_{{\rm mat}}$ can thus lead to a growth advantage by increasing $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ (Fig. \ref{fig:growth_light_height}). At smaller sizes, there is no differentiation among species, because most individuals are focusing on growth. At larger sizes, individuals of some species are allocating a larger fraction of biomass to reproduction, which reduces their growth rate relative to those species with greater $H_{{\rm mat}}$ (Fig. \ref{fig:growth_light_height}).
+
+\subsubsection{Development traits}
+
+The remaining three traits ($\nu$, $\phi$, \& $\rho$) moderate growth rates at a point along an individual's growth trajectory (Fig. \ref{fig:growth_light_height}).
+
+Leaf nitrogen content per leaf area. The response of growth rate to changes in $\nu$ is relatively straightforward: there is an optimum value of $\nu$ that maximises height growth rate in a given light environment $E$ and does not vary with height (Fig. \ref{fig:growth_light_height}). As $E$ increases from low to high, the optimal $\nu$ also increases. The invariance of the growth-trait relationship with respect to size arises as follows. The direct physiological effect of $\nu$ is to increase the maximum potential photosynthetic rate of leaves, with a cost of higher respiration rate. Both the cost and benefits of $\nu$ appear within $\frac{ {\rm d}B} {{\rm d}t}$, implying the direction of correlation between trait and growth rate depends crucially on the change in mass production per $\nu$.
+From eqn \ref{eq:dbdt}, $\frac{\partial \left( \frac{ {\rm d}B} {{\rm d}t}\right)}{\partial nu} = A_{\rm l} \, (\frac{ \partial \bar{p}(E)}{\partial nu}  - \frac{ \partial r_{\rm l}}{\partial nu} )$. Since both and $\bar{p}(E)$ and $r_{\rm l}$ are expressed per unit area and independent of height, the optimal value is also independent of plant height.
+
+Leaf mass per unit leaf area. Unlike $\nu$, the response of growth rate to changes in $\phi$ varies strongly with plant height, with the relationship moving like a wave across the trait spectrum (Fig. \ref{fig:growth_light_height}). As a result, the value of $\phi$ that optimises plant growth increases with plant size, and the direction of correlation between height growth rate and $\phi$ shifts from negative to positive, as plants increase in height. Decreasing $\phi$ has two impacts on height growth rate. First, lower $\phi$ increases the leaf deployment per mass invested $(\frac{{\rm d}A_{\rm l}}{{\rm d}M_{\rm a}})$ by economising on construction costs. Second, lower $\phi$ decreases net production $(\frac{{\rm d}B}{{\rm d}t})$, due to increased leaf turnover. Whether lower $\phi$ increases growth thus depends on the relative magnitude of these two effects. When plants are small the effect on leaf deployment rate is larger and so decreasing $\phi$ increases growth rate. When plants are large, the influence of $\phi$ on leaf deployment rate is diminished, because the cost of building other supportive tissues (other terms in eqn \ref{eq:daldmt}) is larger (Fig. \ref{fig:conceptual}). The net result is that at larger sizes, low $\phi$ is no longer advantageous for growth (Fig. \ref{fig:growth_light_height}).
+
+Wood density. As for leaves, lower cost of stem construction (lower $\rho$) decreases the cost of deploying a unit of leaf area, and may thereby increase growth rates (Fig. \ref{fig:growth_light_height}). In contrast to $\phi$, the benefits of cheaper stem construction become more pronounced at larger sizes, as an increasingly large fraction of the plant is wood (Fig. \ref{fig:conceptual}a). Thus, $\rho$ has only a weak effect on growth rates for small plants, but a strong effect for intermediate to large plants. As the plant becomes very tall (H \textgreater 15m), the benefits of low $\rho$ finally begin to diminish.
+
+
+\begin{SCfigure*}[\sidecaptionrelwidth][t]
+\centering
+\includegraphics[width=11.4cm,height=11.4cm, keepaspectratio]{main/growth_light_height.pdf}
+\caption{\textbf{Effect of four traits on height growth rate for different-sized plants.}
+Growth rates were simulated using the {\plant} model, applying the trade-offs describing in Table \ref{tab:traits}. Each panel shows how growth is influenced by a different trait for plants of a given height, and across a series of canopy openness values from completely open (light blue,  $E=1$) to heavily shaded (dark line, $E=0.25$). For any given value of trait and $E$, plants were grown to the desired height and their growth rate estimated. The white regions indicate trait ranges that are typically observed in real systems. Figs. \ref{fig:growth_light_dia}-\ref{fig:growth_light_mass} show similar plots but with growth measured as stem diameter, stem area, or plant mass. Changes in trait-growth relationships are summarised in Table \ref{tab:responses}.
+\label{fig:growth_light_height}}
+\end{SCfigure*}
+\subsection{Changes in other growth rates with trait}
+
+The results reported above and shown in Fig. \ref{fig:growth_light_height} focus on height growth rate (eqn \ref{eq:dhdt}). Corresponding results for growth rates in stem diameter (eqn \ref{eq:dDdt}), stem basal area (eqn \ref{eq:dast}), and above-ground mass (eqn \ref{eq:dMtdt}) are provided in Figs. \ref{fig:growth_light_dia}--Fig. \ref{fig:growth_light_mass} of the Supplementary Materials. In each figure, plants were grown to a suitable diameter, area, or mass. As such, changes in relative growth rates with traits show a similar patterns as absolute growth rates.
+
+We find that for seed mass, leaf nitrogen, leaf mass per area and height at maturation, the patterns of growth rate in stem diameter, stem area, or above-ground mass with respect to traits mirror those observed with respect to heigh growth (Table \ref{tab:responses}). The only trait where a slightly different response was observed was for wood density. Whereas the effect of wood density on height growth tended to diminish slightly at larger sizes (Fig. \ref{fig:growth_light_height}), the effect became even stronger when measuring growth rate in stem diameter, stem area or above-ground mass. Recall that sapwood lost via turnover is turns into heartwood. Whereas the loss of sapwood diverts energy away from height growth rate, the faster accumulation of heartwood actually accelerates the growth of stem diameter and area.
+
+
+\begin{SCfigure*}[\sidecaptionrelwidth][t]
+\centering
+\includegraphics[width=11.4cm,keepaspectratio]{main/lcp_trait.pdf}
+\caption{\textbf{Effect of three development traits on shade tolerance.}
+Panels show effect of traits on level of canopy openness that causes net production (eqn \ref{eq:dbdt}) to be zero. Different lines indicate relationship for plants with specified height, from short (light blue,  $H=0.5$m) to tall (dark line, $H=20$m). The white regions indicate trait ranges that are typically observed in real systems.
+\label{fig:wplcp}}
+\end{SCfigure*}
+
+\subsection{Responsiveness of growth rate to light}
+
+The predictions in Figs. \ref{fig:growth_light_height} and \ref{fig:growth_light_dia}-\ref{fig:growth_light_mass} illustrate how traits impact on growth rate under different light environments and at different sizes. An additional outcome that arises directly from these analyses is that traits moderate the responsiveness of growth to changes in light environment. This response arises because individuals with higher potential growth rate naturally have greater potential plasticity in growth. Our results therefore support findings that species with low $\rho$ increase growth more substantially with increases in light (Table \ref{tab:phenomena}). Variation in $\phi$ also moderates the response of growth to changes in light, with species having the lowest $\phi$ being most responsive. However, unlike for $\rho$, the effect appears only for the smallest size classes.
+
+\subsection{Shade tolerance}
+Combining eqn \ref{eq:wplcp} with the function-balance model in Table \ref{tab:allometry} leads to the a more specific expression for calculating {\wplcp}, as the value of $E^*$ that gives
+\begin{equation}\label{eq:wplcp_2}
+\bar{p}(E^*) =
+      \phi c_{rm l} +
+      \left(\theta \, \rho \, \eta_c \, H\right)
+        \left(b c_{\rm b}
+            + c_{\rm s}\right) +
+      \alpha_{\rm r1} c_{\rm r},
+\end{equation}
+where $c_{\rm i} = \left(\frac{k_{\rm i}}{y} + r_{\rm i}\right)$ for $i=l,s,b,r$.
+Eqn \ref{eq:wplcp_2} indicates {\wplcp} will increase approximately linearly with $H$ and potentially vary with traits $\nu$, $\phi$, and $\rho$. With some further manipulations, it is possible to show that {\wplcp} will decrease with $\phi$ if $\beta_{{\rm kl2}} >1$. Likewise {\wplcp} will decrease with $\rho$ if $\beta_{{\rm ks2}} >1$. The parameters $\beta_{{\rm kl2}}$ and $\beta_{{\rm ks2}}$ give the slope relating tissue turnover rate to $\phi$ and $\rho$, respectively. Since in this analysis, we have assumed these criteria to hold, species with low $\phi$ and low $\rho$ are predicted to be less shade tolerant because of disproportionate increases in turnover costs (Fig. \ref{fig:wplcp}). At low $\phi$ ($\rho$), leaf (sapwood) turnover is higher and thus a greater light income is needed to offset these costs. {\wplcp} also decreases with height because as size increases, the total amount of carbon needed to offset respiratory and turnover costs in the stem also increases \citep{Givnish-1988}. In addition, {\wplcp} varies with $\nu$. At small sizes, {\wplcp} increases with $\nu$ across the band of values typically observed in real plants, i.e. high leaf nitrogen makes seedlings shade intolerant. At larger sizes, as net production declines to zero, {\wplcp} begins to increase again for very low values of $\nu$. All of these patterns match empirically observed patterns (Table \ref{tab:phenomena}).
+
+
 
 \newcommand{\sepp}{{\color{grey}/}}
 \newcommand{\upup}{$\uparrow\,\uparrow$}
@@ -469,108 +432,122 @@ See Table \ref{tab:definitions} for a list of variable names and definitions.
 \newcommand{\doup}{$\downarrow\,\uparrow$}
 \newcommand{\fldo}{--$\,\downarrow$}
 
-
-\begin{table}[h!]
+\begin{table}[t!]
 \centering
-\caption{\textbf{Predicted effects of traits on key elements of plant function determining growth rate.} Arrows indicate the effect an increase in trait value would have on each element of the equations, with dashes indicating no effect. Traits are: seed mass ($\omega$), height at maturation ($H_{{\rm mat}}$), nitrogen content per leaf area ($\nu$), leaf mass per unit leaf area ($\phi$), and wood density ($\rho$) (see Table \ref{tab:traits} for more details). Adapted and expanded from \citet{Gibert-2016}.}
-{\footnotesize
-\vspace{1cm}
-  \begin{tabular}{lllcx{0.8cm}x{0.8cm}x{0.8cm}x{0.8cm}x{0.8cm}p{0.1cm}}
-  \hline
-  & & &  &  \multicolumn{2}{c}{\bf Ontogenetic} & \multicolumn{3}{c}{\bf Development}& \\
-  & & &  {\bf Symbol} & \boldmath$\omega$ & \boldmath$H_{{\rm mat}}$ & \boldmath$\nu$ & \boldmath$\phi$ & \boldmath$\rho$ & \\ \hline
-  \\
-  \multicolumn{10}{l} {\textbf{a) Effect on elements of eqns \ref{eq:dbdt} -- \ref{eq:dDdt}}}  \\
-  & \multicolumn{2}{l} {Net biomass production} & $\ud B / \ud t$ & & & & & & \\
-  & & \tabitem Photosynthesis & & - & - & $\uparrow$  & - & - & \\
-  & & \tabitem Respiration  & & - & - & $\uparrow$  & - & - & \\
-  & & \tabitem Turnover & & - & - & - & $\uparrow$ & $\uparrow$ & \\
-  & \multicolumn{2}{l} {Allocation to growth} & $\ud M_{\rm a} / \ud B$ & - & $\uparrow$ & - & - & - & \\
-  & \multicolumn{2}{l} {Leaf deployment per mass}  & $\ud A_{\rm l} / \ud M_{\rm a} $ & & \\
-    & & \tabitem Leaf  &  & - & - & - & $\downarrow$ & - & \\
-    & & \tabitem Sapwood & & - & - & - & - & $\downarrow$ & \\
-    & & \tabitem Root & & - & - & - & - & - & \\
-  & \multicolumn{2}{l} {Architecture} & $\ud H / \ud A_{\rm l}$ & - & - & - & - & - & \\
-  \\
-  \multicolumn{10}{l} {\textbf{b) Predicted effect of trait on growths rate for a small and large plant}} \\
-  & \multicolumn{9}{l} {Height} \\
-  & & \tabitem{Absolute} & $\ud H / \ud t$ & \upfl & \flup & \upup & \dofl & \dodo & \\
-  & & \tabitem{Relative} & $\ud H / (\ud t . H)$ & \dofl & \flup & \upup & \dofl & \dodo & \\
-  & \multicolumn{9}{l} {Stem area} \\
-  & & \tabitem{Absolute} & $\ud A_{\rm st} / \ud t$ & \upfl & \flup & \upup & \dofl & \dodo & \\
-  & & \tabitem{Relative} & $\ud A_{\rm st} / (\ud t .A_{\rm st})$ & \dofl & \flup & \upup & \dofl & \dodo & \\
-  & \multicolumn{9}{l} {Stem diameter} \\
-  & & \tabitem{Absolute} & $\ud D / \ud t$ & \upfl & \flup & \upup & \dofl & \dodo & \\
-  & & \tabitem{Relative} & $\ud D / (\ud t . D)$ & \dofl & \flup & \upup & \dofl & \dodo & \\
-  & \multicolumn{9}{l} {Mass} \\
-  & & \tabitem{Absolute} & $\ud M_{\rm t} / \ud t$ & \upfl &  \flup & \upup & \dofl & \dodo & \\
-  & & \tabitem{Relative} & $\ud M_{\rm t} / (\ud t . M_{\rm t} )$ & \dofl &  \flup & \upup & \dofl & \dodo & \\
-  \\
-\hline
+\caption{Predicted effects of traits on key elements of plant function determining growth rate.}
+  \begin{tabular}{llx{0.4cm}x{0.4cm}x{0.4cm}x{0.4cm}x{0.4cm}p{0.01cm}}
+  \toprule
+  & &  \multicolumn{2}{c}{\bf Ontogenetic} & \multicolumn{3}{c}{\bf Development}& \\
+  & & \boldmath$\omega$ & \boldmath$H_{{\rm mat}}$ & \boldmath$\nu$ & \boldmath$\phi$ & \boldmath$\rho$ & \\
+  \midrule
+  \multicolumn{8}{l} {\textbf{a) Effect on elements of eqns \ref{eq:dbdt} -- \ref{eq:dDdt}}}  \\
+  \multicolumn{2}{l} {Net biomass production, $\ud B / \ud t$} & & & & & & \\
+  & \tabitem Photosynthesis & - & - & $\uparrow$  & - & - & \\
+  & \tabitem Respiration & - & - & $\uparrow$  & - & - & \\
+  & \tabitem Turnover & - & - & - & $\uparrow$ & $\uparrow$ & \\
+  \multicolumn{2}{l} {Allocation to growth, $\ud M_{\rm a} / \ud B$} & - & $\uparrow$ & - & - & - & \\
+  \multicolumn{2}{l} {Leaf deployment, $\ud A_{\rm l} / \ud M_{\rm a}$} & & \\
+  & \tabitem Leaf  & - & - & - & $\downarrow$ & - & \\
+  & \tabitem Sapwood & - & - & - & - & $\downarrow$ & \\
+  & \tabitem Root & - & - & - & - & - & \\
+  \multicolumn{2}{l} {Architecture, $\ud H / \ud A_{\rm l}$} & - & - & - & - & - & \\
+\midrule
+ \multicolumn{8}{l} {\textbf{b) Predicted effect of trait on growths rate for a small and large plant}} \\
+  \multicolumn{8}{l} {Height} \\
+  & \tabitem{Absolute}, $\ud H / \ud t$ & \upfl & \flup & \upup & \dofl & \dodo & \\
+  & \tabitem{Relative}, $\ud H / (\ud t . H)$ & \dofl & \flup & \upup & \dofl & \dodo & \\
+  \multicolumn{8}{l} {Stem area} \\
+  & \tabitem{Absolute}, $\ud A_{\rm st} / \ud t$ & \upfl & \flup & \upup & \dofl & \dodo & \\
+  & \tabitem{Relative}, $\ud A_{\rm st} / (\ud t .A_{\rm st})$ & \dofl & \flup & \upup & \dofl & \dodo & \\
+  \multicolumn{8}{l} {Stem diameter} \\
+  & \tabitem{Absolute}, $\ud D / \ud t$ & \upfl & \flup & \upup & \dofl & \dodo & \\
+  & \tabitem{Relative}, $\ud D / (\ud t . D)$ & \dofl & \flup & \upup & \dofl & \dodo & \\
+  \multicolumn{8}{l} {Mass} \\
+  & \tabitem{Absolute}, $\ud M_{\rm t} / \ud t$ & \upfl &  \flup & \upup & \dofl & \dodo & \\
+  & \tabitem{Relative}, $\ud M_{\rm t} / (\ud t . M_{\rm t} )$ & \dofl &  \flup & \upup & \dofl & \dodo & \\
+  \bottomrule
   \end{tabular}
-  }
+\addtabletext{Arrows indicate the effect an increase in trait value would have on each element of the equations, with dashes indicating no effect. See Table \ref{tab:traits} for trait definitions. Adapted and expanded from \citep{Gibert-2016}.}
 \label{tab:responses}
 \end{table}
 
-\clearpage
+\section*{Discussion}
 
-\begin{figure}[ht]
-\centering
-\includegraphics{main/figure_conceptual.pdf}
-\caption{\textbf{Conceptual framework linking growth rate to plant size and traits.}
-\textbf{a)} Shows how the distribution of mass in a typical plant varies with size.
-\textbf{b)} Equations describing the rates of biomass production and growth in various dimensions of the plant. In the first line the symbol $\sum$ means ``sum'', across tissues, where $i = {\rm l,b,sr}$. The grey numbers indicate equation numbers referred to in the main text. The insets show how the different metrics change intrinsically with plant height, when applying the ``functional-balance'' model in Table \ref{tab:allometry}. Colours highlight where the same metric appears repeatedly in different equations. For a full list of variable names see Table \ref{tab:definitions}.
-\label{fig:conceptual}}
-\end{figure}
+Using a model relating plant physiological function and carbon allocation to five prominent traits, we have shown how traits impact on plant growth across the life cycle. This approach extends a widely-used theoretical model for seedlings, which links mass-based growth rate to the trait leaf mass per unit leaf area \citep{Lambers-1992, Wright-2000}, to explicitly include influences of size, light environment, and other prominent traits. During the last two decades, functional traits have captured the attention of ecologists, in large part because of the ability to organise the world's plant species along standard dimensions \citep{Westoby-2002}. However, it has remained unclear how or whether prominent traits influence growth outcomes \citep{Poorter-2008, Wright-2010,Paine-2015}. Matching a growing amount of empirical evidence (Table \ref{tab:phenomena}), this study outlines when and why the direction or strength of correlation between traits and growth rate shifts with plant size. Moreover, we show that different traits and trade-offs generate different types of response. Combined with the available empirical evidence, these results demand a fundamental shift in our understanding of plant ecological strategies, away from one in which species are thought to have a fixed growth strategy throughout their life (from slow to fast growth) \citep[e.g.][]{Grime-1977, Adler-2014, Paine-2015} to one in which traits define a size-dependent growth trajectory \citep{Gibert-2016}. Moreover, we find that growth trajectories and the ranking of traits across them are also moderated by the light environment; while traits that minimise costs of tissue respiration and / or turnover also make plants more shade tolerant (i.e. lower \textsc{wplcp}), as is empirically observed \citep{Messier-1999, Craine-2005, Poorter-2006, Baltzer-2007, Lusk-2008}. The {\plant} model, used here, builds on and extends several related approaches, wherein emergent outcomes such as height, diameter and mass growth arise from the interaction of different tissues and traits \citep[e.g.][]{Givnish-1988, Makela-1997, Moorcroft-2001}. This approach is quite different to models derived from metabolic scaling theory (\textsc{mst}), which derive everything from a single master ``scaling'' equation for mass growth and have thus far been unable to account for size-dependent changes in the correlation between traits and growth rate \citep{Enquist-1999, Enquist-2007}. Our approach is also fundamentally different from statistically-fitted growth models \citep[e.g.][]{Herault-2011, Ruger-2012, Iida-2014} in that it predicts rather than statistically tests for trait-based effects. In this sense, our model is designed to both explain observed phenomena (Table \ref{tab:phenomena}) and also generate new hypotheses.
 
 
-\newpage
+\subsection{Generalising to other traits and trade-offs}
 
-\begin{figure}[ht]
-\centering
-\includegraphics{main/lcp_schematic.pdf}
-\caption{\textbf{Conceptual framework linking shade-tolerance to plant size and traits,}
-adapted from \citet{Givnish-1988}.
-Shade tolerance is the level of canopy openness $E$ where photosynthetic income (dashed line) intersects with the sum of respiration and turnover costs over tissues (solid black lines). The black circles indicate the point of intersection for plants with different heights. All income and cost is expressed in units of dry mass produced  per unit leaf area per year. Note the costs of sapwood and bark increases with height.
-Traits can impact on shade tolerance by, in the case of leaf nitrogen content, shifting the income line up or down, or in the case of leaf mass per unit leaf area or wood density, causing the cost components to increase or decrease.
-\label{fig:wplcp_idea}}
-\end{figure}
+The model presented here extends a widely-used theoretical model for seedlings, which links mass-based growth rate to the trait $\phi$ \citep{Lambers-1992, Wright-2000}, to larger plants and other traits. Importantly, the seedling model can be derived as a special case of our extended approach. Unlike the original model for seedlings (eqn \ref{eq:RGR}), the new model also predicts a relationship between $\phi$ and growth rate that changes with size. In particular, the correlation shifts from being strongly negative in seedlings to being absent, or even possibly positive in larger plants (Fig. \ref{fig:growth_light_height}), irrespective of whether growth rate is estimate via height, stem diameter, stem area or total mass. This shift, which matches empirical evidence \citep{Poorter-2008, Wright-2010, Herault-2011, Paine-2015, Gibert-2016}, occurs because the benefits of cheap leaf deployment diminish with plant size. As seedlings, leaves comprise a large part of the plant (Fig. \ref{fig:conceptual}a). Decreasing $\phi$ then has an overwhelmingly positive effect on height and diameter growth rate because the effect of increasing $\frac{\ud A_{\rm l}}{\ud M_{\rm l}}$ is large compared to the other terms in eqn \ref{eq:daldmt}. As plants increase in size, however, the amount of supporting tissue increases (Fig \ref{fig:assumptions}d), decreasing the benefit of cheaper leaf construction in eqn \ref{eq:daldmt}. Consequently, the effect of $\phi$ on leaf turnover comes to dominate at larger sizes, and as such, the effect of $\phi$ on height, diameter and, mass growth shifts from negative to either flat or mildly positive  (Table \ref{tab:responses}).
 
-\newpage
+The list of functional traits that are known to differ among plant species is long and ever-increasing \citep{Perez-2013}. While we have focussed on understanding the effects of five specific traits on growth rate, the framework presented can be extended to generate hypotheses about other traits and trade-offs. The main criteria for including new traits is that a clear trade-off has been established, with benefits and/or costs that ultimately translate into biomass or carbon, and can therefore be embedded within the eqns in Fig. \ref{fig:conceptual}b. While the list of plant traits that have been measured is extensive, clear trade-offs have been established for only a few of these. A well-developed  trade-off must include two opposing forces, that operate at some point in the organisms life cycle. It is not necessary that benefit and cost both enter into Fig. \ref{fig:conceptual}; for example wood density is sometimes viewed as a trade-off between the costs of tissue construction and the rate of stem mortality. In that case, the costs of lower wood density would not appear within the eqns in Fig. \ref{fig:conceptual}b, so lower wood density would always increase growth rate.
 
-\begin{figure}[ht]
-\centering
-\includegraphics{main/assumptions.pdf}
-\caption{\textbf{Key assumptions of a functional balance model for plant construction.}
-Each dot is a single plant from the \textsc{baad} \citep{Falster-2015b}.
-Blue lines indicate the show standardised major axis of the bivariate cloud for each species. Dotted lines indicate slope of predictions under functional-balance assumptions in Table \ref{tab:allometry}. The dark line shows the relationship assumed in the {\plant} model and applied throughout the paper.
-\label{fig:assumptions}}
-\end{figure}
+Our framework also highlights what is needed for traits to impact on growth rate and shade tolerance. While traits can influence many aspects of plant function, these  influences must operate via the pathways outlined in Fig. \ref{fig:conceptual} if the trait is going to impact on growth. For example, many studies have focused on traits related to plant hydraulics, such as vessel size and increased sapwood area per leaf area \citep{Zanne-2010}. These traits will inevitably influence the rate of photosynthesis per leaf area ($\bar{p}$ in eqn \ref{eq:dbdt}) by altering conductance of water to the leaf. The potential costs of larger vessel size might be higher rates of stem turnover, which would appear in the term $k_{\rm s}$ in eqn \ref{eq:dbdt}. The costs of increased sapwood area per leaf area is increased allocation to stem, a factor which is already included in our framework via the parameter $\theta$ (Table \ref{tab:allometry}). The effect of both these traits on growth rate should be expected to vary with plant size.
 
-\newpage
+\subsection{Implications for trait-based approaches}
 
-\begin{figure}[ht]
-\centering
-\includegraphics{main/growth_light_height.pdf}
-\caption{\textbf{Effect of four traits on height growth rate for different-sized plants.}
-Growth rates were simulated using the {\plant} model, applying the trade-offs describing in Table \ref{tab:traits}. Each panel shows how growth is influenced by a different trait for plants of a given height, and across a series of canopy openness values from completely open (light blue,  $E=1$) to heavily shaded (dark line, $E=0.25$). For any given value of trait and $E$, plants were grown to the desired height and their growth rate estimated. The white regions indicate trait ranges that are typically observed in real systems. Figs. \ref{fig:growth_light_dia}-\ref{fig:growth_light_mass} show similar plots but with growth measured as stem diameter, stem area, or plant mass. Changes in trait-growth relationships are summarised in Table \ref{tab:responses}.
-\label{fig:growth_light_height}}
-\end{figure}
+There are some broad implications of our work for our understanding of plant ecological strategies and plant growth.
 
-\newpage
+First, our results highlight the importance of allocation decisions and turnover costs in determining growth dynamics.
+Much of current ecosystem research focusses on factors effecting primary production -- photosynthesis, respiration, and resultant fluxes of carbon -- with less attention devoted to allocation and turnover (\citealp{Friend-2014}; \citealp[for comparisons of models see][]{Sitch-2008, DeKauwe-2014}). Yet, for four of the five traits considered here, trait values do not influence net primary production. In fact, the analysis with $\phi$ shows that increased growth rate can occur even at a distinct cost to the plant's carbon budget. Low $\phi$ results in high leaf turnover, such that individuals with a $\phi$ have lower mass production. It is this property that makes them shade intolerant. And yet they can still achieve a growth advantage (when small), because the benefits of cheap leaf construction outweigh the costs of high leaf turnover.
 
-\begin{figure}[ht]
-\centering
-\includegraphics{main/lcp_trait.pdf}
-\caption{\textbf{Effect of three development traits on shade tolerance.}
-Panels show effect of traits on level of canopy openness that causes net production (eqn \ref{eq:dbdt}) to be zero. Different lines indicate relationship for plants with specified height, from short (light blue,  $H=0.5$m) to tall (dark line, $H=20$m). The white regions indicate trait ranges that are typically observed in real systems.
-\label{fig:wplcp}}
-\end{figure}
+% - \citep{King-2005} shows that the cost of turning over leaves, branches and fine roots may halve the height growth rate that could otherwise be attained.
 
-\clearpage
+Second, our results demand a shift in the way plant species are sometimes described as, being of fast or slow growth. To the extent the ranking of growth rates among individuals differing in traits shifts with either plant size or light environment, it is not possible to describe a species via a single point along a spectrum from slow to fast growth. Such a spectrum is implied by many of theoretical models used in community ecology, including Grime's \textsc{csr} triangle, the r-K spectrum, and coexistence models base on the Lotka-Volterra system of equations \citep[e.g.][]{Grime-1977,Chesson-2000}. Researchers using functional traits have also tended to describe species as fast or slow growing \citep[e.g.][]{Adler-2014, Diaz-2016}. Our results suggest a more-nuanced approach. Plants that are fast growing as seedlings may not be fast growing as saplings or adults, or under low light. Plants that are fast growing as adults may not be fast growing as seedlings. This more-nuanced perspective tends to mirror observed demographic patterns, where juvenile and adult growth rates are sometimes only loosely correlated \citep{Rees-2001}.
 
-\footnotesize
+Third, our results suggest that even if traits define a potential growth trajectory, researchers seeking to link traits to growth rate must probe deeper into the data than simply looking for a linear relationship between traits and average growth, to recover the expected relationships. None of the predicted relationships between traits and growth is linear across the range of sizes and light environments tested. As such, we should not be surprised if the mean growth rate across individuals spanning a range of sizes or light environments is only weakly or not correlated with traits \citep[e.g.][]{Poorter-2008,Paine-2015}. Controlling for size, site and light environment will be essential for detecting significant patterns \citep[e.g.][]{Gibert-2016}, as will having a clear expectation for the hypothesised relationship.
 
+While our theory has succeeded in explaining some observed phenomena (Table \ref{tab:phenomena}), the test for good theory is that it also makes new predictions that enable the theory to be further refined and tested. To that end, we can make a further prediction arising from our results, which is that the trait $\phi$ should increase through ontogeny for all individuals, across all species. Such shifts have been observed across a variety of species \citep{King-1999,Thomas-1999,Koch-2004}. Since the value of cheap leaf construction diminishes with size, it pays for plants -- and especially those with low $\phi$ -- to increase their $\phi$ as they grow larger. \citep{King-1999} made a similar prediction for a single species of \emph{Eucalyptus}, but here we can extend the idea across species. While trait-based research largely focusses on differences among species, it has long been recognised that traits also vary among individuals within a species and within individuals \citep{Westoby-2002}. This hypothesis attempts to give meaning to some of that variation, and shows how variation across and within species might be understood within a single framework.
+
+\subsection{Comparison with other frameworks}
+
+As noted above, the {\plant} model is closely related to models used in several other studies, including those by \citep{Givnish-1988, Yokozawa-1995, Makela-1997, King-1999, King-2005, Moorcroft-2001, Li-2014}, and in particular those by \citep{Makela-1997} and \citep{Moorcroft-2001}. These models have several properties in common, including that they all have growth being driven by the gross amount of photosynthetic income; have photosynthesis increasing non-linearly with light and leaf nitrogen content; and that they consider the costs of respiration and turnover in different tissues. Many models also make functional-balance assumptions, for example linking the cross-section of sapwood to leaf area \citep{Givnish-1988, Yokozawa-1995, Makela-1997, King-2005, Moorcroft-2001}. We note that an assumption of exact functional balance is not critical for our results, what matters is that the amount of live biomass (i.e. excluding heartwood) needed to support an extra unit of leaf area increases with height (as Fig. \ref{fig:assumptions}d). Some models also differ from in that they directly link a plant's stem diameter to its height, e.g. \citep{Yokozawa-1995, King-1999, Moorcroft-2001, Li-2014}, whereas we let this scaling arise as an emergent outcome of growth and sapwood turnover. Again, we expect this difference will not affect the main results.
+
+A feature distinguishing our model from most of those mentioned above is the explicit linking to trait-based trade-offs. While such a linkage was also made by \citep{Moorcroft-2001} in the \textsc{ed} model; analyses using \textsc{ed} have mainly focussed on ecosystem-level outcomes rather than the growth of individual plants. Because of its underlying similarities, we expect the dynamics reported here to be also present within the \textsc{ed} model. \citep{King-1999} also connected his model of growth for a single species to the trait $\phi$, and like the current study, predicted a gradual flattening out of the relationship between $\phi$ and growth rate with size (as in Fig. \ref{fig:growth_light_height}), because the influence of cheap leaf construction decreased with size. In our study however, there was additional cost of increased leaf turnover, that further penalised low $\phi$ strategies when plants were large.
+
+Perhaps the two most controversial elements of our approach concerns the assumptions about tissue replacement and reproductive allocation. Many vegetation models determine allocation based on net primary production (photosynthesis - respiration), whereas we also subtracted tissues lost via turnover before distributing surplus biomass. This is because we assume tissues lost via turnover are replaced before carbon is allocated to either new growth (i.e. growth that leads to a net increase in $M_{\rm l}, M_{\rm b}, M_{\rm s}$ or $M_{\rm r}$) or reproduction \citep{Thornley-2000}. This assumption is likely to hold true for most woody plants and perennials, but may not hold for some herbs or annuals, where the switch to reproduction may entail a run-down in the vegetative part of the plant. The second assumption we make is that when mature, plants allocate a substantial fraction of their surplus carbon to reproduction. While it remains unclear just how much adult plants might allocate to reproduction, recent reviews suggest the fraction may be high \citep{Thomas-2011, Wenk-2015}. Moreover, a long line of theoretical models indicate that allocation should increase as plants age \citep[reviewed by ][]{Wenk-2015}. Reproductive allocation is given little attention in models of ecosystem flux \citep[e.g.][]{Sitch-2008, DeKauwe-2014}. For example in the \textsc{ed} model, a fixed 30\% of net primary production is allocated to reproduction, irrespective of plant size. In the case of growth, differences in reproductive allocation offer a clear pathway for explaining patterns linking a plants maximum size to the growth rate of large individuals \citep[e.g.][]{Wright-2010}.
+
+Another class of model dealing explicitly with size-related effects includes those derived from the metabolic scaling theory (\textsc{mst}) of ecology \citep{Enquist-1999, Enquist-2007}. Several points suggest our new framework provides a better explanation to the growth phenomena in Table \ref{tab:phenomena} than the \textsc{mst} framework. First, the \textsc{mst}-derived model suggests diameter growth continues to increase as plants grow, whereas empirical data suggests growth rate declines for larger plants \citep{Canham-2004, Canham-2006, Herault-2011}. Second, the \textsc{mst} model does not allow for the effects of traits to vary with plant size. Predicted effects are for a linear increase in growth with decreases in either $\phi$ and lower $\rho$, that apply irrespective of size. However, at least for $\phi$ such effects in large trees have not been observed.
+
+\subsection{Closing remarks}
+
+Overall we have shown how diverse phenomena related to plant growth can be understood with a model accounting for processes generating photosynthetic income and allocating this among different tissues. The need to consider effects of plant size, alongside trait-based differences among species, has has long been recognised in trait-based research \cite[e.g.][]{Givnish-1988, Thomas-1999, Moorcroft-2001, Westoby-2002, Enquist-2007}. Here we have provided a framework for achieving this. By disentangling the effects of plant size, light environment and traits on growth rates, our results provide a solid theoretical foundation for trait ecology and thus provide a platform for understanding growth across diverse species around the world.
+
+\matmethods{
+The growth model described above has been implemented as the \texttt{FF16} physiological model within the {\plant} package \citep{Falster-2016} for \textsc{r} \citep{R-2015}. The {\plant} package also makes use of supporting packages \texttt{Rcpp} \citep{Eddelbuettel-2013} and the Boost Library for C++\citep{Schaling-2014}, via the package \texttt{BH} \citep{Eddelbuettel-2015}. To encode the trait-based trade-offs described above, we use the capacity to in {\plant} to provide a ``hyper-parameterisation'' function, which enables various parameters to covary with traits (for full details see Supplementary Materials -- A).
+
+The trade-offs are then implemented as follows.
+
+\textbf{Seed mass, $\omega$:} There is a direct energetic trade-off between a plant's fecundity and the size of its seeds. Moreover, we assume larger seeds result in larger seedlings; this seed-size number tradeoff translates into a demographic tradeoff between the number of seedlings produced by a parent and their initial size.
+
+\textbf{Height at maturation, $H_{{\rm mat}}$:} This trait moderates an inevitable energetic trade-off between growth and reproduction, that operates at all times through the lifestyle. Mass invested in growth cannot be invested in reproduction. To describe how the fraction of mass allocated to reproduction, $1- \frac{{\rm d}M_{{\rm a}}}{{\rm d}B}$, changes through ontogeny, we assume a function $r(H, H_{{\rm mat}}) = \frac{r_{\rm r1}} {1.0 + \exp\left(r_{\rm r2} \left(1 - H / H_{{\rm mat}}\right)\right)}$, where $H_{{\rm mat}}$ is height at maturation, $r_{\rm r1}$ is the maximum possible allocation (0-1) and $r_{\rm r2}$ determines the sharpness of the transition. The exact shape of this function is non-critical, what is important is that plants shift from a period of investing mainly in growth to investing mainly in reproduction. The trait $H_{{\rm mat}}$ then describes the size at which this shift occurs, with direct biophysical consequences for growth.
+
+\textbf{Nitrogen per unit leaf area,  $\nu$:} We allow for the maximum photosynthetic capacity of the leaf to vary with leaf nitrogen per unit area, as $A_{\rm max} = \beta_{{\rm lf1}} \, \left(\frac{\nu}{\nu_0}\right)^{\beta_{{\rm lf5}}}$, where $\beta_{{\rm lf1}}$, $\nu_0$ and $\beta_{{\rm lf5}}$ are constants. Respiration rates per unit leaf area are also assumed to vary linearly with leaf nitrogen per unit area, as $\beta_{{\rm lf4}}\, \nu$.
+
+\textbf{Leaf mass per unit area, $\phi$:} This trait directly influences growth by changing $\frac{{\rm d}A_{\rm l}}{{\rm d}M_{\rm a}}$ (Table \ref{tab:allometry}). In addition, we link $\phi$ to the rate of leaf turnover ($k_{\rm l}$), based on a widely observed scaling relationship from \citep{Wright-2004}: $k_{\rm l} = \beta_{{\rm kl1}} \, \left(\frac{\phi}{\phi_0}\right)^{-\beta_{{\rm kl2}}}$ where $\beta_{{\rm kl1}}$, $\phi_0$ and $\beta_{{\rm kl2}}$ are empirical constants. Following \citep{Wright-2004}, the rate of leaf respiration per unit area is assumed independent of $\phi$, as such the mass-based rate is adjusted accordingly whenever $\phi$ is varied.
+
+\textbf{Wood density, $\rho$:} This trait directly influences growth by changing $\frac{{\rm d}A_{\rm l}}{{\rm d}M_{\rm a}}$ (Table \ref{tab:allometry}). In addition, we link $\rho$ to the rate of sapwood and bark turnover, mirroring the relationship assumed for leaf turnover: $k_{\rm b} = k_{\rm s} = \beta_{{\rm ks1}} \, \left(\frac{\rho}{\rho_0}\right)^{-\beta_{{\rm ks2}}}$ where $\beta_{{\rm ks1}}$, $\rho_0$ and $\rho_{{\rm ks2}}$ are empirical constants. The rate of sapwood and bark respiration per unit stem volume is assumed to be independent of $\rho$, as such the mass-based rate is adjusted accordingly whenever $\rho$ is varied. There is very little data on rates of sapwood turnover and respiration in relation to wood density, so this latter assumption is more speculative than the equivalent assumption for leaves, which is well supported empirically.
+
+For the most part, parameters used in the current analysis were sourced from \citep{Falster-2016} (see Tables \ref{tab:params_core}--\ref{tab:params_hyper} for values). The only exceptions are: i) parameters affecting the relationships between various size metrics and leaf area, outlined in Table \ref{tab:allometry}a, estimated from data described below, and ii) parameters describing the function for reproductive allocation. By default, we set $r_{\rm r1}=0.8$ and $r_{\rm r2}=10$, implying a relatively rapid transition to reproduction at $H=H_{{\rm mat}}$ (see panel for $\frac{{\rm d}M_{{\rm a}}}{{\rm d}B}$ in Fig. \ref{fig:conceptual}).
+
+The functional-balance assumptions listed in Table \ref{tab:allometry}a were evaluated using data from the Biomass and Allometry Database \citep[\textsc{baad}][]{Falster-2015b}, which includes records for various size metrics from 21084 individual plants across 656 species. We fit standardised major axis ({\sma}) lines \citep{Warton-2006} to characterise bivariate relationships. We implemented a hierarchical model structure, where the distribution of slopes and intercepts among groups is assumed to come from normal distributions. The means and variances of these distributions are then fit as part of the model-fitting procedure.
+
+The analyses presented employ best practises in scientific computing, as defined by \citep{Wilson-2014}, and are fully reproducible, via code available at
+\href{https://github.com/traitecoevo/growth\_trajectories}{github.com/traitecoevo/growth\_trajectories}.
+}
+
+\showmatmethods % Display the Materials and Methods section
+
+\acknow{
+
+We thank J Camac, A Gibert, G Kunstler, C Prentice, E Wenk, M Westoby, I Wright, and SJ Wright for helpful discussions; J Camac for introducing us to the \texttt{stan} framework, and D Warton for discussions about {\sma} line fitting. Falster was supported by an Australian Research Council discovery grant (DP110102086). FitzJohn was supported by the Science and Industry Endowment Fund (RP04-174). The authors have no conflicts of interest to declare.
+}
+
+
+
+
+
+% Bibliography
 \bibliography{references}
-
+%\pnasbreak
 \end{document}
