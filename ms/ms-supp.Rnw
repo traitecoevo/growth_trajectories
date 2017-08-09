@@ -116,7 +116,7 @@ $\alpha_{{\rm p1}}$ and $\alpha_{{\rm p2}}$, such that these become functions of
 
 The hyper-parameterisation function used in this analysis is implemented as follows:
 
-<<echo=FALSE>>=
+<<echo=FALSE, highlight=TRUE, comment = ''>>=
 make_hyperpar2
 @
 

@@ -175,7 +175,7 @@
 \AtBeginEnvironment{tabular}{
 \sffamily\fontsize{7.5}{10}\selectfont
 }
-\newcommand{\addtabletext}[1]{{\setlength{\leftskip}{9pt}\fontsize{7}{9}\selectfont#1}}
+\newcommand{\addtabletext}[1]{{\setlength{\leftskip}{9pt}\fontsize{7}{7}\selectfont#1}}
 
 %% Equation numbering - use square brackets
 \makeatletter

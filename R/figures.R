@@ -132,7 +132,9 @@ make_hyperpar2 <- function(
         ret <- c(last(AA), 0)
         names(ret) <- c("p1","p2")
       } else {
-        fit <- nls(AA ~ p1 * E/(p2 + E), data.frame(E = E, AA = AA), start = list(p1 = 100, p2 = 0.2))
+        fit <- nls(AA ~ p1 * E/(p2 + E),
+                  data.frame(E = E, AA = AA),
+                  start = list(p1 = 100, p2 = 0.2))
         ret <- coef(fit)
       }
       ret
