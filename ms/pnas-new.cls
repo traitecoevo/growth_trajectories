@@ -191,12 +191,12 @@
 \def\leftlinenos{%
   \pgfmathtruncatemacro{\leftstartlineno}{2*(\thepage - 1)*62 + 1}%
   \pgfmathtruncatemacro{\leftendlineno}{(2*(\thepage - 1) + 1)*62}%
-  \foreach \x in {\leftstartlineno,...,\leftendlineno}{\noindent\x\\}%
+  \foreach[count=\x from 5] \x in {\leftstartlineno,...,\leftendlineno}{\color{black!30}\noindent\x\\}%
 }
 \def\rightlinenos{%
   \pgfmathtruncatemacro{\rightstartlineno}{(2*(\thepage - 1) + 1)*62 + 1}%
   \pgfmathtruncatemacro{\rightendlineno}{(2*\thepage)*62}%
-  \foreach \x in {\rightstartlineno,...,\rightendlineno}{\noindent\x\\}%
+  \foreach \x in {\rightstartlineno,...,\rightendlineno}{\color{black!30}\noindent\x\\}%
 }
 
 \makeatletter
