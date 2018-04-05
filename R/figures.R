@@ -297,15 +297,16 @@ figure_rate_vs_size_panels <- function(data, type, path) {
   for (v in yvars) {
     filename <- file.path(path, sprintf("%s_%s.pdf", type, v))
     pdf(filename,width=5, height=6)
-    par(oma=c(0,0,0,0), mar=c(6, 0.1,0.1,0.1))
+    par(oma=c(0,0,0,0), mar=c(7, 0.1,0.1,0.1))
     plot(data[["height"]], data[[v]], type="l", ann=FALSE, axes=FALSE,
-       xlim=c(0, 25),
+       xlim=c(-1, 25),
 #       xaxs="i", yaxs = "i",
-      col=get_col(v), lwd=8)
+      col=get_col(v), lwd=20)
     if(type == "diameter_stem_dt" || (type == "area_stem_dt"  && v %in% c( "area_leaf_dt", "area_heartwood_dt"))){
-      axis(1, at=seq(0,30, by=10), tck=-0.05, cex.axis=4, mgp=c(3, 4, 0))
+      f <- function(at) axis(1, at=at, tck=-0.05, col="grey30", col.ticks = "grey30", cex.axis=7, mgp=c(3, 6, 0))
+      f(0); f(10); f(20);
     }
-    box()
+    box(col="grey30")
     dev.off()
   }
 }
@@ -677,15 +678,18 @@ figure_lcp_schematic <- function() {
   plot(NA, xlab = "", ylab="", xaxs="i", yaxs="i",
       xlim=c(0,1), ylim=c(0, 2.5), las=1)
   mtext("Canopy openness, E (0-1)", 1, line=3)
-  mtext(expression(paste("Mass production or loss (kg ", m^-2~yr^-1, ")")), 2, line=3)
+  mtext(expression(paste("Income or loss (kg ", m^-2~yr^-1, ")")), 2, line=3)
 
   # colour background
   rect(0, 0, 1, 2.5, col = cols["bark"], border=NA)
 
   # leaf and root for smallest size
-  x <- data[[1]]$all
-  rect(0, 0, 1, x[,"leaf"], col = cols["leaf"], border=NA)
-  rect(0, x[,"leaf"], 1, x[,"root"]+x[,"leaf"], col = cols["root"], border=NA)
+
+  rect(0, 0, 1, data[[1]]$all$leaf, col = cols["leaf"], border=NA)
+  rect(0, data[[1]]$all$leaf, 1, data[[1]]$all$root+data[[1]]$all$leaf, col = cols["root"], border=NA)
+
+  # rect(0, 0, 1, data[[1]]$respiration$leaf, col = cols["leaf"], border="black")
+  # rect(0, data[[1]]$respiration$leaf, 1, data[[1]]$respiration$leaf + data[[1]]$turnover$leaf , col = cols["leaf"], border=NA)
 
   # add lines for each height
   for(i in seq_along(heights)){
@@ -708,7 +712,7 @@ figure_lcp_schematic <- function() {
   }
 
   # labels
-  text(rep(0.8,3), c(0.4, 0.875, 1.7), c("leaf", "root", "sapwood+bark"), col="white")
+  text(rep(0.7,3), c(0.4, 0.875, 1.7), c("leaf respiration & turnover", "+ root respiration & turnover", "+ stem respiration & turnover"), col="white")
 }
 
 figure_mass_fraction <- function(data) {
@@ -721,13 +725,11 @@ figure_mass_fraction <- function(data) {
   y <- apply( data[, vars], 1, function(x) { cumsum(x) / sum(x)})
   y <- t(y)
 
-  par(mar=c(2.1, 4.1, 0.5, 2))
+  par(mar=c(2.1, 4.1, 1.5, 2))
   plot(NA, type="n", xlim=c(0, 24), ylim=c(0, 1), las=1,
        xaxs="i", yaxs="i", xlab="", ylab="", axes=FALSE)
-  axis(1, at = c(0,5,10,15,20), labels = c(0,NA,10,NA,20))
-  axis(2, at = c(0,0.25,0.5,0.75, 1), labels = c(0,NA,0.5,NA,1), las=1)
-
-  mtext("Fraction of mass",2, cex=1.25, line=2.5)
+  axis(1, at = c(0,5,10,15,20), labels = c(0,NA,10,NA,20), cex.axis=1.25)
+  axis(2, at = c(0,0.25,0.5,0.75, 1), labels = c(0,NA,0.5,NA,1), las=1, cex.axis=1.25)
 
   for (v in rev(vars)) {
     polygon(c(heights, last(heights), heights[1]), c(y[, v], 0, 0),
@@ -736,6 +738,6 @@ figure_mass_fraction <- function(data) {
 
   x <- c(2, 6, 10, 15, 22)
   y <- c(0.15, 0.195, 0.2, 0.45, 0.8)
-  text(x,y, sub("mass_", "", vars), col="white")
+  text(x,y, sub("mass_", "", vars), col="white", cex=1.5)
   box()
 }

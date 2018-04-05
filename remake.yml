@@ -40,6 +40,7 @@ targets:
   all:
     depends:
       - ms/ms.pdf
+      - build.R
 
 # Documents ------------------------
   ms/ms.pdf:
@@ -133,3 +134,8 @@ targets:
   output/SI/lma_tradeoff.pdf:
     command: figure_lma_tradeoff(glopnet, fit_lma_tradeoff)
     plot: square
+
+  # A plain R version of this file, for those who don't like remake  -----------------------------------
+  build.R:
+    packages: remake
+    command: make_script(file=target_name)

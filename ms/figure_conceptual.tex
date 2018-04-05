@@ -1,5 +1,5 @@
 \documentclass{beamer}
-\usepackage[size=custom, width=21, height=28, scale=1.0, orientation=portrait]{beamerposter}
+\usepackage[size=custom, width=21, height=29, scale=1.0, orientation=portrait]{beamerposter}
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=0em,text margin right=0em}
 
@@ -44,8 +44,9 @@
 
 \newcommand{\textbox}[2]{
   \node at (#1)[anchor=center] {
-  {\footnotesize #2}};
+  {\small #2}};
 }
+
 
 \newcommand{\defineRow}[2]{
   \node at ($(top) + (-9.5cm, -#1*\rowspace cm)$) (#2){};
@@ -81,19 +82,23 @@
   \ylabel{$(thiscol) + (0.85cm,   0cm)$}{#4}
 }
 
-\node at ($(current page.north)+ (0cm, -7.5cm)$) (top){};
+\node at ($(current page.north)+ (0cm, -8.5cm)$) (top){};
 
-\node[rectangle, anchor = center] at ($(top)+ (0cm, 4cm)$){
+\node[rectangle, anchor = center] at ($(top)+ (0.75cm, 5.25cm)$){
   \includegraphics[width=18cm]{output/main/mass_fraction.pdf}};
 
-\node at ($(top) + (-9.25cm, 6.75cm)$) [anchor=west, text width=12cm, text height=0.5cm]{
+\node[rectangle, anchor = center, rotate=90, text width =6cm] at ($(top)+ (-8.75cm, 7cm)$){
+  \small Fraction\\[-1ex] of mass
+  };
+
+\node at ($(top) + (-9.25cm, 7.75cm)$) [anchor=west, text width=12cm, text height=0.5cm]{
   {\bf \footnotesize Standing mass}};
 
-\node at ($(top) + (-10.5cm, 6.75cm)$) [anchor=west, text width=12cm, text height=0.5cm]{
-  {\bf \footnotesize a)}};
+\node at ($(top) + (-10.5cm, 7.75cm)$) [anchor=west, text width=12cm, text height=0.5cm]{
+  {\bf \small a)}};
 
 \node at ($(top) + (-10.5cm, 1.5cm)$) [anchor=west, text width=12cm, text height=0.5cm]{
-  {\bf \footnotesize b)}};
+  {\bf \small b)}};
 
 % \node[rectangle, anchor =center] at ($(top)+ (6cm, 4cm)$){
 %   \includegraphics[height= 3cm]{downloads/tree.png}};
@@ -103,9 +108,9 @@
 %   \textbox{$(top)+ (-8cm, 4cm)$}{Seedling}
 
 \defineRow{0}{thisrow}
-\rowtitle{Biomass production}
+\rowtitle{Biomass growth}
 \firstcol{1}{$\frac{{\rm d}B}{{\rm d}t}$}{output/conn/net_mass_production_dt_net_mass_production_dt}{}
-\othercol{2}{\hspace{-1em} \scriptsize $\alpha_{\rm \tiny bio} \alpha_{\rm \tiny y}$}{output/conn/net_mass_production_dt_yield}{}
+\othercol{2}{\hspace{-1em} \scriptsize $\,\alpha_{\rm \tiny bio} \alpha_{\rm \tiny y}$}{output/conn/net_mass_production_dt_yield}{}
 \othercol{3}{\hspace{-1em}$\times\Bigg($\hspace{-0.3em}\scriptsize$A_{\rm l} \bar{p}$}{output/conn/net_mass_production_dt_assimilation}{}
 \othercol{4}{\hspace{-1em}-$\Sigma$\scriptsize $M_{\rm i} r_{\rm i}$}{output/conn/net_mass_production_dt_respiration}{\hspace{-0.5em}$\Bigg)$}
 \othercol{5}{\hspace{-0.75em}-$\Sigma$\scriptsize $M_{\rm i} k_{\rm i}$}{output/conn/net_mass_production_dt_turnover}{}
@@ -159,7 +164,8 @@
 \othercol{3}{$\frac{{\rm d}A_{{\rm st}}}{{\rm d}t}$}{output/conn/diameter_stem_dt_area_stem_dt}{}
 \rowlabel{eq:dDdt}
 
-\textbox{$(top)+ (0cm, -20cm)$}{{\bf Plant height (m)}}
+\textbox{$(top)+ (0cm, -20cm)$}{Plant height (m)}
+\textbox{$(top)+ (0cm, 2.5cm)$}{Plant height (m)}
 
 \newcommand{\colNum}{0.1}
 

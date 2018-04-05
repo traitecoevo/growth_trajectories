@@ -1,45 +1,33 @@
 
-\usepackage[rgb,dvipsnames]{xcolor}
-\definecolor{grey}{rgb}{0.5, 0.5, 0.5}
-
+% abbreviations
 \newcommand{\smurl}[1]{\url{#1}}
 \newcommand{\ud}{\ensuremath{\rm{d}}}
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
 \newcommand{\email}[1]{\href{mailto:#1}{\texttt{#1}}}
 \newcommand{\plant}{\texttt{plant}}
 \newcommand{\wplcp}{\textsc{wplcp}}
+\newcommand{\lma}{\textsc{lma}}
+\newcommand{\wood}{\textsc{wd}}
+\newcommand{\seed}{\textsc{sm}}
+\newcommand{\hmat}{\textsc{h}$_{\rm mat}$}
+\newcommand{\nitrogen}{\textsc{n}}
 \newcommand{\sma}{\textsc{sma}}
 
-
-
-\title{Trajectories: how functional traits influence plant growth and shade tolerance across the life-cycle}
-\runninghead{H\lowercase{ow traits influence growth}}
-
-\author{Daniel S. Falster\textsuperscript{1,\textasteriskcentered}, Remko A. Duursma\textsuperscript{2}, \& Richard G. FitzJohn\textsuperscript{3}}
-\affiliation{\textsuperscript{1} Evolution \& Ecology Research Centre, School of Biological, Earth and
-Environmental Sciences, University of New South Wales, Sydney, NSW 2052, Australia \\
-\textsuperscript{2} Hawkesbury Institute for the Environment, Western Sydney University, Locked Bag 1797, Penrith NSW 2751, Australia \\
-\textsuperscript{3} Imperial College, London, United Kingdom \\
-\textsuperscript{\textasteriskcentered} Correspondence author. E-mail: \email{adaptive.plant@gmail.com}
-}
-
-\usepackage{natbib}
-\bibliographystyle{ecol_let}
-\setcitestyle{authoryear,open={(},close={)}}
-% allows for numbered referencing, as required by ecol letters
-\usepackage{etoolbox}
-\newbool{MyRefNumbers}
-\booltrue{MyRefNumbers} % comment to remove numbers in reference list
-
-\pdfminorversion=4 % tell pdflatex to generate PDF in version 1.4
-% Needed for problem-free conversion on manuscript central (arrgh)
-% http://timotheepoisot.fr/2013/06/24/manuscript-central-pdf-fix/
 
 \usepackage{graphicx}
 \graphicspath{{../output/}}
 
-% We will generate all images so they have a max width and height. This means
-% that they will get their normal width if they fit onto the page, but
-% are scaled down if they would overflow the margins.
-\let\Oldincludegraphics\includegraphics
-\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=15cm,height=21cm,keepaspectratio]{#1}}
+% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
+\author[a,1]{Daniel S. Falster}
+\author[b]{Remko A. Duursma}
+\author[a,c]{Richard G. FitzJohn}
+
+% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
+\affil[a]{Evolution \& Ecology Research Centre, and School of Biological, Earth and
+Environmental Sciences, University of New South Wales, Sydney NSW 2052, Australia}
+\affil[b]{Hawkesbury Institute for the Environment, Western Sydney University, Locked Bag 1797, Penrith NSW 2751, Australia}
+\affil[c]{Imperial College, London, United Kingdom}
+
+% Please give the surname of the lead author for the running footer
+\leadauthor{Falster}
+

@@ -59,7 +59,7 @@ targets:
     command: figure_mass_fraction(rate_vs_size_data)
     plot:
       width: 10
-      height: 2
+      height: 2.5
 
   output/conn/net_mass_production_dt_net_mass_production_dt.pdf:
     command: figure_rate_vs_size_panels(rate_vs_size_data, I("net_mass_production_dt"), I("output/conn"))

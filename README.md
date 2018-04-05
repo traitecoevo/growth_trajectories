@@ -60,7 +60,7 @@ remake::make("output/main/lcp_schematic.pdf")
 The list of targets can be gleaned from the file `remake.yml`.
 
 
-If you find remake confusing and prefer to run plain R, you can use remake to build a script `build.R`that produces a given output, e.g.
+If you find remake confusing and prefer to run plain R, you can use remake to build a script `build.R` that produces a given output, e.g.
 
 ```r
 remake::make_script(filename="build.R")

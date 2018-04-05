@@ -19,7 +19,7 @@ get.pic <- function(file) {
 setup_viewport <- function(bottom, right, top){
   #gridBase  - works out coordinates of different plots
   vps <- baseViewports()
-  pushViewport(vps$inner)  #put current plot onto global viewport stack
+  pushViewport(vps$inner)  #put current inner onto global viewport stack
   #make new viewport
   vp <- viewport(x=unit(1, "npc") - unit(right, "inches"),
                  y=unit(bottom, "inches"),

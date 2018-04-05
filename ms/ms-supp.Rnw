@@ -1,107 +1,73 @@
-\documentclass[10pt,twoside]{article}
+\documentclass[9pt,onecolumn,twoside]{pnas-new}
+% Use the lineno option to display guide line numbers if required.
+% Note that the use of elements such as single-column equations
+% may affect the guide line number alignment. 
 
-\usepackage{suppmat}
-\usepackage{listings}
-\usepackage[T1]{fontenc} % Better underscores
-\usepackage{longtable}
+\templatetype{pnasresearcharticle}
+
+\title{
+{\normalfont \fontsize{12pt}{16pt}
+{\color{black50} Supporting information for:}\\} \vskip6pt
+\fontsize{16pt}{20pt} How functional traits influence plant growth and shade tolerance across the life-cycle
+}
 
 \input{ms-common-defs}
 
-% We will generate all images so they have a width \maxwidth. This means
-% that they will get their normal width if they fit onto the page, but
-% are scaled down if they would overflow the margins.
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\dates{This supplement was compiled on \today}
+\doi{\url{www.pnas.org/cgi/doi/10.1073/pnas.XXXXXXXXXX}}
 
-\titleprefix{Supporting Materials for:}
-
-% Figure command -- also adds figure to table of contents
-\newcommand{\myfigure}[4]{
-    \begin{figure}
-            \centering
-            \includegraphics{#1}
-            \caption{\textbf{#2} #3}
-            \label{#4}
-    \end{figure}
-  \addcontentsline{toc}{subsection}{Fig \ref{#4} -- #2}
+\hypersetup{
+     linkcolor=pnasbluetext
 }
-
-\date{}
-
-<<preload, echo=FALSE>>=
-library(knitr)
-library(xtable)
-opts_chunk$set(echo=FALSE)
-@
 
 \begin{document}
 
 \maketitle
 
-\tableofcontents
-
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\thetable}{S\arabic{table}}
-\setcounter{secnumdepth}{0}
+\renewcommand{\theequation}{S\arabic{equation}}
+\renewcommand{\thesection}{S\arabic{section}}
 
-\clearpage
+% Figure command -- also adds figure to table of contents
+\newcommand{\myfigure}[4]{
+    \begin{figure*}[!hb]
+            \centering
+             \includegraphics[width=0.9\textwidth]{#1}
+            \caption{\textbf{#2} #3}
+            \label{#4}
+    \end{figure*}
+}
 
-\section{A -- Additional details on the \texttt{FF16} growth model in the {\plant} package}
 
-In this paper we use the \texttt{FF16} growth model from the package {\plant} \citep{Falster-2016}, which is accessed via \textsc{r} \citep{R-2015}. A full derivation of  Eqns 1-21 from the main text are described is provided in Appendix of \citet{Falster-2016}, see also \citep{Falster-2011}. Below we repeat some additional details from \citet{Falster-2016}, so that readers have a complete picture of the model.
+\section{Additional details on the \texttt{FF16} growth model in the {\plant} package}
+
+In this paper we use the \texttt{FF16} growth model from the package {\plant} \citep{Falster-2016}, which is accessed via \textsc{r} \citep{R-2015}. A full derivation of  Eqns 1-21 from the main text are described is provided in Appendix of \citep{Falster-2016}, see also \citep{Falster-2011}. Below we repeat some additional details from \citep{Falster-2016}, so that readers have a complete picture of the model.
 
 The \texttt{FF16} physiological model includes default values for all needed parameters (Table \ref{tab:params_core}). Species are known to vary considerably in many of these parameters, such as $\phi$, $\rho$, $\nu$, and $\omega$; so by varying parameters one can account for species differences. When altering a parameter in the model, however, one must also consider whether there are trade-offs linking parameters. This is achieved via a hyper-parameterisation function.
 
 \subsection{Hyper-parameterisation of the \texttt{FF16} model via traits}
 
-{\plant} allows for the hyper-parameterisation of the \texttt{FF16} physiological model via plant functional traits: this enables simultaneous variation in multiple parameters in accordance with an assumed trade-off. The hyper-parameterisation function used in the current analysis differs slightly from that in \citet{Falster-2016}. The functions implemented are as follows.
-
-\subsubsection{Leaf mass per unit area}
-
-The trait leaf mass per unit area, denoted by $\phi$, directly influences growth by changing ${\rm d}A_{\rm l} / {\rm d}M_{\rm a}$. In addition, we link $\phi$ to the rate of leaf turnover, based on a widely observed scaling relationship from \citet{Wright-2004},
-$$k_{\rm l} = \beta_{{\rm kl1}} \, \left(\frac{\phi}{\phi_0}\right)^{-\beta_{{\rm kl2}}}.$$
-This relationship is normalised around $\phi_0$, the global mean of $\phi$. This allows us to vary $\beta_{{\rm kl1}}$ and $\beta_{{\rm kl2}}$ without displacing the relationship from the observed mean.
-
-We also vary the mass-based leaf respiration rate so that it stays constant per unit leaf area and varies with $\phi$ and nitrogen per unit leaf area $\nu$, as empirically observed by \citet{Wright-2004},
-$$r_{\rm l} = \frac{\beta_{{\rm lf4}}\, \nu}{\phi}.$$
-
-\subsubsection{Wood density}
-
-The trait wood density, denoted by $\rho$, directly influences growth by changing ${\rm d}A_{\rm l} / {\rm d}M_{\rm a}$. In addition, we allow for $\rho$ to influence the rate of growth-independent mortality,
-$$d_{\rm I} = \beta_{{\rm dI1}} \, \left(\frac{\rho}{\rho_0}\right) ^ {-\beta_{{\rm dI2}}},$$
-and also the rate of sapwood turnover,
-$$k_{\rm s} = \beta_{{\rm ks1}} \, \left(\frac{\rho}{\rho_0}\right)^ {-\beta_{{\rm ks2}}}.$$
-As for $\phi$, these relationships are normalized around $\rho_0$, the global mean of $\rho$. By default, $\beta_{{\rm kI2}}$ and $\beta_{{\rm ks2}}$ are set to zero, so these linkages only become present when these parameters are set to something other than their default values.
-
-The rate of sapwood respiration per unit volume is assumed to be constant, so sapwood respiration per unit mass varies as
-$$r_{\rm s}  = \frac{\beta_{{\rm rs1}}}{\rho},$$
-where $\beta_{{\rm rs1}}$ is a default rate per volume of sapwood. Similarly, the rate of bark respiration per unit mass varies as
-$$r_{\rm b} = \frac{\beta_{{\rm rb1}}}{\rho},$$
-with $\beta_{{\rm rb1}} = 2 \beta_{{\rm rs1}}$.
+{\plant} allows for the hyper-parameterisation of the \texttt{FF16} physiological model via plant functional traits: this enables simultaneous variation in multiple parameters in accordance with an assumed trade-off. The hyper-parameterisation function used in the current analysis differs slightly from that in \citep{Falster-2016}. The functions implemented are as follows.
 
 \subsubsection{Seed mass}
 
-Effects of the trait seed mass, denoted by $\omega$, are naturally embedded in the equation determining fecundity (Eq. \ref{eq:fecundity}) and the initial height of seedlings. In addition, we let the accessory cost per seed be a multiple of seed size,
-$$\alpha_{{\rm f3}} = \beta_{{\rm f1}} \omega,$$
+Effects of the trait seed mass, are naturally embedded in the equation determining fecundity and the initial height of seedlings. In addition, we let the accessory cost per seed be a multiple of seed size,
+$\alpha_{{\rm f3}} = \beta_{{\rm f1}} \omega,$
 as empirically observed \citep{Henery-2001}.
 
 \subsubsection{Nitrogen per unit leaf area}
 
 Photosynthesis per unit leaf area and respiration rates per unit leaf mass (or area) are assumed to vary with leaf nitrogen per unit area, $\nu$. The calculation of respiration rates is already described above. To calculate the average annual photosynthesis for a leaf, we integrate the instantaneous rate per unit leaf area over the annual solar trajectory, using a rectangular-hyperbolic photosynthesis light response curve,
-
-$$p(\nu, E) = \frac1{365 \textrm{d}}\int_0^{365 \textrm{d}}\frac{Y(t) + A_{\rm max} - \sqrt{(Y(t) + A_{\rm max})^2 - 4 \beta_{{\rm lf2}} Y(t) A_{\rm max} }}{2 \beta_{{\rm lf2}}} {\rm d}t,$$
-where
-\begin{itemize}
-\item $A_{\rm max}$ is the maximum photosynthetic capacity of the leaf,
-\item $\beta_{{\rm lf2}}$ is the curvature of the light response curve,
-\item $Y(t) = \beta_{{\rm lf3}} I(t)$ is the initial yield of the light response curve, with $\beta_{{\rm lf3}}$ being the quantum yield parameter,
-\item $I(t) = k_{\rm I} \, I_0(t)\, E$ is the intensity of light on the leaf surface, and
-\item $I_0(t)$ is light incident on a surface perpendicular to the sun's rays directly above the canopy at time $t$.
-\end{itemize}
-The profile of $I_0(t)$ is given by a solar model adapted from \citet{TerSteege-1997}.
+\begin{equation} \label{eq:pts}
+p(\nu, E) = \frac1{365 \textrm{d}}\int_0^{365 \textrm{d}}\frac{Y(t) + A_{\rm max} - \sqrt{(Y(t) + A_{\rm max})^2 - 4 \beta_{{\rm lf2}} Y(t) A_{\rm max} }}{2 \beta_{{\rm lf2}}} {\rm d}t,
+\end{equation}
+where $A_{\rm max}$ is the maximum photosynthetic capacity of the leaf, 
+$\beta_{{\rm lf2}}$ is the curvature of the light response curve,
+$Y(t) = \beta_{{\rm lf3}} I(t)$ is the initial yield of the light response curve, with $\beta_{{\rm lf3}}$ being the quantum yield parameter,
+$I(t) = k_{\rm I} \, I_0(t)\, E$ is the intensity of light on the leaf surface, and
+$I_0(t)$ is light incident on a surface perpendicular to the sun's rays directly above the canopy at time $t$.
+The profile of $I_0(t)$ is given by a solar model adapted from \citep{TerSteege-1997}.
 
 We allow for the maximum photosynthetic capacity of the leaf to vary with leaf nitrogen per unit area, as
 \begin{equation} \label{eq:amax}
@@ -112,19 +78,50 @@ where $\beta_{{\rm lf1}}$ and $\beta_{{\rm lf5}}$ are constants. The relationshi
 Values of $p(\nu, E)$ are calculated across a range of values of $E$, and then an expression of the form in Eq. \ref{eq:photosynthesis} is fitted to extract the parameters
 $\alpha_{{\rm p1}}$ and $\alpha_{{\rm p2}}$, such that these become functions of $\nu$.
 
+
+\subsubsection{Leaf mass per unit area}
+
+The trait leaf mass per unit area, denoted by $\phi$, directly influences growth by changing ${\rm d}A_{\rm l} / {\rm d}M_{\rm a}$. In addition, we link $\phi$ to the rate of leaf turnover, based on a widely observed scaling relationship from \citep{Wright-2004},
+\begin{equation}
+k_{\rm l} = \beta_{{\rm kl1}} \, \left(\frac{\phi}{\phi_0}\right)^{-\beta_{{\rm kl2}}}.
+\end{equation}
+This relationship is normalised around $\phi_0$, the global mean of $\phi$. This allows us to vary $\beta_{{\rm kl1}}$ and $\beta_{{\rm kl2}}$ without displacing the relationship from the observed mean.
+
+We also vary the mass-based leaf respiration rate so that it stays constant per unit leaf area and varies with $\phi$ and nitrogen per unit leaf area $\nu$, as empirically observed by \citep{Wright-2004},
+\begin{equation}
+r_{\rm l} = \frac{\beta_{{\rm lf4}}\, \nu}{\phi}.
+\end{equation}
+
+\subsubsection{Wood density}
+
+The trait wood density, denoted by $\rho$, directly influences growth by changing ${\rm d}A_{\rm l} / {\rm d}M_{\rm a}$. As for $\phi$, these relationships are normalized around $\rho_0$, the global mean of $\rho$. By default, $\beta_{{\rm kI2}}$ and $\beta_{{\rm ks2}}$ are set to zero, so these linkages only become present when these parameters are set to something other than their default values.
+
+The rate of sapwood respiration per unit volume is assumed to be constant, so sapwood respiration per unit mass varies as
+\begin{equation}
+r_{\rm s}  = \frac{\beta_{{\rm rs1}}}{\rho},
+\end{equation}
+where $\beta_{{\rm rs1}}$ is a default rate per volume of sapwood. Similarly, the rate of bark respiration per unit mass varies as
+\begin{equation}
+r_{\rm b} = \frac{\beta_{{\rm rb1}}}{\rho},
+\end{equation}
+with $\beta_{{\rm rb1}} = 2 \beta_{{\rm rs1}}$.
+
+
 \subsubsection{Implementation of hyper-parameterisation function}
 
 The hyper-parameterisation function used in this analysis is implemented as follows:
 
 <<echo=FALSE, highlight=TRUE, comment = ''>>=
 make_hyperpar2
+#txt <- capture.output(make_hyperpar2)
+#writeLines(strwrap(txt, width = 150, exdent = 10))
 @
 
-\clearpage
 
-\section{B -- Supporting Tables}\label{app:supp_info_table}
+\section{References}
+\bibliography{references}
 
-\addcontentsline{toc}{subsection}{Table \ref{tab:params_core} -- Core parameters of the \texttt{FF16} physiological model}
+\section{Supporting Tables and Figures}\label{app:supp_info_table}
 
 <<echo=FALSE,results='asis'>>=
 tab <- table_plant_parameters("../data/growth_model_pars_core.csv")
@@ -133,35 +130,38 @@ print(xtable(tab,
             align='lp{7cm}llll',
             label="tab:params_core",
             caption="Core parameter of the \texttt{FF16} physiological model."),
+      floating.environment="table*",
       sanitize.text.function=I,
-      include.rownames=FALSE, caption.placement = "top")
+      include.rownames=FALSE, 
+      caption.placement = "top")
 @
 
-
-\newpage
-
-\addcontentsline{toc}{subsection}{Table \ref{tab:params_hyper} -- Parameters for hyper-parameterisation of the \texttt{FF16} physiological model}
 
 <<echo=FALSE,results='asis'>>=
 tab <- table_plant_parameters("../data/growth_model_pars_hyper.csv")
 print(xtable(tab,
             hline.after=c(1),
-            align='lp{7cm}llll',
+            align='lp{9cm}llll',
             label="tab:params_hyper",
             caption="Parameters for hyper-parameterisation of the \\texttt{FF16} physiological model."),
       sanitize.text.function=I,
-      include.rownames=FALSE, caption.placement = "top")
+      floating.environment="table*",
+      include.rownames=FALSE, 
+      caption.placement = "top")
 @
 
-\clearpage
 
-
-\section{C -- Supporting Figures}\label{app:supp_info_figures}
+\newpage
 
 \myfigure{SI/lma_tradeoff.pdf}{Leaf turnover decreases with leaf-mass per unit leaf area.}{Data from \citep{Wright-2004} for 678 species from 51 sites, each
 point giving a species-average. Lines show standardised major axis lines
 fitted to datsa from each site, with intensity of shading adjusted
 according to strength of the relationship.}{fS-leaf}
+
+\newpage
+
+\myfigure{main/assumptions.pdf}{Assumptions of a functional balance model for plant construction.}{Each dot is a single plant from the \textsc{baad} \citep{Falster-2015b}.
+Blue lines show standardised major axis lines fit to different species. The black line shows the relationship assumed in this paper, with slope given by the functional-balance assumptions in Table \ref{tab:allometry}.}{fig:assumptions}
 
 \newpage
 
@@ -177,10 +177,5 @@ Growth rates were simulated using the {\plant} model, applying the trade-offs de
 
 \myfigure{SI/growth_light_mass.pdf}{Effect of four traits on plant mass growth rate for different-sized plants.}{
 Growth rates were simulated using the {\plant} model, applying the trade-offs describing in Table 3. Each panel shows how growth is influenced by a different trait for plants of a given height, and across a series of canopy openness values from completely open (light blue,  $E=1$) to heavily shaded (dark line, $E=0.25$). For any given value of trait and $E$, plants were grown to the desired mass and their growth rate estimated. Changes in trait-growth relationships are summarised in Table 5.}{fig:growth_light_mass}
-
-\clearpage
-
-\addcontentsline{toc}{section}{References}
-\bibliography{references}
 
 \end{document}
