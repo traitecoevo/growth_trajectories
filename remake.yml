@@ -51,7 +51,6 @@ targets:
       - ms/widetext.sty
       - output/main/figure_conceptual.pdf
       - output/main/lcp_schematic.pdf
-      - output/main/assumptions.pdf
       - output/main/growth_light_height.pdf
       - output/main/lcp_trait.pdf
       - ms/ms-supp.pdf
@@ -62,6 +61,7 @@ targets:
     depends:
       - data/growth_model_pars_core.csv
       - data/growth_model_pars_hyper.csv
+      - output/SI/assumptions.pdf
       - output/SI/lma_tradeoff.pdf
       - output/SI/growth_light_dia.pdf
       - output/SI/growth_light_mass.pdf
@@ -87,7 +87,7 @@ targets:
     depends:
       - output/main/figure_conceptual.pdf
       - output/main/lcp_schematic.pdf
-      - output/main/assumptions.pdf
+      - output/SI/assumptions.pdf
       - output/main/growth_light_height.pdf
       - output/main/lcp_trait.pdf
       - output/SI/lma_tradeoff.pdf
@@ -107,7 +107,7 @@ targets:
       - output/conn/diameter_stem_dt_diameter_stem_dt.pdf
       - output/main/mass_fraction.pdf
 
-  output/main/assumptions.pdf:
+  output/SI/assumptions.pdf:
     command: figure_assumptions(fit_a.lf_h.t, fit_a.lf_sap, fit_a.lf_m.rf, fit_h.t_msal)
     plot: med_square
 

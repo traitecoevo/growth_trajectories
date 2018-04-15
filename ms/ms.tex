@@ -14,7 +14,36 @@ $[\theequation]$%
 \label{#1}
 }
 
-\input{ms-common-defs}
+\usepackage{graphicx}
+\graphicspath{{../output/main/}}
+
+% abbreviations
+\newcommand{\smurl}[1]{\url{#1}}
+\newcommand{\ud}{\ensuremath{\rm{d}}}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\newcommand{\plant}{\texttt{plant}}
+\newcommand{\wplcp}{\textsc{wplcp}}
+\newcommand{\lma}{\textsc{lma}}
+\newcommand{\wood}{\textsc{wd}}
+\newcommand{\seed}{\textsc{sm}}
+\newcommand{\hmat}{\textsc{h}$_{\rm mat}$}
+\newcommand{\nitrogen}{\textsc{n}}
+\newcommand{\sma}{\textsc{sma}}
+
+
+% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
+\author[a,1]{Daniel S. Falster}
+\author[b]{Remko A. Duursma}
+\author[c]{Richard G. FitzJohn}
+
+% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
+\affil[a]{Evolution \& Ecology Research Centre, and School of Biological, Earth and
+Environmental Sciences, University of New South Wales, Sydney NSW 2052, Australia}
+\affil[b]{Hawkesbury Institute for the Environment, Western Sydney University, Locked Bag 1797, Penrith NSW 2751, Australia}
+\affil[c]{Imperial College, London, United Kingdom}
+
+% Please give the surname of the lead author for the running footer
+\leadauthor{Falster}
 
 
 \templatetype{pnasresearcharticle} % Choose template
@@ -23,9 +52,9 @@ $[\theequation]$%
 % {pnasinvited} = Template for a PNAS invited submission
 
 % Enable cross referencing to Evidence document
-\usepackage{xr}
-\externaldocument{ms-supp}
-\externaldocument{figure_conceptual}
+% \usepackage{xr}
+% \externaldocument{ms-supp}
+% \externaldocument{figure_conceptual}
 
 \title{How functional traits influence plant growth and shade tolerance across the life-cycle}
 
@@ -144,14 +173,14 @@ We also show how our approach can account for related phenomena, including chang
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=\linewidth]{main/figure_conceptual.pdf}
+\includegraphics[width=\linewidth]{figure_conceptual.pdf}
 \caption{Conceptual framework linking growth rate to plant size and traits.
 \textbf{a)} Shows how the distribution of mass in a typical plant varies with size.
 \textbf{b)} Equations describing the rates of biomass growth, and growth in various dimensions of the plant. In the first line the symbol $\Sigma$ means ``sum'' across tissues, where $i = {\rm l,b,s,r}$. Grey numbers indicate equation numbers referred to in the main text. The insets show how the different metrics change intrinsically with plant height, when applying the ``functional-balance'' model in Table \ref{tab:allometry}. Colours highlight where the same metric appears repeatedly in different equations. For a list of variable names see Table \ref{tab:definitions}.}
 \label{fig:conceptual}
 \end{figure}
 
-\section*{Modeling the effects of traits on demography}
+\section*{A framework for understanding the effects of traits on growth rate and shade tolerance}
 
 The {\plant} model builds on the widespread approach used in many vegetation models of explicitly modelling the amounts of biomass in different tissues within a plant \citep[e.g.][]{Givnish-1988, Makela-1997, Moorcroft-2001, Sitch-2008, Falster-2011, King-2011, DeKauwe-2014} (Fig. \ref{fig:conceptual}a). We consider the masses $M_i$, areas $A_i$, and diameters $D_i$ of tissues, where the subscripts indicates tissue type: l=leaf, b=bark and phloem, s=sapwood, h=heartwood, r=root, a=alive, t=total, and st=stem total (s+b+h). The total mass of living tissue is then $M_{\rm a}=M_{\rm l}+M_{\rm b}+M_{\rm s}+M_{\rm r}$, and the standing mass of the plant is $M_{\rm t}=M_{\rm a}+M_{\rm h}$. A summary of all variables, units, and definitions is given in Table \ref{tab:definitions}, with further details on the parameter values applied given in Tables \ref{tab:params_core}--\ref{tab:params_hyper}.
 
@@ -218,8 +247,16 @@ where $P_{\rm net} = \alpha_{\rm bio} \, \alpha_{\rm y}\,(\bar{p}(E) - r_{\rm l}
 
 \subsection{Decomposition of growth rates into components}
 
+\refstepcounter{equation}\label{eq:dbdt_2}
+\refstepcounter{equation}\label{eq:dMtdt}
+\refstepcounter{equation}\label{eq:daldmt}
+\refstepcounter{equation}\label{eq:daldt}
+\refstepcounter{equation}\label{eq:dhdt}
+\refstepcounter{equation}\label{eq:dast}
+\refstepcounter{equation}\label{eq:dDdt}
+
 % Update equation counter, following inclusion of figure 1
-\setcounter{equation}{9}
+% \setcounter{equation}{9}
 
 To model growth in plant height ($H$), leaf area ($A_{\rm l}$), basal stem area ($ A_{\rm st}$), standing mass ($M_{\rm t}$) or stem diameter ($D$) requires that we account not just for biomass growth, but also for the costs of building new tissues and allocation to reproduction. Mathematically, these growth rates can be decomposed into a product of physiologically relevant terms \citep{Falster-2011, Gibert-2016} (Fig. \ref{fig:conceptual}b, eqns \ref{eq:dMtdt}-\ref{eq:dDdt}). While other decompositions are possible, the approach used here arises from the idea that multiple aspects of function and allocation decisions are made in relation to the amount of leaf area on a plant  \citep{Falster-2011}. Growth rates in plant weight ($\frac{\ud M_{\rm t} }{\ud t}$; eqn \ref{eq:dMtdt}), total leaf area ($\frac{\ud A_{\rm l}}{\ud t}$; eqn \ref{eq:daldt}), height ($\frac{\ud H}{\ud t}$; eqn \ref{eq:dhdt}), stem basal area ($\frac{\ud  A_{\rm st}}{\ud t}$; eqn \ref{eq:dast}), and stem diameter ($\frac{\ud D}{\ud t}$; eqn \ref{eq:dDdt}) therefore share several terms. Many of these terms also vary intrinsically with size, as shown in the insets in Fig. \ref{fig:conceptual}b.
 
@@ -228,7 +265,7 @@ The growth rate of all size metrics in eqns \ref{eq:dMtdt}-\ref{eq:dDdt} depends
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=.9\linewidth]{main/lcp_schematic.pdf}
+\includegraphics[width=.9\linewidth]{lcp_schematic.pdf}
 
 \caption{Conceptual framework showing how shade-tolerance (as measured by \textsc{wplcp}) is affected by plant size and traits, adapted from \citep{Givnish-1988}. From eqn \ref{eq:wplcp}, \textsc{wplcp} is the canopy openness $E$ where the photosynthetic income per unit leaf area (dashed line) intersects the total respiration and turnover costs per unit leaf area (solid black lines). Colors indicate the contributions from different tissues to total costs. Because the costs of stem tissues increase with height, \textsc{wplcp} also increases. Traits {\wood}, {\nitrogen}, and {\lma} can alter \textsc{wplcp} by shifting either income or cost of different tissues (Table \ref{tab:responses}).
 \label{fig:wplcp_idea}}
@@ -337,13 +374,13 @@ To capture the effects of functional traits on growth rates and shade tolerance 
 
 Seed mass: {\seed} moderates a trade-off between a plant's rate of seed production per unit mass invested in reproduction and the mass of each offspring  \citep{Moles-2006}.
 
-Height at maturation: {\hmat} moderates an inevitable trade-off between mass invested reproduction and growing the plant, i.e.~ $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ in eqns \ref{eq:dhdt} and \ref{eq:dast}. We assume the amount allocated to vegetative growth starts high amd then decreases once $H > H_{{\rm mat}}$  (Fig. \ref{fig:conceptual}b). The exact nature of the function is non-critical, what is important is that plants shift from a period of investing mainly in vegetative growth to investing mainly in reproduction. Here we let the fraction of mass allocated to reproduction vary with $H$ via the function $r_{\rm r1}  \left(1.0 + \exp\left(r_{\rm r2} \left(1 - H / H_{{\rm mat}}\right)\right)\right)^{-1}$, where $r_{\rm r1}$ is the maximum possible allocation (0-1) and $r_{\rm r2}$ determines the sharpness of the transition. 
+Height at maturation: {\hmat} moderates an inevitable trade-off between mass invested reproduction and growing the plant, i.e.~ $\frac{{\rm d}M_{\rm a}}{{\rm d}B}$ in eqns \ref{eq:dhdt} and \ref{eq:dast}. We assume the amount allocated to vegetative growth starts high and then decreases once $H > H_{{\rm mat}}$  (Fig. \ref{fig:conceptual}b). The exact nature of the function is non-critical, what is important is that plants shift from a period of investing mainly in vegetative growth to investing mainly in reproduction. Here we let the fraction of mass allocated to reproduction vary with $H$ via the function $r_{\rm r1}  \left(1.0 + \exp\left(r_{\rm r2} \left(1 - H / H_{{\rm mat}}\right)\right)\right)^{-1}$, where $r_{\rm r1}$ is the maximum possible allocation (0-1) and $r_{\rm r2}$ determines the sharpness of the transition. 
 
 \subsubsection{Developmental traits} The remaining three traits are termed ``developmental traits'' because they moderate effects the rate of movement along an individual's growth trajectory. 
 
 Leaf nitrogen per unit leaf area: We assume that both the maximum photosynthetic capacity of a leaf and leaf respiration rate both vary with {\nitrogen} (=$\nu$), as $\beta_{{\rm lf1}} \, \left(\nu / \nu_0 \right)^{\beta_{{\rm lf5}}}$ and $\beta_{{\rm lf4}}\, \nu$ respectively, where $\beta_{{\rm lf1}}$, $\nu_0$ and $\beta_{{\rm lf4}}$, and $\beta_{{\rm lf5}}$ are constants.
 
-Leaf mass per unit leaf area: {\lma} (=$\phi$) influences growth by changing $\frac{{\rm d}A_{\rm l}}{{\rm d}M_{\rm a}}$ (Table \ref{tab:allometry}). In addition, we link {\lma} to the rate of leaf turnover ($k_{\rm l}$), based on a widely observed scaling relationship \citep{Wright-2004}: $k_{\rm l} = \beta_{{\rm kl1}} \, \left(\phi/\phi_0\right)^{-\beta_{{\rm kl2}}}$ where $\beta_{{\rm kl1}}$, $\phi_0$ and $\beta_{{\rm kl2}}$ are empirical constants. The rate of leaf respiration per unit area is assumed independent of {\lma}\citep{Wright-2004}, as such the mass-based rate is adjusted accordingly whenever {\lma} is varied.
+Leaf mass per unit leaf area: {\lma} (=$\phi$) influences growth by changing $\frac{{\rm d}A_{\rm l}}{{\rm d}M_{\rm a}}$ (Table \ref{tab:allometry}). In addition, we link {\lma} to the rate of leaf turnover ($k_{\rm l}$), based on a widely observed scaling relationship \citep{Wright-2004} (Fig. \ref{fig:leafturn}): $k_{\rm l} = \beta_{{\rm kl1}} \, \left(\phi/\phi_0\right)^{-\beta_{{\rm kl2}}}$ where $\beta_{{\rm kl1}}$, $\phi_0$ and $\beta_{{\rm kl2}}$ are empirical constants. The rate of leaf respiration per unit area is assumed independent of {\lma}\citep{Wright-2004}, as such the mass-based rate is adjusted whenever {\lma} is varied.
 
 Wood density: {\wood} (=$\rho$) influences growth by changing $\frac{{\rm d}A_{\rm l}}{{\rm d}M_{\rm a}}$ (Table \ref{tab:allometry}). In addition, we link {\wood} to the rate of sapwood and bark turnover, mirroring the relationship assumed for leaf turnover: $k_{\rm b} = k_{\rm s} = \beta_{{\rm ks1}} \, \left(\rho / \rho_0\right)^{-\beta_{{\rm ks2}}}$ where $\beta_{{\rm ks1}}$, $\rho_0$ and $\rho_{{\rm ks2}}$ are empirical constants. The rate of sapwood and bark respiration per unit stem volume is assumed to be independent of {\wood}, as such the mass-based rate is adjusted accordingly whenever {\wood} is varied. There currently little data relating sapwood turnover or respiration to {\wood}.
 
@@ -355,7 +392,7 @@ We compared the assumptions outlined in Table \ref{tab:allometry}a to data sourc
 
 \begin{SCfigure*}[\sidecaptionrelwidth][!ht]
 \centering
-\includegraphics[width=12.4cm,height=12.4cm, keepaspectratio]{main/growth_light_height.pdf}
+\includegraphics[width=12.4cm,height=12.4cm, keepaspectratio]{growth_light_height.pdf}
 \caption{\textbf{Effect of four traits on height growth rate for different-sized plants.}
 Growth rates were simulated using the {\plant} model, applying the trade-offs describing in Table \ref{tab:traits}. Each panel shows how growth is influenced by a different trait for plants of a given height, and across a series of canopy openness values from completely open (light blue,  $E=1$) to heavily shaded (dark line, $E=0.25$). For any given value of trait and $E$, plants were grown to the desired height and their growth rate estimated. The white regions indicate trait ranges that are typically observed in real systems. Figs. \ref{fig:growth_light_dia}-\ref{fig:growth_light_mass} show similar plots but with growth measured as stem diameter, stem area, or plant mass. Changes in trait-growth relationships are summarised in Table \ref{tab:responses}.
 \label{fig:growth_light_height}}
@@ -375,7 +412,7 @@ Greater {\hmat} causes a growth advantage at larger sizes by increasing $\frac{{
 
 \begin{SCfigure*}[\sidecaptionrelwidth][b]
 \centering
-\includegraphics[width=11.4cm,keepaspectratio]{main/lcp_trait.pdf}
+\includegraphics[width=11.4cm,keepaspectratio]{lcp_trait.pdf}
 \caption{\textbf{Effect of three developmental traits on shade tolerance.}
 Panels show effect of traits on level of canopy openness that causes biomass growth (eqn \ref{eq:dbdt}) to be zero. Different lines indicate relationship for plants with specified height, from short (light blue,  $H=0.5$m) to tall (dark line, $H=20$m). The white regions indicate trait ranges that are typically observed in real systems.
 \label{fig:wplcp}}
@@ -528,6 +565,20 @@ The growth model used has been implemented as the \texttt{FF16} physiological mo
 \acknow{
 We thank J Camac, A Gibert, G Kunstler, H Muller-Landau, C Prentice, E Wenk, M Westoby, I Wright, and SJ Wright for helpful discussions; J Camac for introducing us to the \texttt{stan} framework, and D Warton for discussions about {\sma} line fitting. DF was supported by fellowships from the  Australian Research Council discovery (DP110102086, FT160100113). RF was supported by the Science and Industry Endowment Fund (RP04-174). The authors have no conflicts of interest to declare.
 }
+
+% Defines references from supplemntary section
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+
+\refstepcounter{table}\label{tab:params_core}
+\refstepcounter{table}\label{tab:params_hyper}
+\refstepcounter{figure}\label{fig:leafturn}
+\refstepcounter{figure}\label{fig:assumptions}
+\refstepcounter{figure}\label{fig:growth_light_dia}
+\refstepcounter{figure}\label{fig:growth_light_area}
+\refstepcounter{figure}\label{fig:growth_light_mass}
 
 % Bibliography
 \bibliography{references}
