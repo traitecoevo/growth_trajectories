@@ -31,7 +31,7 @@ targets:
       - output/talk/growth_rho_6.pdf
       - output/talk/growth_rho_7.pdf
       - output/talk/growth_rho_8.pdf
-
+      - output/talk/growth_light_height.pdf
   tree:
     command: get.pic("data/tree.eps")
 
@@ -125,3 +125,9 @@ targets:
   output/talk/growth_rho_8.pdf:
     command: figure_dY_dt_talk(I("rho"), 8, height_dt_data_talk, tree)
     plot: growth
+
+  output/talk/growth_light_height.pdf:
+    command: figure_dY_dt_talk2(height_dt_data)
+    plot:
+      width: 8
+      height: 3
