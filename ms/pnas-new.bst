@@ -3,8 +3,9 @@
 %%%     author          = "Russell Standish"
 %%%  }
 %%% ====================================================================
-% This is "pnas2011.bst, adapted from "pnas2009.bst" and "pnas.bst", modified
-% from "unsrt.bst"
+% This is "pnas2016.bst", adapted from 
+% "pnas2011.bst" "pnas2009.bst" and "pnas.bst", 
+% modified from "unsrt.bst"
 % BibTeX standard bibliography style `unsrt'
 	% version 0.99a for BibTeX versions 0.99a or later, LaTeX version 2.09.
 	% Copyright (C) 1985, all rights reserved.
@@ -29,8 +30,10 @@ ENTRY
     month
     note
     number
+    issue
     organization
     pages
+    eid
     publisher
     school
     series
@@ -444,21 +447,38 @@ FUNCTION {format.pages}
 FUNCTION {format.vol.num.pages}
 { volume field.or.null
   number empty$
+  {
+    issue empty$
     'skip$
-    { "(" number * ")" * *
+    { "(" issue * ")" * * }
+    if$
+  }
+  {
+    "(" number * ")" * *
       volume empty$
-	{ "there's a number but no volume in " cite$ * warning$ }
-	'skip$
+	    { "there's a number but no volume in " cite$ * warning$ }
+	    'skip$
       if$
-    }
+  }
   if$
   pages empty$
+  {
+    eid empty$
     'skip$
-    { duplicate$ empty$
-	{ pop$ format.pages }
-	{ ":" * pages n.dashify * }
+	  {
+      duplicate$ empty$
+	    { pop$ format.pages }
+	    { ":" * eid n.dashify * }
       if$
     }
+    if$
+  }
+  {
+    duplicate$ empty$
+	  { pop$ format.pages }
+	  { ":" * pages n.dashify * }
+    if$
+  }
   if$
 }
 

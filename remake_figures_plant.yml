@@ -46,8 +46,8 @@ targets:
   output/main/lcp_trait.pdf:
     command: figure_lcp_trait(lcp_trait_data)
     plot:
-      width: 9
-      height: 3
+      width: 7.5
+      height: 2.5
 
   lcp_trait_data:
       command: figure_lcp_trait_data()

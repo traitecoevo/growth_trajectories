@@ -8,6 +8,8 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{arrows,positioning, decorations, decorations.text}
 
+
+
 % use Helvetica font
 \usepackage{fontspec}
 \usefonttheme{serif}
@@ -21,8 +23,18 @@
 \newtagform{brackets}{[}{]}
 \usetagform{brackets}
 
+% \makeatletter
+% \newcommand\thefontsize[1]{{#1 The current font size is: \f@size pt\par}}
+% \makeatother
+
 %----------------------------------------------------------------------------------------
 \begin{document}
+
+% script = 14.4, footnote = 17.28, small = 20.74
+
+
+% \sffamily
+% \thefontsize\scriptsize
 
 % Needed to set equation counter, following inclusion of figure 1
 \setcounter{equation}{2}
@@ -39,7 +51,7 @@
 
 \newcommand{\ylabel}[2]{
   \node at (#1)[anchor=west, text width=2cm, minimum height=1cm] {
-  {\footnotesize #2}};
+  \fontsize{19.5pt}{15pt}\selectfont #2};
 }
 
 \newcommand{\textbox}[2]{
@@ -71,7 +83,7 @@
   \defineCol{thisrow}{#1}{thiscol}
   \ylabel{$(thiscol) + (-2.1cm,  0cm)$}{#2}
   \plot{  $(thiscol)$                 }{#3}
-  \ylabel{$(thiscol) + (0.7cm,   0cm)$}{=}
+  \ylabel{$(thiscol) + (0.7cm,   0cm)$}{\footnotesize=}
   \ylabel{$(thiscol) + (1.1cm,   0cm)$}{#4}
 }
 
@@ -110,17 +122,17 @@
 \defineRow{0}{thisrow}
 \rowtitle{Biomass growth}
 \firstcol{1}{$\frac{{\rm d}B}{{\rm d}t}$}{output/conn/net_mass_production_dt_net_mass_production_dt}{}
-\othercol{2}{\hspace{-1em} \scriptsize $\,\alpha_{\rm \tiny bio} \alpha_{\rm \tiny y}$}{output/conn/net_mass_production_dt_yield}{}
-\othercol{3}{\hspace{-1em}$\times\Bigg($\hspace{-0.3em}\scriptsize$A_{\rm l} \bar{p}$}{output/conn/net_mass_production_dt_assimilation}{}
-\othercol{4}{\hspace{-1em}-$\Sigma$\scriptsize $M_{\rm i} r_{\rm i}$}{output/conn/net_mass_production_dt_respiration}{\hspace{-0.5em}$\Bigg)$}
-\othercol{5}{\hspace{-0.75em}-$\Sigma$\scriptsize $M_{\rm i} k_{\rm i}$}{output/conn/net_mass_production_dt_turnover}{}
+\othercol{2}{\hspace{-0.8em} \fontsize{14}{10}\selectfont $\alpha_{\rm bio} \alpha_{\rm y}$}{output/conn/net_mass_production_dt_yield}{}
+\othercol{3}{\hspace{-1em}{\footnotesize$\times$}$\hspace{-0.1em}\Bigg($\hspace{-0.2em}\fontsize{16}{13}\selectfont $A_{\rm l} \bar{p}$}{output/conn/net_mass_production_dt_assimilation}{}
+\othercol{4}{\hspace{-1em}\fontsize{16}{13}\selectfont -$\Sigma M_{\rm i} r_{\rm i}$}{output/conn/net_mass_production_dt_respiration}{\hspace{-0.65em}$\Bigg)$}
+\othercol{5}{\hspace{-0.8em}\fontsize{16}{13}\selectfont -$\Sigma M_{\rm i} k_{\rm i}$}{output/conn/net_mass_production_dt_turnover}{}
 \rowlabel{eq:dbdt_2}
 
 \defineRow{1}{thisrow}
 \rowtitle{Mass growth}
 \firstcol{1}{$\frac{{\rm d}M_{{\rm t}}}{{\rm d}t}$}{output/conn/mass_total_dt_mass_total_dt}{}
-\othercol{2}{$\frac{{\rm d}M_{{\rm a}}}{{\rm d}B}$}{output/conn/mass_total_dt_fraction_allocation_growth}{$\times$}
-\othercol{3}{$\frac{{\rm d}B}{{\rm d}t}$}{output/conn/mass_total_dt_net_mass_production_dt}{$+$}
+\othercol{2}{$\frac{{\rm d}M_{{\rm a}}}{{\rm d}B}$}{output/conn/mass_total_dt_fraction_allocation_growth}{\footnotesize$\times$}
+\othercol{3}{$\frac{{\rm d}B}{{\rm d}t}$}{output/conn/mass_total_dt_net_mass_production_dt}{\footnotesize$+$}
 \othercol{4}{$\frac{{\rm d}M_{{\rm h}}}{{\rm d}t}$}{output/conn/mass_total_dt_mass_heartwood_dt}{}
 \rowlabel{eq:dMtdt}
 
@@ -136,31 +148,31 @@
 \defineRow{3}{thisrow}
 \rowtitle{Leaf-area growth}
 \firstcol{1}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/conn/area_leaf_dt_area_leaf_dt}{}
-\othercol{2}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}M_{{\rm a}}}$}{output/conn/area_leaf_dt_darea_leaf_dmass_live}{$\times$}
-\othercol{3}{$\frac{{\rm d}M_{{\rm a}}}{{\rm d}B}$}{output/conn/area_leaf_dt_fraction_allocation_growth}{$\times$}
+\othercol{2}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}M_{{\rm a}}}$}{output/conn/area_leaf_dt_darea_leaf_dmass_live}{\footnotesize$\times$}
+\othercol{3}{$\frac{{\rm d}M_{{\rm a}}}{{\rm d}B}$}{output/conn/area_leaf_dt_fraction_allocation_growth}{\footnotesize$\times$}
 \othercol{4}{$\frac{{\rm d}B}{{\rm d}t}$}{output/conn/area_leaf_dt_net_mass_production_dt}{}
 \rowlabel{eq:daldt}
 
 \defineRow{4}{thisrow}
 \rowtitle{Height growth}
 \firstcol{1}{$\frac{{\rm d}H}{{\rm d}t}$}{output/conn/height_dt_height_dt}{}
-\othercol{2}{$\frac{{\rm d}H}{{\rm d}A_{{\rm l}}}$}{output/conn/height_dt_dheight_darea_leaf}{$\times$}
+\othercol{2}{$\frac{{\rm d}H}{{\rm d}A_{{\rm l}}}$}{output/conn/height_dt_dheight_darea_leaf}{\footnotesize$\times$}
 \othercol{3}{$\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/conn/area_leaf_dt_area_leaf_dt}{}
 \rowlabel{eq:dhdt}
 
 \defineRow{5}{thisrow}
 \rowtitle{Stem-area growth}
 \firstcol{1}{$\frac{{\rm d}A_{{\rm st}}}{{\rm d}t}$}{output/conn/area_stem_dt_area_stem_dt}{$\Bigg($}
-\othercol{2}{$\frac{{\rm d}A_{{\rm b}}}{{\rm d}A_{{\rm l}}}$}{output/conn/area_stem_dt_darea_bark_darea_leaf}{$+$}
+\othercol{2}{$\frac{{\rm d}A_{{\rm b}}}{{\rm d}A_{{\rm l}}}$}{output/conn/area_stem_dt_darea_bark_darea_leaf}{\footnotesize$+$}
 \othercol{3}{$\frac{{\rm d}A_{{\rm s}}}{{\rm d}A_{{\rm l}}}$}{output/conn/area_stem_dt_darea_sapwood_darea_leaf}{\hspace{-0.3em}$\Bigg)$}
-\othercol{4}{\hspace{-0.4em}$\times\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/conn/area_stem_dt_area_leaf_dt}{$+$}
+\othercol{4}{\hspace{-0.4em}{\footnotesize$\times$}$\frac{{\rm d}A_{{\rm l}}}{{\rm d}t}$}{output/conn/area_stem_dt_area_leaf_dt}{\footnotesize$+$}
 \othercol{5}{$\frac{{\rm d}A_{{\rm h}}}{{\rm d}t}$}{output/conn/area_stem_dt_area_heartwood_dt}{}
 \rowlabel{eq:dast}
 
 \defineRow{6}{thisrow}
 \rowtitle{Stem-diameter growth}
 \firstcol{1}{$\frac{{\rm d}D}{{\rm d}t}$}{output/conn/diameter_stem_dt_diameter_stem_dt}{}
-\othercol{2}{$\frac{{\rm d}D}{{\rm d}A_{{\rm st}}}$}{output/conn/diameter_stem_dt_ddiameter_stem_darea_stem}{$\times$}
+\othercol{2}{$\frac{{\rm d}D}{{\rm d}A_{{\rm st}}}$}{output/conn/diameter_stem_dt_ddiameter_stem_darea_stem}{\footnotesize$\times$}
 \othercol{3}{$\frac{{\rm d}A_{{\rm st}}}{{\rm d}t}$}{output/conn/diameter_stem_dt_area_stem_dt}{}
 \rowlabel{eq:dDdt}
 

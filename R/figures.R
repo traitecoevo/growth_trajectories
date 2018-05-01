@@ -303,8 +303,8 @@ figure_rate_vs_size_panels <- function(data, type, path) {
 #       xaxs="i", yaxs = "i",
       col=get_col(v), lwd=20)
     if(type == "diameter_stem_dt" || (type == "area_stem_dt"  && v %in% c( "area_leaf_dt", "area_heartwood_dt"))){
-      f <- function(at) axis(1, at=at, tck=-0.05, col="grey30", col.ticks = "grey30", cex.axis=7, mgp=c(3, 6, 0))
-      f(0); f(10); f(20);
+      f <- function(at) axis(1, at=at, tck=-0.05, col="grey30", col.ticks = "grey30", cex.axis=9, mgp=c(3, 6, 0))
+      f(0); f(20);
     }
     box(col="grey30")
     dev.off()
@@ -347,8 +347,10 @@ figure_dY_dt <- function(dat) {
   traits <- dat[["traits"]]
 
   cols <- color_pallete1(length(E))
+  is_main <- function(){vars[2]== "height_dt"}
+
   par(mfrow=c(length(sizes), length(traits)),
-      oma=c(4, 5, 0, 1.5), mar=c(1, 1, 1, 0.9))
+      oma=c(3, ifelse(is_main(), 4, 5), 0, 1.5), mar=c(0.8, 0.8, 0.8, 0.8))
 
   extract_f <- function(v, i, dat) {
       dat_v <- unname(split(dat$data[[v]], dat$data[[v]]$class))
@@ -376,15 +378,16 @@ figure_dY_dt <- function(dat) {
       axis.log10(1, labels = (i == length(sizes)), las=1)
       axis(2, labels = (v == traits[1] ), las=1, at = seq(0, 20, by=get_by(ymax)))
       if (v == last(traits)) {
-        mtext(dat[["label"]](sizes[[i]]), 4, cex=0.9, line=1)
+        
+        mtext(dat[["label"]](sizes[[i]]), 4, cex=0.8, line=1)
       }
       if (i == length(sizes)) {
-        mtext(name_pretty(v), 1, cex=0.9, line=3)
+        mtext(name_pretty(v), 1, cex=0.78, line=2.5)
       }
 
     }
   }
-  mtext(name_pretty(vars[2]), line=3, side=2, cex=0.9 , outer=TRUE)
+  mtext(name_pretty(vars[2]), line=ifelse(is_main(), 2, 3), side=2, cex=0.8, outer=TRUE)
 
   legend("topright", legend = E, lty=1, col=rev(cols), bty="n", cex=0.9)
 }
@@ -608,7 +611,7 @@ figure_lcp_trait <- function(data) {
 
   cols <- rev(color_pallete1(length(data[["heights"]])))
 
-  par(oma=c(0, 2, 3, 0), mar=c(5, 3, 1, 1), mfrow=c(1,3))
+  par(oma=c(0, 2, 2, 0), mar=c(4, 3, 1, 1), mfrow=c(1,3))
   lab = list(narea="a", lma= "b", rho = "c")
 
   for (trait in data[["traits"]]) {
@@ -624,13 +627,13 @@ figure_lcp_trait <- function(data) {
               type="l", lty=1, col=cols, add=TRUE)
 
     axis.log10(1, labels=TRUE, las=1)
-    axis(2, labels=TRUE, las=1)
+    axis(2, labels=(trait == data[["traits"]][1]), las=1, cex = 1)
 
     mylabel(sprintf("%s)", lab[[trait]]))
 
-    mtext(name_pretty(trait), 1, line=3.5, cex=0.8)
+    mtext(name_pretty(trait), 1, line=2.7, cex=0.8)
     if(trait=="narea"){
-        mtext(name_pretty("shading"), 2, line=3.5, cex=0.8)
+        mtext(name_pretty("shading"), 2, line=3, cex=0.8)
     }
   }
   mtext(name_pretty("shading"), 1, line=1, xpd=NA, outer=TRUE)
@@ -728,8 +731,8 @@ figure_mass_fraction <- function(data) {
   par(mar=c(2.1, 4.1, 1.5, 2))
   plot(NA, type="n", xlim=c(0, 24), ylim=c(0, 1), las=1,
        xaxs="i", yaxs="i", xlab="", ylab="", axes=FALSE)
-  axis(1, at = c(0,5,10,15,20), labels = c(0,NA,10,NA,20), cex.axis=1.25)
-  axis(2, at = c(0,0.25,0.5,0.75, 1), labels = c(0,NA,0.5,NA,1), las=1, cex.axis=1.25)
+  axis(1, at = c(0,5,10,15,20), labels = c(0,NA,10,NA,20), cex.axis=1.5)
+  axis(2, at = c(0,0.25,0.5,0.75, 1), labels = c(0,NA,0.5,NA,1), las=1, cex.axis=1.5)
 
   for (v in rev(vars)) {
     polygon(c(heights, last(heights), heights[1]), c(y[, v], 0, 0),

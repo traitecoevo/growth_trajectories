@@ -1,16 +1,17 @@
-\documentclass[9pt,onecolumn,twoside]{pnas-new}
+\documentclass[9pt,twoside]{pnas-new}
 % Use the lineno option to display guide line numbers if required.
-% Note that the use of elements such as single-column equations
-% may affect the guide line number alignment. 
 
-\templatetype{pnasresearcharticle}
+\templatetype{pnassupportinginfo}
 
-\title{
-{\normalfont \fontsize{12pt}{16pt}
-{\color{black50} Supporting information for:}\\} \vskip6pt
-\fontsize{16pt}{20pt} How functional traits influence plant growth and shade tolerance across the life-cycle
-}
+% Use the lineno option to display guide line numbers if required.
 
+\title{How functional traits influence plant growth and shade tolerance across the life-cycle}
+\author{Daniel S. Falster Remko A. Duursma, Richard G. FitzJohn}
+\correspondingauthor{Corresponding Daniel Falster.\\E-mail: daniel.falster@unsw.edu.au}
+
+
+\usepackage{graphicx}
+\graphicspath{{../output/SI/}}
 
 % abbreviations
 \newcommand{\smurl}[1]{\url{#1}}
@@ -26,57 +27,33 @@
 \newcommand{\nitrogen}{\textsc{n}}
 \newcommand{\sma}{\textsc{sma}}
 
-
-\usepackage{graphicx}
-\graphicspath{{../output/SI/}}
-
-% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
-\author[a,1]{Daniel S. Falster}
-\author[b]{Remko A. Duursma}
-\author[c]{Richard G. FitzJohn}
-
-% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
-\affil[a]{Evolution \& Ecology Research Centre, and School of Biological, Earth and
-Environmental Sciences, University of New South Wales, Sydney NSW 2052, Australia}
-\affil[b]{Hawkesbury Institute for the Environment, Western Sydney University, Locked Bag 1797, Penrith NSW 2751, Australia}
-\affil[c]{Imperial College, London, United Kingdom}
-
-% Please give the surname of the lead author for the running footer
-\leadauthor{Falster}
-
-\dates{This supplement was compiled on \today}
-\doi{\url{www.pnas.org/cgi/doi/10.1073/pnas.XXXXXXXXXX}}
-
-\hypersetup{
-     linkcolor=pnasbluetext
-}
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
+
+%% Comment/remove this line before generating final copy for submission
+%%\instructionspage  
 
 \maketitle
 
-\renewcommand{\thefigure}{S\arabic{figure}}
-\renewcommand{\thetable}{S\arabic{table}}
-\renewcommand{\theequation}{S\arabic{equation}}
-\renewcommand{\thesection}{S\arabic{section}}
+%% Adds the main heading for the SI text. Comment out this line if you do not have any supporting information text.
+\SItext
 
-\section{Additional details on the \texttt{FF16} growth model in the {\plant} package}
+\section*{Additional details on the \texttt{FF16} growth model in the {\plant} package}
 
 In this paper we use the \texttt{FF16} growth model from the package {\plant} \citep{Falster-2016}, which is accessed via \textsc{r} \citep{R-2015}. A full derivation of  Eqns 1-21 from the main text are described is provided in Appendix of \citep{Falster-2016}, see also \citep{Falster-2011}. Below we repeat some additional details from \citep{Falster-2016}, so that readers have a complete picture of the model.
 
 The \texttt{FF16} physiological model includes default values for all needed parameters (Table \ref{tab:params_core}). Species are known to vary considerably in many of these parameters, such as $\phi$, $\rho$, $\nu$, and $\omega$; so by varying parameters one can account for species differences. When altering a parameter in the model, however, one must also consider whether there are trade-offs linking parameters. This is achieved via a hyper-parameterisation function.
 
-\subsection{Hyper-parameterisation of the \texttt{FF16} model via traits}
+\subsection*{Hyper-parameterisation of the \texttt{FF16} model via traits}
 
 {\plant} allows for the hyper-parameterisation of the \texttt{FF16} physiological model via plant functional traits: this enables simultaneous variation in multiple parameters in accordance with an assumed trade-off. The hyper-parameterisation function used in the current analysis differs slightly from that in \citep{Falster-2016}. The functions implemented are as follows.
 
-\subsubsection{Seed mass}
+\subsubsection*{Seed mass}
 
 Effects of the trait seed mass, are naturally embedded in the equation determining fecundity and the initial height of seedlings. In addition, we let the accessory cost per seed be a multiple of seed size,
 $\alpha_{{\rm f3}} = \beta_{{\rm f1}} \omega,$
 as empirically observed \citep{Henery-2001}.
 
-\subsubsection{Nitrogen per unit leaf area}
+\subsubsection*{Nitrogen per unit leaf area}
 
 Photosynthesis per unit leaf area and respiration rates per unit leaf mass (or area) are assumed to vary with leaf nitrogen per unit area, $\nu$. The calculation of respiration rates is already described above. To calculate the average annual photosynthesis for a leaf, we integrate the instantaneous rate per unit leaf area over the annual solar trajectory, using a rectangular-hyperbolic photosynthesis light response curve,
 \begin{equation} \label{eq:pts}
@@ -95,7 +72,7 @@ A_{\rm max} = \beta_{{\rm lf1}} \, \left(\frac{\nu}{\nu_0}\right)^{\beta_{{\rm l
 \end{equation}
 where $\beta_{{\rm lf1}}$ and $\beta_{{\rm lf5}}$ are constants. The relationships is normalized around $\nu_0$, the global mean of leaf nitrogen per unit area.
 
-\subsubsection{Leaf mass per unit area}
+\subsubsection*{Leaf mass per unit area}
 
 The trait leaf mass per unit area, denoted by $\phi$, directly influences growth by changing ${\rm d}A_{\rm l} / {\rm d}M_{\rm a}$. In addition, we link $\phi$ to the rate of leaf turnover, based on a widely observed scaling relationship from \citep{Wright-2004} (Fig. \ref{fig:leafturn}),
 \begin{equation}
@@ -108,7 +85,7 @@ We also vary the mass-based leaf respiration rate so that it stays constant per 
 r_{\rm l} = \frac{\beta_{{\rm lf4}}\, \nu}{\phi}.
 \end{equation}
 
-\subsubsection{Wood density}
+\subsubsection*{Wood density}
 
 The trait wood density, denoted by $\rho$, directly influences growth by changing ${\rm d}A_{\rm l} / {\rm d}M_{\rm a}$. As for $\phi$, these relationships are normalized around $\rho_0$, the global mean of $\rho$. By default, $\beta_{{\rm kI2}}$ and $\beta_{{\rm ks2}}$ are set to zero, so these linkages only become present when these parameters are set to something other than their default values.
 
@@ -123,7 +100,7 @@ r_{\rm b} = \frac{\beta_{{\rm rb1}}}{\rho},
 with $\beta_{{\rm rb1}} = 2 \beta_{{\rm rs1}}$.
 
 
-\subsubsection{Implementation of hyper-parameterisation function}
+\subsubsection*{Implementation of hyper-parameterisation function}
 
 The hyper-parameterisation function used in this analysis is implemented as follows:
 
@@ -133,15 +110,9 @@ make_hyperpar2
 #writeLines(strwrap(txt, width = 150, exdent = 10))
 @
 
-
-\section{References}
-\bibliography{references}
-
-\section{Supporting Tables and Figures}\label{app:supp_info_table}
-
 % latex table generated in R 3.4.0 by xtable 1.8-2 package
 % Thu Apr  5 13:08:59 2018
-\begin{table*}[ht]
+\begin{table}[ht]
 \centering
 \caption{Core parameter of the 	exttt{FF16} physiological model.} 
 \label{tab:params_core}
@@ -178,13 +149,13 @@ Description & Symbol & Unit & Code & Value \\
   Parameter determining rate of change in $r(x, m_\textrm{l})$ around $H_{\rm mat}$ & $\alpha_{\rm f2}$ &  & \texttt{a\_f2} & 10 \\ 
    \hline
 \end{tabular}
-\end{table*}
+\end{table}
 
 
 
 % latex table generated in R 3.4.0 by xtable 1.8-2 package
 % Thu Apr  5 13:08:59 2018
-\begin{table*}[ht]
+\begin{table}[ht]
 \centering
 \caption{Parameters for hyper-parameterisation of the \texttt{FF16} physiological model.} 
 \label{tab:params_hyper}
@@ -213,12 +184,11 @@ Description & Symbol & Unit & Code & Value \\
   CO$_2$respiration per unit bark volume & $\beta_{\rm rb1}$ & $\mathrm{mol}\,\mathrm{yr}^{-1}\,\mathrm{m}^{-3}$ & \texttt{B\_rb1} & 8024 \\ 
    \hline
 \end{tabular}
-\end{table*}
+\end{table}
 
 
-
-\newpage
-\begin{figure*}[!hb]
+\clearpage
+\begin{figure}[!hb]
 \centering
 \includegraphics[width=0.9\textwidth]{lma_tradeoff.pdf}
 \caption{\textbf{Leaf turnover decreases with leaf-mass per unit leaf area.}
@@ -227,48 +197,50 @@ point giving a species-average. Lines show standardised major axis lines
 fitted to data from each site, with intensity of shading adjusted
 according to strength of the relationship.}
 \label{fig:leafturn}
-\end{figure*}
+\end{figure}
 \newpage
 
-\begin{figure*}[!hb]
+\begin{figure}[!hb]
 \centering
 \includegraphics[width=0.9\textwidth]{assumptions.pdf}
 \caption{\textbf{Assumptions of a functional balance model for plant construction.}
 Each dot is a single plant from the \textsc{baad} \citep{Falster-2015b}.
 Blue lines show standardised major axis lines fit to different species. The black line shows the relationship assumed in this paper, with slope given by the functional-balance assumptions in Table 4 from main text.}
 \label{fig:assumptions}
-\end{figure*}
+\end{figure}
 
 \newpage
 
-\begin{figure*}[!hb]
+\begin{figure}[!hb]
 \centering
 \includegraphics[width=0.9\textwidth]{growth_light_dia.pdf}
 \caption{\textbf{Effect of four traits on stem-diameter growth rate for different-sized plants.}
 Growth rates were simulated using the {\plant} model, applying the trade-offs describing in Table 3. Each panel shows how growth is influenced by a different trait for plants of a given height, and across a series of canopy openness values from completely open (light blue,  $E=1$) to heavily shaded (dark line, $E=0.25$). For any given value of trait and $E$, plants were grown to the desired stem-diameter and their growth rate estimated. Changes in trait-growth relationships are summarised in Table 5.}
 \label{fig:growth_light_dia}
-\end{figure*}
+\end{figure}
 
 \newpage
 
-\begin{figure*}[!hb]
+\begin{figure}[!hb]
 \centering
 \includegraphics[width=0.9\textwidth]{growth_light_area.pdf}
 \caption{\textbf{Effect of four traits on stem-area growth rate for different-sized plants.}
 Growth rates were simulated using the {\plant} model, applying the trade-offs describing in Table 3. Each panel shows how growth is influenced by a different trait for plants of a given height, and across a series of canopy openness values from completely open (light blue,  $E=1$) to heavily shaded (dark line, $E=0.25$). For any given value of trait and $E$, plants were grown to the desired stem-area and their growth rate estimated. Changes in trait-growth relationships are summarised in Table 5.}
 \label{fig:growth_light_area}
-\end{figure*}
+\end{figure}
 
 
 \newpage
 
-\begin{figure*}[!hb]
+\begin{figure}[!hb]
 \centering
 \includegraphics[width=0.9\textwidth]{growth_light_mass.pdf}
 \caption{\textbf{Effect of four traits on plant mass growth rate for different-sized plants.}
 Growth rates were simulated using the {\plant} model, applying the trade-offs describing in Table 3. Each panel shows how growth is influenced by a different trait for plants of a given height, and across a series of canopy openness values from completely open (light blue,  $E=1$) to heavily shaded (dark line, $E=0.25$). For any given value of trait and $E$, plants were grown to the desired mass and their growth rate estimated. Changes in trait-growth relationships are summarised in Table 5.}
 \label{fig:growth_light_mass}
-\end{figure*}
+\end{figure}
 
+\newpage
+\bibliography{references}
 
 \end{document}

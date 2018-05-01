@@ -1,14 +1,14 @@
 name_pretty <- function(trait) {
   switch(trait,
-         lma=expression(paste("Leaf-mass per area (kg ", m^-2, " )")),
-         rho=expression(paste("Wood density (kg ", m^-3, " )")),
-         narea=expression(paste("Nitrogen per area (kg ", m^-2, " )")),
+         lma=expression(paste("Leaf-mass per area (kg ", m^-2, ")")),
+         rho=expression(paste("Wood density (kg ", m^-3, ")")),
+         narea=expression(paste("Nitrogen per area (kg ", m^-2, ")")),
          hmat=expression(paste("Height at maturation (m)")),
          diameter_stem_dt=expression(paste("Diameter growth (m ", yr^-1, ")")),
          shading=expression(paste("WPLCP, ",E^"*"," (0-1)")),
-         leaf_turnover=expression(paste("Leaf turnover rate (", yr^-1, " )")),
+         leaf_turnover=expression(paste("Leaf turnover rate (", yr^-1, ")")),
 
-         height_dt=expression(paste("Height growth rate (m ", yr^-1, " )")),
+         height_dt=expression(paste("Height growth rate (m ", yr^-1, ")")),
          diameter_stem_dt=expression(paste("Diameter growth (m ", yr^-1, ")")),
          area_stem_dt=expression(paste("Basal area growth (", m^2, " ", yr^-1, ")")),
          mass_above_ground_dt=expression(paste("Mass growth (kg ", yr^-1, ")")),
@@ -42,7 +42,7 @@ trait_range_obs <- function(trait) {
 get_by <- function(ymax) {
     by <- diff(pretty(c(0, ymax)))[1]
     if(ymax > 0.6)
-        by <- 0.2
+        by <- 0.5
     if(ymax > 1.25)
         by <- 0.5
     if(ymax > 2.5)
