@@ -1,7 +1,7 @@
 output
 figures
 downloads
-ms*.pdf
+ms/*.pdf
 ms/ms-supp.tex
 .remake
 self
