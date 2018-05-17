@@ -39,7 +39,7 @@
 
 \section*{Additional details on the \texttt{FF16} growth model in the {\plant} package}
 
-In this paper we use the \texttt{FF16} growth model from the package {\plant} \citep{Falster-2016}, which is accessed via \textsc{r} \citep{R-2015}. A full derivation of  Eqns 1-21 from the main text are described is provided in Appendix of \citep{Falster-2016}, see also \citep{Falster-2011}. Below we repeat some additional details from \citep{Falster-2016}, so that readers have a complete picture of the model.
+In this paper we use the \texttt{FF16} growth model from the package {\plant} \citep{Falster-2016}, which is accessed via \textsc{r} \citep{R-2015}. A full derivation of the Eqs. from the main text are described is provided in Appendix of \citep{Falster-2016}, see also \citep{Falster-2011}. Below we repeat some additional details from \citep{Falster-2016}, so that readers have a complete picture of the model.
 
 The \texttt{FF16} physiological model includes default values for all needed parameters (Table \ref{tab:params_core}). Species are known to vary considerably in many of these parameters, such as $\phi$, $\rho$, $\nu$, and $\omega$; so by varying parameters one can account for species differences. When altering a parameter in the model, however, one must also consider whether there are trade-offs linking parameters. This is achieved via a hyper-parameterisation function.
 

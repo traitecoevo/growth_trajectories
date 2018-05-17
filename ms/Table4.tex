@@ -1,67 +1,56 @@
 \documentclass[9pt,twcolumn]{pnas-new}}
 \begin{document}
 
-\setcounter{equation}{11}
-
-% Enable equation numbers in Table
-% Following http://tex.stackexchange.com/questions/62974/numbering-equations-in-tabular-environment
-\newcommand{\eqncounter}[1]{%
-\mbox{}\refstepcounter{equation}%
-$[\theequation]$%
-\label{#1}
-}
-
 \begin{table}[!ht]
 \caption{Equations for a ``functional-balance'' model of plant construction. See Table 3 for a list of variable names and definitions.}
 \centering
   \begin{tabular}{p{0.1cm}p{2.5cm}p{3cm}p{4cm}p{2.5cm}p{0.75cm}}
   \toprule
-  & Variable & Function & Marginal cost & Growth rate & Eqn\\
+  & Variable & Function & Marginal cost & Growth rate & Eq.\\
   \midrule
   \multicolumn{6}{l}{\textbf{a) Functional-balance assumptions}} \\
   & Height &
     $H = \alpha_{\rm l1} \, A_{\rm l}^{0.5}$ &
     $\frac{{\rm d}H}{{\rm d}A_{\rm l}} = 0.5 \alpha_{\rm l1} A_{\rm l}^{-0.5}$ &
-    $\frac{{\rm d}H}{{\rm d}t}  = \frac{{\rm d}H}{{\rm d}A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ &  \eqncounter{eq:ha}\\
+    $\frac{{\rm d}H}{{\rm d}t}  = \frac{{\rm d}H}{{\rm d}A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ &  [1]\\
   & Sapwood area &
     $A_{\rm s} = \theta \, A_{\rm l}$ &
     $\frac{{\rm d}A_{\rm s}}{{\rm d} A_{\rm l}} = \theta$ &
-    $\frac{{\rm d}A_{\rm s}}{{\rm d}t}  =\frac{{\rm d}A_{\rm s}}{{\rm d} A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & \eqncounter{eq:as}\\
+    $\frac{{\rm d}A_{\rm s}}{{\rm d}t}  =\frac{{\rm d}A_{\rm s}}{{\rm d} A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & [2]\\
   & Bark area &
     $A_{\rm b} = b \, \theta \, A_{\rm l}$ &
     $\frac{{\rm d}A_{\rm b}}{{\rm d} A_{\rm l}} = b \, \theta$ &
-    $\frac{{\rm d}A_{\rm b}}{{\rm d}t} = \frac{{\rm d}A_{\rm b}}{{\rm d} A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & \eqncounter{eq:ab}\\
+    $\frac{{\rm d}A_{\rm b}}{{\rm d}t} = \frac{{\rm d}A_{\rm b}}{{\rm d} A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & [3]\\
   & Root mass &
     $M_{\rm r} = \alpha_{\rm r1} \, A_{\rm l}$ &
     $\frac{{\rm d}M_{\rm r}}{{\rm d}A_{\rm l}} = \alpha_{\rm r1}$  &
-    $\frac{{\rm d}M_{\rm r}}{{\rm d}t}  = \frac{{\rm d}M_{\rm r}}{{\rm d}A_{\rm l}}  \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & \eqncounter{eq:mr}\\
+    $\frac{{\rm d}M_{\rm r}}{{\rm d}t}  = \frac{{\rm d}M_{\rm r}}{{\rm d}A_{\rm l}}  \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & [4]\\
   & Heartwood area & & &
-    $\frac{{\rm d}A_{\rm h}}{{\rm d} t}  = k_{s} A_{\rm h} $ & \eqncounter{eq:dah}\\
+    $\frac{{\rm d}A_{\rm h}}{{\rm d} t}  = k_{s} A_{\rm h} $ & [5]\\
   \multicolumn{6}{l}{\textbf{b) Derived quantities}} \\
   & Leaf mass &
     $M_{\rm l} = \phi \, A_{\rm l} $ &
     $\frac{{\rm d}M_{\rm l}}{{\rm d}A_{\rm l}} = \phi$ &
-    $\frac{{\rm d}M_{\rm l}}{{\rm d}t}  = \frac{{\rm d}M_{\rm l}}{{\rm d}A_{\rm l}}  \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & \eqncounter{eq:ml}\\
+    $\frac{{\rm d}M_{\rm l}}{{\rm d}t}  = \frac{{\rm d}M_{\rm l}}{{\rm d}A_{\rm l}}  \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & [6]\\
   & Sapwood mass &
     $M_{\rm s} = \theta \, \rho \, \eta_c \, A_{\rm l} \, H $ &
     $\frac{{\rm d}M_{\rm s}}{{\rm d}A_{\rm l}} = \theta\, \rho\, \eta_c\, \big( H + A_{\rm l}\, \frac{{\rm d}H}{{\rm d}A_{\rm l}} \big)$ &
-    $\frac{{\rm d}M_{\rm s}}{{\rm d}t}  = \frac{{\rm d}M_{\rm s}}{{\rm d}A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & \eqncounter{eq:ms2}\\
+    $\frac{{\rm d}M_{\rm s}}{{\rm d}t}  = \frac{{\rm d}M_{\rm s}}{{\rm d}A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & [7]\\
   & Bark mass &
     $M_{\rm b} = b\, \theta \, \rho \, \eta_c \, A_{\rm l} \, H $ &
     $\frac{{\rm d}M_{\rm b}}{{\rm d}A_{\rm l}} = b \, \theta \, \rho \, \eta_c\big( H + A_{\rm l} \, \frac{{\rm d}H}{{\rm d}A_{\rm l}} \big)$ &
-    $\frac{{\rm d}M_{\rm b}}{{\rm d}t}  = \frac{{\rm d}M_{\rm b}}{{\rm d}A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & \eqncounter{eq:mb}\\
+    $\frac{{\rm d}M_{\rm b}}{{\rm d}t}  = \frac{{\rm d}M_{\rm b}}{{\rm d}A_{\rm l}} \, \frac{{\rm d}A_{\rm l}}{{\rm d}t}$ & [8]\\
   & Heartwood area &
     $A_{\rm h} = \int_0^t \frac{{\rm d}A_{\rm h}}{{\rm d}t}(t^\prime) \, dt^\prime$ &
      &
-    $\frac{{\rm d}A_{\rm h}}{{\rm d}t} = k_{\rm s} \, A_{\rm s}$ & \eqncounter{eq:hta} \\
+    $\frac{{\rm d}A_{\rm h}}{{\rm d}t} = k_{\rm s} \, A_{\rm s}$ & [9] \\
   & Heartwood mass &
     $M_{\rm h} = \int_0^t \frac{{\rm d}M_{\rm h}}{{\rm d}t}(t^\prime) \, dt^\prime$ &
      &
-    $\frac{{\rm d}M_{\rm h}}{{\rm d}t} = k_{\rm s} \, M_{\rm s}$ & \eqncounter{eq:htm} \\
+    $\frac{{\rm d}M_{\rm h}}{{\rm d}t} = k_{\rm s} \, M_{\rm s}$ & [10]\\
   \bottomrule
 \end{tabular}
-\addtabletext{\\The first column of \textbf{a)} provides cores assumptions between various size metrics and leaf area. Eqns in the middle and right columns of \textbf{a)} and in \textbf{b)} can be derived from these assumptions. The column ``Eqn'' indicates equation numbers referred to in the main text.
-
+\addtabletext{\\The first column of \textbf{a)} provides cores assumptions between various size metrics and leaf area. Eqs. in the middle and right columns of \textbf{a)} and in \textbf{b)} can be derived from these assumptions.
 }
 \label{tab:allometry}
 \end{table}
