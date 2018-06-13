@@ -1,8 +1,3 @@
-
-
-library(gridBase)
-library(grImport)
-
 get.pic <- function(file) {
   base <- tools::file_path_sans_ext(file)
   file.xml <- sprintf("%s.xml", base)
@@ -105,7 +100,6 @@ figure_dY_dt_talk2 <- function(dat) {
               xaxt="n", yaxt="n", xlab="", ylab="",
               ylim = c(0, ymax*1.05))
       usr <- par("usr")
-#      rect(1E-5, -1, 1E4, 2*ymax, col = make_transparent("grey", 0.3), border=NA)
       obs <- trait_range_obs(v)
       rect(obs[1], -1, obs[2], 2*ymax, col = "white", border=NA)
       box()

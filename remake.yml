@@ -1,13 +1,15 @@
 packages:
+  - plant
   - baad.data
   - rmarkdown
-  - plant
   - xtable
   - RColorBrewer
   - dplyr
   - knitr
   - parallel
   - rstan
+  - grImport
+  - gridBase
 
 sources:
   - R
@@ -31,44 +33,25 @@ plot_options:
   large_square:
     width: 12
     height: 12
-
-include:
-  - remake_figures_plant.yml
-  - remake_figures_talk.yml
+  3x2small:
+    width: 6
+    height: 4
+  growth:
+    width: 8
+    height: 4
 
 targets:
   all:
     depends:
-      - ms/ms.pdf
-      - build.R
+      - figures_plant
+      - figures_talk
+#      - figures_stan
+      - analysis.R
 
-# Documents ------------------------
-  ms/ms.pdf:
-    command: latex_build("ms/ms.tex", bibliography="ms/references.bib")
-    depends:
-      - ms/pnas-new.cls
-      - ms/pnasresearcharticle.sty
-      - ms/widetext.sty
-      - output/main/figure_conceptual.pdf
-      - output/main/lcp_schematic.pdf
-      - output/main/growth_light_height.pdf
-      - output/main/lcp_trait.pdf
-      - ms/ms-supp.pdf
-
-  ms/ms-supp.pdf:
-    command: latex_build("ms/ms-supp.tex", bibliography="ms/references.bib", clean=FALSE)
-    # Don't clean because we need info for cross references
-    depends:
-      - data/growth_model_pars_core.csv
-      - data/growth_model_pars_hyper.csv
-      - output/SI/assumptions.pdf
-      - output/SI/lma_tradeoff.pdf
-      - output/SI/growth_light_dia.pdf
-      - output/SI/growth_light_mass.pdf
-      - output/SI/growth_light_area.pdf
-
-  ms/ms-supp.tex:
-    knitr: TRUE
+# A plain R version of this file (for those who don't like remake)  -------------
+  analysis.R:
+    packages: remake
+    command: make_script(file=target_name)
 
 # Data ------------------------
   glopnet:
@@ -81,16 +64,13 @@ targets:
     cleanup_level: purge
     check: exists
 
-# Tables & figures ------------------------
-
-  figures:
+# Tables & figures (excluding those using stan) ------------------------
+  figures_plant:
     depends:
       - output/main/figure_conceptual.pdf
       - output/main/lcp_schematic.pdf
-      - output/SI/assumptions.pdf
       - output/main/growth_light_height.pdf
       - output/main/lcp_trait.pdf
-      - output/SI/lma_tradeoff.pdf
       - output/SI/growth_light_dia.pdf
       - output/SI/growth_light_mass.pdf
       - output/SI/growth_light_area.pdf
@@ -106,6 +86,96 @@ targets:
       - output/conn/area_stem_dt_area_stem_dt.pdf
       - output/conn/diameter_stem_dt_diameter_stem_dt.pdf
       - output/main/mass_fraction.pdf
+
+  output/main/growth_light_height_grid.pdf:
+    command: figure_dY_dt_grid(height_dt_data_grid)
+    plot:
+      width: 10
+      height: 4
+
+  height_dt_data_grid:
+    command: figure_height_dt_data_grid()
+
+  output/main/growth_light_height.pdf:
+    command: figure_dY_dt(height_dt_data)
+    plot: 3x2
+
+  height_dt_data:
+    command: figure_height_dt_data()
+
+  output/SI/growth_light_dia.pdf:
+    command: figure_dY_dt(diameter_stem_dt_data)
+    plot: 3x2
+
+  diameter_stem_dt_data:
+    command: figure_diameter_stem_dt_data()
+
+  output/SI/growth_light_area.pdf:
+    command: figure_dY_dt(area_stem_dt_data)
+    plot: 3x2
+
+  area_stem_dt_data:
+    command: figure_area_stem_dt_data()
+
+  output/SI/growth_light_mass.pdf:
+    command: figure_dY_dt(mass_above_ground_dt_data)
+    plot: 3x2
+
+  mass_above_ground_dt_data:
+    command: figure_mass_above_ground_dt_data()
+
+  output/main/lcp_schematic.pdf:
+    command: figure_lcp_schematic()
+    plot:
+      width: 6
+      height: 4
+
+  output/main/lcp_trait.pdf:
+    command: figure_lcp_trait(lcp_trait_data)
+    plot:
+      width: 7.5
+      height: 2.5
+
+  lcp_trait_data:
+      command: figure_lcp_trait_data()
+
+  rate_vs_size_data:
+    command: figure_rate_vs_size_data()
+
+  output/main/mass_fraction.pdf:
+    command: figure_mass_fraction(rate_vs_size_data)
+    plot:
+      width: 10
+      height: 2.5
+
+  output/conn/net_mass_production_dt_net_mass_production_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("net_mass_production_dt"), I("output/conn"))
+
+  output/conn/mass_total_dt_mass_total_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("mass_total_dt"), I("output/conn"))
+
+  output/conn/darea_leaf_dmass_live_darea_leaf_dmass_live.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("darea_leaf_dmass_live"), I("output/conn"))
+
+  output/conn/height_dt_height_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("height_dt"), I("output/conn"))
+
+  output/conn/area_leaf_dt_area_leaf_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_leaf_dt"), I("output/conn"))
+
+  output/conn/area_stem_dt_area_stem_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("area_stem_dt"), I("output/conn"))
+
+  output/conn/diameter_stem_dt_diameter_stem_dt.pdf:
+    command: figure_rate_vs_size_panels(rate_vs_size_data, I("diameter_stem_dt"), I("output/conn"))
+
+
+# Figures (using stan) ------------------------
+
+  figures_stan:
+    depends:
+      - output/SI/assumptions.pdf
+      - output/SI/lma_tradeoff.pdf
 
   output/SI/assumptions.pdf:
     command: figure_assumptions(fit_a.lf_h.t, fit_a.lf_sap, fit_a.lf_m.rf, fit_h.t_msal)
@@ -135,7 +205,130 @@ targets:
     command: figure_lma_tradeoff(glopnet, fit_lma_tradeoff)
     plot: square
 
-  # A plain R version of this file, for those who don't like remake  -----------------------------------
-  build.R:
-    packages: remake
-    command: make_script(file=target_name)
+## Figures for a talk ----------------------------------------------
+
+  figures_talk:
+    depends:
+      # - output/talk/assumption_ht_1.pdf
+      # - output/talk/assumption_sap_1.pdf
+      # - output/talk/assumption_mrt_1.pdf
+      # - output/talk/assumption_ht_2.pdf
+      # - output/talk/assumption_sap_2.pdf
+      # - output/talk/assumption_mrt_2.pdf
+      - output/talk/growth_lma_1.pdf
+      - output/talk/growth_lma_2.pdf
+      - output/talk/growth_lma_3.pdf
+      - output/talk/growth_lma_4.pdf
+      - output/talk/growth_lma_5.pdf
+      - output/talk/growth_lma_6.pdf
+      - output/talk/growth_lma_7.pdf
+      - output/talk/growth_lma_8.pdf
+      - output/talk/growth_rho_1.pdf
+      - output/talk/growth_rho_2.pdf
+      - output/talk/growth_rho_3.pdf
+      - output/talk/growth_rho_4.pdf
+      - output/talk/growth_rho_5.pdf
+      - output/talk/growth_rho_6.pdf
+      - output/talk/growth_rho_7.pdf
+      - output/talk/growth_rho_8.pdf
+      - output/talk/growth_light_height.pdf
+
+  tree:
+    command: get.pic("data/tree.eps")
+
+  output/talk/assumption_ht_1.pdf:
+    command: figure_assumption_talk(fit_a.lf_h.t, FALSE)
+    plot: 3x2small
+
+  output/talk/assumption_sap_1.pdf:
+    command: figure_assumption_talk(fit_a.lf_sap, FALSE)
+    plot: 3x2small
+
+  output/talk/assumption_mrt_1.pdf:
+    command: figure_assumption_talk(fit_a.lf_m.rf, FALSE)
+    plot: 3x2small
+
+  output/talk/assumption_ht_2.pdf:
+    command: figure_assumption_talk(fit_a.lf_h.t, TRUE)
+    plot: 3x2small
+
+  output/talk/assumption_sap_2.pdf:
+    command: figure_assumption_talk(fit_a.lf_sap, TRUE)
+    plot: 3x2small
+
+  output/talk/assumption_mrt_2.pdf:
+    command: figure_assumption_talk(fit_a.lf_m.rf, TRUE)
+    plot: 3x2small
+
+  height_dt_data_talk:
+    command: figure_height_dt_data(sizes = I(c(0.25, 0.5, 1, 2, 5, 10, 15, 20)))
+
+  output/talk/growth_lma_1.pdf:
+    command: figure_dY_dt_talk(I("lma"), 1, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_lma_2.pdf:
+    command: figure_dY_dt_talk(I("lma"), 2, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_lma_3.pdf:
+    command: figure_dY_dt_talk(I("lma"), 3, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_lma_4.pdf:
+    command: figure_dY_dt_talk(I("lma"), 4, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_lma_5.pdf:
+    command: figure_dY_dt_talk(I("lma"), 5, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_lma_6.pdf:
+    command: figure_dY_dt_talk(I("lma"), 6, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_lma_7.pdf:
+    command: figure_dY_dt_talk(I("lma"), 7, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_lma_8.pdf:
+    command: figure_dY_dt_talk(I("lma"), 8, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_rho_1.pdf:
+    command: figure_dY_dt_talk(I("rho"), 1, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_rho_2.pdf:
+    command: figure_dY_dt_talk(I("rho"), 2, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_rho_3.pdf:
+    command: figure_dY_dt_talk(I("rho"), 3, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_rho_4.pdf:
+    command: figure_dY_dt_talk(I("rho"), 4, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_rho_5.pdf:
+    command: figure_dY_dt_talk(I("rho"), 5, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_rho_6.pdf:
+    command: figure_dY_dt_talk(I("rho"), 6, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_rho_7.pdf:
+    command: figure_dY_dt_talk(I("rho"), 7, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_rho_8.pdf:
+    command: figure_dY_dt_talk(I("rho"), 8, height_dt_data_talk, tree)
+    plot: growth
+
+  output/talk/growth_light_height.pdf:
+    command: figure_dY_dt_talk2(height_dt_data)
+    plot:
+      width: 8
+      height: 3

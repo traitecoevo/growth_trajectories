@@ -1,7 +1,0 @@
-plant:
-  source: github
-  repo: traitecoevo/plant
-
-baad.data:
-  source: github
-  repo: traitecoevo/baad.data
